@@ -1,2 +1,2 @@
 # the-app
-the-app: my testsand experiments with angular2
+the-app: my tests and experiments with angular2
