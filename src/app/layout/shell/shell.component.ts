@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationStart,ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shell',
@@ -7,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ShellComponent implements OnInit {
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
-  isDarkTheme: boolean = false;
-  navSize_Collapsed: string = '65px;';
-  navSize_Extended: string = '240px;';
-  navSize: string = this.navSize_Collapsed;
+  isDarkTheme = false;
+  navSize_Collapsed = '65px;';
+  navSize_Extended = '240px;';
+  navSize = this.navSize_Collapsed;
 
   showAside = false;
   showNav = false;
@@ -29,6 +30,14 @@ export class ShellComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events
+      .subscribe((event) => {
+        // example: NavigationStart, RoutesRecognized, NavigationEnd
+        console.log(event);
+        if (event instanceof NavigationStart) {
+          console.log('Shell NavigationStart:', event);
+        }  
+      });
   }
 
 }

@@ -15,13 +15,15 @@ import { DocumentViewComponent } from './features/documents/document-view/docume
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
 
 // https://damienbod.com/2016/03/02/angular2-openid-connect-implicit-flow-with-identityserver4/
-
+// http://continuousdeveloper.com/2016/07/06/protecting-routes-in-angular-2/
+// http://onehungrymind.com/named-router-outlets-in-angular-2/
 const appRoutes: Routes = [
   {
     path: 'home',
     component: DashboardComponent,
   },
-  { path: '',
+  {
+    path: '',
     redirectTo: '/home',
     pathMatch: 'full'
   },
@@ -35,17 +37,17 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    ShellComponent,
     SettingsComponent,
     DashboardComponent,
     DocumentsComponent,
-    ShellComponent,
     DocumentViewComponent,
     PageNotFoundComponent
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: false } // <-- debugging purposes only
     ),
     BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule
   ],
