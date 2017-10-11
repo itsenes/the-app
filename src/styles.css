@@ -3,9 +3,8 @@
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";  */
-
+/* @import '~@angular/material/_theming.scss'; */
 /* https://blog.thoughtram.io/angular/2017/05/23/custom-themes-with-angular-material.html */
-
 
 body {
   margin: 0;
@@ -15,6 +14,14 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
-.active-route {
-  color: accent;
+a.mat-list-item.active-route {
+  color: #FA646E;
+}
+
+.mat-tab-label, .mat-tab-link {
+  color:black;
+}
+
+.view-content {
+  padding: 10px;
 }

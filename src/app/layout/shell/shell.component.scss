@@ -6,8 +6,9 @@
     min-height: 800px;
 }
 
-.containerX.m2app-dark {
+.containerX.dark {
     background: black;
+    color:white;
   }
 
 nav, aside {
@@ -17,9 +18,13 @@ nav, aside {
 }
 
 article {
-    padding: 10px;
+    padding: 0px;
 }
     
+article.mat-toolbar {
+    padding: 0px;
+}
+
 #main > article {
     background:white;
 }
