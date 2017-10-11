@@ -1,0 +1,40 @@
+<div class="containerX mat-app-background" [class.m2app-dark]="isDarkTheme">
+  <div class="colorNested box" fxLayout="column">
+    <header>
+      <md-toolbar color="primary">
+        <md-icon>widgets</md-icon>&nbsp;{{title}}
+        <span class="app-toolbar-filler"></span>
+        <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
+      </md-toolbar>
+    </header>
+    <div id="main" #main fxLayout.xs="column" fxFlex>
+      <nav #nav fxFlex="{{navSize}}" fxFlexOrder fxFlexOrder.xs="1">
+        <md-nav-list>
+          <a md-list-item (click)="toggleNav()">
+            <md-icon>menu</md-icon>
+          </a>
+          <a md-list-item routerLink="/home" [routerLinkActive]="['active-route']">
+            <md-icon>home</md-icon>
+            <span *ngIf="showNav" class="nav-label">Η εταιρεία μου</span>
+          </a>
+          <a md-list-item routerLink="/documents" [routerLinkActive]="['active-route']">
+            <md-icon>folder</md-icon>
+            <span *ngIf="showNav" class="nav-label">Έγγραφα</span>
+          </a>
+          <a md-list-item routerLink="/settings" [routerLinkActive]="['active-route']">
+            <md-icon>settings</md-icon>
+            <span *ngIf="showNav" class="nav-label">Ρυθμίσεις</span>
+          </a>
+        </md-nav-list>
+      </nav>
+      <article #content fxFlex="*" fxFlexOrder fxFlexOrder.xs="2">
+        <!-- Routed views go here -->
+        <router-outlet></router-outlet>
+      </article>
+      <aside #aside *ngIf="showAside" fxFlex="20" fxFlexOrder fxFlexOrder.xs="3">secondary panel</aside>
+    </div>
+    <!-- <footer>
+      <md-toolbar>INDICE</md-toolbar>
+    </footer> -->
+  </div>
+</div>

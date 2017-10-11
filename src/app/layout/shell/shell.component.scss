@@ -1,0 +1,47 @@
+
+.colorNested, .containerX {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 800px;
+}
+
+.containerX.m2app-dark {
+    background: black;
+  }
+
+nav, aside {
+    padding-top: 4px;
+    padding-left:4px;
+    padding-right: 4px;
+}
+
+article {
+    padding: 10px;
+}
+    
+#main > article {
+    background:white;
+}
+
+#main > aside {
+    background:whitesmoke;
+}
+
+.nav-label {
+    padding-left: 8px;
+}
+
+// #main > nav, #main > aside {
+//     /* border-color: #8888bb; */
+// }
+    
+    
+// header, footer {
+//     /* border-color: #eebb55; */
+//     // background: #ffeebb;
+// }
+
+.app-toolbar-filler {
+    flex: 1 1 auto;
+}
