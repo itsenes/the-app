@@ -23,8 +23,12 @@
             <span *ngIf="showNav" class="nav-label">Έγγραφα</span>
           </a>
           <a md-list-item routerLink="/settings" routerLinkActive="active-route">
-            <md-icon>settings_applications</md-icon>
+            <md-icon>settings</md-icon>
             <span *ngIf="showNav" class="nav-label">Ρυθμίσεις</span>
+          </a>
+          <a md-list-item routerLink="/store" routerLinkActive="active-route">
+            <md-icon>widgets</md-icon>
+            <span *ngIf="showNav" class="nav-label">Εφαρμογές</span>
           </a>
         </md-nav-list>
       </nav>
