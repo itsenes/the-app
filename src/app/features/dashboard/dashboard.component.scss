@@ -1,0 +1,122 @@
+.fill-remaining-space {
+    width:100%;
+    min-width:20px;
+    max-width: 50px;
+}
+
+.invoice-thumb {
+    filter: grayscale(100%);
+}
+
+.action-card {
+   height: 200px;
+   width: 250px;
+    background-color: whitesmoke;
+    color:black;
+    line-height: 14px;
+  }
+  
+  .action-card .mat-card-subtitle {
+      color: black;
+      font-size:16px;
+  }
+  
+  .inline-subtitle {
+      padding-left: 4px;
+      font-size:12px;
+  }
+  
+  .action-badge {
+      position: absolute;
+      color: rgba(233, 30, 99, 1);
+      margin-top: -72px;
+      font-size: 48px;
+      margin-left: 230px;
+      opacity: 0.65;
+  }
+  
+  .action-badge.red {
+      color: #EB4A42;
+  }
+  
+  .action-badge.blue {
+      color: #35A7FF;
+  }
+  
+  .action-badge.green {
+      color: #44CD7D;
+  }
+  
+  .action-badge.teal {
+      color: #20BBAF;
+  }
+
+  .action-button {
+    width: 120px;
+    height: 120px;
+}
+
+.mat-card-subtitle {
+    font-size: 14px;
+    padding-top: 12px;
+    height: 44px;
+    line-height: 16px;
+    overflow: hidden;
+}
+
+
+.folder-count-badge {
+    background-color:#FA646E;
+    color:white;
+    position: absolute;
+    opacity: 0.98;
+    margin-left:-20px; 
+    width:36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;  
+}
+
+p.folder-count {
+   font-size: 12px;
+   color:white;
+   text-align: center;
+}
+
+
+.mat-card-avatar.company-avatar
+{
+    filter: grayscale(96%);
+}
+
+.mat-card-avatar.red {
+    background-color: #EB4A42;
+}
+
+.mat-card-avatar.blue {
+    background-color: #35A7FF;
+}
+
+.mat-card-avatar.green {
+    background-color: #44CD7D;
+}
+
+.mat-card-avatar.teal {
+    background-color: #20BBAF;
+}
+
+.mat-card-avatar.accent {
+    background-color: #EB4A42;
+}
+
+.mat-card-avatar.primary {
+    background-color: accent;
+}
+
+.material-icons.size-64 {
+    font-size: 64px;
+}
+
+.powerbi {
+    color: orange;
+}
