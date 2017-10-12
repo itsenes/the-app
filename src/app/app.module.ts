@@ -13,6 +13,7 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { DocumentsComponent } from './features/documents/documents.component';
 import { DocumentViewComponent } from './features/documents/document-view/document-view.component';
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
+import { StoreComponent } from './features/store/store.component';
 
 // https://damienbod.com/2016/03/02/angular2-openid-connect-implicit-flow-with-identityserver4/
 // http://continuousdeveloper.com/2016/07/06/protecting-routes-in-angular-2/
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
   { path: 'documents', component: DocumentsComponent },
   { path: 'documents/:id', component: DocumentViewComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'store', component: StoreComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     DashboardComponent,
     DocumentsComponent,
     DocumentViewComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    StoreComponent
   ],
   imports: [
     RouterModule.forRoot(
