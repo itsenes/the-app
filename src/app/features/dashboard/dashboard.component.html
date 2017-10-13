@@ -58,7 +58,7 @@
           <md-card-title>
             Συνεργάτες
           </md-card-title>
-          <md-icon class="size-64">recent_actors</md-icon>
+          <md-icon class="size-64">contacts</md-icon>
           <span md-card-avatar class="folder-count-badge accent">
             <p class="folder-count">60</p>
           </span>
@@ -100,9 +100,9 @@
           <md-card-subtitle>Αναζητήστε στο ιστορικό ενεργειών.</md-card-subtitle>
         </md-card-content>
         <md-card-actions>
-          <button md-button>
+          <a md-button routerLink="/history" routerLinkActive="active-route">
             <md-icon>search</md-icon> Αναζήτηση
-          </button>
+          </a>
         </md-card-actions>
       </md-card>
     </md-grid-tile>
@@ -116,9 +116,9 @@
           <md-card-subtitle>Ρυθμίσεις του λογαριασμού σας</md-card-subtitle>
         </md-card-content>
         <md-card-actions>
-          <button md-button>
+          <a md-button routerLink="/settings" routerLinkActive="active-route">
             <md-icon>settings</md-icon> Ξεκινήστε εδώ!
-          </button>
+          </a>
         </md-card-actions>
       </md-card>
     </md-grid-tile>
@@ -132,9 +132,9 @@
             <md-card-subtitle>Προσθήκη λειτουργικότητας και διασυνδέσεων</md-card-subtitle>
           </md-card-content>
           <md-card-actions>
-            <button md-button>
+            <a md-button routerLink="/store" routerLinkActive="active-route">
               <md-icon>widgets</md-icon> Ξεκινήστε εδώ!
-            </button>
+            </a>
           </md-card-actions>
         </md-card>
       </md-grid-tile>
