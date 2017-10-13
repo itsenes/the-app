@@ -36,7 +36,9 @@
         <!-- Routed views go here -->
         <router-outlet></router-outlet>
       </article>
-      <aside #aside *ngIf="showAside" fxFlex="20" fxFlexOrder fxFlexOrder.xs="3">secondary panel</aside>
+      <aside #aside *ngIf="showAside" fxFlex="20" fxFlexOrder fxFlexOrder.xs="3">
+        <router-outlet name='aside'></router-outlet>
+      </aside>
     </div>
     <!-- <footer>
       <md-toolbar>INDICE</md-toolbar>

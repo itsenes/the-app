@@ -36,7 +36,7 @@ export class ShellComponent implements OnInit {
         console.log(event);
         if (event instanceof NavigationStart) {
           console.log('Shell NavigationStart:', event);
-        }  
+        }
       });
   }
 

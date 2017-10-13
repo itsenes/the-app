@@ -10,21 +10,23 @@
 
 .action-card {
    height: 200px;
-   width: 250px;
-    background-color: whitesmoke;
-    color:black;
-    line-height: 14px;
-  }
+   width: 90%;
+   background-color: whitesmoke;
+   color:#1C1D21;
+   line-height: 14px;
+   opacity: 0.9;
+}
   
-  .action-card .mat-card-subtitle {
-      color: black;
-      font-size:16px;
-  }
+.action-card .mat-card-subtitle {
+    color:#1C1D21;
+    font-size:16px;
+    opacity: 0.8;
+}
   
-  .inline-subtitle {
-      padding-left: 4px;
-      font-size:12px;
-  }
+.inline-subtitle {
+    padding-left: 4px;
+    font-size:12px;
+}
   
   .action-badge {
       position: absolute;
