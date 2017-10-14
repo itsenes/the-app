@@ -1,8 +1,10 @@
+
+<!-- based on the mozilla holy-grail layout  -->
 <div class="containerX mat-app-background" [class.dark]="isDarkTheme">
   <div class="colorNested box" fxLayout="column">
     <header>
       <md-toolbar class="shell-toolbar">
-        <md-icon>widgets</md-icon>&nbsp;{{title}}
+          <img class="icon" src="assets/images/incontrl_icon_transparent_white.png" /><img class="logo" src="assets/images/incontrl_logo_transparent_white.png" />
         <span class="app-toolbar-filler"></span>
         <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
       </md-toolbar>

@@ -7,7 +7,7 @@
 </md-toolbar>
 
 <div class="view-content">
-  <md-grid-list cols="5" rowHeight="280" gutterSize="5">
+  <md-grid-list cols="{{gridColumns}}" rowHeight="280" gutterSize="5">
     <md-grid-tile>
       <md-card class="action-card">
         <md-card-content>
@@ -22,10 +22,12 @@
         </md-card-content>
         <md-card-actions>
           <button md-button>
-            <md-icon>search</md-icon> Αναζήτηση
+            <md-icon>search</md-icon>
+            <label>Αναζήτηση</label>
           </button>
           <button md-button>
-            <md-icon>add_circle</md-icon> Προσθήκη
+            <md-icon>add_circle</md-icon>
+            <label>Προσθήκη</label>
           </button>
         </md-card-actions>
       </md-card>
@@ -87,7 +89,7 @@
           <button md-button>
             <md-icon>insert_chart</md-icon> Ξεκινήστε εδώ!
           </button>
-          </md-card-actions>
+        </md-card-actions>
       </md-card>
     </md-grid-tile>
     <md-grid-tile>
@@ -123,20 +125,20 @@
       </md-card>
     </md-grid-tile>
     <md-grid-tile>
-        <md-card class="action-card">
-          <md-card-content>
-            <md-card-title>
-              Εφαρμογές
-            </md-card-title>
-            <md-icon class="size-64">widgets</md-icon>
-            <md-card-subtitle>Προσθήκη λειτουργικότητας και διασυνδέσεων</md-card-subtitle>
-          </md-card-content>
-          <md-card-actions>
-            <a md-button routerLink="/store" routerLinkActive="active-route">
-              <md-icon>widgets</md-icon> Ξεκινήστε εδώ!
-            </a>
-          </md-card-actions>
-        </md-card>
-      </md-grid-tile>
+      <md-card class="action-card">
+        <md-card-content>
+          <md-card-title>
+            Εφαρμογές
+          </md-card-title>
+          <md-icon class="size-64">widgets</md-icon>
+          <md-card-subtitle>Προσθήκη λειτουργικότητας και διασυνδέσεων</md-card-subtitle>
+        </md-card-content>
+        <md-card-actions>
+          <a md-button routerLink="/store" routerLinkActive="active-route">
+            <md-icon>widgets</md-icon> Ξεκινήστε εδώ!
+          </a>
+        </md-card-actions>
+      </md-card>
+    </md-grid-tile>
   </md-grid-list>
 </div>
