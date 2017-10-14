@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart,ActivatedRoute } from '@angular/router';
+import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shell',
