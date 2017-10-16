@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShellComponent } from './layout/shell/shell.component';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,37 +10,19 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'THE-APP';
+  busy = true;
 
-  constructor(public oidcSecurityService: OidcSecurityService) {
-    if (this.oidcSecurityService.moduleSetup) {
-      this.doCallbackLogicIfRequired();
-    } else {
-      this.oidcSecurityService.onModuleSetup.subscribe(() => {
-        this.doCallbackLogicIfRequired();
-      });
+  constructor(private authService: AuthService, private router: Router) {
+    if (this.authService.isLoggedIn()) {
+      // return true;
+      console.log('isLoggedIn OK');
     }
+    this.authService.startAuthentication();
   }
 
   ngOnInit() {
-
   }
 
   ngOnDestroy(): void {
-    this.oidcSecurityService.onModuleSetup.unsubscribe();
   }
-
-  login() {
-    this.oidcSecurityService.authorize();
-  }
-
-  logout() {
-    this.oidcSecurityService.logoff();
-  }
-
-  private doCallbackLogicIfRequired() {
-    if (window.location.hash) {
-      this.oidcSecurityService.authorizedCallback();
-    }
-  }
-
 }

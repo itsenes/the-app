@@ -1,12 +1,13 @@
-
 <!-- based on the mozilla holy-grail layout  -->
-<div class="containerX mat-app-background" [class.dark]="isDarkTheme">
-  <div class="colorNested box" fxLayout="column">
+<div class="app-container mat-app-background" [class.dark]="isDarkTheme">
+  <div class="app-layout box" fxLayout="column">
     <header>
       <md-toolbar class="shell-toolbar">
-          <img class="icon" src="assets/images/incontrl_icon_transparent_white.png" /><img class="logo" src="assets/images/incontrl_logo_transparent_white.png" />
+        <img class="icon" src="assets/images/incontrl_icon_transparent_white.png" />
+        <img class="logo" src="assets/images/incontrl_logo_transparent_white.png" />
         <span class="app-toolbar-filler"></span>
-        <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
+        <!-- <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button> -->
+        <span class="user-info">user@domain.com</span>
       </md-toolbar>
     </header>
     <!-- https://material.io/icons/ -->
@@ -20,7 +21,7 @@
             <md-icon>home</md-icon>
             <span *ngIf="showNav" class="nav-label">Η εταιρεία μου</span>
           </a>
-          <a md-list-item routerLink="/documents"  routerLinkActive="active-route">
+          <a md-list-item routerLink="/documents" routerLinkActive="active-route">
             <md-icon>folder</md-icon>
             <span *ngIf="showNav" class="nav-label">Έγγραφα</span>
           </a>

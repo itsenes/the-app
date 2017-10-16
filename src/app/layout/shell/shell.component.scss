@@ -8,7 +8,11 @@
     padding-right: 10px;
 }
 
-.colorNested, .containerX {
+.user-info {
+    font-size: 14px;
+}
+
+.app-container, .app-layout {
     display: flex;
     flex-direction: column;
     height: 100vh;
