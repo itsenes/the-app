@@ -1,5 +1,6 @@
 .logo {
     height: 20px;
+    //padding-left: 8px;
 }
 
 .icon {
@@ -17,9 +18,10 @@
     flex-direction: column;
     height: 100vh;
     min-height: 800px;
+    background: whitesmoke;
 }
 
-.containerX.dark {
+.app-container.dark {
     background: black;
     color:white;
   }
@@ -28,7 +30,7 @@ nav, aside {
     padding-top: 4px;
     padding-left:4px;
     padding-right: 4px;
-    background: #2F3137;
+    background: #FA646E;
 }
 
 

@@ -1,35 +1,38 @@
 <!-- based on the mozilla holy-grail layout  -->
 <div class="app-container mat-app-background" [class.dark]="isDarkTheme">
   <div class="app-layout box" fxLayout="column">
-    <header>
+    <!-- <header>
       <md-toolbar class="shell-toolbar">
         <img class="icon" src="assets/images/incontrl_icon_transparent_white.png" />
         <img class="logo" src="assets/images/incontrl_logo_transparent_white.png" />
         <span class="app-toolbar-filler"></span>
-        <!-- <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button> -->
+        <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
         <span class="user-info">user@domain.com</span>
       </md-toolbar>
-    </header>
+    </header> -->
     <!-- https://material.io/icons/ -->
     <div id="main" #main fxLayout.xs="column" fxFlex>
       <nav #nav fxFlex="{{navSize}}" fxFlexOrder fxFlexOrder.xs="1">
-        <md-nav-list>
+        <md-nav-list class="mat-elevation-z6">
           <a md-list-item (click)="toggleNav()">
-            <md-icon>menu</md-icon>
+            <md-icon *ngIf="!showNav">menu</md-icon>
+            <img class="logo" *ngIf="showNav" src="assets/images/incontrl_logo_transparent_white.png" />
           </a>
-          <a md-list-item routerLink="/home" routerLinkActive="active-route">
+        </md-nav-list>
+        <md-nav-list>
+          <a md-list-item routerLink="/app/" routerLinkActive="active-route">
             <md-icon>home</md-icon>
             <span *ngIf="showNav" class="nav-label">Η εταιρεία μου</span>
           </a>
-          <a md-list-item routerLink="/documents" routerLinkActive="active-route">
+          <a md-list-item routerLink="/app/documents" routerLinkActive="active-route">
             <md-icon>folder</md-icon>
             <span *ngIf="showNav" class="nav-label">Έγγραφα</span>
           </a>
-          <a md-list-item routerLink="/settings" routerLinkActive="active-route">
+          <a md-list-item routerLink="/app/settings" routerLinkActive="active-route">
             <md-icon>settings</md-icon>
             <span *ngIf="showNav" class="nav-label">Ρυθμίσεις</span>
           </a>
-          <a md-list-item routerLink="/store" routerLinkActive="active-route">
+          <a md-list-item routerLink="/app/store" routerLinkActive="active-route">
             <md-icon>widgets</md-icon>
             <span *ngIf="showNav" class="nav-label">Εφαρμογές</span>
           </a>
@@ -40,7 +43,7 @@
         <router-outlet></router-outlet>
       </article>
       <aside #aside *ngIf="showAside" fxFlex="20" fxFlexOrder fxFlexOrder.xs="3">
-        <router-outlet name='aside'></router-outlet>
+        <router-outlet name='app-aside-view'></router-outlet>
       </aside>
     </div>
     <!-- <footer>

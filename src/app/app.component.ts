@@ -6,19 +6,13 @@ import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
-  template: '<app-shell></app-shell>'
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'THE-APP';
   busy = true;
 
-  constructor(private authService: AuthService, private router: Router) {
-    if (this.authService.isLoggedIn()) {
-      // return true;
-      console.log('isLoggedIn OK');
-    }
-    this.authService.startAuthentication();
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
   }

@@ -19,23 +19,30 @@ import { StoreComponent } from './features/store/store.component';
 import { UnauthorizedComponent } from './common/unauthorized/unauthorized.component';
 
 import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthCallbackComponent } from './common/auth-callback/auth-callback.component';
 
 // http://continuousdeveloper.com/2016/07/06/protecting-routes-in-angular-2/
 // http://onehungrymind.com/named-router-outlets-in-angular-2/
 const appRoutes: Routes = [
+  { path: 'auth-callback', component: AuthCallbackComponent },
+  { path: '', redirectTo: 'app', pathMatch: 'full' },
   {
-    path: 'home',
-    component: DashboardComponent,
+    path: 'app',
+    component: ShellComponent,
+    canActivate: [AuthGuardService],
+    children: [
+      {
+        path: '',
+        children: [
+          { path: '', component: DashboardComponent },
+          { path: 'documents', component: DocumentsComponent },
+          { path: 'documents/:typeId', component: DocumentViewComponent },
+          { path: 'settings', component: SettingsComponent },
+          { path: 'store', component: StoreComponent },
+        ]
+      }]
   },
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
-  },
-  { path: 'documents', component: DocumentsComponent },
-  { path: 'documents/:typeId', component: DocumentViewComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'store', component: StoreComponent },
   { path: '**', component: PageNotFoundComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'forbidden', component: UnauthorizedComponent }
@@ -52,15 +59,17 @@ const appRoutes: Routes = [
     DocumentViewComponent,
     PageNotFoundComponent,
     StoreComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    AuthCallbackComponent
   ],
   imports: [
     HttpModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forChild(appRoutes),
     BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
 
