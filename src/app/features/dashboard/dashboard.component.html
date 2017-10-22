@@ -1,144 +1,145 @@
-<md-toolbar class="view-header mat-elevation-z6">
-  <img md-card-avatar class="company-avatar" src="assets/images/indice-round.jpg" />
+<mat-toolbar class="view-header mat-elevation-z6">
+  <img mat-card-avatar class="company-avatar" src="assets/images/indice-round.jpg" />
   <span class="title">&nbsp;INDICE</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
   <!-- <span class="caption">Δευτέρα 11/10/2017</span> -->
-</md-toolbar>
+</mat-toolbar>
 
 <div class="view-content">
-  <md-grid-list cols="{{gridColumns}}" rowHeight="280" gutterSize="5">
+  <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="5" 
+  rowHeight="280" gutterSize="5">
     <md-grid-tile>
-      <md-card class="action-card mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Τιμολόγια
-          </md-card-title>
-          <md-icon class="size-64">folder</md-icon>
-          <span md-card-avatar class="folder-count-badge accent">
+          </mat-card-title>
+          <mat-icon class="size-64">folder</mat-icon>
+          <span mat-card-avatar class="folder-count-badge accent">
             <p class="folder-count">120</p>
           </span>
-          <md-card-subtitle>ΤΠΥ: Τιμολόγια παροχής υπηρεσιών.</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <button md-button>
-            <md-icon>search</md-icon>
+          <mat-card-subtitle>ΤΠΥ: Τιμολόγια παροχής υπηρεσιών.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon>search</mat-icon>
             <label>Αναζήτηση</label>
           </button>
-          <button md-button>
-            <md-icon>add_circle</md-icon>
+          <button mat-button>
+            <mat-icon>add_circle</mat-icon>
             <label>Προσθήκη</label>
           </button>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
     <md-grid-tile>
-      <md-card class="action-card  mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card  mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Αποδείξεις
-          </md-card-title>
-          <md-icon class="size-64">folder</md-icon>
-          <span md-card-avatar class="folder-count-badge accent">
+          </mat-card-title>
+          <mat-icon class="size-64">folder</mat-icon>
+          <span mat-card-avatar class="folder-count-badge accent">
             <p class="folder-count">80</p>
           </span>
-          <md-card-subtitle>ΑΠΥ: Αποδείξεις παροχής υπηρεσιών.</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <button md-button>
-            <md-icon>search</md-icon> Αναζήτηση
+          <mat-card-subtitle>ΑΠΥ: Αποδείξεις παροχής υπηρεσιών.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon>search</mat-icon> Αναζήτηση
           </button>
-          <button md-button>
-            <md-icon>add_circle</md-icon> Προσθήκη
+          <button mat-button>
+            <mat-icon>add_circle</mat-icon> Προσθήκη
           </button>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
     <md-grid-tile>
-      <md-card class="action-card  mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card  mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Συνεργάτες
-          </md-card-title>
-          <md-icon class="size-64">contacts</md-icon>
-          <span md-card-avatar class="folder-count-badge accent">
+          </mat-card-title>
+          <mat-icon class="size-64">contacts</mat-icon>
+          <span mat-card-avatar class="folder-count-badge accent">
             <p class="folder-count">60</p>
           </span>
-          <md-card-subtitle>Ευρετήριο συνεργατών : πελάτες, προμηθευτές και επαφές.</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <button md-button>
-            <md-icon>search</md-icon> Αναζήτηση
+          <mat-card-subtitle>Ευρετήριο συνεργατών : πελάτες, προμηθευτές και επαφές.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon>search</mat-icon> Αναζήτηση
           </button>
-          <button md-button>
-            <md-icon>add_circle</md-icon> Προσθήκη
+          <button mat-button>
+            <mat-icon>add_circle</mat-icon> Προσθήκη
           </button>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
     <md-grid-tile>
-      <md-card class="action-card  mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card  mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Power BI
-          </md-card-title>
-          <md-icon class="size-64 powerbi">insert_chart</md-icon>
-          <md-card-subtitle>Go from data to insights in minutes.</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <button md-button>
-            <md-icon>insert_chart</md-icon> Ξεκινήστε εδώ!
+          </mat-card-title>
+          <mat-icon class="size-64 powerbi">insert_chart</mat-icon>
+          <mat-card-subtitle>Go from data to insights in minutes.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon>insert_chart</mat-icon> Ξεκινήστε εδώ!
           </button>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
     <md-grid-tile>
-      <md-card class="action-card  mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card  mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Ιστορικό
-          </md-card-title>
-          <md-icon class="size-64">update</md-icon>
-          <md-card-subtitle>Αναζητήστε στο ιστορικό ενεργειών.</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <a md-button routerLink="/app/history" routerLinkActive="active-route">
-            <md-icon>search</md-icon> Αναζήτηση
+          </mat-card-title>
+          <mat-icon class="size-64">update</mat-icon>
+          <mat-card-subtitle>Αναζητήστε στο ιστορικό ενεργειών.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button routerLink="/app/history" routerLinkActive="active-route">
+            <mat-icon>search</mat-icon> Αναζήτηση
           </a>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
     <md-grid-tile>
-      <md-card class="action-card  mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card  mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Ρυθμίσεις
-          </md-card-title>
-          <md-icon class="size-64">settings</md-icon>
-          <md-card-subtitle>Ρυθμίσεις του λογαριασμού σας</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <a md-button routerLink="/app/settings" routerLinkActive="active-route">
-            <md-icon>settings</md-icon> Ξεκινήστε εδώ!
+          </mat-card-title>
+          <mat-icon class="size-64">settings</mat-icon>
+          <mat-card-subtitle>Ρυθμίσεις του λογαριασμού σας</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button routerLink="/app/settings" routerLinkActive="active-route">
+            <mat-icon>settings</mat-icon> Ξεκινήστε εδώ!
           </a>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
     <md-grid-tile>
-      <md-card class="action-card  mat-elevation-z6">
-        <md-card-content>
-          <md-card-title>
+      <mat-card class="action-card  mat-elevation-z6">
+        <mat-card-content>
+          <mat-card-title>
             Εφαρμογές
-          </md-card-title>
-          <md-icon class="size-64">widgets</md-icon>
-          <md-card-subtitle>Προσθήκη λειτουργικότητας και διασυνδέσεων</md-card-subtitle>
-        </md-card-content>
-        <md-card-actions>
-          <a md-button routerLink="/app/store" routerLinkActive="active-route">
-            <md-icon>widgets</md-icon> Ξεκινήστε εδώ!
+          </mat-card-title>
+          <mat-icon class="size-64">widgets</mat-icon>
+          <mat-card-subtitle>Προσθήκη λειτουργικότητας και διασυνδέσεων</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button routerLink="/app/store" routerLinkActive="active-route">
+            <mat-icon>widgets</mat-icon> Ξεκινήστε εδώ!
           </a>
-        </md-card-actions>
-      </md-card>
+        </mat-card-actions>
+      </mat-card>
     </md-grid-tile>
   </md-grid-list>
 </div>
