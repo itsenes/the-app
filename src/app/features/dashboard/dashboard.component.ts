@@ -7,20 +7,18 @@ import { MediaChange, ObservableMedia } from '@angular/flex-layout';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  gridColumns = 5;
+  columns = 3;
 
   constructor(media: ObservableMedia) {
     media.asObservable()
       .subscribe((change: MediaChange) => {
         console.log(change.mqAlias);
         if (change.mqAlias === 'xs') {
-          this.gridColumns = 1;
+          this.columns = 1;
         } else if (change.mqAlias === 'sm') {
-          this.gridColumns = 2;
-        } else if (change.mqAlias === 'md') {
-          this.gridColumns = 3;
+          this.columns = 2;
         } else {
-          this.gridColumns = 5;
+          this.columns = 3;
         }
       });
   }
