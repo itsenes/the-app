@@ -14,7 +14,6 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { DocumentsComponent } from './features/documents/documents.component';
 import { DocumentViewComponent } from './features/documents/document-view/document-view.component';
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
-import { StoreComponent } from './features/store/store.component';
 
 import { UnauthorizedComponent } from './common/unauthorized/unauthorized.component';
 
@@ -24,6 +23,8 @@ import { AuthCallbackComponent } from './common/auth-callback/auth-callback.comp
 import { LoggedOutComponent } from './common/logged-out/logged-out.component';
 import { SplashComponent } from './common/splash/splash.component';
 
+import { GravatarModule } from 'ng2-gravatar-directive';
+import { AccountSettingsComponent } from './features/account-settings/account-settings.component';
 
 // http://continuousdeveloper.com/2016/07/06/protecting-routes-in-angular-2/
 // http://onehungrymind.com/named-router-outlets-in-angular-2/
@@ -42,7 +43,7 @@ const appRoutes: Routes = [
           { path: 'documents', component: DocumentsComponent },
           { path: 'documents/:typeId', component: DocumentViewComponent },
           { path: 'settings', component: SettingsComponent },
-          { path: 'store', component: StoreComponent },
+          { path: 'account', component: AccountSettingsComponent },
         ]
       }]
   },
@@ -61,17 +62,18 @@ const appRoutes: Routes = [
     DocumentsComponent,
     DocumentViewComponent,
     PageNotFoundComponent,
-    StoreComponent,
     UnauthorizedComponent,
     AuthCallbackComponent,
     LoggedOutComponent,
-    SplashComponent
+    SplashComponent,
+    AccountSettingsComponent
   ],
   imports: [
     HttpModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     RouterModule.forChild(appRoutes),
-    BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule
+    BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
+    GravatarModule
   ],
   providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]

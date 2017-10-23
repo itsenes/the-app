@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-shell',
@@ -8,17 +9,17 @@ import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 })
 
 export class ShellComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {
-  }
   isDarkTheme = false;
   navSize_Collapsed = '65px;';
   navSize_Extended = '240px;';
   navSize = this.navSize_Collapsed;
-
   showAside = false;
   showNav = false;
-
   title = 'THE-APP';
+  user = null;
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+    this.user = this.authService.currentUser().profile;
+  }
 
   toggleNav(): void {
     this.showNav = !this.showNav;

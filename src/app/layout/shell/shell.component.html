@@ -13,12 +13,13 @@
     <!-- https://material.io/icons/ -->
     <div id="main" #main fxLayout.xs="column" fxFlex>
       <nav #nav fxFlex="{{navSize}}" fxFlexOrder fxFlexOrder.xs="1">
-        <mat-nav-list class="burger mat-elevation-z6">
+        <mat-nav-list class="burger">
           <a mat-list-item (click)="toggleNav()">
             <mat-icon *ngIf="!showNav">menu</mat-icon>
+            <img class="icon" *ngIf="showNav" src="assets/images/incontrl_icon_transparent_white.png" />
             <img class="logo" *ngIf="showNav" src="assets/images/incontrl_logo_transparent_white.png" />
           </a>
-        </mat-nav-list>
+        </mat-nav-list>     
         <mat-nav-list>
           <a mat-list-item routerLink="/app/" routerLinkActive="active-route">
             <mat-icon>home</mat-icon>
@@ -32,9 +33,10 @@
             <mat-icon>settings</mat-icon>
             <span *ngIf="showNav" class="nav-label">Ρυθμίσεις</span>
           </a>
-          <a mat-list-item routerLink="/app/store" routerLinkActive="active-route">
-            <mat-icon>widgets</mat-icon>
-            <span *ngIf="showNav" class="nav-label">Εφαρμογές</span>
+          <mat-divider class="nav-divider"></mat-divider>
+          <a mat-list-item routerLink="/app/account" routerLinkActive="active-route">
+            <img gravatar [email]="user.email" [size]="48" mat-card-avatar class="user-avatar" src="assets/images/indice-round.jpg" />
+            <span *ngIf="showNav" class="nav-label">{{user.given_name}} {{user.family_name}}</span>
           </a>
         </mat-nav-list>
       </nav>

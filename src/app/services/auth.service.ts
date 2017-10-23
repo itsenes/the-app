@@ -59,7 +59,7 @@ export function getClientSettings(): UserManagerSettings {
     redirect_uri: 'http://localhost:4200/auth-callback',
     post_logout_redirect_uri: 'http://localhost:4200/logged-out',
     response_type: 'id_token token',
-    scope: 'openid profile core',
+    scope: 'openid profile email core',
     filterProtocolClaims: true,
     loadUserInfo: true
   };
