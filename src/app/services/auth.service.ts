@@ -42,30 +42,8 @@ export class AuthService {
 }
 
 export function getClientSettings(): UserManagerSettings {
-  // {
-  //   authority: 'https://www.incontrl.io/',
-  //   client_id: 'implicit-spa-client',
-  //   redirect_uri: 'http://localhost:4200/auth-callback',
-  //   post_logout_redirect_uri: 'http://localhost:4200/unauthorized',
-  //   response_type: 'id_token token',
-  //   scope: 'openid profile core',
-  //   filterProtocolClaims: true,
-  //   loadUserInfo: true
-  // }
-
-  return {
-    authority: 'http://localhost:20200/',
-    client_id: 'spa',
-    redirect_uri: 'http://localhost:4200/auth-callback',
-    post_logout_redirect_uri: 'http://localhost:4200/logged-out',
-    response_type: 'id_token token',
-    scope: 'openid profile core',
-    filterProtocolClaims: true,
-    loadUserInfo: true
-  };
-
   // return {
-  //   authority: 'https://www.incontrl.io/',
+  //   authority: 'http://localhost:20200/',
   //   client_id: 'spa',
   //   redirect_uri: 'http://localhost:4200/auth-callback',
   //   post_logout_redirect_uri: 'http://localhost:4200/logged-out',
@@ -74,4 +52,15 @@ export function getClientSettings(): UserManagerSettings {
   //   filterProtocolClaims: true,
   //   loadUserInfo: true
   // };
+
+  return {
+    authority: 'https://incontrl.io/',
+    client_id: 'spa',
+    redirect_uri: 'http://localhost:4200/auth-callback',
+    post_logout_redirect_uri: 'http://localhost:4200/logged-out',
+    response_type: 'id_token token',
+    scope: 'openid profile core',
+    filterProtocolClaims: true,
+    loadUserInfo: true
+  };
 }

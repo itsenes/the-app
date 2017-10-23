@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,8 +9,11 @@ import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 })
 export class DashboardComponent implements OnInit {
   columns = 3;
-
-  constructor(media: ObservableMedia) {
+  userJson = null;
+  user = null;
+  constructor(private media: ObservableMedia, public authService: AuthService) {
+    this.user = authService.currentUser().profile;
+    this.userJson = JSON.stringify(this.user);
     media.asObservable()
       .subscribe((change: MediaChange) => {
         console.log(change.mqAlias);

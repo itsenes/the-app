@@ -1,75 +1,83 @@
 .logo {
-    height: 20px;
-    //padding-left: 8px;
+  height: 20px; //padding-left: 8px;
 }
 
 .burger {
-    padding:0px;
+  padding-top: 2px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .icon {
-    height: 30px;
-    padding-left: 4px;
-    padding-right: 10px;
+  height: 30px;
+  padding-left: 4px;
+  padding-right: 10px;
 }
 
 .user-info {
-    font-size: 14px;
+  font-size: 14px;
 }
 
-.app-container, .app-layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    min-height: 800px;
-    background: whitesmoke;
+.app-container,
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 800px;
+  background: whitesmoke;
 }
 
 .app-container.dark {
-    background: black;
-    color:white;
-  }
-
-nav, aside {
-    padding-top: 6px;
-    padding-left:4px;
-    padding-right: 4px;
-    background: #FA646E;
+  background: black;
+  color: white;
 }
 
+nav,
+aside {
+  padding-top: 6px;
+  padding-left: 4px;
+  padding-right: 4px;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fa646e+0,f9c784+100 */
+  background: #fa646e;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #fa646e 0%, #f9c784 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #fa646e 0%, #f9c784 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #fa646e 0%, #f9c784 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa646e', endColorstr='#f9c784', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+}
 
 article {
-    padding: 0px;
+  padding: 0px;
 }
-    
+
 article.mat-toolbar {
-    padding: 0px;
+  padding: 0px;
 }
 
-#main > article {
-    background:white;
+#main>article {
+  background: white;
 }
 
-#main > aside {
-    background:whitesmoke;
+#main>aside {
+  background: whitesmoke;
 }
 
 .nav-label {
-    padding-left: 8px;
+  padding-left: 8px;
 }
 
 // #main > nav, #main > aside {
 //     /* border-color: #8888bb; */
 // }
-    
-    
 // header, footer {
 //     /* border-color: #eebb55; */
 //     // background: #ffeebb;
 // }
-
-
 .shell-toolbar {
-     background-color: #FA646E;
-    
+  background-color: #FA646E;
 }

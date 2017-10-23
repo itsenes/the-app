@@ -20,17 +20,18 @@ a.mat-list-item.route {
 }
 
 a.mat-list-item.active-route {
-  color:white;
+  color: white;
   opacity: 1;
 }
 
-.mat-tab-label, .mat-tab-link {
-  color:black;
+.mat-tab-label,
+.mat-tab-link {
+  color: black;
 }
 
 .view-header {
-   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c784+0,fa646e+100 */
-   background: #2F3137;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c784+0,fa646e+100 */
+  background: #2F3137;
 }
 
 .view-content {
@@ -66,19 +67,23 @@ md-icon.size-64 {
   flex: 1 1 auto;
 }
 
-.mat-tab-group.mat-primary .mat-tab-label:focus, .mat-tab-group.mat-primary .mat-tab-link:focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
+.mat-tab-group.mat-primary .mat-tab-label:focus,
+.mat-tab-group.mat-primary .mat-tab-link:focus,
+.mat-tab-nav-bar.mat-primary .mat-tab-label:focus,
+.mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
   background: #FA646E;
-  color:white;
+  color: white;
 }
 
-.mat-tab-header, .mat-tab-nav-bar {
+.mat-tab-header,
+.mat-tab-nav-bar {
   border-bottom: 1px solid #FA646E;
 }
 
-.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: #FA646E;
 }
-
 
 .splash-container {
   display: flex;
@@ -87,7 +92,17 @@ md-icon.size-64 {
   align-items: center;
   align-content: center;
   min-height: 800px;
-  background: #FA646E;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fa646e+0,f9c784+100 */
+  background: #fa646e;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #fa646e 0%, #f9c784 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #fa646e 0%, #f9c784 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #fa646e 0%, #f9c784 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa646e', endColorstr='#f9c784', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
   color: white;
   text-align: center;
 }
@@ -96,7 +111,7 @@ md-icon.size-64 {
   padding-top: 40px;
   padding-left: 40px;
   padding-right: 40px;
-  padding-bottom:  10px;
+  padding-bottom: 10px;
   height: 40px;
   color: white;
 }
