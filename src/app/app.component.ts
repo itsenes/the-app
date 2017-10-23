@@ -12,7 +12,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'THE-APP';
   busy = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }

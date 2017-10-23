@@ -22,6 +22,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthCallbackComponent } from './common/auth-callback/auth-callback.component';
 import { LoggedOutComponent } from './common/logged-out/logged-out.component';
+import { SplashComponent } from './common/splash/splash.component';
 
 // http://continuousdeveloper.com/2016/07/06/protecting-routes-in-angular-2/
 // http://onehungrymind.com/named-router-outlets-in-angular-2/
@@ -62,7 +63,8 @@ const appRoutes: Routes = [
     StoreComponent,
     UnauthorizedComponent,
     AuthCallbackComponent,
-    LoggedOutComponent
+    LoggedOutComponent,
+    SplashComponent
   ],
   imports: [
     HttpModule,

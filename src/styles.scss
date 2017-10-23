@@ -65,3 +65,42 @@ md-icon.size-64 {
 .app-toolbar-filler {
   flex: 1 1 auto;
 }
+
+.mat-tab-label {
+  
+}
+
+.mat-tab-group.mat-primary .mat-tab-label:focus, .mat-tab-group.mat-primary .mat-tab-link:focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
+  background: #FA646E;
+  color:white;
+}
+
+.mat-tab-header, .mat-tab-nav-bar {
+  border-bottom: 1px solid #FA646E;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #FA646E;
+}
+
+
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  align-content: center;
+  min-height: 800px;
+  background: #FA646E;
+  color: white;
+  text-align: center;
+}
+
+.splash-logo {
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom:  10px;
+  height: 40px;
+  color: white;
+}
