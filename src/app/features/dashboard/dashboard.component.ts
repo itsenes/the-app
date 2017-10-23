@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  columns = 3;
+  columns = 4;
   userJson = null;
   user = null;
   constructor(private media: ObservableMedia, public authService: AuthService) {
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
         } else if (change.mqAlias === 'sm') {
           this.columns = 2;
         } else {
-          this.columns = 3;
+          this.columns = 4;
         }
       });
   }
