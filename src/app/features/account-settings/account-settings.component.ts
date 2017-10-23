@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-settings.component.css']
 })
 export class AccountSettingsComponent implements OnInit {
-
-  constructor() { }
+  user = null;
+  constructor(private authService: AuthService) {
+    this.user = authService.currentUser().profile;
+  }
 
   ngOnInit() {
   }

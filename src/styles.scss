@@ -4,6 +4,8 @@
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";  */
 /* @import '~@angular/material/_theming.scss'; */
+
+
 /* https://blog.thoughtram.io/angular/2017/05/23/custom-themes-with-angular-material.html */
 
 body {
@@ -26,12 +28,16 @@ a.mat-list-item.active-route {
 
 .mat-tab-label,
 .mat-tab-link {
-  color: black;
+  color: #2F3137;
 }
 
 .view-header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9c784+0,fa646e+100 */
-  background: #2F3137;
+  // background: #2F3137;
+  background: none;
+  color: #2F3137;
+  font-size: 20px;
+  opacity: 0.8;
 }
 
 .view-content {
