@@ -13,7 +13,7 @@
     <!-- https://material.io/icons/ -->
     <div id="main" #main fxLayout.xs="column" fxFlex>
       <nav #nav fxFlex="{{navSize}}" fxFlexOrder fxFlexOrder.xs="1">
-        <mat-nav-list class="mat-elevation-z6">
+        <mat-nav-list class="burger">
           <a mat-list-item (click)="toggleNav()">
             <mat-icon *ngIf="!showNav">menu</mat-icon>
             <img class="logo" *ngIf="showNav" src="assets/images/incontrl_logo_transparent_white.png" />
