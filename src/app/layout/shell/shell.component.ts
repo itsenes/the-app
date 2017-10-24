@@ -3,8 +3,8 @@ import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular
 import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
 
-const NAV_WIDTH_COLLAPSED = '65px;';
-const NAV_WIDTH_EXTENDED = '240px;';
+const nav_width_collapsed = '65px;';
+const nav_width_extended = '240px;';
 
 @Component({
   selector: 'app-shell',
@@ -14,7 +14,7 @@ const NAV_WIDTH_EXTENDED = '240px;';
 
 export class ShellComponent implements OnInit, OnDestroy {
   isDarkTheme = false;
-  navSize = NAV_WIDTH_COLLAPSED;
+  navSize = nav_width_collapsed;
   showAside = false;
   showNav = false;
   user = null;
@@ -27,9 +27,9 @@ export class ShellComponent implements OnInit, OnDestroy {
   toggleNav(): void {
     this.showNav = !this.showNav;
     if (this.showNav) {
-      this.navSize = NAV_WIDTH_EXTENDED;
+      this.navSize = nav_width_extended;
     } else {
-      this.navSize = NAV_WIDTH_COLLAPSED;
+      this.navSize = nav_width_collapsed;
     }
   }
 
