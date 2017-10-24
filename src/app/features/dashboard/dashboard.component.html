@@ -8,53 +8,31 @@
 
 <div class="view-content">
   <mat-grid-list [cols]="columns" rowHeight="280" gutterSize="10">
-    <mat-grid-tile>
+    <mat-grid-tile *ngFor="let doc of document_tiles">
       <mat-card class="action-card mat-elevation-z6">
         <mat-card-content>
           <mat-card-title>
-            Τιμολόγια
+            {{doc.name}}
           </mat-card-title>
           <mat-icon class="size-64">folder</mat-icon>
           <span mat-card-avatar class="folder-count-badge accent">
-            <p class="folder-count">120</p>
+            <p class="folder-count">{{doc.count}}</p>
           </span>
-          <mat-card-subtitle>ΤΠΥ: Τιμολόγια παροχής υπηρεσιών.</mat-card-subtitle>
+          <mat-card-subtitle>{{doc.notes}}.</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>
+          <a mat-button [routerLink]="doc.search_path">
             <mat-icon>search</mat-icon>
             <label>Αναζήτηση</label>
-          </button>
-          <button mat-button>
+          </a>
+          <a mat-button [routerLink]="doc.addnew_path">
             <mat-icon>add_circle</mat-icon>
             <label>Προσθήκη</label>
-          </button>
+          </a>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="action-card  mat-elevation-z6">
-        <mat-card-content>
-          <mat-card-title>
-            Αποδείξεις
-          </mat-card-title>
-          <mat-icon class="size-64">folder</mat-icon>
-          <span mat-card-avatar class="folder-count-badge accent">
-            <p class="folder-count">80</p>
-          </span>
-          <mat-card-subtitle>ΑΠΥ: Αποδείξεις παροχής υπηρεσιών.</mat-card-subtitle>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>
-            <mat-icon>search</mat-icon> Αναζήτηση
-          </button>
-          <button mat-button>
-            <mat-icon>add_circle</mat-icon> Προσθήκη
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
+    <!-- <mat-grid-tile>
       <mat-card class="action-card  mat-elevation-z6">
         <mat-card-content>
           <mat-card-title>
@@ -107,7 +85,7 @@
           </a>
         </mat-card-actions>
       </mat-card>
-    </mat-grid-tile>
+    </mat-grid-tile> -->
     <mat-grid-tile>
       <mat-card class="action-card  mat-elevation-z6">
         <mat-card-content>
@@ -118,13 +96,13 @@
           <mat-card-subtitle>Ρυθμίσεις του λογαριασμού σας</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-button routerLink="/app/settings" routerLinkActive="active-route">
+          <a mat-button [routerLink]="settings_path" routerLinkActive="active-route">
             <mat-icon>settings</mat-icon> Ξεκινήστε εδώ!
           </a>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <!-- <mat-grid-tile>
       <mat-card class="action-card  mat-elevation-z6">
         <mat-card-content>
           <mat-card-title>
@@ -139,6 +117,6 @@
           </a>
         </mat-card-actions>
       </mat-card>
-    </mat-grid-tile>
+    </mat-grid-tile> -->
   </mat-grid-list>
 </div>

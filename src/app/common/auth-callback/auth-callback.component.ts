@@ -20,13 +20,35 @@ export class AuthCallbackComponent implements OnInit {
         this.apiClient.getSubscriptions()
           .subscribe((subscriptions) => {
             if (subscriptions.count > 0) {
-              this.appState.subscriptions = subscriptions.items;
-              this.appState.selected_subscription = subscriptions.items[0];
+              this.appState.subscriptions = subscriptions.items.map((sub) => {
+                return {
+                  id: sub.id,
+                  alias: sub.alias,
+                  code: sub.code,
+                  status: sub.status,
+                  contact: sub.contact,
+                  company: sub.company,
+                  notes: sub.notes,
+                  home_path: '/app/' + sub.alias,
+                  settings_path: '/app/' + sub.alias + '/settings',
+                };
+              });
+              this.appState.selected_subscription = this.appState.subscriptions[0];
               this.status = 'loading your document types information, please wait...';
               this.apiClient.getInvoiceTypes(this.appState.selected_subscription.id)
                 .subscribe((invoiceTypes) => {
                   // add logic if user does not have any document types then she should get one!
-                  this.appState.document_types = invoiceTypes.items;
+                  // i guess this is my first viewmodel ?
+                  this.appState.document_types = invoiceTypes.items.
+                    map((doc) => {
+                      return {
+                        id: doc.id, name: doc.name,
+                        notes: doc.notes,
+                        count: '?',
+                        search_path: '/app/' + this.appState.selected_subscription.alias + '/documents/' + doc.id,
+                        addnew_path: '/app/' + this.appState.selected_subscription.alias + '/documents/new',
+                      };
+                    });
                   this.router.navigate(['/app/' + this.appState.selected_subscription.alias]);
                 });
             } else {

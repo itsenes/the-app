@@ -36,15 +36,14 @@ export class ShellComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // build nav links for selected subscription
     this.navLinks = [
-      { path: '/app/' + this.appState.selected_subscription.alias + '/', icon: 'home', label: 'Η εταιρεία μου' }
+      { path: this.appState.selected_subscription.home_path, icon: 'home', label: 'Η εταιρεία μου' }
     ];
     if (this.appState.document_types != null) {
       this.appState.document_types.forEach((doc) => {
-        this.navLinks.push({ path: '/app/' + this.appState.selected_subscription.alias +
-        '/documents/' + doc.id, icon: 'folder', label: doc.name });
+        this.navLinks.push({ path: doc.search_path, icon: 'folder', label: doc.name });
       });
     }
-    this.navLinks.push({ path: '/app/' + this.appState.selected_subscription.alias + '/settings', icon: 'settings', label: 'Ρυθμίσεις' });
+    this.navLinks.push({ path:  this.appState.selected_subscription.settings_path, icon: 'settings', label: 'Ρυθμίσεις' });
 
     // monitor navigation events to display progress!
     this.router_events_sub = this.router.events
