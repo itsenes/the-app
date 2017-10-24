@@ -7,7 +7,6 @@ export class AuthService {
 
   private manager: UserManager = new UserManager(getClientSettings());
   private user: User = null;
-  public redirectUrl: String = '';
   constructor() {
     this.manager.getUser().then(user => {
       this.user = user;
@@ -27,11 +26,15 @@ export class AuthService {
   }
 
   getAuthorizationHeaderValue(): string {
-    return `${this.user.token_type} ${this.user.access_token}`;
+    if (null !== this.user) {
+      return `${this.user.token_type} ${this.user.access_token}`;
+    } else {
+      return undefined;
+    }
   }
 
   startAuthentication(): Promise<void> {
-    return this.manager.signinRedirect({ target_url: this.redirectUrl }).catch(function (err) { console.log(err); });
+    return this.manager.signinRedirect({ data: 'data' }).catch(function (err) { console.log(err); });
   }
 
   completeAuthentication(): Promise<void> {

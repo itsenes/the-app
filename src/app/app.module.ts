@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { HttpModule, JsonpModule, Http } from '@angular/http';
+import { NgModule, Injectable, Inject } from '@angular/core';
+import { HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
+import { RequestOptionsArgs } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,14 +26,20 @@ import { SplashComponent } from './common/splash/splash.component';
 
 import { GravatarModule } from 'ng2-gravatar-directive';
 import { AccountSettingsComponent } from './features/account-settings/account-settings.component';
+import { ApiClient } from './services/incontrl-apiclient';
+import { AppStateService} from './services/app-state.service';
 
-// http://continuousdeveloper.com/2016/07/06/protecting-routes-in-angular-2/
-// http://onehungrymind.com/named-router-outlets-in-angular-2/
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
   { path: '', redirectTo: 'app', pathMatch: 'full' },
   {
-    path: 'app',
+    path: 'app', component: ShellComponent, canActivate: [AuthGuardService],
+    children: [
+      { path: 'account', component: AccountSettingsComponent },
+    ]
+  },
+  {
+    path: 'app/:subscription-alias',
     component: ShellComponent,
     canActivate: [AuthGuardService],
     children: [
@@ -40,10 +47,9 @@ const appRoutes: Routes = [
         path: '',
         children: [
           { path: '', component: DashboardComponent },
-          { path: 'documents', component: DocumentsComponent },
-          { path: 'documents/:typeId', component: DocumentViewComponent },
+          { path: 'documents/:typeId', component: DocumentsComponent },
+          { path: 'documents/:typeId/:documentId', component: DocumentViewComponent },
           { path: 'settings', component: SettingsComponent },
-          { path: 'account', component: AccountSettingsComponent },
         ]
       }]
   },
@@ -52,6 +58,19 @@ const appRoutes: Routes = [
   { path: 'forbidden', component: UnauthorizedComponent }
 ];
 
+export class SecureApiRequestOptions extends BaseRequestOptions {
+  constructor( @Inject(AuthService) private authService: AuthService) {
+    super();
+  }
+  merge(options?: RequestOptionsArgs) {
+    if (options.headers) {
+      options.headers.append('Authorization', this.authService.getAuthorizationHeaderValue());
+    } else {
+      options.headers = new Headers({ 'Authorization': this.authService.getAuthorizationHeaderValue() });
+    }
+    return super.merge(options);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -70,12 +89,14 @@ const appRoutes: Routes = [
   ],
   imports: [
     HttpModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    RouterModule.forRoot(appRoutes),
     RouterModule.forChild(appRoutes),
     BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
     GravatarModule
   ],
-  providers: [AuthService, AuthGuardService],
+  providers: [AuthService, AuthGuardService, ApiClient,
+    { provide: RequestOptions, useClass: SecureApiRequestOptions },
+    AppStateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

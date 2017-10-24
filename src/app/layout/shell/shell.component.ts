@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { AppStateService } from '../../services/app-state.service';
+
+const NAV_WIDTH_COLLAPSED = '65px;';
+const NAV_WIDTH_EXTENDED = '240px;';
 
 @Component({
   selector: 'app-shell',
@@ -8,37 +12,55 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./shell.component.scss']
 })
 
-export class ShellComponent implements OnInit {
+export class ShellComponent implements OnInit, OnDestroy {
   isDarkTheme = false;
-  navSize_Collapsed = '65px;';
-  navSize_Extended = '240px;';
-  navSize = this.navSize_Collapsed;
+  navSize = NAV_WIDTH_COLLAPSED;
   showAside = false;
   showNav = false;
-  title = 'THE-APP';
   user = null;
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+  navLinks = [];
+  private router_events_sub: any;
+  constructor(private appState: AppStateService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
     this.user = this.authService.currentUser().profile;
   }
 
   toggleNav(): void {
     this.showNav = !this.showNav;
     if (this.showNav) {
-      this.navSize = this.navSize_Extended;
+      this.navSize = NAV_WIDTH_EXTENDED;
     } else {
-      this.navSize = this.navSize_Collapsed;
+      this.navSize = NAV_WIDTH_COLLAPSED;
     }
   }
 
   ngOnInit() {
-    this.router.events
+    // build nav links for selected subscription
+    this.navLinks = [
+      { path: '/app/' + this.appState.selected_subscription.alias + '/', icon: 'home', label: 'Η εταιρεία μου' }
+    ];
+    if (this.appState.document_types != null) {
+      this.appState.document_types.forEach((doc) => {
+        this.navLinks.push({ path: '/app/' + this.appState.selected_subscription.alias +
+        '/documents/' + doc.id, icon: 'folder', label: doc.name });
+      });
+    }
+    this.navLinks.push({ path: '/app/' + this.appState.selected_subscription.alias + '/settings', icon: 'settings', label: 'Ρυθμίσεις' });
+
+    // monitor navigation events to display progress!
+    this.router_events_sub = this.router.events
       .subscribe((event) => {
         // example: NavigationStart, RoutesRecognized, NavigationEnd
         console.log(event);
         if (event instanceof NavigationStart) {
           console.log('Shell NavigationStart:', event);
+        } else if (event instanceof NavigationEnd) {
+          console.log('Shell NavigationStart:', event);
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.router_events_sub.unsubscribe();
   }
 
 }

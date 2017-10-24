@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
     this.userJson = JSON.stringify(this.user);
     media.asObservable()
       .subscribe((change: MediaChange) => {
-        console.log(change.mqAlias);
+        console.log('media change (mqAlias): ' + change.mqAlias);
         if (change.mqAlias === 'xs') {
           this.columns = 1;
         } else if (change.mqAlias === 'sm') {
