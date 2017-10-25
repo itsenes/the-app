@@ -10,11 +10,15 @@
 
 .action-card {
    height: 200px;
-   width: 90%;
+   width: 98%;
    background-color: white;
    color:#1C1D21;
    line-height: 14px;
    opacity: 0.9;
+}
+
+.action-card-title {
+    font-size: 20px;
 }
   
 .action-card .mat-card-subtitle {

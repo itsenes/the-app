@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
+
+
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";  */
+
+
 /* @import '~@angular/material/_theming.scss'; */
 
 
@@ -13,8 +21,20 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   background: whitesmoke;
+}
+
+body,
+.mat-card,
+.mat-tab-group,
+.mat-toolbar,
+.mat-list-item,
+.mat-button,
+.mat-fab,
+.mat-icon-button,
+.mat-mini-fab,
+.mat-raised-button {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a.mat-list-item.route {
@@ -87,7 +107,7 @@ md-icon.size-64 {
 
 .mat-tab-header,
 .mat-tab-nav-bar {
-  border-bottom: 1px solid #FA646E;
+  // border-bottom: 1px solid #FA646E;
 }
 
 .mat-tab-group.mat-primary .mat-ink-bar,
@@ -124,4 +144,18 @@ md-icon.size-64 {
   padding-bottom: 10px;
   height: 40px;
   color: white;
+}
+
+.user-avatar {
+  margin-left: -8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.mat-card-avatar.user-avatar-large {
+  margin-left: -8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  height: 64px;
+  width: 64px;
 }
