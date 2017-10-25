@@ -21,7 +21,7 @@
           <mat-card-subtitle>{{user.idp}} account type</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-button color="primary">
+          <a mat-button color="primary" href="https://incontrl.io/console/dashboard" target="_blank">
             <mat-icon>settings_system_daydream</mat-icon>
             <label>Διαχείριση</label>
           </a>
@@ -32,7 +32,7 @@
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile colspan="3">
+    <mat-grid-tile colspan="3" rowspan="2">
       <mat-card class="action-card">
         <mat-card-header>
           <mat-icon class="panel-icon" mat-card-avatar>assignment_ind</mat-icon>
@@ -41,7 +41,7 @@
         <mat-card-content>
           <div class="list-container">
             <mat-list>
-              <mat-list-item class="subscriptions-list mat-elevation-z1" *ngFor="let subscription of subscriptions">
+              <mat-list-item class="subscription-list-item" *ngFor="let subscription of subscriptions">
                 <img matListAvatar src="{{subscription.company.logoPath}}" alt="{{subscription.id}}">
                 <h2 matLine>{{subscription.company.name}}</h2>
                 <p matLine>
@@ -54,11 +54,11 @@
                   <span>{{subscription.company.email}}, {{subscription.company.website}}</span>
                 </p>
                 <br />
-                <h3 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h3>
+                <h2 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h2>
                 <p matLine>
                   <span>{{subscription.contact.email}}, {{subscription.contact.phone1}}, {{subscription.contact.skype}}</span>
                 </p>
-                <a mat-fab class="fab-icon-link" color="primary">
+                <a mat-fab class="fab-icon-link" color="primary" [routerLink]="subscription.settings_path">
                   <mat-icon>settings</mat-icon>
                 </a>
                 <a mat-fab class="fab-icon-link" color="warn">
@@ -70,7 +70,7 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile rowspan="2"></mat-grid-tile>
     <mat-grid-tile colspan="3">
       <mat-card class="action-card">
         <mat-card-header>

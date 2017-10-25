@@ -16,7 +16,10 @@
   margin-right: 4px;
 }
 .list-container {
-  height: 160px;
+  display: flex;
+  height: 90%;
+  width:90%;
+  min-width: 250px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -31,10 +34,11 @@
   opacity: 0.8;
 }
 
-.subscriptions-list {
+.subscription-list-item {
   color: #1C1D21;
   font-size: 16px;
   opacity: 0.8;
+  min-width: 250px;
 }
 
 .inline-subtitle {
