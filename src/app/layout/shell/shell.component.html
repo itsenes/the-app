@@ -1,18 +1,23 @@
 <!-- based on the mozilla holy-grail layout  -->
 <div class="app-container mat-app-background" [class.dark]="isDarkTheme">
   <div class="app-layout box" fxLayout="column">
-    <!-- <header>
+    <header fxHide fxShow.lt-sm>
       <mat-toolbar class="shell-toolbar">
         <img class="icon" src="assets/images/incontrl_icon_transparent_white.png" />
         <img class="logo" src="assets/images/incontrl_logo_transparent_white.png" />
         <span class="app-toolbar-filler"></span>
-        <button mat-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
-        <span class="user-info">user@domain.com</span>
+        <!-- <button mat-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button> -->
+        <!-- <span class="user-info">user@domain.com</span> -->
+        <a mat-list-item (click)="toggleNav()">
+            <mat-icon *ngIf="!showNav">menu</mat-icon>
+            <img class="icon" *ngIf="showNav" src="assets/images/incontrl_icon_transparent_white.png" />
+            <img class="logo" *ngIf="showNav" src="assets/images/incontrl_logo_transparent_white.png" />
+          </a>
       </mat-toolbar>
-    </header> -->
+    </header>
     <!-- https://material.io/icons/ -->
     <div id="main" #main fxLayout.xs="column" fxFlex>
-      <nav #nav fxFlex="{{navSize}}" fxFlexOrder fxFlexOrder.xs="1">
+      <nav fxShow fxHide.lt-sm #nav fxFlex="{{navSize}}" fxFlexOrder fxFlexOrder.xs="1">
         <mat-nav-list class="burger">
           <a mat-list-item (click)="toggleNav()">
             <mat-icon *ngIf="!showNav">menu</mat-icon>
