@@ -42,6 +42,16 @@ export class AuthService {
       this.user = user;
     }).catch(function (err) { console.log(err); });
   }
+
+  startSignout(): Promise<void> {
+    return this.manager.signoutRedirect().catch(function (err) { console.log(err); });
+  }
+
+  completeSignout(): Promise<void> {
+    return this.manager.signoutRedirectCallback().then(user => {
+      this.user = null;
+    }).catch(function (err) { console.log(err); });
+  }
 }
 
 export function getClientSettings(): UserManagerSettings {

@@ -1,19 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-
-
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
-
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
-
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
-
-
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";  */
-
-
 /* @import '~@angular/material/_theming.scss'; */
-
-
 /* https://blog.thoughtram.io/angular/2017/05/23/custom-themes-with-angular-material.html */
 
 body {
@@ -63,7 +53,7 @@ a.mat-list-item.active-route {
 }
 
 .view-content {
-  padding-top: 0px;
+  padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;

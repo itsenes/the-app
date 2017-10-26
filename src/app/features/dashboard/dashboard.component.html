@@ -1,5 +1,5 @@
 <mat-toolbar class="view-header">
-  <img mat-card-avatar class="company-avatar mat-elevation-z3" src="{{company.logoPath}}" />
+  <img mat-card-avatar class="company-avatar mat-elevation-z3" src="{{subscription.company_logo}}" />
   <span class="title">&nbsp;{{company.name}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
@@ -16,7 +16,7 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <mat-icon color="warn" class="size-64">folder</mat-icon>
+          <mat-icon color="primary" class="size-64">folder</mat-icon>
           <!-- <span mat-card-avatar class="folder-count-badge accent">
             <p class="folder-count">{{doc.count}}</p>
           </span> -->
@@ -27,7 +27,7 @@
             <mat-icon>search</mat-icon>
             <label fxShow fxHide.sm fxHide.md>Αναζήτηση</label>
           </a>
-          <a mat-button color="warn" [routerLink]="doc.addnew_path">
+          <a mat-button color="primary" [routerLink]="doc.addnew_path">
             <mat-icon>add_circle</mat-icon>
             <label fxShow fxHide.sm fxHide.md>Προσθήκη</label>
           </a>

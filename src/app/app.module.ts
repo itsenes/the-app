@@ -31,6 +31,7 @@ import { AppStateService} from './services/app-state.service';
 
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
+  { path: 'logged-out', component: LoggedOutComponent },
   { path: '', redirectTo: 'app', pathMatch: 'full' },
   {
     path: 'app', component: ShellComponent, canActivate: [AuthGuardService],
@@ -53,9 +54,9 @@ const appRoutes: Routes = [
         ]
       }]
   },
-  { path: '**', component: PageNotFoundComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: 'forbidden', component: UnauthorizedComponent }
+  { path: 'forbidden', component: UnauthorizedComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 export class SecureApiRequestOptions extends BaseRequestOptions {

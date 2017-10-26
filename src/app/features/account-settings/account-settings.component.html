@@ -25,14 +25,14 @@
             <mat-icon>settings_system_daydream</mat-icon>
             <label>Διαχείριση</label>
           </a>
-          <a mat-button color="warn">
+          <a mat-button color="warn" (click)="signout()">
             <mat-icon>exit_to_app</mat-icon>
             <label>Αποσύνδεση</label>
           </a>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile colspan="3" rowspan="2">
+    <mat-grid-tile colspan="3" [rowspan]="multipleSubsRowspan">
       <mat-card class="action-card">
         <mat-card-header>
           <mat-icon class="panel-icon" mat-card-avatar>assignment_ind</mat-icon>
@@ -42,7 +42,7 @@
           <div class="list-container">
             <mat-list>
               <mat-list-item class="subscription-list-item" *ngFor="let subscription of subscriptions">
-                <img matListAvatar src="{{subscription.company.logoPath}}" alt="{{subscription.id}}">
+                <img matListAvatar class="user-avatar-large" src="{{subscription.company_logo}}" alt="{{subscription.id}}">
                 <h2 matLine>{{subscription.company.name}}</h2>
                 <p matLine>
                   <span class="label-small">{{subscription.company.legalName}}</span>
@@ -58,10 +58,10 @@
                 <p matLine>
                   <span>{{subscription.contact.email}}, {{subscription.contact.phone1}}, {{subscription.contact.skype}}</span>
                 </p>
-                <a mat-fab class="fab-icon-link" color="primary" [routerLink]="subscription.settings_path">
+                <a mat-mini-fab class="fab-icon-link" color="primary" [routerLink]="subscription.settings_path">
                   <mat-icon>settings</mat-icon>
                 </a>
-                <a mat-fab class="fab-icon-link" color="warn">
+                <a mat-mini-fab *ngIf="subscription.id != currentSubId" class="fab-icon-link" color="warn">
                   <mat-icon>screen_share</mat-icon>
                 </a>
               </mat-list-item>
@@ -70,7 +70,7 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile rowspan="2"></mat-grid-tile>
+    <mat-grid-tile [rowspan]="multipleSubsRowspan"></mat-grid-tile>
     <mat-grid-tile colspan="3">
       <mat-card class="action-card">
         <mat-card-header>

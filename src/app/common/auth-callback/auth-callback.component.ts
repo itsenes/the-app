@@ -6,8 +6,7 @@ import { AppStateService } from '../../services/app-state.service';
 
 @Component({
   selector: 'app-auth-callback',
-  templateUrl: './auth-callback.component.html',
-  styleUrls: ['./auth-callback.component.scss']
+  templateUrl: './auth-callback.component.html'
 })
 export class AuthCallbackComponent implements OnInit {
   status = 'loading your profile, please wait...';
@@ -28,6 +27,7 @@ export class AuthCallbackComponent implements OnInit {
                   status: sub.status,
                   contact: sub.contact,
                   company: sub.company,
+                  company_logo: 'https://api.incontrl.io/subscriptions/' + sub.id + '/image',
                   notes: sub.notes,
                   home_path: '/app/' + sub.alias,
                   settings_path: '/app/' + sub.alias + '/settings',

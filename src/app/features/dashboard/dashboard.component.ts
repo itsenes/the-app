@@ -16,12 +16,14 @@ export class DashboardComponent implements OnInit {
   user = null;
   document_tiles = [];
   settings_path = null;
+  subscription = null;
   company = null;
   constructor(private media: ObservableMedia, private authService: AuthService, private appState: AppStateService) {
     this.user = authService.currentUser().profile;
     this.userJson = JSON.stringify(this.user);
     this.settings_path = appState.selected_subscription.settings_path;
     this.document_tiles = appState.document_types;
+    this.subscription = appState.selected_subscription;
     this.company = appState.selected_subscription.company;
     media.asObservable()
       .subscribe((change: MediaChange) => {
