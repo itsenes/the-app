@@ -17,6 +17,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { Http, Headers, ResponseContentType, Response } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
@@ -28,7 +29,7 @@ export class ApiClient {
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "https://api.incontrl.io";
+        this.baseUrl = baseUrl ? baseUrl : environment.api_url;
     }
 
     /**

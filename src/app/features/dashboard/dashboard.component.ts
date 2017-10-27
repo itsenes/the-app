@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
@@ -10,7 +10,7 @@ const default_columns = 4;
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   columns = default_columns;
   userJson = null;
   user = null;
@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   settings_path = null;
   subscription = null;
   company = null;
+  sub: any = null;
   constructor(private media: ObservableMedia, private authService: AuthService, private appState: AppStateService) {
     this.user = authService.currentUser().profile;
     this.userJson = JSON.stringify(this.user);
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit {
     this.document_tiles = appState.document_types;
     this.subscription = appState.selected_subscription;
     this.company = appState.selected_subscription.company;
-    media.asObservable()
+    this.sub = media.asObservable()
       .subscribe((change: MediaChange) => {
         console.log('media change (mqAlias): ' + change.mqAlias);
         if (change.mqAlias === 'xs') {
@@ -39,6 +40,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

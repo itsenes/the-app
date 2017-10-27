@@ -28,6 +28,7 @@ import { GravatarModule } from 'ng2-gravatar-directive';
 import { AccountSettingsComponent } from './features/account-settings/account-settings.component';
 import { ApiClient } from './services/incontrl-apiclient';
 import { AppStateService} from './services/app-state.service';
+import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
 
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
@@ -86,7 +87,8 @@ export class SecureApiRequestOptions extends BaseRequestOptions {
     AuthCallbackComponent,
     LoggedOutComponent,
     SplashComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    SubscriptionListComponent
   ],
   imports: [
     HttpModule,
