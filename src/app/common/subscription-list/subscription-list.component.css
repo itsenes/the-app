@@ -1,15 +1,6 @@
 .mat-card {
   width: 510px;
-  background: white;
-}
-
-.action-card {
-  height: 96%;
-  width: 98%;
-  background-color: white;
-  color: #1C1D21;
-  /* line-height: 14px; */
-  opacity: 0.9;
+  background: none;
 }
 
 .fab-icon-link {
@@ -65,11 +56,10 @@
 .subscription-list-item {
   display: flex;
   margin: 4px;
-  background: whitesmoke;
+  background: white;
   padding-bottom: 10px;
   color: #1C1D21;
   font-size: 16px;
-  opacity: 0.8;
   width: 100%;
 }
 

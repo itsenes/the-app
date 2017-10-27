@@ -29,6 +29,7 @@ import { AccountSettingsComponent } from './features/account-settings/account-se
 import { ApiClient } from './services/incontrl-apiclient';
 import { AppStateService} from './services/app-state.service';
 import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
+import { CompanyFormComponent } from './features/forms/company-form/company-form.component';
 
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
@@ -88,7 +89,8 @@ export class SecureApiRequestOptions extends BaseRequestOptions {
     LoggedOutComponent,
     SplashComponent,
     AccountSettingsComponent,
-    SubscriptionListComponent
+    SubscriptionListComponent,
+    CompanyFormComponent
   ],
   imports: [
     HttpModule,

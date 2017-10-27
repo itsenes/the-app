@@ -1,29 +1,25 @@
-  <mat-card>
-    <mat-card-content>
-      <div class="list-container">
-        <mat-list>
-          <mat-list-item class="subscription-list-item" *ngFor="let subscription of subscriptions">
-            <img matListAvatar class="user-avatar-large" src="{{subscription.company_logo}}" alt="{{subscription.id}}">
-            <h2 matLine>{{subscription.company.name}}</h2>
-            <p matLine>
-              <span class="label-small">{{subscription.company.legalName}}</span>
-              <br />
-              <span>{{subscription.company.lineOfBusiness}}</span>
-              <br/>
-              <span>{{subscription.company.taxCode}}{{subscription.company.taxOffice}}</span>
-              <br/>
-              <span>{{subscription.company.email}} {{subscription.company.website}}</span>
-            </p>
-            <br />
-            <h2 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h2>
-            <p matLine>
-              <span>{{subscription.contact.email}} {{subscription.contact.phone1}} {{subscription.contact.skype}}</span>
-            </p>
-            <a mat-mini-fab class="fab-icon-link" color="warn" (click)="selectSubscription(subscription)">
-              <mat-icon>screen_share</mat-icon>
-            </a>
-          </mat-list-item>
-        </mat-list>
-      </div>
-    </mat-card-content>
-  </mat-card>
+<div class="list-container">
+  <mat-list>
+    <mat-list-item class="subscription-list-item mat-elevation-z3" *ngFor="let subscription of subscriptions">
+      <img matListAvatar class="user-avatar-large" src="{{subscription.company_logo}}" alt="{{subscription.id}}">
+      <h2 matLine>{{subscription.company.name}}</h2>
+      <p matLine>
+        <span class="label-small">{{subscription.company.legalName}}</span>
+        <br />
+        <span>{{subscription.company.lineOfBusiness}}</span>
+        <br/>
+        <span>{{subscription.company.taxCode}}{{subscription.company.taxOffice}}</span>
+        <br/>
+        <span>{{subscription.company.email}} {{subscription.company.website}}</span>
+      </p>
+      <br />
+      <h2 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h2>
+      <p matLine>
+        <span>{{subscription.contact.email}} {{subscription.contact.phone1}} {{subscription.contact.skype}}</span>
+      </p>
+      <a mat-mini-fab class="fab-icon-link" color="warn" (click)="selectSubscription(subscription)">
+        <mat-icon>screen_share</mat-icon>
+      </a>
+    </mat-list-item>
+  </mat-list>
+</div>
