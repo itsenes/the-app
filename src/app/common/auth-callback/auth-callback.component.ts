@@ -15,85 +15,30 @@ import { environment } from '../../../environments/environment';
 export class AuthCallbackComponent implements OnInit {
   status = 'loading your profile, please wait...';
   displaySubscriptionsList = false;
-
-  set subscriptions(value: any) {
-    this.appState.subscriptions = value;
-  }
-  get subscriptions(): any {
-    return this.appState.subscriptions;
-  }
-
-  set selected_subscription(value: any) {
-    this.appState.selected_subscription = value;
-    this.document_types = null;
-  }
-  get selected_subscription(): any {
-    return this.appState.selected_subscription;
-  }
-
-  set document_types(value: any) {
-    this.appState.document_types = value;
-  }
-  get document_types(): any {
-    return this.appState.document_types;
-  }
+  subscriptions = null;
 
   selectSubscription(subscription: any) {
-    this.selected_subscription = subscription;
-    this.loadDocumentTypes(subscription)
-      .subscribe((types) => {
-        this.document_types = types;
-        this.router.navigate([subscription.home_path]);
-      });
+    // this.appState.selectSubscription(subscription).subscribe((sub) => {
+    //   console.log('subscription select');
+    // });
+    this.appState.selectSubscription(subscription);
+    this.router.navigate([subscription.home_path]);
+    // this.selected_subscription = subscription;
+    // this.loadDocumentTypes(subscription)
+    //   .subscribe((types) => {
+    //     this.document_types = types;
+    //     this.router.navigate([subscription.home_path]);
+    //   });
   }
 
   constructor(public appState: AppStateService, private apiClient: ApiClient, private authService: AuthService, private router: Router) { }
-
-  loadSubscriptions(): Observable<any> {
-    const observable = this.apiClient.getSubscriptions().map((response) => {
-      const subscriptions = response.items.map((subscription) => {
-        return {
-          id: subscription.id,
-          alias: subscription.alias,
-          code: subscription.code,
-          status: subscription.status,
-          contact: subscription.contact,
-          company: subscription.company,
-          company_logo: environment.api_url + '/subscriptions/' + subscription.id + '/image',
-          notes: subscription.notes,
-          home_path: '/app/' + subscription.alias,
-          settings_path: '/app/' + subscription.alias + '/settings',
-        };
-      });
-      return subscriptions;
-    });
-    return observable;
-  }
-
-  loadDocumentTypes(subscription): Observable<any> {
-    const observable = this.apiClient.getInvoiceTypes(subscription.id)
-      .map((response) => {
-        const types = response.items.
-          map((doc) => {
-            return {
-              id: doc.id, name: doc.name,
-              notes: doc.notes,
-              count: '?',
-              search_path: subscription.home_path + '/documents/' + doc.id,
-              addnew_path: subscription.home_path + '/documents/new',
-            };
-          });
-        return types;
-      });
-    return observable;
-  }
 
   ngOnInit() {
     this.authService.completeAuthentication().then(() => {
       if (this.authService.isLoggedIn) {
         this.status = 'loading your subscription information, please wait...';
         // ok get the subscriptions for the user
-        this.loadSubscriptions().subscribe((subs) => {
+        this.appState.subscriptions.subscribe((subs) => {
           this.subscriptions = subs;
           if (subs === null || subs.length === 0) {
             console.log('user must create a subscription');

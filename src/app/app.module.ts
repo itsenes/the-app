@@ -1,4 +1,4 @@
-import { NgModule, Injectable, Inject } from '@angular/core';
+import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
 import { RequestOptionsArgs } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +30,7 @@ import { ApiClient } from './services/incontrl-apiclient';
 import { AppStateService} from './services/app-state.service';
 import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
 import { CompanyFormComponent } from './features/forms/company-form/company-form.component';
-
+export let AppInjector: Injector;
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
   { path: 'logged-out', component: LoggedOutComponent },
@@ -104,5 +104,9 @@ export class SecureApiRequestOptions extends BaseRequestOptions {
     AppStateService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
 
+export class AppModule {
+  constructor(private injector: Injector) {
+    AppInjector = this.injector;
+  }
+}

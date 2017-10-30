@@ -17,8 +17,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.params_sub = this.route.params.subscribe((params) => {
       this.busy = true;
-      this.subscription = this.appState.subscriptions.find((sub) => sub.alias === params['subscription-alias']);
-      this.company = this.subscription.company.clone();
+      // this.subscription = this.appState.subscriptions.find((sub) => sub.alias === params['subscription-alias']);
+      // this.company = this.subscription.company.clone();
       this.busy = false;
     });
   }

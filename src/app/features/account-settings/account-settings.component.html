@@ -61,7 +61,7 @@
                 <a mat-mini-fab class="fab-icon-link" color="primary" [routerLink]="subscription.settings_path">
                   <mat-icon>settings</mat-icon>
                 </a>
-                <a mat-mini-fab *ngIf="subscription.id != currentSubId" class="fab-icon-link" color="warn">
+                <a mat-mini-fab *ngIf="subscription.id != currentSubId" [routerLink]="subscription.home_path" class="fab-icon-link" color="warn">
                   <mat-icon>screen_share</mat-icon>
                 </a>
               </mat-list-item>

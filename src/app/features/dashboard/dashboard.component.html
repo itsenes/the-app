@@ -1,6 +1,6 @@
 <mat-toolbar class="view-header">
   <img mat-card-avatar class="company-avatar mat-elevation-z3" src="{{subscription.company_logo}}" />
-  <span class="title">&nbsp;{{company.name}}</span>
+  <span class="title">&nbsp;{{subscription.company.name}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
   <!-- <span class="caption">Δευτέρα 11/10/2017</span> -->
@@ -8,7 +8,7 @@
 
 <div class="view-content">
   <mat-grid-list [cols]="columns" rowHeight="280" gutterSize="10">
-    <mat-grid-tile *ngFor="let doc of document_tiles">
+    <mat-grid-tile *ngFor="let doc of subscription.document_types | async">
       <mat-card class="action-card">
         <mat-card-header>
           <mat-card-title class="action-card-title">
@@ -100,7 +100,7 @@
           <mat-card-subtitle>Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-button color="primary" [routerLink]="settings_path" routerLinkActive="active-route">
+          <a mat-button color="primary" [routerLink]="subscription.settings_path" routerLinkActive="active-route">
             <mat-icon>settings</mat-icon>
             <label fxShow fxHide.sm fxHide.md>Ξεκινήστε εδώ!</label>
           </a>

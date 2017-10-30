@@ -14,19 +14,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   columns = default_columns;
   userJson = null;
   user = null;
-  document_tiles = [];
-  settings_path = null;
   subscription = null;
-  company = null;
-  sub: any = null;
+  document_types = null;
+  mediaSub: any = null;
   constructor(private media: ObservableMedia, private authService: AuthService, private appState: AppStateService) {
     this.user = authService.currentUser().profile;
     this.userJson = JSON.stringify(this.user);
-    this.settings_path = appState.selected_subscription.settings_path;
-    this.document_tiles = appState.document_types;
-    this.subscription = appState.selected_subscription;
-    this.company = appState.selected_subscription.company;
-    this.sub = media.asObservable()
+    this.subscription = this.appState.current_subscription;
+    // this.settings_path = null;
+    // appState. .sub .settings_path;
+    // this.document_tiles = appState.document_types;
+    // this.subscription = appState.selected_subscription;
+    // this.company = appState.selected_subscription.company;
+    this.mediaSub = media.asObservable()
       .subscribe((change: MediaChange) => {
         console.log('media change (mqAlias): ' + change.mqAlias);
         if (change.mqAlias === 'xs') {
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.mediaSub.unsubscribe();
   }
 
 }
