@@ -12,15 +12,14 @@ export class AccountSettingsComponent implements OnInit {
   hasMultipleSubs = false;
   multipleSubsRowspan = 1;
   currentSubId = null;
-  constructor(private appState: AppStateService, private authService: AuthService) {
-    this.user = authService.currentUser().profile;
-  }
+  constructor(private appState: AppStateService, private authService: AuthService) { }
 
   signout() {
     this.authService.startSignout();
   }
 
   ngOnInit() {
+    this.user = this.authService.currentUser().profile;
     this.appState.subscriptions.subscribe((subs) => {
       this.subscriptions = subs;
       this.hasMultipleSubs = (subs != null) && (subs.length > 1);

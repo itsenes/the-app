@@ -1,5 +1,5 @@
 <mat-toolbar class="view-header">
-  <img mat-card-avatar class="company-avatar mat-elevation-z3" src="{{subscription.company_logo}}" />
+  <img mat-card-avatar class="company-avatar mat-elevation-z3" [src]='subscription.company_logo' />
   <span class="title">&nbsp;{{subscription.company.name}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>

@@ -7,9 +7,12 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AppStateService {
   private _subscriptions: any = null;
-  private _current_subscription: any = null;
+  private _current_subscription: SubscriptionViewModel = null;
   private _current_subscriptionkey: any = null;
-  
+
+  public get current_subscriptionkey(): string {
+    return this._current_subscriptionkey;
+  }
 
   public get subscriptions(): Observable<Array<any>> {
     if (null === this._subscriptions) {
@@ -20,10 +23,15 @@ export class AppStateService {
     }
   }
 
-  public get current_subscription(): any {
-    return this._current_subscription;
+  public get current_subscription(): Observable<SubscriptionViewModel> {
+    const observable = this.subscriptions.map(subs => subs.find(sub => sub.alias === this._current_subscriptionkey));
+    return observable;
   }
 
+  getSubscriptionByKey(key: string): Observable<SubscriptionViewModel> {
+    const observable = this.subscriptions.map(subs => subs.find(sub => sub.alias === key));
+    return observable;
+  }
 
   selectSubscription(subscription: any): any {
     if (subscription.alias === this._current_subscriptionkey) {
@@ -95,7 +103,7 @@ export class SubscriptionViewModel {
     this.home_path = '/app/' + this._model.alias;
     this.settings_path = '/app/' + this._model.alias + '/settings';
   }
-  
+
   private _document_types: Observable<any>;
   public get document_types(): Observable<any> {
     if (null == this._document_types) {
