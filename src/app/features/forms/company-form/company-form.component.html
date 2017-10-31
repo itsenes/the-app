@@ -1,43 +1,127 @@
 <div class="tab-view-content">
-  <mat-grid-list class="" cols="1" gutterSize="4">
-    <mat-grid-tile>
-      <mat-card class="action-card">
-        <mat-card-content>
-          <mat-toolbar class='form-toolbar'>
-            <button mat-raised-button color='primary'>
-              <mat-icon>save</mat-icon> ΑΠΟΘΗΚΕΥΣΗ</button>
-            <button mat-raised-button color='default'>
-              <mat-icon>cancel</mat-icon> ΑΚΥΡΩΣΗ</button>
-          </mat-toolbar>
-          <div class="form-container">
-            <mat-form-field hintLabel="Max 10 characters">
-              <input matInput #legalname placeholder="Επωνυμία της επιχείρησης" floatPlaceholder='auto' maxlength="150">
-              <mat-hint align="end">{{legalname.value?.length || 0}}/50</mat-hint>
-            </mat-form-field>
+  <mat-toolbar color='primary' class="form-toolbar">
+    <button mat-button>
+      <mat-icon>save</mat-icon> ΑΠΟΘΗΚΕΥΣΗ</button>
+    <button mat-button color='default'>
+      <mat-icon>cancel</mat-icon> ΑΚΥΡΩΣΗ</button>
+  </mat-toolbar>
 
-            <mat-form-field>
-              <mat-select placeholder="Select me">
-                <mat-option value="option">Option</mat-option>
-              </mat-select>
-              <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
-            </mat-form-field>
+  <mat-card class="form-card">
+    <mat-card-content>
+      <div class="form-container">
+        <mat-form-field>
+          <input matInput #name [value]='data.company?.name' placeholder="Διακριτικός τίτλος" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{name.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
 
-            <mat-form-field float='always'>
-              <input matInput placeholder="Input">
-            </mat-form-field>
+        <mat-form-field>
+          <input matInput #legalname [value]='data.company?.legalName' placeholder="Επωνυμία" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{legalname.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
 
-            <mat-form-field float='always'>
-              <textarea matInput placeholder="Textarea"></textarea>
-            </mat-form-field>
+        <mat-form-field>
+          <input matInput #lineofbusiness [value]='data.company?.lineOfBusiness' placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{lineofbusiness.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
 
-            <mat-form-field float='always'>
-              <mat-select placeholder="Currency">
-                <mat-option value="option">Option</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+        <mat-form-field class="short">
+          <input matInput #taxcode [value]='data.company?.taxCode'  placeholder="ΑΦΜ" floatPlaceholder='auto' maxlength="50">
+          <mat-hint align="end">{{taxcode.value?.length || 0}}/50</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #taxoffice [value]='data.company?.taxOffice'  placeholder="ΔΟΥ" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{taxoffice.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="short">
+          <mat-select placeholder="Νόμισμα">
+            <mat-option value="option">EUR</mat-option>
+            <mat-option value="option">US DOLLAR</mat-option>
+            <mat-option value="option">YEN</mat-option>
+            <mat-option value="option">...</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #email [value]='data?.email' placeholder="Email" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{email.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #website [value]='data?.website' placeholder="WWW" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{website.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="form-card">
+    <mat-card-content>
+      <div class="form-container">
+        <mat-form-field>
+          <input matInput #address1 [value]='data.company?.address?.name' placeholder="Διεύθυνση #1" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{address1.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #address2 [value]='data.company?.address?.line1' placeholder="Διεύθυνση #2" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{address2.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="short">
+          <input matInput #zipCode [value]='data.company?.address?.zipCode' placeholder="ΤΚ" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{zipCode.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #city [value]='data.company?.address?.city' placeholder="Πόλη" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{city.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="short" floatPlaceholder='auto' >
+          <mat-select placeholder="Χώρα">
+            <mat-option value="GR">Ελλάδα</mat-option>
+            <mat-option value="option">Αλλη χώρα</mat-option>
+            <mat-option value="option">YEN</mat-option>
+            <mat-option value="option">OTHER</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="form-card">
+    <mat-card-content>
+
+      <div class="form-container">
+
+        <mat-form-field>
+          <input matInput #firstName [value]='data.contact?.firstName' placeholder="Όνομα" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{firstName.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #lastName [value]='data.contact?.lastName' placeholder="Επώνυμο" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{lastName.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput #contactemail [value]='data.contact?.email' placeholder="Email" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{contactemail.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="short">
+          <input matInput #phone1 [value]='data.contact?.phone1' placeholder="Τηλέφωνο" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{phone1.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="short">
+          <input matInput #skype [value]='data.contact?.skype' placeholder="Skype" floatPlaceholder='auto' maxlength="150">
+          <mat-hint align="end">{{skype.value?.length || 0}}/150</mat-hint>
+        </mat-form-field>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

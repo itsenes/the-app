@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-company-form',
@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../forms.components.scss']
 })
 export class CompanyFormComponent implements OnInit {
+  private _data: any = { company: { address: {}},  contact: {} };
+  @Input()
+  set data(value: any) {
+    this._data = value;
+  }
+  get data(): any { return this._data; }
 
   constructor() { }
 

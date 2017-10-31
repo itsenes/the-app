@@ -5,7 +5,7 @@ import { CompanyFormComponent } from '../forms/company-form/company-form.compone
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   subscription: any = {};

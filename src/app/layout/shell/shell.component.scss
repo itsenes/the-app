@@ -58,6 +58,11 @@ aside {
   /* IE6-9 fallback on horizontal gradient */
 }
 
+.mat-list .mat-list-item, .mat-nav-list .mat-list-item, .mat-selection-list .mat-list-item {
+  color: white;
+}
+
+
 article {
   padding: 0px;
 }

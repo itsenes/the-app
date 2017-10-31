@@ -10,25 +10,21 @@
   color: white;
 }
 
-.mat-grid-tile .mat-figure {
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    position: absolute;
-    display: flex;
-    align-items: top;
-    justify-content: center;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
 .mat-form-field,
 .mat-input,
 .mat-input-element {
   color: darkgray;
   max-width: 800px;
+}
+
+.mat-form-field.short {
+  max-width: 400px;
+}
+
+.mat-form-field {
+  font-size: 16px;
+  color: black;
+  padding-bottom: 15px;
 }
 
 .form-container {
@@ -38,7 +34,6 @@
   padding-right: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
-
   color: black;
 }
 
@@ -47,8 +42,9 @@
 }
 
 .mat-toolbar.form-toolbar {
-  background: white;
-  color: black;
+  margin-top: 2px;
+  opacity: 0.9;
+  height: 58px;
 }
 
 .material-icons {
@@ -117,10 +113,10 @@ button.mat-toolbar.form-toolbar {
   padding-right: 8px;
 }
 
-.action-card .mat-card-subtitle {
-  color: #1C1D21;
-  font-size: 16px;
-  opacity: 0.8;
+.mat-card.form-card{
+  //color: #1C1D21;
+  //font-size: 16px;
+  margin-top: 10px;
 }
 
 .subscription-list-item {

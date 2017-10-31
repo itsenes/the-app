@@ -23,15 +23,20 @@
   width: 90%;
   overflow-y: auto;
   overflow-x: hidden;
+  max-height: 400px;
 }
 
-.mat-list-item.mat-multi-line .mat-list-item-content, .mat-selection-list .mat-list-item.mat-multi-line .mat-list-item-content {
+
+.mat-list-item.mat-multi-line .mat-list-item-content,
+.mat-selection-list .mat-list-item.mat-multi-line .mat-list-item-content {
   height: 100%;
   width: 100%;
-  padding:16px;
+  padding: 16px;
 }
 
-.mat-list .mat-list-item .mat-list-avatar, .mat-nav-list .mat-list-item .mat-list-avatar, .mat-selection-list .mat-list-item .mat-list-avatar {
+.mat-list .mat-list-item .mat-list-avatar,
+.mat-nav-list .mat-list-item .mat-list-avatar,
+.mat-selection-list .mat-list-item .mat-list-avatar {
   flex-shrink: 0;
   width: 64px;
   height: 64px;
