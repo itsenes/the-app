@@ -30,11 +30,34 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  padding-top: 10px;
+  padding-top: 5px;
   padding-right: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   color: black;
+}
+
+.form-container .company-avatar-large {
+  width: 96px;
+  height: 96px;
+  padding: 4px;
+  margin: 4px;
+  margin-left: -4px;
+  margin-bottom: 10px;
+  border: solid 1 whitesmoke;
+}
+
+.form-container .company-avatar-button {
+  width:36px;
+  height:36px;
+  position:absolute;
+  margin-left:80px;
+}
+
+.form-container .mat-icon {
+  margin-left:-10px;
+  margin-top:-2px;
+  font-size: 16px;
 }
 
 .form-container>* {
@@ -66,14 +89,6 @@ button.mat-toolbar.form-toolbar {
   padding: 0px;
 }
 
-.action-card {
-  height: 90%;
-  width: 98%;
-  background-color: white;
-  color: #1C1D21; // line-height: 14px;
-  opacity: 0.9;
-}
-
 .fab-icon-link {
   margin-right: 4px;
 }
@@ -100,12 +115,6 @@ button.mat-toolbar.form-toolbar {
   width: 64px;
   height: 64px;
   border-radius: 0%;
-}
-
-.list-company-avatar {
-  border-radius: 0%;
-  width: 64px;
-  height: 64px;
 }
 
 .panel-icon {

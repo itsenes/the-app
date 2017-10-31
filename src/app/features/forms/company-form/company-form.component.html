@@ -9,8 +9,12 @@
   <mat-card class="form-card">
     <mat-card-content>
       <div class="form-container">
+        <img class="mat-elavation-z6 company-avatar-large" [src]="data.company_logo">
+        <button color="accent" class="company-avatar-button" mat-mini-fab>
+            <mat-icon aria-label="Example icon-button with a heart icon">add_a_photo</mat-icon>            
+        </button> 
         <mat-form-field>
-          <input matInput #name [value]='data.company?.name' placeholder="Διακριτικός τίτλος" floatPlaceholder='auto' maxlength="150">
+          <input matInput #name [value]='data.company?.name' placeholder="Ονομασία (Διακριτικός τίτλος)" floatPlaceholder='auto' maxlength="150">
           <mat-hint align="end">{{name.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
@@ -20,17 +24,18 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput #lineofbusiness [value]='data.company?.lineOfBusiness' placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto' maxlength="150">
+          <input matInput #lineofbusiness [value]='data.company?.lineOfBusiness' placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto'
+            maxlength="150">
           <mat-hint align="end">{{lineofbusiness.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
         <mat-form-field class="short">
-          <input matInput #taxcode [value]='data.company?.taxCode'  placeholder="ΑΦΜ" floatPlaceholder='auto' maxlength="50">
+          <input matInput #taxcode [value]='data.company?.taxCode' placeholder="ΑΦΜ" floatPlaceholder='auto' maxlength="50">
           <mat-hint align="end">{{taxcode.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput #taxoffice [value]='data.company?.taxOffice'  placeholder="ΔΟΥ" floatPlaceholder='auto' maxlength="150">
+          <input matInput #taxoffice [value]='data.company?.taxOffice' placeholder="ΔΟΥ" floatPlaceholder='auto' maxlength="150">
           <mat-hint align="end">{{taxoffice.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
@@ -79,7 +84,7 @@
           <mat-hint align="end">{{city.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="short" floatPlaceholder='auto' >
+        <mat-form-field class="short" floatPlaceholder='auto'>
           <mat-select placeholder="Χώρα">
             <mat-option value="GR">Ελλάδα</mat-option>
             <mat-option value="option">Αλλη χώρα</mat-option>
