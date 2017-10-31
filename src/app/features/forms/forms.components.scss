@@ -13,7 +13,7 @@
 .mat-form-field,
 .mat-input,
 .mat-input-element {
-  color: darkgray;
+  // color: darkgray;
   max-width: 800px;
 }
 
@@ -23,8 +23,8 @@
 
 .mat-form-field {
   font-size: 16px;
-  color: black;
-  padding-bottom: 15px;
+  // color: black;
+  padding-bottom: 5px;
 }
 
 .form-container {
@@ -128,120 +128,10 @@ button.mat-toolbar.form-toolbar {
   margin-top: 10px;
 }
 
-.subscription-list-item {
-  //display: flex;
-  margin: 4px;
-  background: whitesmoke;
-  padding: 10px;
-  color: #1C1D21;
-  font-size: 16px;
-  opacity: 0.8;
-  width: 96%;
-}
-
-.inline-subtitle {
-  padding-left: 4px;
-  font-size: 12px;
-}
-
-.action-badge {
-  position: absolute;
-  color: rgba(233, 30, 99, 1);
-  margin-top: -72px;
-  font-size: 48px;
-  margin-left: 230px;
-  opacity: 0.65;
-}
-
-.action-badge.red {
-  color: #EB4A42;
-}
-
-.action-badge.blue {
-  color: #35A7FF;
-}
-
-.action-badge.green {
-  color: #44CD7D;
-}
-
-.action-badge.teal {
-  color: #20BBAF;
-}
-
-.action-button {
-  width: 120px;
-  height: 120px;
-}
-
-.mat-card-subtitle {
-  font-size: 14px;
-  padding-top: 12px;
-  height: 44px;
-  line-height: 16px;
-  overflow: hidden;
-}
-
-.folder-count-badge {
-  background-color: #FA646E;
-  color: white;
-  position: absolute;
-  opacity: 0.98;
-  margin-left: 20px;
-  width: 36px;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
-}
-
-p.folder-count {
-  font-size: 12px;
-  color: white;
-  text-align: center;
-}
-
-.mat-card-avatar.user-avatar-large {
-  // filter: grayscale(96%);
-  height: 64px;
-  width: 64px;
-  border-radius: 0%;
-}
 
 .label-small {
   font-size: 12px;
   opacity: 0.8;
-}
-
-.mat-card-avatar.red {
-  background-color: #EB4A42;
-}
-
-.mat-card-avatar.blue {
-  background-color: #35A7FF;
-}
-
-.mat-card-avatar.green {
-  background-color: #44CD7D;
-}
-
-.mat-card-avatar.teal {
-  background-color: #20BBAF;
-}
-
-.mat-card-avatar.accent {
-  background-color: #EB4A42;
-}
-
-.mat-card-avatar.primary {
-  background-color: accent;
-}
-
-.material-icons.size-64 {
-  font-size: 64px;
-}
-
-.mat-card-title {
-  margin-top: 12px;
 }
 
 .mat-tab.mat-grid-list {
@@ -252,133 +142,4 @@ p.folder-count {
   width: 200px
 }
 
-.mat-form-field-placeholder {
-  color: darkgray;
-}
-
-.mat-hint {
-  color: darkgray;
-}
-
-.mat-focused .mat-form-field-placeholder {
-  color: #3f51b5
-}
-
-.mat-focused .mat-form-field-placeholder.mat-accent {
-  color: #ff4081
-}
-
-.mat-focused .mat-form-field-placeholder.mat-warn {
-  color: #f44336
-}
-
-.mat-focused .mat-form-field-required-marker {
-  color: #ff4081
-}
-
-.mat-form-field-underline {
-  background-color: darkgray;
-}
-
-.mat-form-field-underline.mat-disabled {
-  background-image: linear-gradient(to right, darkgray 0, rgba(0, 0, 0, .42) 33%, transparent 0);
-  background-size: 4px 1px;
-  background-repeat: repeat-x
-}
-
-.mat-form-field-ripple {
-  background-color: #3f51b5
-}
-
-.mat-form-field-ripple.mat-accent {
-  background-color: #ff4081
-}
-
-.mat-form-field-ripple.mat-warn {
-  background-color: #f44336
-}
-
-.mat-form-field-invalid .mat-form-field-placeholder {
-  color: #f44336
-}
-
-.mat-form-field-invalid .mat-form-field-placeholder .mat-form-field-required-marker,
-.mat-form-field-invalid .mat-form-field-placeholder.mat-accent {
-  color: #f44336
-}
-
-.mat-form-field-invalid .mat-form-field-ripple {
-  background-color: #f44336
-}
-
-.mat-form-field {
-  &.mat-focused {
-    &.mat-primary .mat-select-arrow {
-      color: darkgray;
-    }
-    &.mat-accent .mat-select-arrow {
-      color: #f44336;
-    }
-    &.mat-warn .mat-select-arrow {
-      color: #f44336;
-    }
-  }
-  .mat-select.mat-select-invalid .mat-select-arrow {
-    color: #f44336;
-  }
-  .mat-select.mat-select-disabled .mat-select-arrow {
-    color: darkgray;
-  }
-}
-
-.mat-select.mat-select-disabled .mat-select-arrow {
-  color: #f44336;
-}
-
-.mat-error {
-  color: #f44336
-}
-
-.mat-icon.mat-primary {
-  color: #3f51b5
-}
-
-.mat-icon.mat-accent {
-  color: #ff4081
-}
-
-.mat-icon.mat-warn {
-  color: #f44336
-}
-
-.mat-input-element:disabled {
-  color: rgba(0, 0, 0, .42)
-}
-
-mat-form-field.mat-form-field {
-  font-size: 16px;
-  color: black;
-}
-
 // https://github.com/angular/material2/blob/master/src/lib/form-field/_form-field-theme.scss
-.mat-form-field-placeholder {
-  color: black;
-}
-
-.mat-hint {
-  color: black;
-}
-
-.mat-form-field-underline {
-  background-color: darkgray;
-}
-
-.mat-form-field-ripple {
-  background-color: darkgray;
-  &.mat-accent {
-    background-color: darkgray;
-  }
-  &.mat-warn {
-    background-color: #f44336;
-  }
-}

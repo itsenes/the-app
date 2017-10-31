@@ -14,17 +14,17 @@
             <mat-icon aria-label="Example icon-button with a heart icon">add_a_photo</mat-icon>            
         </button> 
         <mat-form-field>
-          <input matInput #name [value]='data.company?.name' placeholder="Ονομασία (Διακριτικός τίτλος)" floatPlaceholder='auto' maxlength="150">
+          <input matInput readonly='true' #name [value]='data.company?.name' placeholder="Ονομασία (Διακριτικός τίτλος)" floatPlaceholder='auto' maxlength="150">
           <mat-hint align="end">{{name.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput #legalname [value]='data.company?.legalName' placeholder="Επωνυμία" floatPlaceholder='auto' maxlength="150">
+          <input matInput readonly='true' #legalname [value]='data.company?.legalName' placeholder="Επωνυμία" floatPlaceholder='auto' maxlength="150">
           <mat-hint align="end">{{legalname.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput #lineofbusiness [value]='data.company?.lineOfBusiness' placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto'
+          <input matInput readonly='true' #lineofbusiness [value]='data.company?.lineOfBusiness' placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto'
             maxlength="150">
           <mat-hint align="end">{{lineofbusiness.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
