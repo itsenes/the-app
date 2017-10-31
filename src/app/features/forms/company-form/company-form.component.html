@@ -1,3 +1,43 @@
-<p>
-  company-form works!
-</p>
+<div class="tab-view-content">
+  <mat-grid-list class="" cols="1" gutterSize="4">
+    <mat-grid-tile>
+      <mat-card class="action-card">
+        <mat-card-content>
+          <mat-toolbar class='form-toolbar'>
+            <button mat-raised-button color='primary'>
+              <mat-icon>save</mat-icon> ΑΠΟΘΗΚΕΥΣΗ</button>
+            <button mat-raised-button color='default'>
+              <mat-icon>cancel</mat-icon> ΑΚΥΡΩΣΗ</button>
+          </mat-toolbar>
+          <div class="form-container">
+            <mat-form-field hintLabel="Max 10 characters">
+              <input matInput #legalname placeholder="Επωνυμία της επιχείρησης" floatPlaceholder='auto' maxlength="150">
+              <mat-hint align="end">{{legalname.value?.length || 0}}/50</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="Select me">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+              <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field float='always'>
+              <input matInput placeholder="Input">
+            </mat-form-field>
+
+            <mat-form-field float='always'>
+              <textarea matInput placeholder="Textarea"></textarea>
+            </mat-form-field>
+
+            <mat-form-field float='always'>
+              <mat-select placeholder="Currency">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
