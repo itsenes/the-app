@@ -32,6 +32,7 @@ import { SubscriptionListComponent } from './common/subscription-list/subscripti
 import { CompanyFormComponent } from './features/forms/company-form/company-form.component';
 
 import { environment } from '../environments/environment';
+import { SelectImageDialogComponent } from './common/dialogs/select-image-dialog/select-image-dialog.component';
 
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
@@ -82,7 +83,8 @@ export const getApiUrl = function() {
     SplashComponent,
     AccountSettingsComponent,
     SubscriptionListComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    SelectImageDialogComponent
   ],
   imports: [
     HttpModule,

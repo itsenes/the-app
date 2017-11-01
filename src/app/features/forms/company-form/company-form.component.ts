@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
 
 @Component({
   selector: 'app-company-form',
@@ -37,13 +40,44 @@ export class CompanyFormComponent implements OnInit {
 
   save() {
     this.readonly = true;
-    this.bak(this.model);
-    if (null != this.model_changed) {
-      this.model_changed.next(this.model);
-    }
+    const request: UpdateSubscriptionCompanyRequest = new UpdateSubscriptionCompanyRequest();
+    request.logoPath = this.model.company.logoPath;
+    request.code = this.model.company.code;
+    request.currencyCode = this.model.company.currencyCode;
+    request.legalName = this.model.company.legalName;
+    request.name = this.model.company.name;
+    request.lineOfBusiness = this.model.company.lineOfBusiness;
+    request.taxCode = this.model.company.taxCode;
+    request.taxOffice = this.model.company.taxOffice;
+    request.notes = this.model.company.notes;
+    request.email = this.model.company.email;
+    request.website = this.model.company.website;
+    request.address = this.model.company.address;
+    this.apiClient.updateSubscriptionCompany(this.model.id, request).subscribe((company) => {
+      // create a new backup copy
+      this.bak(this.model);
+      if (null != this.model_changed) {
+        this.model_changed.next(this.model);
+      }
+    }, (error) => {
+      console.log(error);
+      alert(error);
+    });
   }
 
-  constructor() {
+  openLogoDialog(): void {
+    const dialogRef = this.dialog.open(SelectImageDialogComponent, {
+      width: '450px', height: '350px',
+      data: { imagepath: this.model.company.logoPath }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+  constructor(private apiClient: ApiClient, public dialog: MatDialog) {
     this.model = { company: { address: {} }, contact: {} };
   }
 
