@@ -23,7 +23,7 @@ export class CompanyFormComponent implements OnInit {
   }
 
   private bak(value: any) {
-    this._bak = value;
+    this._bak = value.clone();
   }
 
   cancel() {
