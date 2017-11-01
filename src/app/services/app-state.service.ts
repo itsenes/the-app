@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 // a simple singleton to maintain app state for now, other patterns could be applied
 @Injectable()
 export class AppStateService {
-  private _subscriptions: any = null;
+  private _subscriptions: SubscriptionViewModel[] = null;
   private _current_subscription: SubscriptionViewModel = null;
   private _current_subscriptionkey: any = null;
 
@@ -14,23 +14,29 @@ export class AppStateService {
     return this._current_subscriptionkey;
   }
 
-  public get subscriptions(): Observable<Array<any>> {
+  public get subscriptions(): Observable<SubscriptionViewModel[]> {
     if (null === this._subscriptions) {
-      this._subscriptions = this.loadSubscriptions();
-      return this._subscriptions;
+      return this.loadSubscriptions();
     } else {
-      return this._subscriptions;
+      return Observable.create((observer) => {
+        observer.next(this._subscriptions);
+        observer.complete();
+      });
     }
   }
 
   public get current_subscription(): Observable<SubscriptionViewModel> {
-    const observable = this.subscriptions.map(subs => subs.find(sub => sub.alias === this._current_subscriptionkey));
-    return observable;
+    return Observable.create((observer) => {
+      observer.next(this._subscriptions.find(sub => sub.alias === this._current_subscriptionkey));
+      observer.complete();
+    });
   }
 
   getSubscriptionByKey(key: string): Observable<SubscriptionViewModel> {
-    const observable = this.subscriptions.map(subs => subs.find(sub => sub.alias === key));
-    return observable;
+    return Observable.create((observer) => {
+      observer.next(this._subscriptions.find(sub => sub.alias === key));
+      observer.complete();
+    });
   }
 
   selectSubscription(subscription: any): any {
@@ -44,12 +50,12 @@ export class AppStateService {
 
   constructor(private apiClient: ApiClient) { }
 
-  loadSubscriptions(): Observable<any> {
+  loadSubscriptions(): Observable<SubscriptionViewModel[]> {
     const observable = this.apiClient.getSubscriptions().map((response) => {
-      const subscriptions = response.items.map((subscription) => {
+      this._subscriptions = response.items.map((subscription) => {
         return this.newSubscriptionVM(subscription);
       });
-      return subscriptions;
+      return this._subscriptions;
     });
     return observable;
   }
@@ -65,7 +71,7 @@ export class SubscriptionViewModel {
   public get id() {
     return this.model.id;
   }
-  public get alias(){
+  public get alias() {
     return this.model.alias;
   }
 
@@ -81,19 +87,17 @@ export class SubscriptionViewModel {
     return this.model.company;
   }
 
-  private _company_logo;
   public get company_logo() {
-    return this._company_logo;
+    return `${environment.api_url}/subscriptions/${this._model.id}/image`;
   }
 
-  private _home_path;
   public get home_path() {
-    return this._home_path;
+    return `/app/${this._model.alias}`;
   }
 
   private _settings_path;
   public get settings_path() {
-    return this._settings_path;
+    return `/app/${this._model.alias}/settings`;
   }
 
   private _model: Subscription = null;
@@ -103,39 +107,39 @@ export class SubscriptionViewModel {
 
   public set model(value: Subscription) {
     this._model = value;
-    this._company_logo = environment.api_url + '/subscriptions/' + this._model.id + '/image';
-    this._home_path = '/app/' + this._model.alias;
-    this._settings_path = '/app/' + this._model.alias + '/settings';
   }
 
-  private _document_types: Observable<any>;
-  public get document_types(): Observable<any> {
+  private _document_types: any[];
+  public get document_types(): Observable<any[]> {
     if (null == this._document_types) {
-      this._document_types = this.loadDocumentTypes();
+      return this.loadDocumentTypes();
     }
-    return this._document_types;
+    return Observable.create((observer) => {
+      observer.next(this._document_types);
+      observer.complete();
+    });
   }
 
   loadDocumentTypes(): Observable<any> {
     const observable = this.apiClient.getDocumentTypes(this.id)
       .map((response) => {
-        const types = response.items.
+        this._document_types = response.items.
           map((doc) => {
             return {
               id: doc.id, name: doc.name,
               notes: doc.notes,
               count: '?',
-              search_path: this.home_path + '/documents/' + doc.id,
-              addnew_path: this.home_path + '/documents/new',
+              search_path: `${this.home_path}/documents/${doc.id}`,
+              addnew_path: `${this.home_path}/documents/new`,
               model: doc
             };
           });
-        return types;
+        return this._document_types;
       });
     return observable;
   }
 
-  constructor(subscription: any, private apiClient: ApiClient) {
+  constructor(subscription: Subscription, private apiClient: ApiClient) {
     this.apiClient = apiClient;
     this.model = subscription;
   }

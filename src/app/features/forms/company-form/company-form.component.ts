@@ -44,10 +44,10 @@ export class CompanyFormComponent implements OnInit {
   }
 
   constructor() {
+    this.model = { company: { address: {} }, contact: {} };
   }
 
   ngOnInit() {
-    this.model = { company: { address: {} }, contact: {} };
   }
 
 }
