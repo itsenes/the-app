@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { ApiClient } from '../../services/incontrl-apiclient';
 import { AppStateService } from '../../services/app-state.service';
 import { SubscriptionListComponent } from '../subscription-list/subscription-list.component';
 import { Observable } from 'rxjs/Observable';
@@ -18,20 +17,11 @@ export class AuthCallbackComponent implements OnInit {
   subscriptions = null;
 
   selectSubscription(subscription: any) {
-    // this.appState.selectSubscription(subscription).subscribe((sub) => {
-    //   console.log('subscription select');
-    // });
     this.appState.selectSubscription(subscription);
     this.router.navigate([subscription.home_path]);
-    // this.selected_subscription = subscription;
-    // this.loadDocumentTypes(subscription)
-    //   .subscribe((types) => {
-    //     this.document_types = types;
-    //     this.router.navigate([subscription.home_path]);
-    //   });
   }
 
-  constructor(public appState: AppStateService, private apiClient: ApiClient, private authService: AuthService, private router: Router) { }
+  constructor(public appState: AppStateService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.authService.completeAuthentication().then(() => {

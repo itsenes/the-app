@@ -1,6 +1,6 @@
-import { NgModule, Injectable, Inject, Injector } from '@angular/core';
+import { NgModule, Injectable, Inject, Injector, ReflectiveInjector, InjectionToken } from '@angular/core';
 import { HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
-import { RequestOptionsArgs } from '@angular/http';
+
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +18,7 @@ import { PageNotFoundComponent } from './common/page-not-found/page-not-found.co
 
 import { UnauthorizedComponent } from './common/unauthorized/unauthorized.component';
 
-import { AuthService } from './services/auth.service';
+import { AuthService, SecureApiRequestOptions } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthCallbackComponent } from './common/auth-callback/auth-callback.component';
 import { LoggedOutComponent } from './common/logged-out/logged-out.component';
@@ -26,11 +26,13 @@ import { SplashComponent } from './common/splash/splash.component';
 
 import { GravatarModule } from 'ng2-gravatar-directive';
 import { AccountSettingsComponent } from './features/account-settings/account-settings.component';
-import { ApiClient } from './services/incontrl-apiclient';
-import { AppStateService} from './services/app-state.service';
+import { ApiClient, API_BASE_URL } from './services/incontrl-apiclient';
+import { AppStateService } from './services/app-state.service';
 import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
 import { CompanyFormComponent } from './features/forms/company-form/company-form.component';
-export let AppInjector: Injector;
+
+import { environment } from '../environments/environment';
+
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
   { path: 'logged-out', component: LoggedOutComponent },
@@ -61,19 +63,9 @@ const appRoutes: Routes = [
   { path: '**', component: PageNotFoundComponent }
 ];
 
-export class SecureApiRequestOptions extends BaseRequestOptions {
-  constructor( @Inject(AuthService) private authService: AuthService) {
-    super();
-  }
-  merge(options?: RequestOptionsArgs) {
-    if (options.headers) {
-      options.headers.append('Authorization', this.authService.getAuthorizationHeaderValue());
-    } else {
-      options.headers = new Headers({ 'Authorization': this.authService.getAuthorizationHeaderValue() });
-    }
-    return super.merge(options);
-  }
-}
+export const getApiUrl = function() {
+  return environment.api_url;
+};
 
 @NgModule({
   declarations: [
@@ -99,14 +91,16 @@ export class SecureApiRequestOptions extends BaseRequestOptions {
     BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
     GravatarModule
   ],
-  providers: [AuthService, AuthGuardService, ApiClient,
-    { provide: RequestOptions, useClass: SecureApiRequestOptions },
-    AppStateService],
+  providers: [
+    AuthService, AuthGuardService,
+    ApiClient, { provide: RequestOptions, useClass: SecureApiRequestOptions },
+    AppStateService,
+    { provide: API_BASE_URL, useFactory: getApiUrl }
+  ],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
-  constructor(private injector: Injector) {
-    AppInjector = this.injector;
+  constructor() {
   }
 }

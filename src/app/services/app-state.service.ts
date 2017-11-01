@@ -55,35 +55,46 @@ export class AppStateService {
   }
 
   private newSubscriptionVM(subscription: Subscription): SubscriptionViewModel {
-    // const i = Injector.create([{provide: SubscriptionViewModel, useClass: SubscriptionViewModel, deps: [ApiClient]}]);
-    // const vm = i.get(SubscriptionViewModel);
-    // return vm;
-    // const injector = Injector.create([
-    //     { provide: SubscriptionViewModel, deps: [ApiClient] },
-    //     { provide: ApiClient, deps: [] }
-    //   ]);
-    // const subVM = injector.get(SubscriptionViewModel);
-    // // const subscriptionVMInjector = ReflectiveInjector.resolveAndCreate([{ provide: SubscriptionViewModel, useClass: SubscriptionViewModel, deps: [ApiClient]}]);
-    // // const subVM = subscriptionVMInjector.get(SubscriptionViewModel);
-    // // subVM.model = subscription;
-    // return subVM;
-    return new SubscriptionViewModel(subscription, this.apiClient)
+    return new SubscriptionViewModel(subscription, this.apiClient);
   }
 }
 
 // @Injectable()
 export class SubscriptionViewModel {
   public busy = false;
-  public id = null;
-  public alias = null;
-  public code = null;
-  public status = null;
-  public contact = null;
-  public company = null;
-  public company_logo = null;
-  public notes = null;
-  public home_path = null;
-  public settings_path = null;
+  public get id() {
+    return this.model.id;
+  }
+  public get alias(){
+    return this.model.alias;
+  }
+
+  public get status() {
+    return this.model.status;
+  }
+
+  public get contact() {
+    return this.model.contact;
+  }
+
+  public get company() {
+    return this.model.company;
+  }
+
+  private _company_logo;
+  public get company_logo() {
+    return this._company_logo;
+  }
+
+  private _home_path;
+  public get home_path() {
+    return this._home_path;
+  }
+
+  private _settings_path;
+  public get settings_path() {
+    return this._settings_path;
+  }
 
   private _model: Subscription = null;
   public get model(): Subscription {
@@ -92,16 +103,9 @@ export class SubscriptionViewModel {
 
   public set model(value: Subscription) {
     this._model = value;
-    this.id = this._model.id;
-    this.alias = this._model.alias;
-    this.code = this._model.code;
-    this.status = this._model.status;
-    this.contact = this._model.contact;
-    this.company = this._model.company;
-    this.company_logo = environment.api_url + '/subscriptions/' + this._model.id + '/image';
-    this.notes = this._model.notes;
-    this.home_path = '/app/' + this._model.alias;
-    this.settings_path = '/app/' + this._model.alias + '/settings';
+    this._company_logo = environment.api_url + '/subscriptions/' + this._model.id + '/image';
+    this._home_path = '/app/' + this._model.alias;
+    this._settings_path = '/app/' + this._model.alias + '/settings';
   }
 
   private _document_types: Observable<any>;
@@ -113,7 +117,7 @@ export class SubscriptionViewModel {
   }
 
   loadDocumentTypes(): Observable<any> {
-    const observable = this.apiClient.getInvoiceTypes(this.id)
+    const observable = this.apiClient.getDocumentTypes(this.id)
       .map((response) => {
         const types = response.items.
           map((doc) => {
@@ -123,13 +127,13 @@ export class SubscriptionViewModel {
               count: '?',
               search_path: this.home_path + '/documents/' + doc.id,
               addnew_path: this.home_path + '/documents/new',
+              model: doc
             };
           });
         return types;
       });
     return observable;
   }
-
 
   constructor(subscription: any, private apiClient: ApiClient) {
     this.apiClient = apiClient;
