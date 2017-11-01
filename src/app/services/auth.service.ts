@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
+import { HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
+import { RequestOptionsArgs } from '@angular/http';
 
 // https://github.com/damienbod/AspNet5IdentityServerAngularImplicitFlow/tree/npm-lib-test/src/AngularClient/angularApp/app
 @Injectable()
@@ -76,4 +78,18 @@ export function getClientSettings(): UserManagerSettings {
     filterProtocolClaims: true,
     loadUserInfo: true
   };
+}
+
+export class SecureApiRequestOptions extends BaseRequestOptions {
+  constructor( @Inject(AuthService) private authService: AuthService) {
+    super();
+  }
+  merge(options?: RequestOptionsArgs) {
+    if (options.headers) {
+      options.headers.append('Authorization', this.authService.getAuthorizationHeaderValue());
+    } else {
+      options.headers = new Headers({ 'Authorization': this.authService.getAuthorizationHeaderValue() });
+    }
+    return super.merge(options);
+  }
 }

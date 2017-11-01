@@ -8,6 +8,7 @@ import { CompanyFormComponent } from '../forms/company-form/company-form.compone
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
+  subscription_key: any = null;
   subscription: any = {};
   company: any = {};
   params_sub: any = null;
@@ -18,14 +19,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.params_sub = this.route.params.subscribe((params) => {
       this.busy = true;
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
+        this.subscription_key = params['subscription-alias'];
         this.subscription = sub.model;
         this.busy = false;
       });
-      // this.company = this.subscription.company.clone();
     });
   }
 
   ngOnDestroy() {
     this.params_sub.unsubscribe();
   }
+
+  subscription_changed(model: any) {
+    this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
+        sub.model = model;
+        alert(' data changed ' + JSON.stringify(model));
+    });
+  }
+
 }

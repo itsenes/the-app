@@ -1,14 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-company-form',
   templateUrl: './company-form.component.html',
   styleUrls: ['../forms.components.scss']
 })
+
+
 export class CompanyFormComponent implements OnInit {
   private _bak: any = null;
   private _model: any = null;
   private readonly = true;
+  @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
+
   @Input()
   set model(value: any) {
     this._model = value;
@@ -34,13 +38,16 @@ export class CompanyFormComponent implements OnInit {
   save() {
     this.readonly = true;
     this.bak(this.model);
+    if (null != this.model_changed) {
+      this.model_changed.next(this.model);
+    }
   }
 
   constructor() {
-   }
+  }
 
   ngOnInit() {
-    this.model =  { company: { address: {} }, contact: {} };
+    this.model = { company: { address: {} }, contact: {} };
   }
 
 }
