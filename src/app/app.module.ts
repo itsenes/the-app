@@ -29,10 +29,13 @@ import { AccountSettingsComponent } from './features/account-settings/account-se
 import { ApiClient, API_BASE_URL } from './services/incontrl-apiclient';
 import { AppStateService } from './services/app-state.service';
 import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
+// forms
 import { CompanyFormComponent } from './features/forms/company-form/company-form.component';
+// dialogs
+import { SelectImageDialogComponent } from './common/dialogs/select-image-dialog/select-image-dialog.component';
 
 import { environment } from '../environments/environment';
-import { SelectImageDialogComponent } from './common/dialogs/select-image-dialog/select-image-dialog.component';
+
 
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
@@ -86,6 +89,7 @@ export const getApiUrl = function() {
     CompanyFormComponent,
     SelectImageDialogComponent
   ],
+  entryComponents: [SelectImageDialogComponent],
   imports: [
     HttpModule,
     RouterModule.forRoot(appRoutes),

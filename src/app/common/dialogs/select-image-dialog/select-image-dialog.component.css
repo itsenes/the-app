@@ -1,0 +1,22 @@
+label.dialog-title {
+    font-size:12px;
+    padding-bottom: 4px;
+}
+
+.image-preview {
+    width:128px;
+    height:128px;
+    padding:4px;
+    background: whitesmoke;
+}
+
+.mat-form-field {
+    width:100%;
+}
+
+hr {
+    color:whitesmoke;
+    opacity:0.2;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}

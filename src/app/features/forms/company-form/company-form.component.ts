@@ -67,8 +67,8 @@ export class CompanyFormComponent implements OnInit {
 
   openLogoDialog(): void {
     const dialogRef = this.dialog.open(SelectImageDialogComponent, {
-      width: '450px', height: '350px',
-      data: { imagepath: this.model.company.logoPath }
+      width: '550px',
+      data: { imagePath: this.model.company.logoPath }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -1,3 +1,17 @@
-<p>
-  select-image-dialog works!
-</p>
+<div fxLayout="column">
+  <label class="dialog-title">LOGO IMAGE</label>
+  <br />
+  <img class="image-preview">
+  <br />
+  <mat-form-field>
+    <!-- #imagePath='ngModel' [(ngModel)]='imagePath' -->
+    <input matInput name='imagePath' #imagePath placeholder="Image path" floatPlaceholder='auto' maxlength="250">
+    <mat-hint align="end">{{imagePath.value?.length || 0}}/250</mat-hint>
+  </mat-form-field>
+  <br />
+  <hr />
+  <span>
+    <button mat-button>OK</button>
+    <button mat-button>Cancel</button>
+  </span>
+</div>
