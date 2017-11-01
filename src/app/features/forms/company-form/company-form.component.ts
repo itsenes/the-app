@@ -6,16 +6,41 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['../forms.components.scss']
 })
 export class CompanyFormComponent implements OnInit {
-  private _data: any = { company: { address: {}},  contact: {} };
+  private _bak: any = null;
+  private _model: any = null;
+  private readonly = true;
   @Input()
-  set data(value: any) {
-    this._data = value;
+  set model(value: any) {
+    this._model = value;
   }
-  get data(): any { return this._data; }
+  get model(): any { return this._model; }
 
-  constructor() { }
+  toggle_edit_mode() {
+    this.readonly = !this.readonly;
+    if (!this.readonly) {
+      this.bak(this.model);
+    }
+  }
+
+  private bak(value: any) {
+    this._bak = value;
+  }
+
+  cancel() {
+    this.readonly = true;
+    this.model = this._bak;
+  }
+
+  save() {
+    this.readonly = true;
+    this.bak(this.model);
+  }
+
+  constructor() {
+   }
 
   ngOnInit() {
+    this.model =  { company: { address: {} }, contact: {} };
   }
 
 }

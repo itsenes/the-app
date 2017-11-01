@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.params_sub = this.route.params.subscribe((params) => {
       this.busy = true;
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
-        this.subscription = sub;
+        this.subscription = sub.model;
         this.busy = false;
       });
       // this.company = this.subscription.company.clone();

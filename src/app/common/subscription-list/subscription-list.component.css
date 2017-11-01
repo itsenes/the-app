@@ -16,6 +16,10 @@
   text-align: left;
 }
 
+.mat-mini-fab {
+  color: white;
+}
+
 .mat-list {
   width:100%;
 }
