@@ -11,19 +11,11 @@
   color: #1C1D21;
   line-height: 14px;
   opacity: 0.9;
+  padding-right: 4px;
 }
 
 .fab-icon-link {
   margin-right: 4px;
-}
-
-.list-container {
-  display: flex;
-  height: 90%;
-  width: 90%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 400px;
 }
 
 
@@ -57,7 +49,7 @@
 .action-card .mat-card-subtitle {
   color: #1C1D21;
   font-size: 16px;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .subscription-list-item {

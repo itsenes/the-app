@@ -40,7 +40,7 @@
 
 nav,
 aside {
-  height: 100%;
+  height: 100hv;
   padding-top: 6px;
   padding-left: 4px;
   padding-right: 4px;
@@ -82,13 +82,16 @@ article.mat-toolbar {
   padding-left: 8px;
 }
 
-// #main > nav, #main > aside {
-//     /* border-color: #8888bb; */
-// }
-// header, footer {
-//     /* border-color: #eebb55; */
-//     // background: #ffeebb;
-// }
 .shell-toolbar {
-  background-color: #FA646E;
+   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fa646e+0,f9c784+100 */
+   background: #fa646e;
+   /* Old browsers */
+   background: -moz-linear-gradient(-45deg, #fa646e 0%, #f9c784 100%);
+   /* FF3.6-15 */
+   background: -webkit-linear-gradient(-45deg, #fa646e 0%, #f9c784 100%);
+   /* Chrome10-25,Safari5.1-6 */
+   background: linear-gradient(135deg, #fa646e 0%, #f9c784 100%);
+   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa646e', endColorstr='#f9c784', GradientType=1);
+   /* IE6-9 fallback on horizontal gradient */
 }
