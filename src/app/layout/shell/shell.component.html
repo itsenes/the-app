@@ -1,5 +1,6 @@
 <!-- based on the mozilla holy-grail layout  -->
 <div class="app-container mat-app-background" [class.dark]="isDarkTheme">
+  <jaspero-alerts [defaultSettings]="alertSettings"></jaspero-alerts>
   <div class="app-layout box" fxLayout="column">
     <header fxHide fxShow.lt-sm>
       <mat-toolbar class="shell-toolbar">

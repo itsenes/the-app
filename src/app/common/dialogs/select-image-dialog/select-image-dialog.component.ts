@@ -9,6 +9,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class SelectImageDialogComponent {
   imagePath: any = '';
   constructor(public dialogRef: MatDialogRef<SelectImageDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-        this.imagePath = data.imagePath;
+    this.imagePath = data.imagePath;
+  }
+
+  ok() {
+    this.dialogRef.close(this.imagePath);
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 }

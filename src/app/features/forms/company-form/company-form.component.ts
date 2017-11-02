@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
+import { AlertsService } from '@jaspero/ng2-alerts';
 
 @Component({
   selector: 'app-company-form',
@@ -68,12 +69,16 @@ export class CompanyFormComponent implements OnInit {
   openLogoDialog(): void {
     const dialogRef = this.dialog.open(SelectImageDialogComponent, {
       width: '550px',
-      data: { imagePath: this.model.company.logoPath }
+      data: {
+        imagePath: this.model.company.logoPath
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
+      if (result != null) {
+        this.model.company.logoPath = result;
+      }
     });
   }
 

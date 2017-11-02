@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
+import { AlertSettings } from '@jaspero/ng2-alerts';
 
 const nav_width_collapsed = '65px;';
 const nav_width_extended = '240px;';
@@ -23,6 +24,12 @@ export class ShellComponent implements OnInit, OnDestroy {
   busy = false;
   private router_events_sub: any;
   private router_params_sub: any;
+  alertSettings: AlertSettings = {
+    overlay: true,
+    overlayClickToClose: true,
+    showCloseButton: false,
+    duration: 5000
+  };
   constructor(private appState: AppStateService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
     this.user = this.authService.currentUser().profile;
   }
