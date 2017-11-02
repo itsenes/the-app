@@ -52,11 +52,9 @@
           </mat-form-field>
 
           <mat-form-field class="short">
-            <mat-select [disabled]='readonly' name="currency" placeholder="Νόμισμα">
-              <mat-option value="option">EUR</mat-option>
-              <mat-option value="option">US DOLLAR</mat-option>
-              <mat-option value="option">YEN</mat-option>
-              <mat-option value="option">...</mat-option>
+            <mat-select [disabled]='readonly' name="currency" #currency="ngModel" [(ngModel)]='model.company.currencyCode' placeholder="Νόμισμα">
+              <mat-option value="">...</mat-option>
+              <mat-option *ngFor='let currency of currencies' [value]="currency.id">{{currency.description}}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -102,11 +100,9 @@
           </mat-form-field>
 
           <mat-form-field class="short" floatPlaceholder='auto' name="country" #country>
-            <mat-select [disabled]='readonly' placeholder="Χώρα">
-              <mat-option value="GR">Ελλάδα</mat-option>
-              <mat-option value="option">Αλλη χώρα</mat-option>
-              <mat-option value="option">YEN</mat-option>
-              <mat-option value="option">OTHER</mat-option>
+            <mat-select [disabled]='readonly' name="country" #currency="ngModel" [(ngModel)]='model.company.address.countryCode' placeholder="Νόμισμα">
+              <mat-option value="">...</mat-option>
+              <mat-option *ngFor='let country of countries' [value]="country.id">{{country.description}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AppStateService } from '../../../services/app-state.service';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
-import { AlertsService } from '@jaspero/ng2-alerts';
 
 @Component({
   selector: 'app-company-form',
@@ -14,14 +14,31 @@ import { AlertsService } from '@jaspero/ng2-alerts';
 export class CompanyFormComponent implements OnInit {
   private _bak: any = null;
   private _model: any = null;
-  private readonly = true;
+  public readonly = true;
+  private busy = false;
+  public currencies = [];
+  public countries = [];
+
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
-  set model(value: any) {
+  public set model(value: any) {
     this._model = value;
   }
-  get model(): any { return this._model; }
+  public get model(): any { return this._model; }
+
+  constructor(private apiClient: ApiClient, public dialog: MatDialog, private appState: AppStateService) {
+    this.model = { company: { address: {} }, contact: {} };
+  }
+
+  ngOnInit() {
+    this.appState.currencies.subscribe((items) => {
+      this.currencies = items;
+    });
+    this.appState.countries.subscribe((items) => {
+      this.countries = items;
+    });
+  }
 
   toggle_edit_mode() {
     this.readonly = !this.readonly;
@@ -81,12 +98,4 @@ export class CompanyFormComponent implements OnInit {
       }
     });
   }
-
-  constructor(private apiClient: ApiClient, public dialog: MatDialog) {
-    this.model = { company: { address: {} }, contact: {} };
-  }
-
-  ngOnInit() {
-  }
-
 }

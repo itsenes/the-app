@@ -34,7 +34,64 @@ export class ApiClient {
     /**
      * @return Success
      */
-    getCountries(page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<void> {
+    getLookup(lookupType: string, page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<ResultSetOfLookupEntry> {
+        let url_ = this.baseUrl + "/{lookupType}/lookup?";
+        if (lookupType === undefined || lookupType === null)
+            throw new Error("The parameter 'lookupType' must be defined.");
+        url_ = url_.replace("{lookupType}", encodeURIComponent("" + lookupType)); 
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (size !== undefined)
+            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (search !== undefined)
+            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_ : any) => {
+            return this.processGetLookup(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetLookup(response_);
+                } catch (e) {
+                    return <Observable<ResultSetOfLookupEntry>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<ResultSetOfLookupEntry>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetLookup(response: Response): Observable<ResultSetOfLookupEntry> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ResultSetOfLookupEntry.fromJS(resultData200) : new ResultSetOfLookupEntry();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<ResultSetOfLookupEntry>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getCountries(page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<ResultSetOfCountryInfo> {
         let url_ = this.baseUrl + "/countries?";
         if (page !== undefined)
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
@@ -50,6 +107,7 @@ export class ApiClient {
             method: "get",
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -60,31 +118,34 @@ export class ApiClient {
                 try {
                     return this.processGetCountries(response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<ResultSetOfCountryInfo>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<ResultSetOfCountryInfo>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetCountries(response: Response): Observable<void> {
+    protected processGetCountries(response: Response): Observable<ResultSetOfCountryInfo> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
         if (status === 200) {
             const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ResultSetOfCountryInfo.fromJS(resultData200) : new ResultSetOfCountryInfo();
+            return Observable.of(result200);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<ResultSetOfCountryInfo>(<any>null);
     }
 
     /**
      * @return Success
      */
-    getCurrencies(page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<void> {
+    getCurrencies(page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<ResultSetOfCurrencyInfo> {
         let url_ = this.baseUrl + "/currencies?";
         if (page !== undefined)
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
@@ -100,6 +161,7 @@ export class ApiClient {
             method: "get",
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -110,25 +172,28 @@ export class ApiClient {
                 try {
                     return this.processGetCurrencies(response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<ResultSetOfCurrencyInfo>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<ResultSetOfCurrencyInfo>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetCurrencies(response: Response): Observable<void> {
+    protected processGetCurrencies(response: Response): Observable<ResultSetOfCurrencyInfo> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
         if (status === 200) {
             const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ResultSetOfCurrencyInfo.fromJS(resultData200) : new ResultSetOfCurrencyInfo();
+            return Observable.of(result200);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<ResultSetOfCurrencyInfo>(<any>null);
     }
 
     /**
@@ -4118,7 +4183,7 @@ export class ApiClient {
     /**
      * @return Success
      */
-    getTimeZones(page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<void> {
+    getTimeZones(page?: number | null, size?: number | null, sort?: string | null, search?: string | null): Observable<ResultSetOfTimeZone> {
         let url_ = this.baseUrl + "/timezones?";
         if (page !== undefined)
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
@@ -4134,6 +4199,7 @@ export class ApiClient {
             method: "get",
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -4144,31 +4210,34 @@ export class ApiClient {
                 try {
                     return this.processGetTimeZones(response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<ResultSetOfTimeZone>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<ResultSetOfTimeZone>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetTimeZones(response: Response): Observable<void> {
+    protected processGetTimeZones(response: Response): Observable<ResultSetOfTimeZone> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
         if (status === 200) {
             const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ResultSetOfTimeZone.fromJS(resultData200) : new ResultSetOfTimeZone();
+            return Observable.of(result200);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<ResultSetOfTimeZone>(<any>null);
     }
 
     /**
      * @return Success
      */
-    getTimeZoneById(zoneId: string): Observable<void> {
+    getTimeZoneById(zoneId: string): Observable<TimeZone> {
         let url_ = this.baseUrl + "/timezones/{zoneId}";
         if (zoneId === undefined || zoneId === null)
             throw new Error("The parameter 'zoneId' must be defined.");
@@ -4179,6 +4248,7 @@ export class ApiClient {
             method: "get",
             headers: new Headers({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -4189,67 +4259,300 @@ export class ApiClient {
                 try {
                     return this.processGetTimeZoneById(response_);
                 } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
+                    return <Observable<TimeZone>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<void>><any>Observable.throw(response_);
+                return <Observable<TimeZone>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetTimeZoneById(response: Response): Observable<void> {
+    protected processGetTimeZoneById(response: Response): Observable<TimeZone> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
         if (status === 200) {
             const _responseText = response.text();
-            return Observable.of<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TimeZone.fromJS(resultData200) : new TimeZone();
+            return Observable.of(result200);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<void>(<any>null);
+        return Observable.of<TimeZone>(<any>null);
     }
+}
 
-    /**
-     * @return Success
-     */
-    getTimeZonesLookup(): Observable<void> {
-        let url_ = this.baseUrl + "/timezones/lookup";
-        url_ = url_.replace(/[?&]$/, "");
+export class ResultSetOfLookupEntry {
+    count?: number | undefined;
+    items?: LookupEntry[] | undefined;
 
-        let options_ : any = {
-            method: "get",
-            headers: new Headers({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
-            return this.processGetTimeZonesLookup(response_);
-        }).catch((response_: any) => {
-            if (response_ instanceof Response) {
-                try {
-                    return this.processGetTimeZonesLookup(response_);
-                } catch (e) {
-                    return <Observable<void>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<void>><any>Observable.throw(response_);
-        });
-    }
-
-    protected processGetTimeZonesLookup(response: Response): Observable<void> {
-        const status = response.status; 
-
-        let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            return Observable.of<void>(<any>null);
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+    init(data?: any) {
+        if (data) {
+            this.count = data["count"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(LookupEntry.fromJS(item));
+            }
         }
-        return Observable.of<void>(<any>null);
+    }
+
+    static fromJS(data: any): ResultSetOfLookupEntry {
+        let result = new ResultSetOfLookupEntry();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["count"] = this.count;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new ResultSetOfLookupEntry();
+        result.init(json);
+        return result;
+    }
+}
+
+export class LookupEntry {
+    id?: string | undefined;
+    description?: string | undefined;
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.description = data["description"];
+        }
+    }
+
+    static fromJS(data: any): LookupEntry {
+        let result = new LookupEntry();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["description"] = this.description;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new LookupEntry();
+        result.init(json);
+        return result;
+    }
+}
+
+export class ResultSetOfCountryInfo {
+    count?: number | undefined;
+    items?: Country[] | undefined;
+
+    init(data?: any) {
+        if (data) {
+            this.count = data["count"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(Country.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ResultSetOfCountryInfo {
+        let result = new ResultSetOfCountryInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["count"] = this.count;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new ResultSetOfCountryInfo();
+        result.init(json);
+        return result;
+    }
+}
+
+export class Country {
+    readonly name?: string | undefined;
+    readonly twoLetterCode?: string | undefined;
+    readonly twoLetterLanguageCode?: string | undefined;
+    readonly numericCode?: number | undefined;
+    readonly locale?: string | undefined;
+
+    init(data?: any) {
+        if (data) {
+            (<any>this).name = data["name"];
+            (<any>this).twoLetterCode = data["twoLetterCode"];
+            (<any>this).twoLetterLanguageCode = data["twoLetterLanguageCode"];
+            (<any>this).numericCode = data["numericCode"];
+            (<any>this).locale = data["locale"];
+        }
+    }
+
+    static fromJS(data: any): Country {
+        let result = new Country();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["twoLetterCode"] = this.twoLetterCode;
+        data["twoLetterLanguageCode"] = this.twoLetterLanguageCode;
+        data["numericCode"] = this.numericCode;
+        data["locale"] = this.locale;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new Country();
+        result.init(json);
+        return result;
+    }
+}
+
+export class ResultSetOfCurrencyInfo {
+    count?: number | undefined;
+    items?: Currency[] | undefined;
+
+    init(data?: any) {
+        if (data) {
+            this.count = data["count"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(Currency.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ResultSetOfCurrencyInfo {
+        let result = new ResultSetOfCurrencyInfo();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["count"] = this.count;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new ResultSetOfCurrencyInfo();
+        result.init(json);
+        return result;
+    }
+}
+
+export class Currency {
+    readonly name?: string | undefined;
+    readonly nativeName?: string | undefined;
+    readonly symbol?: string | undefined;
+    readonly alignRight?: boolean | undefined;
+    readonly isoSymbol?: string | undefined;
+    readonly fraction?: Fraction | undefined;
+
+    init(data?: any) {
+        if (data) {
+            (<any>this).name = data["name"];
+            (<any>this).nativeName = data["nativeName"];
+            (<any>this).symbol = data["symbol"];
+            (<any>this).alignRight = data["alignRight"];
+            (<any>this).isoSymbol = data["isoSymbol"];
+            (<any>this).fraction = data["fraction"] ? Fraction.fromJS(data["fraction"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Currency {
+        let result = new Currency();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["nativeName"] = this.nativeName;
+        data["symbol"] = this.symbol;
+        data["alignRight"] = this.alignRight;
+        data["isoSymbol"] = this.isoSymbol;
+        data["fraction"] = this.fraction ? this.fraction.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new Currency();
+        result.init(json);
+        return result;
+    }
+}
+
+export class Fraction {
+    readonly name?: string | undefined;
+    readonly symbol?: string | undefined;
+    readonly denominator?: number | undefined;
+
+    init(data?: any) {
+        if (data) {
+            (<any>this).name = data["name"];
+            (<any>this).symbol = data["symbol"];
+            (<any>this).denominator = data["denominator"];
+        }
+    }
+
+    static fromJS(data: any): Fraction {
+        let result = new Fraction();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["symbol"] = this.symbol;
+        data["denominator"] = this.denominator;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new Fraction();
+        result.init(json);
+        return result;
     }
 }
 
@@ -6949,6 +7252,96 @@ export class UpdateSubscriptionTimeZoneRequest {
     clone() {
         const json = this.toJSON();
         let result = new UpdateSubscriptionTimeZoneRequest();
+        result.init(json);
+        return result;
+    }
+}
+
+export class ResultSetOfTimeZone {
+    count?: number | undefined;
+    items?: TimeZone[] | undefined;
+
+    init(data?: any) {
+        if (data) {
+            this.count = data["count"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(TimeZone.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ResultSetOfTimeZone {
+        let result = new ResultSetOfTimeZone();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["count"] = this.count;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new ResultSetOfTimeZone();
+        result.init(json);
+        return result;
+    }
+}
+
+export class TimeZone {
+    readonly baseUtcOffset?: string | undefined;
+    readonly id?: string | undefined;
+    readonly standardName?: string | undefined;
+    readonly daylightName?: string | undefined;
+    readonly latitude?: number | undefined;
+    readonly longitude?: number | undefined;
+    readonly countryName?: string | undefined;
+    displayName?: string | undefined;
+
+    init(data?: any) {
+        if (data) {
+            (<any>this).baseUtcOffset = data["baseUtcOffset"];
+            (<any>this).id = data["id"];
+            (<any>this).standardName = data["standardName"];
+            (<any>this).daylightName = data["daylightName"];
+            (<any>this).latitude = data["latitude"];
+            (<any>this).longitude = data["longitude"];
+            (<any>this).countryName = data["countryName"];
+            this.displayName = data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): TimeZone {
+        let result = new TimeZone();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["baseUtcOffset"] = this.baseUtcOffset;
+        data["id"] = this.id;
+        data["standardName"] = this.standardName;
+        data["daylightName"] = this.daylightName;
+        data["latitude"] = this.latitude;
+        data["longitude"] = this.longitude;
+        data["countryName"] = this.countryName;
+        data["displayName"] = this.displayName;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new TimeZone();
         result.init(json);
         return result;
     }

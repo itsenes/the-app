@@ -28,7 +28,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     overlay: true,
     overlayClickToClose: true,
     showCloseButton: false,
-    duration: 5000
+    duration: 3000
   };
   constructor(private appState: AppStateService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
     this.user = this.authService.currentUser().profile;

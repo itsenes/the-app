@@ -1,5 +1,5 @@
 import { Component, Injectable, Inject, Injector } from '@angular/core';
-import { ApiClient, Subscription } from './incontrl-apiclient';
+import { ApiClient, Subscription, LookupEntry } from './incontrl-apiclient';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { environment } from '../../environments/environment';
@@ -9,9 +9,75 @@ export class AppStateService {
   private _subscriptions: SubscriptionViewModel[] = null;
   private _current_subscription: SubscriptionViewModel = null;
   private _current_subscriptionkey: any = null;
+  private _countries: LookupEntry[] = null;
+  private _currencies: LookupEntry[] = null;
+  private _timezones: LookupEntry[] = null;
 
   public get current_subscriptionkey(): string {
     return this._current_subscriptionkey;
+  }
+
+  public get countries(): Observable<LookupEntry[]> {
+    if (null === this._countries) {
+      return this.loadCountries();
+    } else {
+      return Observable.create((observer) => {
+        observer.next(this._countries);
+        observer.complete();
+      });
+    }
+  }
+
+  loadCountries(): Observable<LookupEntry[]> {
+    const observable = this.apiClient.getLookup('countries').map((response) => {
+      this._countries = response.items.map((item) => {
+        return item;
+      });
+      return this._countries;
+    });
+    return observable;
+  }
+
+  public get currencies(): Observable<any[]> {
+    if (null === this._currencies) {
+      return this.loadCurrencies();
+    } else {
+      return Observable.create((observer) => {
+        observer.next(this._currencies);
+        observer.complete();
+      });
+    }
+  }
+
+  loadCurrencies(): Observable<LookupEntry[]> {
+    const observable = this.apiClient.getLookup('currencies').map((response) => {
+      this._countries = response.items.map((item) => {
+        return item;
+      });
+      return this._countries;
+    });
+    return observable;
+  }
+
+  public get timezones(): Observable<any[]> {
+    if (null === this._timezones) {
+      return this.loadTimezones();
+    } else {
+      return Observable.create((observer) => {
+        observer.next(this._timezones);
+        observer.complete();
+      });
+    }
+  }
+
+  loadTimezones(): Observable<LookupEntry[]> {
+    const observable = this.apiClient.getLookup('timezones').map((response) => {
+      this._countries = response.items.map((item) => {
+        return item;
+      });
+      return this._countries;
+    });
+    return observable;
   }
 
   public get subscriptions(): Observable<SubscriptionViewModel[]> {
