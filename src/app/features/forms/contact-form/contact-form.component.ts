@@ -6,14 +6,13 @@ import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/i
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
 
+
 @Component({
-  selector: 'app-company-form',
-  templateUrl: './company-form.component.html',
+  selector: 'app-contact-form',
+  templateUrl: './contact-form.component.html',
   styleUrls: ['../forms.components.scss']
 })
-
-
-export class CompanyFormComponent implements OnInit, OnDestroy {
+export class ContactFormComponent implements OnInit {
   subscription_key: any = null;
   private _bak: any = null;
   private _model: any = null;

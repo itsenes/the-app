@@ -81,23 +81,10 @@ button.mat-toolbar.form-toolbar {
   height: 60px;
 }
 
-.mat-card.mat-card-account {
-  padding-top: 0px;
-  background: none;
-  color: black;
-  padding: 0px;
-}
-
 .fab-icon-link {
   margin-right: 4px;
 }
 
-.mat-card.form-card {
-  //color: #1C1D21;
-  //font-size: 16px;
-  margin-top: 10px;
-  width: 60%;
-}
 
 .mat-card-title {
   display: flex;
@@ -123,10 +110,6 @@ button label.small {
 .mat-icon.form-button-icon {
   margin-left:-6px;
   color:white;
-}
-
-.mat-tab.mat-grid-list {
-  margin-top: -20px;
 }
 
 .mat-form-field {

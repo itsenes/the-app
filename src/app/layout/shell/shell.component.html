@@ -2,6 +2,7 @@
 <div class="app-container mat-app-background" [class.dark]="isDarkTheme">
   <jaspero-alerts [defaultSettings]="alertSettings"></jaspero-alerts>
   <div class="app-layout box" fxLayout="column">
+    <ng-progress showSpinner="false" [toggle]="busy"></ng-progress>
     <header fxHide fxShow.lt-sm>
       <mat-toolbar class="shell-toolbar">
         <img class="icon" src="assets/images/incontrl_icon_transparent_white.png" />

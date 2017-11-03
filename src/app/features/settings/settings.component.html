@@ -1,46 +1,44 @@
 <mat-toolbar class="view-header">
-  <span class="title">ΡΥΘΜΙΣΕΙΣ</span>
+  <span class="title">ΡΥΘΜΙΣΕΙΣ ΣΥΝΔΡΟΜΗΣ</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
-
-  <!-- <span class="caption">user@domain.com</span> -->
 </mat-toolbar>
 
-<div class="view-content">
-  <mat-tab-group>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>business</mat-icon>&nbsp;Εταιρεία
-      </ng-template>
-      <app-company-form [model]='subscription' (model_changed)='subscription_changed($event)'></app-company-form>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>folder</mat-icon>&nbsp;Τύποι εγγράφων
-      </ng-template>
-
-      <h1>Some more tab content</h1>
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis
-        vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur
-        felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum
-        enim, vel tempor sapien arcu a tellus.
-      </div>
-
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <i class="material-icons">shopping_cart</i>&nbsp;Προϊοντα-Υπηρεσίες
-      </ng-template>
-
-      <h1>Some more tab content</h1>
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis
-        vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur
-        felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum
-        enim, vel tempor sapien arcu a tellus.
-      </div>
-
-    </mat-tab>
-  </mat-tab-group>
+<div class="view-content" flLayout="row" flLayoutAlign="start start">
+  <mat-card class="action-card" fxFlex="20">
+    <mat-card-header>
+      <img mat-card-avatar [src]="subscription.company.logoPath" class="avatar-large" />
+      <mat-card-title>
+        {{subscription.company.name}}
+        <br /> {{subscription.company.legalName}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-subtitle>{{subscription.contact.firstName}} {{subscription.contact.lastName}} </mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions>
+      <a routerLink="company" routerLinkActive="active-route" mat-button color="primary">
+        <mat-icon>business</mat-icon>
+        <label>Στοιχεία Επιχείρησης</label>
+      </a>
+      <a routerLink="contact" routerLinkActive="active-route" mat-button color="primary">
+        <mat-icon>person</mat-icon>
+        <label>Στοιχεία Επικοινωνίας</label>
+      </a>
+      <a routerLink="document-types" routerLinkActive="active-route" mat-button color="primary">
+        <mat-icon class="orange">folder</mat-icon>
+        <label>Τύποι εγγράφων - παραστατικών</label>
+      </a>
+      <a routerLink="items" routerLinkActive="active-route" mat-button color="primary">
+        <mat-icon>apps</mat-icon>
+        <label>Προϊόντα - Υπηρεσίες</label>
+      </a>
+      <!-- malakia -->
+      <br/><br/>
+    </mat-card-actions>
+  </mat-card>
+  <div fxFlex="60">
+    <router-outlet></router-outlet>
+  </div>
+  <!-- <app-company-form fxFlex="60" [model]='subscription' (model_changed)='subscription_changed($event)'></app-company-form> -->
 </div>

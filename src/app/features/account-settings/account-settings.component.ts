@@ -4,7 +4,7 @@ import { AppStateService } from '../../services/app-state.service';
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
-  styleUrls: ['./account-settings.component.scss']
+  styleUrls: ['./account-settings.component.scss', '../features.components.scss']
 })
 export class AccountSettingsComponent implements OnInit {
   user = null;

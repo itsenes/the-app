@@ -95,3 +95,20 @@ article.mat-toolbar {
    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa646e', endColorstr='#f9c784', GradientType=1);
    /* IE6-9 fallback on horizontal gradient */
 }
+
+
+.mat-progress-bar{
+  display:block;
+  height:3px;
+  overflow:hidden;
+  position:absolute;
+  transform:translateZ(0);
+  transition:opacity 250ms linear;
+  width:100%
+}
+
+.mat-progress-bar .hidden{
+  display:none;
+}
+  
+  

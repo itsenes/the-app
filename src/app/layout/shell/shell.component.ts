@@ -3,6 +3,7 @@ import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular
 import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
 import { AlertSettings } from '@jaspero/ng2-alerts';
+import { NgProgress } from 'ngx-progressbar';
 
 const nav_width_collapsed = '65px;';
 const nav_width_extended = '240px;';
@@ -21,7 +22,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   user = null;
   navLinks = [];
   subscription = null;
-  busy = false;
+  public busy = false;
   private router_events_sub: any;
   private router_params_sub: any;
   alertSettings: AlertSettings = {
@@ -30,7 +31,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     showCloseButton: false,
     duration: 3000
   };
-  constructor(private appState: AppStateService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+  constructor(private appState: AppStateService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private ngProgress: NgProgress) {
     this.user = this.authService.currentUser().profile;
   }
 
@@ -79,10 +80,12 @@ export class ShellComponent implements OnInit, OnDestroy {
           console.log(event);
           if (event instanceof NavigationStart) {
             this.busy = true;
+            //this.ngProgress.start();
             console.log('Shell NavigationStart:', event);
           } else if (event instanceof NavigationEnd) {
-            console.log('Shell NavigationStart:', event);
             this.busy = false;
+            console.log('Shell NavigationEnd:', event);
+            //this.ngProgress.done();
           }
         });
     });

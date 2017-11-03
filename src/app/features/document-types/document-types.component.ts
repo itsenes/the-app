@@ -1,19 +1,18 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
-import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
+import { AppStateService } from '../../services/app-state.service';
+import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
+import { SelectImageDialogComponent } from '../../common/dialogs/select-image-dialog/select-image-dialog.component';
+
 
 @Component({
-  selector: 'app-company-form',
-  templateUrl: './company-form.component.html',
-  styleUrls: ['../forms.components.scss']
+  selector: 'app-document-types',
+  templateUrl: './document-types.component.html',
+  styleUrls: ['./document-types.component.css']
 })
-
-
-export class CompanyFormComponent implements OnInit, OnDestroy {
+export class DocumentTypesComponent implements OnInit, OnDestroy {
   subscription_key: any = null;
   private _bak: any = null;
   private _model: any = null;
@@ -34,7 +33,7 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
     private apiClient: ApiClient) {
-    this.model = { company: { address: {} }, contact: {} };
+    this.model = [];
   }
 
   ngOnInit() {
@@ -48,13 +47,14 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
-          this.model = sub.model.clone();
+          this.model = sub;
+          // this.model = sub.model.clone();
         });
     });
   }
 
   ngOnDestroy() {
-    // this.params_sub.unsubscribe();
+    this.params_sub.unsubscribe();
   }
 
   toggle_edit_mode() {

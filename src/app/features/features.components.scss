@@ -1,0 +1,28 @@
+.action-card {
+    height: 90%;
+    width: 98%;
+    background-color: white;
+    color: #1C1D21;
+    line-height: 14px;
+    opacity: 0.9;
+    margin-right: 10px;
+}  
+
+.mat-card-avatar.avatar-large {
+    height: 64px;
+    width: 64px;
+    border-radius: 0%;
+}
+  
+.label-small {
+    font-size: 12px;
+    opacity: 0.8;
+}
+  
+.mat-card-title {
+    margin-top: 12px;
+}
+
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button {
+    margin: 0px;
+}
