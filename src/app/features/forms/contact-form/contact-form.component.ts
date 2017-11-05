@@ -2,9 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
+import { ApiClient, Contact, Address, UpdateContactRequest } from '../../../services/incontrl-apiclient';
 
 
 @Component({
@@ -12,7 +10,7 @@ import { SelectImageDialogComponent } from '../../../common/dialogs/select-image
   templateUrl: './contact-form.component.html',
   styleUrls: ['../forms.components.scss']
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent implements OnInit, OnDestroy {
   subscription_key: any = null;
   private _bak: any = null;
   private _model: any = null;
@@ -22,18 +20,19 @@ export class ContactFormComponent implements OnInit {
   public countries = [];
   params_sub: any = null;
 
-  // @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
-  // @Input()
-  public set model(value: any) {
+  @Input()
+  public set model(value: Contact) {
     this._model = value;
   }
-  public get model(): any { return this._model; }
+  public get model(): Contact { return this._model; }
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
-    public dialog: MatDialog, private appState: AppStateService,
+    private appState: AppStateService,
     private apiClient: ApiClient) {
-    this.model = { company: { address: {} }, contact: {} };
+    this.model = new Contact();
+    this.model.address = new Address();
   }
 
   ngOnInit() {
@@ -47,13 +46,17 @@ export class ContactFormComponent implements OnInit {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
-          this.model = sub.model.clone();
+          const contact = sub.model.contact.clone();
+          if (null == contact.address) {
+            contact.address = new Address();
+          }
+          this.model = contact;
         });
     });
   }
 
   ngOnDestroy() {
-    // this.params_sub.unsubscribe();
+    this.params_sub.unsubscribe();
   }
 
   toggle_edit_mode() {
@@ -74,20 +77,20 @@ export class ContactFormComponent implements OnInit {
 
   save() {
     this.readonly = true;
-    const request: UpdateSubscriptionCompanyRequest = new UpdateSubscriptionCompanyRequest();
-    request.logoPath = this.model.company.logoPath;
-    request.code = this.model.company.code;
-    request.currencyCode = this.model.company.currencyCode;
-    request.legalName = this.model.company.legalName;
-    request.name = this.model.company.name;
-    request.lineOfBusiness = this.model.company.lineOfBusiness;
-    request.taxCode = this.model.company.taxCode;
-    request.taxOffice = this.model.company.taxOffice;
-    request.notes = this.model.company.notes;
-    request.email = this.model.company.email;
-    request.website = this.model.company.website;
-    request.address = this.model.company.address;
-    this.apiClient.updateSubscriptionCompany(this.model.id, request).subscribe((company) => {
+    const request: UpdateContactRequest = new UpdateContactRequest();
+    // request.logoPath = this.model.company.logoPath;
+    // request.code = this.model.company.code;
+    // request.currencyCode = this.model.company.currencyCode;
+    // request.legalName = this.model.company.legalName;
+    // request.name = this.model.company.name;
+    // request.lineOfBusiness = this.model.company.lineOfBusiness;
+    // request.taxCode = this.model.company.taxCode;
+    // request.taxOffice = this.model.company.taxOffice;
+    request.notes = this.model.notes;
+    request.email = this.model.email;
+    // request.website = this.model.company.website;
+    request.address = this.model.address;
+    this.apiClient.updateSubscriptionContact(this.model.id, request).subscribe((company) => {
       // create a new backup copy
       this.bak(this.model);
       this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
@@ -97,22 +100,6 @@ export class ContactFormComponent implements OnInit {
     }, (error) => {
       console.log(error);
       alert(error);
-    });
-  }
-
-  openLogoDialog(): void {
-    const dialogRef = this.dialog.open(SelectImageDialogComponent, {
-      width: '550px',
-      data: {
-        imagePath: this.model.company.logoPath
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result != null) {
-        this.model.company.logoPath = result;
-      }
     });
   }
 }

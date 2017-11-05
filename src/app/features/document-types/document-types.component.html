@@ -1,119 +1,52 @@
-<mat-grid-list [cols]="4" rowHeight="280" gutterSize="4">
-  <mat-grid-tile *ngFor="let doc of model.document_types | async">
-    <button mat-button>
-      <mat-card class="action-card">
-        <mat-card-header>
-          <mat-card-title class="action-card-title">
-            {{doc.name}}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-icon color="primary" class="size-64">folder</mat-icon>
-          <!-- <span mat-card-avatar class="folder-count-badge accent">
-          <p class="folder-count">{{doc.count}}</p>
-        </span> -->
-          <mat-card-subtitle>{{doc.notes}}.</mat-card-subtitle>
-        </mat-card-content>
-        <mat-card-actions>
-          <a mat-button color="primary" [routerLink]="doc.search_path">
-            <mat-icon>search</mat-icon>
-            <label fxShow fxHide.sm fxHide.md>Αναζήτηση</label>
-          </a>
-          <a mat-button color="primary" [routerLink]="doc.addnew_path">
-            <mat-icon>add_circle</mat-icon>
-            <label fxShow fxHide.sm fxHide.md>Προσθήκη</label>
-          </a>
-        </mat-card-actions>
-      </mat-card>
+<mat-card class="action-card">
+  <mat-card-title>
+    <label class="small">Τύποι εγγράφων και παραστατικών</label>
+    <span class="app-toolbar-filler"></span>
+    <!-- <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
+      <mat-icon class="form-button-icon">edit</mat-icon>
+    </button> -->
+    <button (click)="cancel()" mat-button color="primary">
+      <label class="small">ΝΕΟΣ ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ</label>
     </button>
-  </mat-grid-tile>
-  <!-- <mat-grid-tile>
-    <mat-card class="action-card  mat-elevation-z6">
-      <mat-card-content>
-        <mat-card-title>
-          Συνεργάτες
-        </mat-card-title>
-        <mat-icon class="size-64">contacts</mat-icon>
-        <span mat-card-avatar class="folder-count-badge accent">
-          <p class="folder-count">60</p>
-        </span>
-        <mat-card-subtitle>Ευρετήριο συνεργατών : πελάτες, προμηθευτές και επαφές.</mat-card-subtitle>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>
-          <mat-icon>search</mat-icon> Αναζήτηση
-        </button>
-        <button mat-button>
-          <mat-icon>add_circle</mat-icon> Προσθήκη
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card class="action-card  mat-elevation-z6">
-      <mat-card-content>
-        <mat-card-title>
-          Power BI
-        </mat-card-title>
-        <mat-icon class="size-64 powerbi">insert_chart</mat-icon>
-        <mat-card-subtitle>Go from data to insights in minutes.</mat-card-subtitle>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>
-          <mat-icon>insert_chart</mat-icon> Ξεκινήστε εδώ!
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card class="action-card  mat-elevation-z6">
-      <mat-card-content>
-        <mat-card-title>
-          Ιστορικό
-        </mat-card-title>
-        <mat-icon class="size-64">update</mat-icon>
-        <mat-card-subtitle>Αναζητήστε στο ιστορικό ενεργειών.</mat-card-subtitle>
-      </mat-card-content>
-      <mat-card-actions>
-        <a mat-button routerLink="/app/history" routerLinkActive="active-route">
-          <mat-icon>search</mat-icon> Αναζήτηση
+    <!-- <button *ngIf='!readonly' (click)="cancel()" mat-button color="warn">
+      <label class="small">ΑΚΥΡΩΣΗ</label>
+    </button> -->
+  </mat-card-title>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item class="subscription-list-item" *ngFor="let doc of model.document_types | async">
+        <!-- <img matListAvatar class="user-avatar-large" src="{{subscription.company_logo}}" alt="{{subscription.id}}"> -->
+        <mat-icon color="primary" class="size-128">folder</mat-icon>
+        <h2 matLine>{{doc.name}}</h2>
+        <p matLine>
+          <!-- <span class="label-small">{{subscription.company.legalName}}</span> -->
+          <br />
+          <!-- <span>{{subscription.company.lineOfBusiness}}</span> -->
+          <br/>
+          <!-- <span>{{subscription.company.taxCode}},{{subscription.company.taxOffice}}</span> -->
+          <br/>
+          <!-- <span>{{subscription.company.email}}, {{subscription.company.website}}</span> -->
+        </p>
+        <br />
+        <!-- <h2 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h2> -->
+        <p matLine>
+          <!-- <span>{{subscription.contact.email}}, {{subscription.contact.phone1}}, {{subscription.contact.skype}}</span> -->
+        </p>
+        <a mat-mini-fab class="fab-icon-link" class="fab-icon-link" color="warn" routerLink="subscription.settings_path">
+          <mat-icon>edit</mat-icon>
         </a>
-      </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile> -->
-  <mat-grid-tile>
-    <mat-card class="action-card">
-      <mat-card-header>
-        <mat-card-title class="action-card-title">
-          Ρυθμίσεις
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-icon class="size-64">settings</mat-icon>
-        <mat-card-subtitle>Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.</mat-card-subtitle>
-      </mat-card-content>
-      <mat-card-actions>
-        <a mat-button color="primary" [routerLink]="model.settings_path" routerLinkActive="active-route">
-          <mat-icon>settings</mat-icon>
-          <label fxShow fxHide.sm fxHide.md>Ξεκινήστε εδώ!</label>
+        <!-- <a mat-mini-fab [routerLink]="subscription.home_path" class="fab-icon-link" color="warn">
+          <mat-icon>screen_share</mat-icon>
+        </a> -->
+        <a mat-button color="primary" [routerLink]="doc.search_path">
+          <mat-icon>search</mat-icon>
+          <label fxShow fxHide.sm fxHide.md>Αναζήτηση</label>
         </a>
-      </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile>
-  <!-- <mat-grid-tile>
-    <mat-card class="action-card  mat-elevation-z6">
-      <mat-card-content>
-        <mat-card-title>
-          Εφαρμογές
-        </mat-card-title>
-        <mat-icon class="size-64">widgets</mat-icon>
-        <mat-card-subtitle>Προσθήκη λειτουργικότητας και διασυνδέσεων</mat-card-subtitle>
-      </mat-card-content>
-      <mat-card-actions>
-        <a mat-button routerLink="/app/store" routerLinkActive="active-route">
-          <mat-icon>widgets</mat-icon> Ξεκινήστε εδώ!
+        <a mat-button color="primary" [routerLink]="doc.addnew_path">
+          <mat-icon>add_circle</mat-icon>
+          <label fxShow fxHide.sm fxHide.md>Προσθήκη</label>
         </a>
-      </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile> -->
-</mat-grid-list>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
