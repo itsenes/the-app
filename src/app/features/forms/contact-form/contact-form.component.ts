@@ -12,11 +12,11 @@ import { ApiClient, Contact, Address, UpdateContactRequest } from '../../../serv
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   subscription_key: any = null;
+  subscription_id: any = null;
   private _bak: any = null;
   private _model: any = null;
   public readonly = true;
   private busy = false;
-  public currencies = [];
   public countries = [];
   params_sub: any = null;
 
@@ -36,9 +36,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.appState.currencies.subscribe((items) => {
-      this.currencies = items;
-    });
     this.appState.countries.subscribe((items) => {
       this.countries = items;
     });
@@ -46,6 +43,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
+          this.subscription_id = sub.id;
           const contact = sub.model.contact.clone();
           if (null == contact.address) {
             contact.address = new Address();
@@ -78,28 +76,26 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   save() {
     this.readonly = true;
     const request: UpdateContactRequest = new UpdateContactRequest();
-    // request.logoPath = this.model.company.logoPath;
-    // request.code = this.model.company.code;
-    // request.currencyCode = this.model.company.currencyCode;
-    // request.legalName = this.model.company.legalName;
-    // request.name = this.model.company.name;
-    // request.lineOfBusiness = this.model.company.lineOfBusiness;
-    // request.taxCode = this.model.company.taxCode;
-    // request.taxOffice = this.model.company.taxOffice;
-    request.notes = this.model.notes;
+    request.firstName = this.model.firstName;
+    request.lastName = this.model.lastName;
     request.email = this.model.email;
-    // request.website = this.model.company.website;
+    request.phone1 = this.model.phone1;
+    request.phone2 = this.model.phone2;
+    request.skype = this.model.skype;
+    request.notes = this.model.notes;
     request.address = this.model.address;
-    this.apiClient.updateSubscriptionContact(this.model.id, request).subscribe((company) => {
+    this.apiClient.updateSubscriptionContact(this.subscription_id, request).subscribe((company) => {
       // create a new backup copy
       this.bak(this.model);
       this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
-        sub.model = this.model;
+        sub.model.contact = this.model;
         this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
       });
     }, (error) => {
       console.log(error);
-      alert(error);
+      this.alertsService.create('error', 'Σφάλμα κατα την αποθήκευση! Μύνημα συστήματος: ' + error);
+      // keep on editing...
+      this.readonly = false;
     });
   }
 }

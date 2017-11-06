@@ -27,7 +27,7 @@
         </mat-form-field>
   
         <mat-form-field>
-          <input matInput [readonly]='readonly' #contactemail="ngModel" name="contactemail" [(ngModel)]='model.email' placeholder="Email"
+          <input matInput="email" [readonly]='readonly' #contactemail="ngModel" name="contactemail" [(ngModel)]='model.email' placeholder="Email"
             floatPlaceholder='auto' maxlength="150">
           <mat-hint *ngIf='!readonly' align="end">{{contactemail.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
@@ -50,9 +50,9 @@
           <mat-hint *ngIf='!readonly' align="end">{{skype.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="short">
-          <input matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.notes' placeholder="Σχόλια"
-            floatPlaceholder='auto' maxlength="150">
+        <mat-form-field>
+          <textarea matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.notes' placeholder="Σχόλια"
+            floatPlaceholder='auto' maxlength="150"></textarea>
           <mat-hint *ngIf='!readonly' align="end">{{notes.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
   
@@ -108,8 +108,8 @@
         </mat-form-field>
   
         <mat-form-field>
-          <input matInput [readonly]='readonly' #addressnotes="ngModel" name="addressnotes" [(ngModel)]='model.address.notes' placeholder="Σχόλια"
-            floatPlaceholder='auto' maxlength="150">
+          <textarea  matInput [readonly]='readonly' #addressnotes="ngModel" name="addressnotes" [(ngModel)]='model.address.notes' placeholder="Σχόλια"
+            floatPlaceholder='auto' maxlength="150"></textarea>
           <mat-hint *ngIf='!readonly' align="end">{{addressnotes.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
       </div>
