@@ -10,3 +10,25 @@
     <app-document-type-form (onDelete)='delete($event,i)' *ngFor="let doc of model.document_types | async; let i = index" [model]='doc.model'></app-document-type-form>
   </mat-card-content>
 </mat-card>
+
+<!-- <mat-card class="action-card" fxFlex="60">
+  <mat-card-header>
+    <mat-card-title>ΣΥΝΔΡΟΜΕΣ</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item class="subscription-list-item" *ngFor="let doc of model.document_types | async; let i = index">
+        <img matListAvatar class="user-avatar-large" src="">
+        <h2 matLine>{{doc.name}}</h2>
+        <p matLine>
+          <span class="label-small">{{doc.notes}}</span>
+          <br />
+        </p>
+        <br />
+        <a mat-mini-fab class="fab-icon-link" class="fab-icon-link" color="warn" [routerLink]="doc.settings_path">
+          <mat-icon>settings</mat-icon>
+        </a>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card> -->

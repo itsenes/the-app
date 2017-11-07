@@ -1,6 +1,6 @@
 <mat-card class="document-type-card-form">
   <mat-card-title>
-    <label class="small">ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ</label>
+    <label class="small">ΠΡΟΪΟΝ ή ΥΠΗΡΕΣΙΑ</label>
     <span class="app-toolbar-filler"></span>
     <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
       <mat-icon class="form-button-icon">edit</mat-icon>
@@ -47,7 +47,7 @@
         <mat-hint *ngIf='model.numberOffset' align="start">To επόμενο έγγραφο θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
       </mat-form-field>
       <hr/>
-      <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
+      <!-- <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
         placeholder="Παράγει έγγραφα" floatPlaceholder='auto' maxlength="150">
         <label *ngIf="model.generatesPrintouts">Να παράγει έγγραφα</label>
         <label *ngIf="!model.generatesPrintouts">Να μην παράγει έγγραφα</label>
@@ -64,7 +64,7 @@
           {{model.template.name}}
         </a>
       </mat-hint>
-      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start"><label class="small">{{model.template.contentLength}} bytes</label></mat-hint>
+      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start"><label class="small">{{model.template.contentLength}} bytes</label></mat-hint> -->
     </div>
   </mat-card-content>
 </mat-card>

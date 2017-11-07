@@ -44,6 +44,7 @@ import { ApiClient, API_BASE_URL } from './services/incontrl-apiclient';
 // get a proper app + route config module at some point!
 import { environment } from '../environments/environment';
 import { DocumentTypeFormComponent } from './features/forms/document-type-form/document-type-form.component';
+import { ItemFormComponent } from './features/forms/item-form/item-form.component';
 
 // my api url factory method :)
 export const getApiUrl = function() {
@@ -107,7 +108,8 @@ const appRoutes: Routes = [
     ContactFormComponent,
     DocumentTypesComponent,
     ItemsComponent,
-    DocumentTypeFormComponent
+    DocumentTypeFormComponent,
+    ItemFormComponent
   ],
   entryComponents: [SelectImageDialogComponent],
   imports: [

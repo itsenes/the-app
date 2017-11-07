@@ -4834,7 +4834,7 @@ export class Plan {
     description?: string | undefined;
     richText?: string | undefined;
     uiHint?: UiHint | undefined;
-    services?: ServiceConfig[] | undefined;
+    services?: Service[] | undefined;
     limits?: LimitPolicy[] | undefined;
 
     init(data?: any) {
@@ -4846,7 +4846,7 @@ export class Plan {
             if (data["services"] && data["services"].constructor === Array) {
                 this.services = [];
                 for (let item of data["services"])
-                    this.services.push(ServiceConfig.fromJS(item));
+                    this.services.push(Service.fromJS(item));
             }
             if (data["limits"] && data["limits"].constructor === Array) {
                 this.limits = [];
@@ -5033,8 +5033,10 @@ export class UiHint {
     }
 }
 
-export class ServiceConfig {
-    name?: string | undefined;
+export class Service {
+    name: string;
+    description?: string | undefined;
+    type: string;
     enabled?: boolean | undefined;
     uiHint?: UiHint | undefined;
     settings?: any | undefined;
@@ -5042,6 +5044,8 @@ export class ServiceConfig {
     init(data?: any) {
         if (data) {
             this.name = data["name"];
+            this.description = data["description"];
+            this.type = data["type"];
             this.enabled = data["enabled"];
             this.uiHint = data["uiHint"] ? UiHint.fromJS(data["uiHint"]) : <any>undefined;
             if (data["settings"]) {
@@ -5054,8 +5058,8 @@ export class ServiceConfig {
         }
     }
 
-    static fromJS(data: any): ServiceConfig {
-        let result = new ServiceConfig();
+    static fromJS(data: any): Service {
+        let result = new Service();
         result.init(data);
         return result;
     }
@@ -5063,6 +5067,8 @@ export class ServiceConfig {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["description"] = this.description;
+        data["type"] = this.type;
         data["enabled"] = this.enabled;
         data["uiHint"] = this.uiHint ? this.uiHint.toJSON() : <any>undefined;
         if (this.settings) {
@@ -5077,7 +5083,7 @@ export class ServiceConfig {
 
     clone() {
         const json = this.toJSON();
-        let result = new ServiceConfig();
+        let result = new Service();
         result.init(json);
         return result;
     }
@@ -6541,7 +6547,7 @@ export class PaymentOption {
     code?: string | undefined;
     name: string;
     description: string;
-    provider?: ServiceConfig | undefined;
+    provider?: Service | undefined;
 
     init(data?: any) {
         if (data) {
@@ -6550,7 +6556,7 @@ export class PaymentOption {
             this.code = data["code"];
             this.name = data["name"];
             this.description = data["description"];
-            this.provider = data["provider"] ? ServiceConfig.fromJS(data["provider"]) : <any>undefined;
+            this.provider = data["provider"] ? Service.fromJS(data["provider"]) : <any>undefined;
         }
     }
 

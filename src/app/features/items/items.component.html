@@ -1,3 +1,12 @@
-<p>
-  items works!
-</p>
+<mat-card class="list-card">
+  <mat-card-title class="list-card-title">
+    <label class="small">ΠΡΟΪΟΝΤΑ κ ΥΠΗΡΕΣΙΕΣ</label>
+    <span class="app-toolbar-filler"></span>
+    <button color="primary" (click)="add_new()" mat-button>
+      <label class="small">ΠΡΟΣΘΗΚΗ</label>
+    </button>
+  </mat-card-title>
+  <mat-card-content>
+    <app-item-form (onDelete)='delete($event,i)' *ngFor="let product of products; let i = index" [model]='product.model'></app-item-form>
+  </mat-card-content>
+</mat-card>

@@ -1,5 +1,5 @@
 import { Component, Injectable, Inject, Injector } from '@angular/core';
-import { ApiClient, Subscription, LookupEntry, DocumentType } from './incontrl-apiclient';
+import { ApiClient, Subscription, LookupEntry, DocumentType, Product } from './incontrl-apiclient';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { environment } from '../../environments/environment';
@@ -176,6 +176,8 @@ export class SubscriptionViewModel {
   }
 
   private _document_types: any[];
+  private _products: any[];
+
   public get document_types(): Observable<any[]> {
     if (null == this._document_types) {
       return this.loadDocumentTypes();
@@ -195,20 +197,63 @@ export class SubscriptionViewModel {
   loadDocumentTypes(): Observable<any> {
     const observable = this.apiClient.getDocumentTypes(this.id)
       .map((response) => {
-        this._document_types = response.items.
-          map((doc) => {
-            return {
-              id: doc.id, name: doc.name,
-              notes: doc.notes,
-              count: '?',
-              search_path: `${this.home_path}/documents/${doc.id}`,
-              addnew_path: `${this.home_path}/documents/new`,
-              model: doc
-            };
-          });
-        return this._document_types;
+        if (response.count === 0) {
+          this._document_types = [];
+        } else {
+          this._document_types = response.items.
+            map((doc) => {
+              return {
+                id: doc.id, name: doc.name,
+                notes: doc.notes,
+                count: '?',
+                search_path: `${this.home_path}/documents/${doc.id}`,
+                addnew_path: `${this.home_path}/documents/new`,
+                model: doc
+              };
+            });
+          return this._document_types;
+        }
       });
     return observable;
+  }
+
+  public get products(): Observable<any[]> {
+    if (null == this._products) {
+      return this.loadProducts();
+    }
+    return Observable.create((observer) => {
+      observer.next(this._products);
+      observer.complete();
+    });
+  }
+
+  add_product() {
+    this._products.push({
+      model: new Product()
+    });
+  }
+
+  loadProducts(): Observable<any> {
+    const observable1 = this.apiClient.getProducts(this.id)
+      .map((response) => {
+        if (response.count === 0) {
+          this._products = [];
+        } else {
+          this._products = response.items.
+            map((product) => {
+              return {
+                id: product.id,
+                name: product.name,
+                notes: product.notes,
+                search_path: `${this.home_path}/products/${product.id}`,
+                addnew_path: `${this.home_path}/products/new`,
+                model: product
+              };
+            });
+        }
+        return this._products;
+      });
+    return observable1;
   }
 
   constructor(subscription: Subscription, private apiClient: ApiClient) {
