@@ -44,7 +44,7 @@
       <mat-form-field class="shorter">
         <input matInput [readonly]='readonly' #numberOffset="ngModel" name="numberOffset" [(ngModel)]='model.numberOffset' placeholder="Αρίθμηση από"
           floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='model.numberOffset' align="end">To επόμενο έγγραφο τύπου "{{model.name}}" θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
+        <mat-hint *ngIf='model.numberOffset' align="end">To επόμενο έγγραφο θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
       </mat-form-field>
       <hr/>
       <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
