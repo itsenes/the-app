@@ -5,6 +5,9 @@
     <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
       <mat-icon class="form-button-icon">edit</mat-icon>
     </button>
+    <button *ngIf='readonly && !isnew' color="warn" (click)="delete()" mat-mini-fab>
+        <mat-icon class="form-button-icon">delete</mat-icon>
+      </button>
     <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
       <label class="small">ΑΠΟΘΗΚΕΥΣΗ</label>
     </button>
@@ -55,8 +58,8 @@
         <label class="small">ΠΡΟΤΥΠΟ ΕΓΓΡΑΦΟ:</label>
       </mat-hint>
       <mat-hint *ngIf='model.template' align="start">
-        <a mat-button class="form-link" [href]="api_path +'/'+ model.template.uri">
-          <img class="small" src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/word_16x1.svg">
+        <a [download]='this.model.template.name' (click)='download_file($event)' mat-button class="form-link">
+          <img class="word-logo small">
           {{model.template.name}}
         </a>
       </mat-hint>

@@ -134,6 +134,10 @@ button label.small {
   margin-bottom: 10px;
 }
 
+button.form-link {
+  color: black;
+}
+
 a.form-link {
   color: black;
 }
@@ -141,4 +145,8 @@ a.form-link {
 img.small {
   height: 24px;
   width: 24px;
+}
+
+img.word-logo {
+  content: url("https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/word_16x1.svg");
 }

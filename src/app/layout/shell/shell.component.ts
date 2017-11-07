@@ -31,7 +31,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     showCloseButton: false,
     duration: 3000
   };
-  constructor(private appState: AppStateService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private ngProgress: NgProgress) {
+  constructor(private appState: AppStateService, private authService: AuthService, private router: Router,
+    private route: ActivatedRoute, private ngProgress: NgProgress) {
     this.user = this.authService.currentUser().profile;
   }
 

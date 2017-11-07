@@ -24,6 +24,7 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   params_sub: any = null;
   isnew = false;
   api_path = environment.api_url + '/api/';
+  private template_file_url;
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -77,6 +78,31 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   cancel() {
     this.readonly = true;
     this.model = this._bak;
+  }
+
+  delete() {
+    this.apiClient.deleteDocumentType(this.subscription_id, this.model.id)
+      .subscribe(() => {
+        
+      });
+  }
+
+  download_file(event) {
+    const target = event.currentTarget;
+    if (null != this.template_file_url) {
+      return;
+    }
+    const file_type = this.model.template.contentType;
+    this.apiClient.getDocumentTypeTemplate(this.subscription_id, this.model.id)
+      .subscribe((response) => {
+        const blob: Blob = new Blob([response.data], {
+          type: `"${this.model.template.contentType}"`
+        });
+        this.template_file_url = window.URL.createObjectURL(blob);
+        target.href = this.template_file_url;
+        target.click();
+        // event.cancel = true;
+      });
   }
 
   save() {
