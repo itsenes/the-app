@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService, SubscriptionViewModel } from '../../services/app-state.service';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../services/incontrl-apiclient';
-
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 @Component({
   selector: 'app-document-types',
   templateUrl: './document-types.component.html',
@@ -28,16 +28,33 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
   constructor(private alertsService: AlertsService,
     private route: ActivatedRoute,
     private appState: AppStateService,
-    private apiClient: ApiClient) {
+    private apiClient: ApiClient,
+    private confirmation: ConfirmationService) {
   }
 
   delete(documentType, index) {
-    this.apiClient.deleteDocumentType(this.model.id, documentType.id)
-      .subscribe(() => {
-        this.model.document_types.subscribe((types) => {
-          types.splice(index, 1);
-        });
+    if (documentType.id == null) {
+      this.model.document_types.subscribe((types) => {
+        types.splice(index, 1);
+        this.alertsService.create('success', 'Η διαγραφή του τύπου εγγράφων έγινε με επιτυχία!');
       });
+    } else {
+      // an einai kanonikh eggrafh
+      this.confirmation.create('Διαγραφή τύπου εγγράφου', `Να γίνει η διαγραφή του τύπου εγγράφου ${documentType.name}`)
+        .subscribe((ans) => {
+          if (ans.resolved) {
+            this.apiClient.deleteDocumentType(this.model.id, documentType.id)
+              .subscribe(() => {
+                this.model.document_types.subscribe((types) => {
+                  types.splice(index, 1);
+                  this.alertsService.create('success', 'Η διαγραφή του τύπου εγγράφων έγινε με επιτυχία!');
+                });
+              }, (error) => {
+                this.alertsService.create('error', 'Σφάλμα κατα την διαγραφή! Μύνημα συστήματος: ' + error);
+              });
+          }
+        });
+    }
   }
 
   ngOnInit() {

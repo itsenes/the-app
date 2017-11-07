@@ -75,8 +75,12 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.readonly = true;
-    this.model = this._bak;
+    if (this.isnew()) {
+      this.delete();
+    } else {
+      this.readonly = true;
+      this.model = this._bak;
+    }
   }
 
   delete() {

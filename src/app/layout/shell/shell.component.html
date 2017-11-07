@@ -1,6 +1,7 @@
 <!-- based on the mozilla holy-grail layout  -->
 <div class="app-container mat-app-background" [class.dark]="isDarkTheme">
   <jaspero-alerts [defaultSettings]="alertSettings"></jaspero-alerts>
+  <jaspero-confirmations [defaultSettings]="confirmOptions"></jaspero-confirmations>
   <div class="app-layout box" fxLayout="column">
     <ng-progress showSpinner="false" [toggle]="busy"></ng-progress>
     <header fxHide fxShow.lt-sm>

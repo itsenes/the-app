@@ -46,24 +46,25 @@
           floatPlaceholder='auto' maxlength="150">
         <mat-hint *ngIf='model.numberOffset' align="end">To επόμενο έγγραφο τύπου "{{model.name}}" θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
       </mat-form-field>
-
       <hr/>
-      <mat-slide-toggle [disabled]='readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
+      <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
         placeholder="Παράγει έγγραφα" floatPlaceholder='auto' maxlength="150">
         <label *ngIf="model.generatesPrintouts">Να παράγει έγγραφα</label>
         <label *ngIf="!model.generatesPrintouts">Να μην παράγει έγγραφα</label>
       </mat-slide-toggle>
-      <mat-hint *ngIf='!readonly' align="end">Ενεργοποιήστε την επιλογή για να παράγεται έγγραφα τύπου microsoft word </mat-hint>
-      <mat-hint *ngIf='model.template' align="start">
+      <mat-hint *ngIf='!readonly' align="end">Ενεργοποιήστε την επιλογή για να παράγονται έγγραφα τύπου microsoft word ή και pdf βάση του παρακάτω προτύπου.</mat-hint>
+      <label class="small" *ngIf='readonly && model.generatesPrintouts' align="start">Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
+      <label class="small" *ngIf='readonly && !model.generatesPrintouts' align="start">Αυτός ο τύπος <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
+      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start">
         <label class="small">ΠΡΟΤΥΠΟ ΕΓΓΡΑΦΟ:</label>
       </mat-hint>
-      <mat-hint *ngIf='model.template' align="start">
+      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start">
         <a [download]='this.model.template.name' (click)='download_file($event)' mat-button class="form-link">
           <img class="word-logo small">
           {{model.template.name}}
         </a>
       </mat-hint>
-      <mat-hint *ngIf='model.template' align="start"><label class="small">{{model.template.contentLength}} bytes</label></mat-hint>
+      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start"><label class="small">{{model.template.contentLength}} bytes</label></mat-hint>
     </div>
   </mat-card-content>
 </mat-card>

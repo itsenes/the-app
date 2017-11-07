@@ -12,6 +12,7 @@ import { GravatarModule } from 'ng2-gravatar-directive';
 import { NgProgressModule, NgProgressBrowserXhr } from 'ngx-progressbar';
 // https://jaspero.co/resources/projects/ng-alerts
 import { JasperoAlertsModule } from '@jaspero/ng2-alerts';
+import { JasperoConfirmationsModule } from '@jaspero/ng2-confirmations';
 // my own ui components
 import { AppComponent } from './app.component';
 import { ShellComponent } from './layout/shell/shell.component';
@@ -116,6 +117,7 @@ const appRoutes: Routes = [
     BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
     GravatarModule,
     JasperoAlertsModule,
+    JasperoConfirmationsModule,
     NgProgressModule
   ],
   providers: [

@@ -31,6 +31,13 @@ export class ShellComponent implements OnInit, OnDestroy {
     showCloseButton: false,
     duration: 3000
   };
+  confirmOptions: any = {
+    overlay: true,
+    overlayClickToClose: false,
+    showCloseButton: false,
+    confirmText: 'ΝΑΙ',
+    declineText: 'OXI'
+  };
   constructor(private appState: AppStateService, private authService: AuthService, private router: Router,
     private route: ActivatedRoute, private ngProgress: NgProgress) {
     this.user = this.authService.currentUser().profile;
@@ -81,12 +88,12 @@ export class ShellComponent implements OnInit, OnDestroy {
           console.log(event);
           if (event instanceof NavigationStart) {
             this.busy = true;
-            //this.ngProgress.start();
+            // this.ngProgress.start();
             console.log('Shell NavigationStart:', event);
           } else if (event instanceof NavigationEnd) {
             this.busy = false;
             console.log('Shell NavigationEnd:', event);
-            //this.ngProgress.done();
+            // this.ngProgress.done();
           }
         });
     });
