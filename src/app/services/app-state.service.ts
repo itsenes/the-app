@@ -1,5 +1,5 @@
 import { Component, Injectable, Inject, Injector } from '@angular/core';
-import { ApiClient, Subscription, LookupEntry } from './incontrl-apiclient';
+import { ApiClient, Subscription, LookupEntry, DocumentType } from './incontrl-apiclient';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { environment } from '../../environments/environment';
@@ -183,6 +183,12 @@ export class SubscriptionViewModel {
     return Observable.create((observer) => {
       observer.next(this._document_types);
       observer.complete();
+    });
+  }
+
+  add_document_type() {
+    this._document_types.push({
+      model: new DocumentType()
     });
   }
 

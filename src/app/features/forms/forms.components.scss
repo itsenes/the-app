@@ -1,3 +1,9 @@
+hr {
+  margin-bottom: 10px;
+  opacity: 0.2;
+  margin-top: 20px;
+}
+
 .mat-button,
 .mat-fab,
 .mat-icon-button,
@@ -19,6 +25,10 @@
 
 .mat-form-field.short {
   max-width: 400px;
+}
+
+.mat-form-field.shorter {
+  max-width: 300px;
 }
 
 .mat-form-field {
@@ -85,7 +95,6 @@ button.mat-toolbar.form-toolbar {
   margin-right: 4px;
 }
 
-
 .mat-card-title {
   display: flex;
   padding-bottom: 0px;
@@ -108,12 +117,28 @@ button label.small {
 }
 
 .mat-icon.form-button-icon {
-  margin-left:-6px;
-  color:white;
+  margin-left: -7px;
+  color: white;
 }
 
 .mat-form-field {
   width: 200px
 }
 
+.mat-card .doc-type-form {
+  width: 300px;
+}
+
 // https://github.com/angular/material2/blob/master/src/lib/form-field/_form-field-theme.scss
+.document-type-card-form {
+  margin-bottom: 10px;
+}
+
+a.form-link {
+  color: black;
+}
+
+img.small {
+  height: 24px;
+  width: 24px;
+}

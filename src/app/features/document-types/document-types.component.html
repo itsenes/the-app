@@ -1,52 +1,12 @@
-<mat-card class="action-card">
-  <mat-card-title>
-    <label class="small">Τύποι εγγράφων και παραστατικών</label>
+<mat-card class="list-card">
+  <mat-card-title class="list-card-title">
+    <label class="small">ΤΥΠΟΙ ΕΓΓΡΑΦΩΝ κ ΠΑΡΑΣΤΑΤΙΚΩΝ</label>
     <span class="app-toolbar-filler"></span>
-    <!-- <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
-      <mat-icon class="form-button-icon">edit</mat-icon>
-    </button> -->
-    <button (click)="cancel()" mat-button color="primary">
-      <label class="small">ΝΕΟΣ ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ</label>
+    <button color="primary" (click)="add_new()" mat-button>
+      <label class="small">ΠΡΟΣΘΗΚΗ</label>
     </button>
-    <!-- <button *ngIf='!readonly' (click)="cancel()" mat-button color="warn">
-      <label class="small">ΑΚΥΡΩΣΗ</label>
-    </button> -->
   </mat-card-title>
   <mat-card-content>
-    <mat-list>
-      <mat-list-item class="subscription-list-item" *ngFor="let doc of model.document_types | async">
-        <!-- <img matListAvatar class="user-avatar-large" src="{{subscription.company_logo}}" alt="{{subscription.id}}"> -->
-        <mat-icon color="primary" class="size-128">folder</mat-icon>
-        <h2 matLine>{{doc.name}}</h2>
-        <p matLine>
-          <!-- <span class="label-small">{{subscription.company.legalName}}</span> -->
-          <br />
-          <!-- <span>{{subscription.company.lineOfBusiness}}</span> -->
-          <br/>
-          <!-- <span>{{subscription.company.taxCode}},{{subscription.company.taxOffice}}</span> -->
-          <br/>
-          <!-- <span>{{subscription.company.email}}, {{subscription.company.website}}</span> -->
-        </p>
-        <br />
-        <!-- <h2 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h2> -->
-        <p matLine>
-          <!-- <span>{{subscription.contact.email}}, {{subscription.contact.phone1}}, {{subscription.contact.skype}}</span> -->
-        </p>
-        <a mat-mini-fab class="fab-icon-link" class="fab-icon-link" color="warn" routerLink="subscription.settings_path">
-          <mat-icon>edit</mat-icon>
-        </a>
-        <!-- <a mat-mini-fab [routerLink]="subscription.home_path" class="fab-icon-link" color="warn">
-          <mat-icon>screen_share</mat-icon>
-        </a> -->
-        <a mat-button color="primary" [routerLink]="doc.search_path">
-          <mat-icon>search</mat-icon>
-          <label fxShow fxHide.sm fxHide.md>Αναζήτηση</label>
-        </a>
-        <a mat-button color="primary" [routerLink]="doc.addnew_path">
-          <mat-icon>add_circle</mat-icon>
-          <label fxShow fxHide.sm fxHide.md>Προσθήκη</label>
-        </a>
-      </mat-list-item>
-    </mat-list>
+    <app-document-type-form *ngFor="let doc of model.document_types | async" [model]='doc.model'></app-document-type-form>
   </mat-card-content>
 </mat-card>

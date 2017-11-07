@@ -1,6 +1,6 @@
-<mat-card class="form-card">
+<mat-card class="document-type-card-form">
   <mat-card-title>
-    <label class="small">ΣΤΟΙΧΕΙΑ ΕΠΙΚΟΙΝΩΝΙΑΣ</label>
+    <label class="small">ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ</label>
     <span class="app-toolbar-filler"></span>
     <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
       <mat-icon class="form-button-icon">edit</mat-icon>
@@ -15,35 +15,52 @@
   <mat-card-content>
     <div class="form-container">
       <mat-form-field>
-        <input matInput [readonly]='readonly' #firstName="ngModel" name="firstName" [(ngModel)]='model.contact.firstName' placeholder="Όνομα"
-          floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end">{{firstName.value?.length || 0}}/150</mat-hint>
+        <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.name' placeholder="Ονομασία" floatPlaceholder='auto'
+          maxlength="150">
+        <mat-hint *ngIf='!readonly' align="end">{{name.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [readonly]='readonly' #lastName="ngModel" name="lastName" [(ngModel)]='model.contact.lastName' placeholder="Επώνυμο"
-          floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end">{{lastName.value?.length || 0}}/150</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput [readonly]='readonly' #contactemail="ngModel" name="contactemail" [(ngModel)]='model.contact.email' placeholder="Email"
-          floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end">{{contactemail.value?.length || 0}}/150</mat-hint>
+        <textarea matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.notes' placeholder="Περιγραφή"
+          floatPlaceholder='auto' maxlength="250"></textarea>
+        <mat-hint *ngIf='!readonly' align="end">{{notes.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
 
       <mat-form-field class="short">
-        <input matInput [readonly]='readonly' #phone1="ngModel" name="phone1" [(ngModel)]='model.contact.phone1' placeholder="Τηλέφωνο"
-          floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end">{{phone1.value?.length || 0}}/150</mat-hint>
+        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.code' placeholder="Κωδικός" floatPlaceholder='auto'
+          maxlength="150">
+        <mat-hint *ngIf='!readonly' align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="short">
-        <input matInput [readonly]='readonly' #skype="ngModel" name="skype" [(ngModel)]='model.contact.skype' placeholder="Skype"
+      <mat-form-field class="shorter">
+        <input matInput [readonly]='readonly' #numberFormat="ngModel" name="numberFormat" [(ngModel)]='model.numberFormat' placeholder="Μάσκα αρίθμησης"
           floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end">{{skype.value?.length || 0}}/150</mat-hint>
+        <mat-hint *ngIf='!readonly' align="end"></mat-hint>
       </mat-form-field>
 
+      <mat-form-field class="shorter">
+        <input matInput [readonly]='readonly' #numberOffset="ngModel" name="numberOffset" [(ngModel)]='model.numberOffset' placeholder="Αρίθμηση από"
+          floatPlaceholder='auto' maxlength="150">
+        <mat-hint *ngIf='model.numberOffset' align="end">To επόμενο έγγραφο τύπου "{{model.name}}" θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
+      </mat-form-field>
+
+      <hr/>
+      <mat-slide-toggle [disabled]='readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
+        placeholder="Παράγει έγγραφα" floatPlaceholder='auto' maxlength="150">
+        <label *ngIf="model.generatesPrintouts">Να παράγει έγγραφα</label>
+        <label *ngIf="!model.generatesPrintouts">Να μην παράγει έγγραφα</label>
+      </mat-slide-toggle>
+      <mat-hint *ngIf='!readonly' align="end">Ενεργοποιήστε την επιλογή για να παράγεται έγγραφα τύπου microsoft word </mat-hint>
+      <mat-hint *ngIf='model.template' align="start">
+        <label class="small">ΠΡΟΤΥΠΟ ΕΓΓΡΑΦΟ:</label>
+      </mat-hint>
+      <mat-hint *ngIf='model.template' align="start">
+        <a mat-button class="form-link" [href]="api_path +'/'+ model.template.uri">
+          <img class="small" src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/word_16x1.svg">
+          {{model.template.name}}
+        </a>
+      </mat-hint>
+      <mat-hint *ngIf='model.template' align="start"><label class="small">{{model.template.contentLength}} bytes</label></mat-hint>
     </div>
   </mat-card-content>
-</mat-card>  
+</mat-card>

@@ -10,7 +10,7 @@ import { SelectImageDialogComponent } from '../../common/dialogs/select-image-di
 @Component({
   selector: 'app-document-types',
   templateUrl: './document-types.component.html',
-  styleUrls: ['./document-types.component.css']
+  styleUrls: ['./document-types.component.scss', '../forms/forms.components.scss']
 })
 export class DocumentTypesComponent implements OnInit, OnDestroy {
   subscription_key: any = null;
@@ -22,9 +22,9 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
   public countries = [];
   params_sub: any = null;
 
-  // @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
-  // @Input()
+  @Input()
   public set model(value: any) {
     this._model = value;
   }
@@ -33,22 +33,15 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
     private apiClient: ApiClient) {
-    this.model = [];
+    this.model = {};
   }
 
   ngOnInit() {
-    this.appState.currencies.subscribe((items) => {
-      this.currencies = items;
-    });
-    this.appState.countries.subscribe((items) => {
-      this.countries = items;
-    });
     this.params_sub = this.route.parent.params.subscribe((params) => {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
-        .subscribe((sub) => {
-          this.model = sub;
-          // this.model = sub.model.clone();
+        .subscribe((subscription) => {
+          this.model = subscription;
         });
     });
   }
@@ -57,11 +50,8 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
     this.params_sub.unsubscribe();
   }
 
-  toggle_edit_mode() {
-    this.readonly = !this.readonly;
-    if (!this.readonly) {
-      this.bak(this.model);
-    }
+  add_new() {
+   this.model.add_document_type();
   }
 
   private bak(value: any) {

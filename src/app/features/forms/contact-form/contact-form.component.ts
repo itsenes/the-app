@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, Contact, Address, UpdateContactRequest } from '../../../services/incontrl-apiclient';
+import { ApiClient, Contact, Address, UpdateContactRequest, LookupEntry } from '../../../services/incontrl-apiclient';
+import {FormControl} from '@angular/forms';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   private busy = false;
   public countries = [];
   params_sub: any = null;
+  myControl: FormControl = new FormControl();
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -72,6 +74,11 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.readonly = true;
     this.model = this._bak;
   }
+
+  displayCountryFn(country: LookupEntry): string {
+    return country ? country.description : '';
+  }
+
 
   save() {
     this.readonly = true;
