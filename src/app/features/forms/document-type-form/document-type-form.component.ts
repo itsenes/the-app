@@ -25,7 +25,8 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   api_path = environment.api_url + '/api/';
   private template_file_url;
 
-  @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
   public set model(value: any) {
@@ -79,10 +80,9 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    this.apiClient.deleteDocumentType(this.subscription_id, this.model.id)
-      .subscribe(() => {
-
-      });
+    if (null != this.onDelete) {
+      this.onDelete.next(this.model);
+    }
   }
 
   download_file(event) {

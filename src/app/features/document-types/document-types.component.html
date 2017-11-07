@@ -7,6 +7,6 @@
     </button>
   </mat-card-title>
   <mat-card-content>
-    <app-document-type-form *ngFor="let doc of model.document_types | async" [model]='doc.model'></app-document-type-form>
+    <app-document-type-form (onDelete)='delete($event,i)' *ngFor="let doc of model.document_types | async; let i = index" [model]='doc.model'></app-document-type-form>
   </mat-card-content>
 </mat-card>
