@@ -22,7 +22,6 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   public currencies = [];
   public countries = [];
   params_sub: any = null;
-  isnew = false;
   api_path = environment.api_url + '/api/';
   private template_file_url;
 
@@ -33,7 +32,6 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
     this._model = value;
     if (value != null) {
       this.readonly = (value.id != null);
-      this.isnew = true;
     }
   }
   public get model(): any { return this._model; }
@@ -83,7 +81,7 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   delete() {
     this.apiClient.deleteDocumentType(this.subscription_id, this.model.id)
       .subscribe(() => {
-        
+
       });
   }
 
@@ -101,12 +99,15 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
         this.template_file_url = window.URL.createObjectURL(blob);
         target.href = this.template_file_url;
         target.click();
-        // event.cancel = true;
       });
   }
 
+  isnew() {
+    return (null == this.model || this.model.id == null);
+  }
+
   save() {
-    if (this.isnew) {
+    if (this.isnew()) {
       this.savenew();
       return;
     }

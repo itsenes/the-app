@@ -5,7 +5,7 @@
     <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
       <mat-icon class="form-button-icon">edit</mat-icon>
     </button>
-    <button *ngIf='readonly && !isnew' color="warn" (click)="delete()" mat-mini-fab>
+    <button *ngIf='readonly && !isnew()' color="warn" (click)="delete()" mat-mini-fab>
         <mat-icon class="form-button-icon">delete</mat-icon>
       </button>
     <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
