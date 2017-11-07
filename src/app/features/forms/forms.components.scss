@@ -148,5 +148,8 @@ img.small {
 }
 
 img.word-logo {
-  content: url("https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/word_16x1.svg");
+  background: url("https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/word_16x1.svg") no-repeat;
+  box-shadow:none;
+  -webkit-box-shadow:none;
+  border:0px;
 }
