@@ -4,17 +4,19 @@
   <span class="fill-remaining-space"></span>
 </mat-toolbar>
 
-<div class="view-content" flLayout="row" flLayoutAlign="start start">
-  <mat-card class="action-card" fxFlex="20">
+<div class="view-content">
+  <mat-card class="action-card" fxShow fxHide.lt-lg fxFlex="20">
     <mat-card-header>
       <img mat-card-avatar [src]="subscription.company.logoPath" class="avatar-large" />
       <mat-card-title>
         {{subscription.company.name}}
-        <br /> {{subscription.company.legalName}}
+        <br /> 
+        {{subscription.company.legalName}}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-card-subtitle>{{subscription.contact.firstName}} {{subscription.contact.lastName}} </mat-card-subtitle>
+      <mat-card-subtitle>{{subscription.contact.email}} </mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions>
       <a routerLink="company" routerLinkActive="active-route" mat-button color="primary">
@@ -33,12 +35,11 @@
         <mat-icon>apps</mat-icon>
         <label>Προϊόντα - Υπηρεσίες</label>
       </a>
-      <!-- malakia -->
+      <!-- malakia, allh mia -->
       <br/><br/>
     </mat-card-actions>
   </mat-card>
-  <div fxFlex="60">
+  <div fxFlex="100">
     <router-outlet></router-outlet>
   </div>
-  <!-- <app-company-form fxFlex="60" [model]='subscription' (model_changed)='subscription_changed($event)'></app-company-form> -->
 </div>

@@ -18,6 +18,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   private busy = false;
   params_sub: any = null;
   products: any[] = [];
+  norecords = false;
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -39,6 +40,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.model.products.subscribe((items) => {
         items.splice(index, 1);
         this.alertsService.create('success', 'Η διαγραφή του προϊόντος έγινε με επιτυχία!');
+        this.norecords = (items == null || items.length === 0);
       });
     } else {
       // an einai kanonikh eggrafh
@@ -67,6 +69,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
           this.model = subscription;
           subscription.products.subscribe((products) => {
             this.products = products;
+            this.norecords = (this.products == null || this.products.length === 0);
           });
         });
     });
@@ -78,5 +81,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
 
   add_new() {
     this.model.add_product();
+    this.norecords = false;
   }
 }

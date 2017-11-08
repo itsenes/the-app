@@ -1,4 +1,4 @@
-<mat-card class="list-card">
+<mat-card class="list-card" *ngIf="!norecords">
   <mat-card-title class="list-card-title">
     <label class="small">ΠΡΟΪΟΝΤΑ κ ΥΠΗΡΕΣΙΕΣ</label>
     <span class="app-toolbar-filler"></span>
@@ -10,3 +10,19 @@
     <app-item-form (onDelete)='delete($event,i)' *ngFor="let product of products; let i = index" [model]='product.model'></app-item-form>
   </mat-card-content>
 </mat-card>
+
+<div fxLayout="row" fxLayoutAlign="center center" *ngIf="norecords">
+  <mat-card class="no-records-card">
+    <mat-card-content fxLayout="column" fxLayoutAlign="center stretch">
+      <mat-card-title fxLayoutAlign="center center">
+        <label class="small">δεν βρέθηκαν προϊόντα ή υπηρεσίες.</label>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+        <img src="assets/images/no-records.png" class="no-records">
+        <button color="primary" (click)="add_new()" mat-button>
+          <label class="small">ΞΕΚΙΝΗΣΤΕ ΕΔΩ!</label>
+        </button>
+      </mat-card-content>
+    </mat-card-content>
+  </mat-card>
+</div>

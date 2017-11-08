@@ -16,6 +16,8 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
   public readonly = true;
   private busy = false;
   params_sub: any = null;
+  norecords = false;
+  document_types: any[];
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -37,6 +39,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
       this.model.document_types.subscribe((types) => {
         types.splice(index, 1);
         this.alertsService.create('success', 'Η διαγραφή του τύπου εγγράφων έγινε με επιτυχία!');
+        this.norecords = (types == null || types.length === 0);
       });
     } else {
       // an einai kanonikh eggrafh
@@ -48,6 +51,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
                 this.model.document_types.subscribe((types) => {
                   types.splice(index, 1);
                   this.alertsService.create('success', 'Η διαγραφή του τύπου εγγράφων έγινε με επιτυχία!');
+                  this.norecords = (types == null || types.length === 0);
                 });
               }, (error) => {
                 this.alertsService.create('error', 'Σφάλμα κατα την διαγραφή! Μύνημα συστήματος: ' + error);
@@ -63,6 +67,10 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((subscription) => {
           this.model = subscription;
+          subscription.document_types.subscribe((types) => {
+            this.document_types = types;
+            this.norecords = (this.document_types == null || this.document_types.length === 0);
+          });
         });
     });
   }
@@ -73,6 +81,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
 
   add_new() {
     this.model.add_document_type();
+    this.norecords = false;
   }
 }
 

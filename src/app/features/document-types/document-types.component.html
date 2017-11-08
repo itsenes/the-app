@@ -1,4 +1,4 @@
-<mat-card class="list-card">
+<mat-card class="list-card" *ngIf="!norecords">
   <mat-card-title class="list-card-title">
     <label class="small">ΤΥΠΟΙ ΕΓΓΡΑΦΩΝ κ ΠΑΡΑΣΤΑΤΙΚΩΝ</label>
     <span class="app-toolbar-filler"></span>
@@ -7,7 +7,7 @@
     </button>
   </mat-card-title>
   <mat-card-content>
-    <app-document-type-form (onDelete)='delete($event,i)' *ngFor="let doc of model.document_types | async; let i = index" [model]='doc.model'></app-document-type-form>
+    <app-document-type-form (onDelete)='delete($event,i)' *ngFor="let doc of document_types; let i = index" [model]='doc.model'></app-document-type-form>
   </mat-card-content>
 </mat-card>
 
@@ -32,3 +32,21 @@
     </mat-list>
   </mat-card-content>
 </mat-card> -->
+
+
+<div fxLayout="row" fxLayoutAlign="center center" *ngIf="norecords">
+    <mat-card class="no-records-card">
+      <mat-card-content fxLayout="column" fxLayoutAlign="center stretch">
+        <mat-card-title fxLayoutAlign="center center">
+          <label class="small">δεν βρέθηκαν τύποι εγγράφων και παραστατικών.</label>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+          <img src="assets/images/no-records.png" class="no-records">
+          <button color="primary" (click)="add_new()" mat-button>
+            <label class="small">ΞΕΚΙΝΗΣΤΕ ΕΔΩ!</label>
+          </button>
+        </mat-card-content>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
