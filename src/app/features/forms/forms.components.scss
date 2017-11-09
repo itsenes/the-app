@@ -106,6 +106,10 @@ label.small {
   padding-top: 10px;
 }
 
+.mat-hint label.small {
+  font-size: 12px;
+}
+
 label.small.inline {
   padding-top: 0px;
   padding-bottom: 20px;
@@ -142,6 +146,11 @@ a.form-link {
   color: black;
 }
 
+a.download-link {
+  color:whitesmoke;
+  background: whitesmoke;
+}
+
 img.small {
   height: 24px;
   width: 24px;
@@ -152,6 +161,7 @@ img.word-logo {
   box-shadow: none;
   -webkit-box-shadow: none;
   border: 0px;
+  margin-left: -8px;
 }
 
 .no-records-card {

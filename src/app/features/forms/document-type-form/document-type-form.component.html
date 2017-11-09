@@ -6,8 +6,8 @@
       <mat-icon class="form-button-icon">edit</mat-icon>
     </button>
     <button *ngIf='readonly && !isnew()' color="warn" (click)="delete()" mat-mini-fab>
-        <mat-icon class="form-button-icon">delete</mat-icon>
-      </button>
+      <mat-icon class="form-button-icon">delete</mat-icon>
+    </button>
     <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
       <label class="small">ΑΠΟΘΗΚΕΥΣΗ</label>
     </button>
@@ -17,54 +17,61 @@
   </mat-card-title>
   <mat-card-content>
     <div class="form-container">
-      <mat-form-field>
+      <h3 *ngIf='readonly'>{{model.name}}</h3>
+      <mat-form-field *ngIf='!readonly'>
         <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.name' placeholder="Ονομασία" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint *ngIf='!readonly' align="end">{{name.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <mat-form-field>
+      <label *ngIf='readonly'>{{model.notes}}</label>
+      <mat-form-field *ngIf='!readonly'>
         <textarea matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.notes' placeholder="Περιγραφή"
           floatPlaceholder='auto' maxlength="250"></textarea>
         <mat-hint *ngIf='!readonly' align="end">{{notes.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="short">
+      <label *ngIf='readonly'>Κωδικός: {{model.code}}</label>
+      <mat-form-field class="shorter" *ngIf='!readonly'>
         <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.code' placeholder="Κωδικός" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint *ngIf='!readonly' align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="shorter">
+      <label *ngIf='readonly'>Μάσκα αρίθμησης: {{model.numberFormat}}</label>
+      <mat-form-field class="shorter" *ngIf='!readonly'>
         <input matInput [readonly]='readonly' #numberFormat="ngModel" name="numberFormat" [(ngModel)]='model.numberFormat' placeholder="Μάσκα αρίθμησης"
           floatPlaceholder='auto' maxlength="150">
         <mat-hint *ngIf='!readonly' align="end"></mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="shorter">
-        <input matInput [readonly]='readonly' #numberOffset="ngModel" name="numberOffset" [(ngModel)]='model.numberOffset' placeholder="Αρίθμηση από"
-          floatPlaceholder='auto' maxlength="150">
+      <label *ngIf='readonly'>Αρίθμηση από: {{model.numberOffset}} - To επόμενο έγγραφο θα έχει τον αριθμό: {{model.numberOffset+1}}</label>
+      <mat-form-field class="shorter" *ngIf='!readonly'>
+        <input matInput type="number" [readonly]='readonly' #numberOffset="ngModel" name="numberOffset" [(ngModel)]='model.numberOffset'
+          placeholder="Αρίθμηση από" floatPlaceholder='auto' maxlength="150">
         <mat-hint *ngIf='model.numberOffset' align="start">To επόμενο έγγραφο θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
       </mat-form-field>
+
       <hr/>
+
       <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
         placeholder="Παράγει έγγραφα" floatPlaceholder='auto' maxlength="150">
         <label *ngIf="model.generatesPrintouts">Να παράγει έγγραφα</label>
         <label *ngIf="!model.generatesPrintouts">Να μην παράγει έγγραφα</label>
       </mat-slide-toggle>
-      <mat-hint *ngIf='!readonly' align="start">Ενεργοποιήστε την επιλογή για να παράγονται έγγραφα τύπου microsoft word ή και pdf βάση του παρακάτω προτύπου.</mat-hint>
-      <label class="small" *ngIf='readonly && model.generatesPrintouts' align="start">Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
-      <label class="small" *ngIf='readonly && !model.generatesPrintouts' align="start">Αυτός ο τύπος <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf.</label>
-      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start">
-        <label class="small">ΠΡΟΤΥΠΟ ΕΓΓΡΑΦΟ:</label>
-      </mat-hint>
-      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start">
-        <a [download]='this.model.template.name' (click)='download_file($event)' mat-button class="form-link">
+      
+      <mat-hint *ngIf='!readonly' align="start"><br>Ενεργοποιήστε την επιλογή για να παράγονται έγγραφα τύπου microsoft word ή και pdf βάση του παρακάτω προτύπου.</mat-hint>
+
+      <mat-hint align="start" *ngIf="model.generatesPrintouts">
+        <br *ngIf='!readonly'>
+        <a [download]='this.model.code+"-template.docx"' (click)='download_file($event)' mat-mini-fab class="download-link">
           <img class="word-logo small">
-          {{model.template.name}}
         </a>
+        <label *ngIf='!readonly' align="start">Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο. </label>
+        <label *ngIf='readonly && model.generatesPrintouts' align="start">Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
       </mat-hint>
-      <mat-hint *ngIf='model.template && model.generatesPrintouts' align="start"><label class="small">{{model.template.contentLength}} bytes</label></mat-hint>
+      <label *ngIf='readonly && !model.generatesPrintouts' align="start">Αυτός ο τύπος
+        <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf.</label>
     </div>
   </mat-card-content>
 </mat-card>

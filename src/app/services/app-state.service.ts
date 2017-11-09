@@ -3,12 +3,11 @@ import { ApiClient, Subscription, LookupEntry, DocumentType, Product } from './i
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { environment } from '../../environments/environment';
-// a simple singleton to maintain app state for now, other patterns could be applied
+// a simple singleton to maintain app state for now, other patterns e.g. repository could be applied
 @Injectable()
 export class AppStateService {
   private _subscriptions: SubscriptionViewModel[] = null;
-  private _current_subscription: SubscriptionViewModel = null;
-  private _current_subscriptionkey: any = null;
+  private _current_subscriptionkey: string = null;
   private _countries: LookupEntry[] = null;
   private _currencies: LookupEntry[] = null;
   private _timezones: LookupEntry[] = null;
@@ -38,7 +37,7 @@ export class AppStateService {
     return observable;
   }
 
-  public get currencies(): Observable<any[]> {
+  public get currencies(): Observable<LookupEntry[]> {
     if (null === this._currencies) {
       return this.loadCurrencies();
     } else {
@@ -59,7 +58,7 @@ export class AppStateService {
     return observable;
   }
 
-  public get timezones(): Observable<any[]> {
+  public get timezones(): Observable<LookupEntry[]> {
     if (null === this._timezones) {
       return this.loadTimezones();
     } else {
@@ -110,7 +109,6 @@ export class AppStateService {
       return subscription;
     }
     this._current_subscriptionkey = subscription.alias;
-    this._current_subscription = subscription;
     return subscription;
   }
 
@@ -133,7 +131,6 @@ export class AppStateService {
 
 // @Injectable()
 export class SubscriptionViewModel {
-  public busy = false;
   public get id() {
     return this.model.id;
   }
@@ -161,7 +158,6 @@ export class SubscriptionViewModel {
     return `/app/${this._model.alias}`;
   }
 
-  private _settings_path;
   public get settings_path() {
     return `/app/${this._model.alias}/settings`;
   }
@@ -175,10 +171,10 @@ export class SubscriptionViewModel {
     this._model = value;
   }
 
-  private _document_types: any[];
+  private _document_types: DocumentTypeViewModel[];
   private _products: any[];
 
-  public get document_types(): Observable<any[]> {
+  public get document_types(): Observable<DocumentTypeViewModel[]> {
     if (null == this._document_types) {
       return this.loadDocumentTypes();
     }
@@ -189,32 +185,22 @@ export class SubscriptionViewModel {
   }
 
   add_document_type() {
-    this._document_types.push({
-      model: new DocumentType()
-    });
+    this._document_types.push(new DocumentTypeViewModel(new DocumentType(), this.home_path));
   }
 
-  loadDocumentTypes(): Observable<any> {
-    const observable = this.apiClient.getDocumentTypes(this.id)
+  loadDocumentTypes(): Observable<DocumentTypeViewModel[]> {
+    return this.apiClient.getDocumentTypes(this.id)
       .map((response) => {
         if (response.count === 0) {
-          this._document_types = [];
+          this._document_types = DocumentTypeViewModel[0];
         } else {
           this._document_types = response.items.
             map((doc) => {
-              return {
-                id: doc.id, name: doc.name,
-                notes: doc.notes,
-                count: '?',
-                search_path: `${this.home_path}/documents/${doc.id}`,
-                addnew_path: `${this.home_path}/documents/new`,
-                model: doc
-              };
+              return new DocumentTypeViewModel(doc, this.home_path);
             });
           return this._document_types;
         }
       });
-    return observable;
   }
 
   public get products(): Observable<any[]> {
@@ -234,7 +220,7 @@ export class SubscriptionViewModel {
   }
 
   loadProducts(): Observable<any> {
-    const observable1 = this.apiClient.getProducts(this.id)
+    return this.apiClient.getProducts(this.id)
       .map((response) => {
         if (response.count === 0) {
           this._products = [];
@@ -253,7 +239,6 @@ export class SubscriptionViewModel {
         }
         return this._products;
       });
-    return observable1;
   }
 
   constructor(subscription: Subscription, private apiClient: ApiClient) {
@@ -262,5 +247,45 @@ export class SubscriptionViewModel {
   }
 }
 
+export class DocumentTypeViewModel {
+  public get id() {
+    return this.model.id;
+  }
 
+  public get name() {
+    return this.model.name;
+  }
 
+  public get notes() {
+    return this.model.notes;
+  }
+
+  public get alias() {
+    return this.model.code;
+  }
+
+  public get icon() {
+    return `${environment.api_url}/subscriptions/${this._model.id}/image`;
+  }
+
+  public get search_path() {
+    return `${this.homePath}/documents/${this.model.id}`;
+  }
+
+  public get addnew_path() {
+    return `${this.homePath}/documents/new`;
+  }
+
+  private _model: DocumentType = null;
+  public get model(): DocumentType {
+    return this._model;
+  }
+
+  public set model(value: DocumentType) {
+    this._model = value;
+  }
+
+  constructor(documentType: DocumentType, private homePath: string) {
+    this.model = documentType;
+  }
+}
