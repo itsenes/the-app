@@ -19,53 +19,62 @@
         <button *ngIf='!readonly' color="accent" class="company-avatar-button" mat-mini-fab (click)='openLogoDialog($event)'>
           <mat-icon aria-label="icon-button">add_a_photo</mat-icon>
         </button>
-        <mat-form-field>
+
+        <h3 *ngIf='readonly'>{{model.company.name}}</h3>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.company.name' placeholder="Ονομασία (Διακριτικός τίτλος)"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{name.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{name.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <label *ngIf='readonly'>{{model.company.legalName}}</label>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #legalname="ngModel" name="legalName" [(ngModel)]='model.company.legalName' placeholder="Επωνυμία"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{legalname.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{legalname.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <label *ngIf='readonly'>{{model.company.lineOfBusiness}}</label>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #lineofbusiness="ngModel" name="lineofbusiness" [(ngModel)]='model.company.lineOfBusiness'
             placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{lineofbusiness.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{lineofbusiness.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="short">
+        <label *ngIf='readonly'>{{model.company.taxCode}}</label>
+        <mat-form-field *ngIf='!readonly' class="short">
           <input matInput [readonly]='readonly' #taxcode="ngModel" name="taxcode" [(ngModel)]='model.company.taxCode' placeholder="ΑΦΜ"
             floatPlaceholder='auto' maxlength="50">
-          <mat-hint *ngIf='!readonly' align="end">{{taxcode.value?.length || 0}}/50</mat-hint>
+          <mat-hint align="end">{{taxcode.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <label *ngIf='readonly'>{{model.company.taxOffice}}</label>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #taxoffice="ngModel" name="taxoffice" [(ngModel)]='model.company.taxOffice' placeholder="ΔΟΥ"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{taxoffice.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{taxoffice.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="short">
+        <label *ngIf='readonly'>{{model.company.currencyCode}}</label>
+        <mat-form-field *ngIf='!readonly' class="short">
           <mat-select [disabled]='readonly' name="currency" #currency="ngModel" [(ngModel)]='model.company.currencyCode' placeholder="Νόμισμα">
             <mat-option value="">...</mat-option>
             <mat-option *ngFor='let currency of currencies' [value]="currency.id">{{currency.description}}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [readonly]='readonly' #email="ngModel" name="email" [(ngModel)]='model.email' placeholder="Email" floatPlaceholder='auto'
+        <label *ngIf='readonly'>{{model.company.email}}</label>
+        <mat-form-field *ngIf='!readonly'>
+          <input matInput [readonly]='readonly' #email="ngModel" name="email" [(ngModel)]='model.company.email' placeholder="Email" floatPlaceholder='auto'
             maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{email.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{email.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [readonly]='readonly' #website="ngModel" name="website" [(ngModel)]='model.website' placeholder="WWW" floatPlaceholder='auto'
+        <label *ngIf='readonly'>{{model.company.website}}</label>
+        <mat-form-field *ngIf='!readonly'>
+          <input matInput [readonly]='readonly' #website="ngModel" name="website" [(ngModel)]='model.company.website' placeholder="WWW" floatPlaceholder='auto'
             maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{website.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{website.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
       </div>
     </mat-card-content>
@@ -75,38 +84,43 @@
     </mat-card-title>
     <mat-card-content>
       <div class="form-container">
-        <mat-form-field>
+        <label *ngIf='readonly'>{{model.company.address.name}}</label>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #address1="ngModel" name="address1" [(ngModel)]='model.company.address.name' placeholder="Διεύθυνση #1"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{address1.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{address1.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <label *ngIf='readonly'>{{model.company.address.line1}}</label>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #address2="ngModel" name="address2" [(ngModel)]='model.company.address.line1' placeholder="Διεύθυνση #2"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{address2.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{address2.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="short">
+        <label *ngIf='readonly'>{{model.company.address.zipCode}}</label>
+        <mat-form-field *ngIf='!readonly' class="short">
           <input matInput [readonly]='readonly' #zipCode="ngModel" name="zipCode" [(ngModel)]='model.company.address.zipCode' placeholder="ΤΚ"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{zipCode.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{zipCode.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <label *ngIf='readonly'>{{model.company.address.city}}</label>
+        <mat-form-field *ngIf='!readonly'>
           <input matInput [readonly]='readonly' #city="ngModel" name="city" [(ngModel)]='model.company.address.city' placeholder="Πόλη"
             floatPlaceholder='auto' maxlength="150">
-          <mat-hint *ngIf='!readonly' align="end">{{city.value?.length || 0}}/150</mat-hint>
+          <mat-hint align="end">{{city.value?.length || 0}}/150</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="short" floatPlaceholder='auto' name="country" #country>
+        <label *ngIf='readonly'>{{model.company.address.countryCode}}</label>
+        <mat-form-field *ngIf='!readonly' class="short" floatPlaceholder='auto' name="country" #country>
           <mat-select [disabled]='readonly' name="country" #currency="ngModel" [(ngModel)]='model.company.address.countryCode' placeholder="Χώρα">
             <mat-option value="">...</mat-option>
             <mat-option *ngFor='let country of countries' [value]="country.id">{{country.description}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-    
+
     </mat-card-content>
   </mat-card>
 </form>

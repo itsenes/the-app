@@ -146,9 +146,15 @@ a.form-link {
   color: black;
 }
 
-a.download-link {
+.mat-button.download-link {
   color:whitesmoke;
   background: whitesmoke;
+  width: 40px;
+  height:60px;
+}
+
+.download-link-container {
+  margin-top: 8px;
 }
 
 img.small {
@@ -161,7 +167,7 @@ img.word-logo {
   box-shadow: none;
   -webkit-box-shadow: none;
   border: 0px;
-  margin-left: -8px;
+  margin-top: 12px;
 }
 
 .no-records-card {
