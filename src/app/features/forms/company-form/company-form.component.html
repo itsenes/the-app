@@ -58,7 +58,6 @@
         <label *ngIf='readonly'>{{model.company.currencyCode}}</label>
         <mat-form-field *ngIf='!readonly' class="short">
           <mat-select [disabled]='readonly' name="currency" #currency="ngModel" [(ngModel)]='model.company.currencyCode' placeholder="Νόμισμα">
-            <mat-option value="">...</mat-option>
             <mat-option *ngFor='let currency of currencies' [value]="currency.id">{{currency.description}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -115,7 +114,6 @@
         <label *ngIf='readonly'>{{model.company.address.countryCode}}</label>
         <mat-form-field *ngIf='!readonly' class="short" floatPlaceholder='auto' name="country" #country>
           <mat-select [disabled]='readonly' name="country" #currency="ngModel" [(ngModel)]='model.company.address.countryCode' placeholder="Χώρα">
-            <mat-option value="">...</mat-option>
             <mat-option *ngFor='let country of countries' [value]="country.id">{{country.description}}</mat-option>
           </mat-select>
         </mat-form-field>

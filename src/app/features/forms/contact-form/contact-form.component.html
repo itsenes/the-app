@@ -98,14 +98,23 @@
         <mat-hint align="end">{{city.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
+      <!-- <label *ngIf='readonly'>{{model.address.countryCode}}</label>
+      <mat-form-field *ngIf='!readonly' class="short" floatPlaceholder='auto' name="country" #country>
+        <input matInput placeholder="Χώρα" [readonly]='readonly' [matAutocomplete]="countryAuto" 
+          name="country" #country="ngModel" [(ngModel)]='model.address.countryCode'
+          floatPlaceholder='auto' maxlength="150">
+        <mat-autocomplete #countryAuto="matAutocomplete" [displayWith]="displayCountryFn">
+          <mat-option *ngFor='let country of filteredCountries | async' [value]="country.id">{{country.description}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field> -->
+
       <label *ngIf='readonly'>{{model.address.countryCode}}</label>
       <mat-form-field *ngIf='!readonly' class="short" floatPlaceholder='auto' name="country" #country>
-        <input type="text" matInput [readonly]='readonly' name="country" #country="ngModel" [(ngModel)]='model.address.countryCode'
-          placeholder="Χώρα" floatPlaceholder='auto' maxlength="150" [matAutocomplete]="countryAuto">
-        <mat-autocomplete #countryAuto="matAutocomplete" [displayWith]="displayCountryFn">
+        <mat-select [disabled]='readonly' name="country" #currency="ngModel" [(ngModel)]='model.address.countryCode' placeholder="Χώρα">
           <mat-option *ngFor='let country of countries' [value]="country.id">{{country.description}}</mat-option>
-        </mat-autocomplete>
+        </mat-select>
       </mat-form-field>
+
 
       <label *ngIf='readonly'>{{model.address.phone1}}</label>
       <mat-form-field *ngIf='!readonly' class="short">

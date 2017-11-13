@@ -2,8 +2,11 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, Contact, Address, UpdateContactRequest, LookupEntry } from '../../../services/incontrl-apiclient';
-import {FormControl} from '@angular/forms';
+import { ApiClient, Contact, Address, UpdateContactRequest, LookupEntry, Country } from '../../../services/incontrl-apiclient';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 
 
 @Component({
@@ -12,6 +15,8 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['../forms.components.scss']
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
+  countryCtrl: FormControl;
+  filteredCountries: Observable<any[]>;
   subscription_key: any = null;
   subscription_id: any = null;
   private _bak: any = null;
@@ -35,6 +40,15 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     private apiClient: ApiClient) {
     this.model = new Contact();
     this.model.address = new Address();
+    this.countryCtrl = new FormControl();
+    this.filteredCountries = this.countryCtrl.valueChanges
+      .startWith(null)
+      .map(country => country ? this.filterCountries(country) : this.countries.slice());
+  }
+
+  filterCountries(name: string) {
+    return this.countries.filter(country =>
+      country.description.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   ngOnInit() {

@@ -48,6 +48,10 @@ hr {
   margin-right: 6px;
 }
 
+.mat-chip.list.new-line {
+  font-size: 20px;
+}
+
 
 .form-container {
   display: flex;
@@ -192,4 +196,10 @@ img.word-logo {
 img.no-records {
   height: 160px;
   margin: 20px;
+}
+
+
+.mat-icon.warn-icon {
+  background: whitesmoke;
+  color: orangered;
 }

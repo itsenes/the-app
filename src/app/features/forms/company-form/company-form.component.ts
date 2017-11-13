@@ -38,11 +38,11 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.appState.currencies.subscribe((items) => {
-      this.currencies = items;
+    this.appState.currencies.subscribe((currencies) => {
+      this.currencies = currencies;
     });
-    this.appState.countries.subscribe((items) => {
-      this.countries = items;
+    this.appState.countries.subscribe((countries) => {
+      this.countries = countries;
     });
     this.params_sub = this.route.parent.params.subscribe((params) => {
       this.subscription_key = params['subscription-alias'];

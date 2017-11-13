@@ -53,7 +53,7 @@
   <mat-card-content>
     <div class="form-container">
       <mat-chip-list *ngIf='readonly'>
-        <mat-chip color="warn" *ngFor="let tax of model.taxes; let i = index">{{tax.name}} ({{tax.amount}}%)</mat-chip>
+        <mat-chip [color]="'warn'" *ngFor="let tax of model.taxes; let i = index">{{tax.name}} ({{tax.amount}}%)</mat-chip>
       </mat-chip-list>
 
       <ng-container *ngIf='!readonly'>
@@ -64,8 +64,8 @@
               maxlength="150">
           </mat-form-field>
 
-          <mat-form-field class="small list">
-            <mat-select [(value)]="tax.type">
+          <mat-form-field class="shorter list">
+            <mat-select [(value)]="tax.type" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
               <mat-option value="UnitRate">Είναι ΦΠΑ</mat-option>
               <mat-option value="FixedRate">Είναι Φόρος Παρακράτησης</mat-option>
               <mat-option value="Fixed">Άλλο</mat-option>
@@ -73,28 +73,29 @@
           </mat-form-field>
 
           <mat-form-field class="shorter list">
-            <input matInput type="number" [readonly]='readonly' #taxamount="ngModel" name="taxamount" [(ngModel)]='tax.amount' placeholder="Ποσοστό ή αξία"
+            <input matInput type="number" [readonly]='readonly' #taxamount="ngModel" name="taxamount" [(ngModel)]='tax.amount' placeholder="Ποσοστό"
               floatPlaceholder='auto' maxlength="150">
+            <span matSuffix>%</span>
           </mat-form-field>
 
-          <button color="warn" (click)="removetax(i)" mat-button>
-            <mat-icon>delete</mat-icon>
+          <button color="warn" (click)="removetax(i)" mat-icon-button>
+            <mat-icon class="warn-icon">delete</mat-icon>
           </button>
         </div>
 
         <div *ngIf='!readonly' class="tax" fxLayout="row" fxLayoutAlign="start center">
           <mat-chip color="warn" class="list" selected="true">...</mat-chip>
-          
+
           <mat-form-field class="shorter list">
             <input matInput [readonly]='readonly' #newtaxname="ngModel" name="newtaxname" [(ngModel)]='newtax.name' placeholder="Ονομασία"
               floatPlaceholder='auto' maxlength="150">
             <mat-hint align="end"></mat-hint>
           </mat-form-field>
 
-          <mat-form-field class="small list">
-            <mat-select [(value)]="newtax.type">
-              <mat-option value="UnitRate">Είναι ΦΠΑ</mat-option>
-              <mat-option value="FixedRate">Είναι Φόρος Παρακράτησης</mat-option>
+          <mat-form-field class="shorter list">
+            <mat-select [(value)]="newtax.type" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
+              <mat-option value="UnitRate">ΦΠΑ</mat-option>
+              <mat-option value="FixedRate">Φόρος Παρακράτησης</mat-option>
               <mat-option value="Fixed">Άλλο</mat-option>
             </mat-select>
           </mat-form-field>
