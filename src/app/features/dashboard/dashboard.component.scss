@@ -23,8 +23,9 @@
   
 .action-card .mat-card-subtitle {
     color:#1C1D21;
-    font-size:16px;
+    font-size:14px;
     opacity: 0.8;
+    text-overflow: ellipsis;
 }
   
 .inline-subtitle {

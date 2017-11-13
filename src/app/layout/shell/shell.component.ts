@@ -73,7 +73,7 @@ export class ShellComponent implements OnInit, OnDestroy {
             ];
             if (types != null) {
               types.forEach((doc) => {
-                this.navLinks.push({ path: doc.search_path, icon: 'folder', label: doc.name });
+                this.navLinks.push({ path: doc.search_path, icon: 'folder', label: doc.folder });
               });
             }
             this.navLinks.push({ path: this.subscription.settings_path, icon: 'settings', label: 'Ρυθμίσεις' });
