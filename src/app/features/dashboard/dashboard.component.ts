@@ -3,6 +3,7 @@ import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { SubscriptionViewModel, DocumentTypeViewModel } from '../../view-models/view-models';
 
 const default_columns = 4;
 
@@ -14,7 +15,8 @@ const default_columns = 4;
 export class DashboardComponent implements OnInit, OnDestroy {
   columns = default_columns;
   user = null;
-  subscription = {company : {}};
+  subscription: SubscriptionViewModel;
+  document_types: DocumentTypeViewModel[];
   private media_sub: any = null;
   private router_params_sub: any;
 
@@ -43,6 +45,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (null != alias) {
         this.appState.getSubscriptionByKey(alias).subscribe((sub) => {
           this.subscription = sub;
+          this.subscription.document_types.subscribe((types) => {
+            this.document_types = types;
+          });
         });
       }
     });

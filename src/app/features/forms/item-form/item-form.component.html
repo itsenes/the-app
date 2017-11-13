@@ -17,37 +17,105 @@
   </mat-card-title>
   <mat-card-content>
     <div class="form-container">
-      <mat-form-field>
+      <h3 *ngIf='readonly'>{{model.name}}</h3>
+      <mat-form-field *ngIf='!readonly'>
         <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.name' placeholder="Ονομασία" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint *ngIf='!readonly' align="end">{{name.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <mat-form-field>
-        <textarea matInput [readonly]='readonly' #publicNotes="ngModel" name="publicNotes" [(ngModel)]='model.publicNotes' placeholder="Περιγραφή"
-          floatPlaceholder='auto' maxlength="250"></textarea>
-        <mat-hint *ngIf='!readonly' align="end">{{publicNotes.value?.length || 0}}/250</mat-hint>
-        <mat-hint *ngIf='!readonly' align="start">Γίνεται χρήση αυτής της περιγραφής, αν το επιλέξετε, στο παραστατικό.</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field>
+      <label *ngIf='readonly'>{{model.notes}}</label>
+      <mat-form-field *ngIf='!readonly'>
         <textarea matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.notes' placeholder="Σχόλια" floatPlaceholder='auto'
           maxlength="250"></textarea>
-        <mat-hint *ngIf='!readonly' align="end">{{notes.value?.length || 0}}/250</mat-hint>
-        <mat-hint *ngIf='!readonly' align="start">Σχόλια για το προιόν ή την υπηρεσία που δεν εμφανίζονται στο παραστατικό.</mat-hint>
+        <mat-hint align="end">{{notes.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="shorter">
+      <label *ngIf='readonly'>{{model.code}}</label>
+      <mat-form-field *ngIf='!readonly' class="shorter">
         <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.code' placeholder="Κωδικός" floatPlaceholder='auto'
           maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end">{{code.value?.length || 0}}/150</mat-hint>
+        <mat-hint align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <mat-form-field class="shorter">
-        <input matInput type="number" [readonly]='readonly' #amount="ngModel" name="amount" [(ngModel)]='model.amount' placeholder="Τιμή"
+      <label *ngIf='readonly'>{{model.amount}}</label>
+      <mat-form-field *ngIf='!readonly' class="shorter">
+        <input matInput type="number" [readonly]='readonly' #amount="ngModel" name="amount" [(ngModel)]='model.amount' placeholder="Τιμή μονάδος"
           floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='!readonly' align="end"></mat-hint>
+        <mat-hint align="end"></mat-hint>
       </mat-form-field>
     </div>
   </mat-card-content>
+
+  <mat-card-title>
+    <label class="small inline">ΦΟΡΟΙ</label>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="form-container">
+      <mat-chip-list *ngIf='readonly'>
+        <mat-chip color="warn" *ngFor="let tax of model.taxes; let i = index">{{tax.name}} ({{tax.amount}}%)</mat-chip>
+      </mat-chip-list>
+
+      <ng-container *ngIf='!readonly'>
+        <div class="tax" fxLayout="row" fxLayoutAlign="start center" *ngFor="let tax of model.taxes; let i = index">
+          <mat-chip class="list">{{i+1}}</mat-chip>
+          <mat-form-field class="shorter list">
+            <input matInput [readonly]='readonly' #taxname="ngModel" name="taxname" [(ngModel)]='tax.name' placeholder="Ονομασία" floatPlaceholder='auto'
+              maxlength="150">
+          </mat-form-field>
+          <mat-form-field class="small list">
+            <mat-select [(value)]="tax.type">
+              <mat-option value="UnitRate">Ποσοστό</mat-option>
+              <mat-option value="FixedRate">Αξία</mat-option>
+              <mat-option value="Fixed">Αξία</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="shorter list">
+            <input matInput type="number" [readonly]='readonly' #taxamount="ngModel" name="taxamount" [(ngModel)]='tax.amount' placeholder="Ποσοστό ή αξία"
+              floatPlaceholder='auto' maxlength="150">
+          </mat-form-field>
+          
+          <mat-slide-toggle class="list">Παρακρατείται;</mat-slide-toggle>
+
+          <mat-slide-toggle class="list">Είναι ΦΠΑ;</mat-slide-toggle>
+
+          <button color="default" (click)="removetax(i)" mat-icon-button>
+            <mat-icon class="form-button-icon">delete</mat-icon>
+          </button>
+        </div>
+
+        <div *ngIf='!readonly' class="tax" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip color="warn" class="list" selected="true">...</mat-chip>
+          <mat-form-field class="shorter list">
+            <input matInput [readonly]='readonly' #newtaxname="ngModel" name="newtaxname" [(ngModel)]='newtax.name' placeholder="Ονομασία"
+              floatPlaceholder='auto' maxlength="150">
+            <mat-hint align="end"></mat-hint>
+          </mat-form-field>
+          <mat-form-field class="small list">
+            <mat-select [(value)]="newtax.type">
+              <mat-option value="UnitRate">Ποσοστό</mat-option>
+              <mat-option value="FixedRate">Αξία</mat-option>
+              <mat-option value="Fixed">Αξία</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="shorter list">
+            <input matInput type="number" [readonly]='readonly' #newtaxamount="ngModel" name="newtaxamount" [(ngModel)]='newtax.amount'
+              placeholder="Ποσοστό" floatPlaceholder='auto' maxlength="150">
+            <span matSuffix>%</span>
+            <mat-hint align="end"></mat-hint>
+          </mat-form-field>
+
+          <mat-slide-toggle class="list">Παρακρατείται;</mat-slide-toggle>
+
+          <mat-slide-toggle class="list">Είναι ΦΠΑ;</mat-slide-toggle>
+
+          <button (click)="addtax()" mat-button color="primary">
+            <label class="small">ΠΡΟΣΘΗΚΗ</label>
+          </button>
+        </div>
+      </ng-container>
+
+    </div>
+  </mat-card-content>
+
 </mat-card>

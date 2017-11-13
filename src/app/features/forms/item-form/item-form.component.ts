@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, UpdateDocumentTypeRequest, CreateDocumentTypeRequest } from '../../../services/incontrl-apiclient';
+import { ApiClient, Product, Tax, TaxType } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../environments/environment';
 
@@ -15,7 +15,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   subscription_key: any = null;
   subscription_id: any = null;
   private _bak: any = null;
-  private _model: any = null;
+  private _model: Product = null;
   public readonly = true;
   private busy = false;
   public currencies = [];
@@ -23,32 +23,26 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   params_sub: any = null;
   api_path = environment.api_url + '/api/';
   private template_file_url;
+  public newtax = new Tax();
 
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
-  public set model(value: any) {
+  public set model(value: Product) {
     this._model = value;
     if (value != null) {
       this.readonly = (value.id != null);
     }
   }
-  public get model(): any { return this._model; }
+  public get model(): Product { return this._model; }
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
     private apiClient: ApiClient) {
-    this.model = {};
   }
 
   ngOnInit() {
-    // this.appState.currencies.subscribe((items) => {
-    //   this.currencies = items;
-    // });
-    // this.appState.countries.subscribe((items) => {
-    //   this.countries = items;
-    // });
     this.params_sub = this.route.parent.params.subscribe((params) => {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
@@ -92,27 +86,30 @@ export class ItemFormComponent implements OnInit, OnDestroy {
     return (null == this.model || this.model.id == null);
   }
 
+  addtax() {
+    const tax = this.newtax.clone();
+    if (null == this.model.taxes) {
+      this.model.taxes = [];
+    }
+    this.model.taxes.push(tax);
+    this.newtax = new Tax();
+  }
+
+  removetax(index) {
+    this.model.taxes.splice(index, 1);
+  }
+
   save() {
     if (this.isnew()) {
       this.savenew();
       return;
     }
-    const request: UpdateDocumentTypeRequest = new UpdateDocumentTypeRequest();
+
     this.readonly = true;
-    request.code = this.model.code;
-    request.culture = this.model.culture;
-    request.generatesPrintouts = this.model.generatesPrintouts;
-    request.name = this.model.name;
-    request.notes = this.model.notes;
-    request.numberFormat = this.model.numberFormat;
-    request.numberOffset = this.model.numberOffset;
-    request.recordType = this.model.recordType;
-    request.tags = this.model.tags;
-    request.uiHint = this.model.uiHint;
-    this.apiClient.updateDocumentType(this.subscription_id, this.model.id, request).subscribe((documentType) => {
+    this.apiClient.updateProduct(this.subscription_id, this.model.id, this.model).subscribe((product) => {
       // create a new backup copy
       this.bak(this.model);
-      this.model = documentType;
+      this.model = product;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing
@@ -122,22 +119,10 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   }
 
   savenew() {
-    const request: CreateDocumentTypeRequest = new CreateDocumentTypeRequest();
-    this.readonly = true;
-    request.code = this.model.code;
-    request.culture = this.model.culture;
-    request.generatesPrintouts = this.model.generatesPrintouts;
-    request.name = this.model.name;
-    request.notes = this.model.notes;
-    request.numberFormat = this.model.numberFormat;
-    request.numberOffset = this.model.numberOffset;
-    request.recordType = this.model.recordType;
-    request.tags = this.model.tags;
-    request.uiHint = this.model.uiHint;
-    this.apiClient.createDocumentType(this.subscription_id, request).subscribe((documentType) => {
+    this.apiClient.createProduct(this.subscription_id, this.model).subscribe((product) => {
       // create a new backup copy
       this.bak(this.model);
-      this.model = documentType;
+      this.model = product;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing

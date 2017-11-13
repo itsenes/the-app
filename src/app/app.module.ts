@@ -45,9 +45,11 @@ import { ApiClient, API_BASE_URL } from './services/incontrl-apiclient';
 import { environment } from '../environments/environment';
 import { DocumentTypeFormComponent } from './features/forms/document-type-form/document-type-form.component';
 import { ItemFormComponent } from './features/forms/item-form/item-form.component';
+import { ErrorComponent } from './common/error/error.component';
+
 
 // my api url factory method :)
-export const getApiUrl = function() {
+export const getApiUrl = function () {
   return environment.api_url;
 };
 
@@ -72,17 +74,20 @@ const appRoutes: Routes = [
           { path: '', component: DashboardComponent },
           { path: 'documents/:typeId', component: DocumentsComponent },
           { path: 'documents/:typeId/:documentId', component: DocumentViewComponent },
-          { path: 'settings', component: SettingsComponent,
-            children : [
-              { path : '', redirectTo: 'company', pathMatch: 'full' },
-              { path : 'company', component : CompanyFormComponent },
-              { path : 'contact', component : ContactFormComponent },
-              { path : 'document-types', component : DocumentTypesComponent },
-              { path : 'items', component : ItemsComponent },
-            ] },
+          {
+            path: 'settings', component: SettingsComponent,
+            children: [
+              { path: '', redirectTo: 'company', pathMatch: 'full' },
+              { path: 'company', component: CompanyFormComponent },
+              { path: 'contact', component: ContactFormComponent },
+              { path: 'document-types', component: DocumentTypesComponent },
+              { path: 'items', component: ItemsComponent },
+            ]
+          },
         ]
       }]
   },
+  { path: 'error', component: ErrorComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'forbidden', component: UnauthorizedComponent },
   { path: '**', component: PageNotFoundComponent }
@@ -109,7 +114,8 @@ const appRoutes: Routes = [
     DocumentTypesComponent,
     ItemsComponent,
     DocumentTypeFormComponent,
-    ItemFormComponent
+    ItemFormComponent,
+    ErrorComponent
   ],
   entryComponents: [SelectImageDialogComponent],
   imports: [

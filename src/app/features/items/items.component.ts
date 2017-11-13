@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
-import { AppStateService, SubscriptionViewModel } from '../../services/app-state.service';
+import { AppStateService } from '../../services/app-state.service';
+import { SubscriptionViewModel} from '../../view-models/view-models';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../services/incontrl-apiclient';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
@@ -47,10 +48,10 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.confirmation.create('Διαγραφή προϊόντος', `Να γίνει η διαγραφή του προϊόντος ${item.name}`)
         .subscribe((ans) => {
           if (ans.resolved) {
-            this.apiClient.deleteDocumentType(this.model.id, item.id)
+            this.apiClient.deleteProduct(this.model.id, item.id)
               .subscribe(() => {
-                this.model.document_types.subscribe((types) => {
-                  types.splice(index, 1);
+                this.model.products.subscribe((products) => {
+                  products.splice(index, 1);
                   this.alertsService.create('success', 'Η διαγραφή του προϊόντος έγινε με επιτυχία!');
                 });
               }, (error) => {

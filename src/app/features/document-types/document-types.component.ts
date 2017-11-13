@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
-import { AppStateService, SubscriptionViewModel } from '../../services/app-state.service';
+import { AppStateService } from '../../services/app-state.service';
+import { SubscriptionViewModel} from '../../view-models/view-models';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../services/incontrl-apiclient';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 @Component({

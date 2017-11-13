@@ -31,9 +31,9 @@
         <mat-hint align="end">{{notes.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Κωδικός: {{model.code}}</label>
+      <label *ngIf='readonly'>Όνομα φακέλου: {{model.code}}</label>
       <mat-form-field class="shorter" *ngIf='!readonly'>
-        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.code' placeholder="Κωδικός" floatPlaceholder='auto'
+        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.code' placeholder="Όνομα φακέλου" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>

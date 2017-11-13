@@ -1,6 +1,6 @@
 <mat-toolbar class="view-header">
-  <img mat-card-avatar class="company-avatar mat-elevation-z3" [src]='subscription.company_logo' />
-  <span class="title">&nbsp;{{subscription.company.name}}</span>
+  <img mat-card-avatar class="company-avatar mat-elevation-z3" [src]='subscription?.company_logo' />
+  <span class="title">&nbsp;{{subscription?.company?.name}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
   <!-- <span class="caption">Δευτέρα 11/10/2017</span> -->
@@ -8,11 +8,11 @@
 
 <div class="view-content">
   <mat-grid-list [cols]="columns" rowHeight="280" gutterSize="10">
-    <mat-grid-tile *ngFor="let doc of subscription.document_types | async">
+    <mat-grid-tile *ngFor="let doc of document_types">
       <mat-card class="action-card">
         <mat-card-header>
           <mat-card-title class="action-card-title">
-            {{doc.name}}
+            {{doc.folder}}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>

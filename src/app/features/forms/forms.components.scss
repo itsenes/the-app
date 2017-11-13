@@ -31,10 +31,23 @@ hr {
   max-width: 300px;
 }
 
+.mat-form-field.small {
+  max-width: 120px;
+}
+
 .mat-form-field {
   font-size: 16px; // color: black;
-  padding-bottom: 5px;
+  margin-bottom: 4px;
 }
+
+.mat-form-field.shorter.list, .mat-form-field.small, .mat-slide-toggle.list {
+  margin-right: 6px;
+}
+
+.mat-chip.list {
+  margin-right: 6px;
+}
+
 
 .form-container {
   display: flex;
@@ -147,10 +160,10 @@ a.form-link {
 }
 
 .mat-button.download-link {
-  color:whitesmoke;
+  color: whitesmoke;
   background: whitesmoke;
   width: 40px;
-  height:60px;
+  height: 60px;
 }
 
 .download-link-container {
