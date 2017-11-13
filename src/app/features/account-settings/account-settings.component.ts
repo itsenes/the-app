@@ -11,8 +11,10 @@ export class AccountSettingsComponent implements OnInit {
   subscriptions = null;
   hasMultipleSubs = false;
   multipleSubsRowspan = 1;
-  currentSubId = null;
-  constructor(private appState: AppStateService, private authService: AuthService) { }
+  current_subscriptionkey = null;
+  constructor(private appState: AppStateService, private authService: AuthService) {
+    this.current_subscriptionkey = this.appState.current_subscriptionkey;
+  }
 
   signout() {
     this.authService.startSignout();
