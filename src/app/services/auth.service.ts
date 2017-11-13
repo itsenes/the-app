@@ -35,14 +35,16 @@ export class AuthService {
     }
   }
 
-  startAuthentication(): Promise<void> {
-    return this.manager.signinRedirect({ data: 'data' }).catch(function (err) { console.log(err); });
+  startAuthentication(url): Promise<void> {
+    return this.manager.signinRedirect({ data: url }).catch(function (err) { console.log(err); });
   }
 
   completeAuthentication(): Promise<void> {
     return this.manager.signinRedirectCallback().then(user => {
       this.user = user;
-    }).catch(function (err) { console.log(err); });
+    }).catch(function (err) {
+      console.log(err);
+    });
   }
 
   startSignout(): Promise<void> {

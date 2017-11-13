@@ -7,7 +7,7 @@
     </button>
   </mat-card-title>
   <mat-card-content>
-    <app-item-form (onDelete)='delete($event,i)' *ngFor="let product of products; let i = index" [model]='product.model'></app-item-form>
+    <app-item-form (onDelete)='delete($event,i)' *ngFor="let product of products; let i = index" [model]='product.model' [currencyCode]='currencyCode'></app-item-form>
   </mat-card-content>
 </mat-card>
 

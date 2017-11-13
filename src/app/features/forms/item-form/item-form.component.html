@@ -38,7 +38,7 @@
         <mat-hint align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Τιμή μονάδος: {{model.amount | currency}}</label>
+      <label *ngIf='readonly'>Τιμή μονάδος: {{model.amount | currency:currencyCode}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
         <input matInput type="number" [readonly]='readonly' #amount="ngModel" name="amount" [(ngModel)]='model.amount' placeholder="Τιμή μονάδος"
           floatPlaceholder='auto' maxlength="150">

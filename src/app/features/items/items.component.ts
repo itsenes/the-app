@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../services/app-state.service';
-import { SubscriptionViewModel} from '../../view-models/view-models';
+import { SubscriptionViewModel } from '../../view-models/view-models';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../services/incontrl-apiclient';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
@@ -20,6 +20,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   params_sub: any = null;
   products: any[] = [];
   norecords = false;
+  currencyCode = 'EUR';
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -68,6 +69,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((subscription) => {
           this.model = subscription;
+          this.currencyCode = subscription.company.currencyCode;
           subscription.products.subscribe((products) => {
             this.products = products;
             this.norecords = (this.products == null || this.products.length === 0);

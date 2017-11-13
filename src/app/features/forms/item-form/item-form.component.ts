@@ -16,6 +16,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   subscription_id: any = null;
   private _bak: any = null;
   private _model: Product = null;
+  private _currencyCode: string = null;
   public readonly = true;
   private busy = false;
   public currencies = [];
@@ -27,6 +28,12 @@ export class ItemFormComponent implements OnInit, OnDestroy {
 
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
+
+  @Input()
+  public set currencyCode(value: string) {
+    this._currencyCode = value;
+  }
+  public get currencyCode(): string { return this._currencyCode; }
 
   @Input()
   public set model(value: Product) {
@@ -48,6 +55,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
           this.subscription_id = sub.id;
+
         });
     });
   }
