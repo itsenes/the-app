@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../services/app-state.service';
+import { SubscriptionViewModel, DocumentTypeViewModel } from '../../view-models/view-models';
+import { ApiClient,Document  } from '../../services/incontrl-apiclient';
 
 @Component({
   selector: 'app-documents',
@@ -8,14 +11,30 @@ import { AppStateService } from '../../services/app-state.service';
 })
 export class DocumentsComponent implements OnInit, OnDestroy {
   title = null;
-  documentType = null;
-  constructor(private appState: AppStateService) {}
+  subscription: SubscriptionViewModel = null;
+  params_sub = null;
+  documentType: DocumentTypeViewModel = null;
+  documents: Document[] = null;
+
+  constructor(private appState: AppStateService, private route: ActivatedRoute, private apiClient: ApiClient) { }
 
   ngOnInit() {
-    // this.documentType = this.appState.document_types.filter(d => {d.id == })
+    this.params_sub = this.route.params.subscribe((params) => {
+      this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
+        this.subscription = sub;
+        const id = params['typeId'];
+        this.subscription.getDocumentType(id).subscribe((doc) => {
+          this.documentType = doc;
+          this.apiClient.getDocuments(this.subscription.id).subscribe((response) => {
+            this.documents = response.items;
+          });
+        });
+      });
+    });
   }
 
   ngOnDestroy() {
+    this.params_sub.unsubscribe();
   }
 
 }

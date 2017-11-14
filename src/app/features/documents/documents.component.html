@@ -1,9 +1,17 @@
 <mat-toolbar class="view-header">
-  <span class="title">{{document_type?.folder}}</span>
+  <span class="title">{{documentType?.folder}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
 </mat-toolbar>
 
 <div class="view-content">
- 
+  <mat-grid-list cols="4" rowHeight="100px">
+    <mat-grid-tile *ngFor="let doc of documents">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{doc.numberPrintable}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

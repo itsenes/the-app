@@ -66,6 +66,14 @@ export class SubscriptionViewModel {
     });
   }
 
+  getDocumentType(id) {
+    return Observable.create((observer) => {
+      observer.next(this._document_types.find(doc  => doc.id === id));
+      observer.complete();
+    });
+  }
+
+  // todo:rename
   add_document_type() {
     this._document_types.push(new DocumentTypeViewModel(new DocumentType(), this.home_path));
   }
