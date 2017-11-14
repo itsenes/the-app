@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
 import { RequestOptionsArgs } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 // https://github.com/damienbod/AspNet5IdentityServerAngularImplicitFlow/tree/npm-lib-test/src/AngularClient/angularApp/app
 @Injectable()
@@ -59,6 +60,8 @@ export class AuthService {
 }
 
 export function getClientSettings(): UserManagerSettings {
+  return environment.auth_settings;
+
   // return {
   //   authority: 'http://localhost:20200/',
   //   client_id: 'spa',
@@ -70,16 +73,27 @@ export function getClientSettings(): UserManagerSettings {
   //   loadUserInfo: true
   // };
 
-  return {
-    authority: 'https://incontrl.io/',
-    client_id: 'spa',
-    redirect_uri: 'http://localhost:4200/auth-callback',
-    post_logout_redirect_uri: 'http://localhost:4200/logged-out',
-    response_type: 'id_token token',
-    scope: 'openid profile email core',
-    filterProtocolClaims: true,
-    loadUserInfo: true
-  };
+  // return {
+  //   authority: 'https://incontrl.io/',
+  //   client_id: 'spa',
+  //   redirect_uri: 'http://localhost:4200/auth-callback',
+  //   post_logout_redirect_uri: 'http://localhost:4200/logged-out',
+  //   response_type: 'id_token token',
+  //   scope: 'openid profile email core',
+  //   filterProtocolClaims: true,
+  //   loadUserInfo: true
+  // };
+
+  // return {
+  //   authority: 'https://incontrl.io/',
+  //   client_id: 'spa',
+  //   redirect_uri: 'https://app.incontrl.io/auth-callback',
+  //   post_logout_redirect_uri: 'https://app.incontrl.io/logged-out',
+  //   response_type: 'id_token token',
+  //   scope: 'openid profile email core',
+  //   filterProtocolClaims: true,
+  //   loadUserInfo: true
+  // };
 }
 
 export class SecureApiRequestOptions extends BaseRequestOptions {
