@@ -5,12 +5,25 @@
 </mat-toolbar>
 
 <div class="view-content">
-  <mat-grid-list cols="4" rowHeight="100px">
+  <mat-grid-list cols="4" rowHeight="2:1" gutter="0">
     <mat-grid-tile *ngFor="let doc of documents">
-      <mat-card>
+      <mat-card fxFlexAlign="stretch" class="doc-card">
         <mat-card-header>
-          <mat-card-title>{{doc.numberPrintable}}</mat-card-title>
+          <mat-card-title>
+            <h3 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h3>
+            <h3 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h3>
+          </mat-card-title>
+          <mat-card-title>{{doc.documentType.name}}</mat-card-title>
+          <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
         </mat-card-header>
+        <mat-card-content>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <a [href]="doc.portal_link" target="__new" mat-button>Προβολή</a>
+          <button mat-button>Μεταβολή</button>
+          <button disabled="doc.model.status=='Draft'" mat-button>Διαγραφή</button>
+        </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

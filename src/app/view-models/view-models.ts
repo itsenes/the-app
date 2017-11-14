@@ -2,7 +2,7 @@ import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
-import { ApiClient, Subscription, LookupEntry, DocumentType, Product, Tax } from '../services/incontrl-apiclient';
+import { ApiClient, Subscription, LookupEntry, DocumentType, Product, Tax, Document } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 
 export class SubscriptionViewModel {
@@ -68,7 +68,7 @@ export class SubscriptionViewModel {
 
   getDocumentType(id) {
     return Observable.create((observer) => {
-      observer.next(this._document_types.find(doc  => doc.id === id));
+      observer.next(this._document_types.find(doc => doc.id === id));
       observer.complete();
     });
   }
@@ -214,10 +214,50 @@ export class ItemViewModel {
 
   private _model: Product = null;
   public get model(): Product {
-        return this._model;
+    return this._model;
   }
 
   public set model(value: Product) {
+    this._model = value;
+  }
+
+}
+
+export class DocumentViewModel {
+  constructor(item: Document, private documentType: DocumentTypeViewModel, private homePath: string) {
+    this.model = item;
+  }
+
+  public get id() {
+    return this.model.id;
+  }
+
+  public get folder() {
+    return this.documentType.folder;
+  }
+
+  public get notes() {
+    return this.model.notes;
+  }
+
+  public get portal_link() {
+    return `${environment.api_url}${this.model.permaLink}`;
+  }
+
+  public get edit_path() {
+    return `${this.homePath}/documents/${this.documentType.id}/${this.model.id}`;
+  }
+
+  public get preview_path() {
+    return `${this.homePath}/documents/new`;
+  }
+
+  private _model: Document = null;
+  public get model(): Document {
+    return this._model;
+  }
+
+  public set model(value: Document) {
     this._model = value;
   }
 
