@@ -16,4 +16,5 @@ export const environment = {
       filterProtocolClaims: true,
       loadUserInfo: true
     }
-  }
+  };
+
