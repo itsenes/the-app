@@ -7,7 +7,7 @@
 </mat-toolbar>
 
 <div class="view-content">
-  <mat-grid-list [cols]="columns" rowHeight="280" gutterSize="10">
+  <mat-grid-list [cols]="columns" rowHeight="340" gutterSize="10">
     <mat-grid-tile *ngFor="let doc of document_types">
       <mat-card class="action-card">
         <mat-card-header>
@@ -15,11 +15,12 @@
             {{doc.folder}}
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content>
-          <mat-icon color="primary" class="size-64">folder</mat-icon>
+        <mat-card-content class="min-height">
+          <!-- <mat-icon color="primary" class="size-64">folder</mat-icon> -->
           <!-- <span mat-card-avatar class="folder-count-badge accent">
             <p class="folder-count">{{doc.count}}</p>
           </span> -->
+          <img src="assets/images/donut.png" class="chart">
           <mat-card-subtitle>{{doc.notes}}.</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
@@ -95,8 +96,8 @@
             Ρυθμίσεις
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content>
-          <mat-icon class="size-64">settings</mat-icon>
+        <mat-card-content class="min-height">
+          <mat-icon class="size-128">settings</mat-icon>
           <mat-card-subtitle>Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
