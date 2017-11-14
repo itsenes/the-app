@@ -5,7 +5,7 @@
 </mat-toolbar>
 
 <div class="view-content">
-  <mat-grid-list cols="4" rowHeight="2:1" gutter="0">
+  <mat-grid-list cols="4" rowHeight="300px" gutter="0">
     <mat-grid-tile *ngFor="let doc of documents">
       <mat-card fxFlexAlign="stretch" class="doc-card">
         <mat-card-header>
@@ -14,7 +14,11 @@
             <h3 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h3>
           </mat-card-title>
           <mat-card-title>{{doc.documentType.name}}</mat-card-title>
+          <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode}}</mat-card-title>
+          <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode}}</mat-card-subtitle>
           <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
+          <mat-card-title>{{doc.model?.recipient?.organisation?.name}}</mat-card-title>
+          <mat-card-subtitle>{{doc.model?.recipient?.contact?.displayName}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
 

@@ -2,3 +2,7 @@
   min-width: 200px;
   margin: 4px;
 }
+
+.mat-card-actions {
+    padding: 0px;
+}

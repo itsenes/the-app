@@ -224,7 +224,7 @@ export class ItemViewModel {
 }
 
 export class DocumentViewModel {
-  constructor(item: Document, private documentType: DocumentTypeViewModel, private homePath: string) {
+  constructor(item: Document, public documentType: DocumentTypeViewModel, private homePath: string) {
     this.model = item;
   }
 
