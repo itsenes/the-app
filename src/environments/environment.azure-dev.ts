@@ -5,7 +5,7 @@
 
 export const environment = {
     production: false,
-    api_url: 'https://sandbox.api.incontrl.io',
+    api_url: 'https://sandbox.incontrl.io',
     auth_settings: {
       authority: 'https://incontrl.io/',
       client_id: 'spa',
