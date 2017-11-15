@@ -24,7 +24,6 @@ import { PageNotFoundComponent } from './common/page-not-found/page-not-found.co
 import { UnauthorizedComponent } from './common/unauthorized/unauthorized.component';
 import { AuthCallbackComponent } from './common/auth-callback/auth-callback.component';
 import { LoggedOutComponent } from './common/logged-out/logged-out.component';
-import { SplashComponent } from './common/splash/splash.component';
 import { AccountSettingsComponent } from './features/account-settings/account-settings.component';
 import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
 import { DocumentTypesComponent } from './features/document-types/document-types.component';
@@ -105,7 +104,6 @@ const appRoutes: Routes = [
     UnauthorizedComponent,
     AuthCallbackComponent,
     LoggedOutComponent,
-    SplashComponent,
     AccountSettingsComponent,
     SubscriptionListComponent,
     CompanyFormComponent,
