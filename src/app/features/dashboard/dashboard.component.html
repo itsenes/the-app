@@ -108,6 +108,26 @@
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="action-card">
+        <mat-card-header>
+          <mat-card-title class="action-card-title">
+            Πληροφορίες
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="min-height">
+          <mat-icon class="size-128">bug_report</mat-icon>
+          <mat-card-subtitle>Η έκδοση της εφαρμογής είναι δοκιμαστική.
+            <br>API: {{api_url}}</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button color="primary" href="https://www.incontrl.io" target="__new">
+            <mat-icon>forum</mat-icon>
+            <label fxShow fxHide.sm fxHide.md>Επικοινωνήστε μαζί μας!</label>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
     <!-- <mat-grid-tile>
       <mat-card class="action-card  mat-elevation-z6">
         <mat-card-content>

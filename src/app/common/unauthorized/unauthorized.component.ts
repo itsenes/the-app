@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-unauthorized',
-  template: '<h1>Error 403: Unauthorized</h1>'
+  templateUrl: './unauthorized.component.html'
 })
 
 export class UnauthorizedComponent implements OnInit {

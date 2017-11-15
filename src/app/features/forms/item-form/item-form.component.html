@@ -6,7 +6,7 @@
       <mat-icon class="form-button-icon">edit</mat-icon>
     </button>
     <button *ngIf='readonly && !isnew()' color="warn" (click)="delete()" mat-mini-fab>
-      <mat-icon class="form-button-icon">delete</mat-icon>
+      <mat-icon class="form-button-icon">delete_forever</mat-icon>
     </button>
     <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
       <label class="small">ΑΠΟΘΗΚΕΥΣΗ</label>
@@ -53,11 +53,11 @@
   <mat-card-content>
     <div class="form-container">
       <mat-chip-list *ngIf='readonly'>
-        <mat-chip [color]="'warn'" *ngFor="let tax of model.taxes; let i = index">{{tax.name}} ({{tax.amount}}%)</mat-chip>
+        <mat-chip [color]="'warn'" *ngFor="let tax of model?.taxes; let i = index">{{tax.name}} ({{tax.amount}}%)</mat-chip>
       </mat-chip-list>
 
       <ng-container *ngIf='!readonly'>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let tax of model.taxes; let i = index">
+        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let tax of model?.taxes; let i = index">
           <mat-chip class="list">{{i+1}}</mat-chip>
           <mat-form-field class="shorter list">
             <input matInput [readonly]='readonly' #taxname="ngModel" name="taxname" [(ngModel)]='tax.name' placeholder="Ονομασία" floatPlaceholder='auto'
@@ -79,12 +79,12 @@
           </mat-form-field>
 
           <button color="warn" (click)="removetax(i)" mat-icon-button>
-            <mat-icon class="warn-icon">delete</mat-icon>
+            <mat-icon class="warn-icon">delete_forever</mat-icon>
           </button>
         </div>
 
-        <div *ngIf='!readonly' class="tax" fxLayout="row" fxLayoutAlign="start center">
-          <mat-chip color="warn" class="list" selected="true">...</mat-chip>
+        <div *ngIf='!readonly' fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip color="warn" class="list">...</mat-chip>
 
           <mat-form-field class="shorter list">
             <input matInput [readonly]='readonly' #newtaxname="ngModel" name="newtaxname" [(ngModel)]='newtax.name' placeholder="Ονομασία"

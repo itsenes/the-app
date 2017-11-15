@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
 import { ActivatedRoute } from '@angular/router';
 import { SubscriptionViewModel, DocumentTypeViewModel } from '../../view-models/view-models';
+import { environment } from '../../../environments/environment';
 
 const default_columns = 4;
 
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   document_types: DocumentTypeViewModel[];
   private media_sub: any = null;
   private router_params_sub: any;
+  api_url = environment.api_url;
 
   constructor(private media: ObservableMedia,
     private authService: AuthService,
