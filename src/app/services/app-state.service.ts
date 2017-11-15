@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { environment } from '../../environments/environment';
 import { SubscriptionViewModel } from '../view-models/view-models';
+import { Router } from '@angular/router';
 // a simple singleton to maintain app state for now, other patterns e.g. repository could be applied
 @Injectable()
 export class AppStateService {
@@ -12,6 +13,24 @@ export class AppStateService {
   private _countries: LookupEntry[] = null;
   private _currencies: LookupEntry[] = null;
   private _timezones: LookupEntry[] = null;
+  private _lastError = null;
+
+  constructor(private apiClient: ApiClient, private injector: Injector, private router: Router) {
+  }
+
+  public onError(error) {
+    // implement telemetry
+    this._lastError = error;
+    this.router.navigate(['/error']);
+  }
+
+  public getLastError(): any {
+    return this._lastError;
+  }
+
+  public clearError() {
+    this._lastError = null;
+  }
 
   public get current_subscriptionkey(): string {
     return this._current_subscriptionkey;
@@ -111,10 +130,6 @@ export class AppStateService {
     }
     this._current_subscriptionkey = subscription.alias;
     return subscription;
-  }
-
-  constructor(private apiClient: ApiClient, private injector: Injector) {
-
   }
 
   loadSubscriptions(): Observable<SubscriptionViewModel[]> {

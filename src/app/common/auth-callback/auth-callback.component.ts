@@ -42,7 +42,7 @@ export class AuthCallbackComponent implements OnInit {
           }
         }, (error) => {
           console.log('error loading subscriptions' + error);
-          this.router.navigate(['/error', { data: error }]);
+          this.appState.onError(error);
         });
       } else {
         console.log('should redirect to unauthorized!');

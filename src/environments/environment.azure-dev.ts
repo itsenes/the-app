@@ -5,12 +5,12 @@
 
 export const environment = {
     production: false,
-    api_url: 'http://api-vnext.incontrl.io',
+    api_url: 'https://sandbox.api.incontrl.io',
     auth_settings: {
       authority: 'https://incontrl.io/',
       client_id: 'spa',
-      redirect_uri: 'http://app.incontrl.io/auth-callback',
-      post_logout_redirect_uri: 'http://app.incontrl.io/logged-out',
+      redirect_uri: 'https://app.incontrl.io/auth-callback',
+      post_logout_redirect_uri: 'https://app.incontrl.io/logged-out',
       response_type: 'id_token token',
       scope: 'openid profile email core',
       filterProtocolClaims: true,

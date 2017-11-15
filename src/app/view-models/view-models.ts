@@ -33,7 +33,7 @@ export class SubscriptionViewModel {
   }
 
   public get company_logo() {
-    return `${environment.api_url}/subscriptions/${this._model.id}/image`;
+    return `${environment.api_url}/subscriptions/${this._model.id}/image?size=64`;
   }
 
   public get home_path() {
