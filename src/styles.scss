@@ -190,3 +190,15 @@ h3 {
   -webkit-margin-before: 2px;
   -webkit-margin-after: 2px;
 }
+
+.search-input {
+  border:0;
+  border-bottom: solid 1 whismoke;
+}
+
+.divider {
+  margin-left: 4px;
+  margin-right: 4px;
+  color:black;
+  opacity: 0.4;
+}

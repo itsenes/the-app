@@ -1,7 +1,22 @@
 <mat-toolbar class="view-header">
   <span class="title">{{documentType?.folder}}</span>
   <!-- This fills the remaining space of the current row -->
-  <span class="fill-remaining-space"></span>
+  <span class="app-toolbar-filler"></span>
+  <span>
+    <input class="search-input" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='none' maxlength="150">
+    <button mat-icon-button disabled="true">
+      <mat-icon>search</mat-icon>
+    </button>
+  </span>
+  <label class="divider">|</label>
+  <mat-button-toggle>
+    <mat-icon>view_module</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle>
+    <mat-icon>list</mat-icon>
+  </mat-button-toggle>
+  <label class="divider">|</label>
+  <button mat-button>Νέο τιμολόγιο</button>
 </mat-toolbar>
 
 <div class="view-content">
