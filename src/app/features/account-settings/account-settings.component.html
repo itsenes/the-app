@@ -4,8 +4,8 @@
   <span class="fill-remaining-space"></span>
 </mat-toolbar>
 
-<div class="view-content" flLayout="row" flLayoutAlign="start start">
-  <mat-card class="action-card" fxHide.lt-md fxFlex="20">
+<div class="view-content" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start">
+  <mat-card class="action-card" fxFlex="20">
     <mat-card-header>
       <img mat-card-avatar gravatar [email]="user.email" [size]="64" class="avatar-large" />
       <mat-card-title>
@@ -29,7 +29,7 @@
     </mat-card-actions>
   </mat-card>
 
-  <mat-card class="action-card min-height-300" fxFlex="60">
+  <mat-card class="action-card min-height-300" fxFlex="80">
     <mat-card-header>
       <mat-card-title>ΣΥΝΔΡΟΜΕΣ</mat-card-title>
     </mat-card-header>
@@ -43,7 +43,7 @@
             <br />
             <span>{{subscription.company.lineOfBusiness}}</span>
             <br/>
-            <span>{{subscription.company.taxCode}},{{subscription.company.taxOffice}}</span>
+            <span>{{subscription.company.taxCode}}, {{subscription.company.taxOffice}}</span>
             <br/>
             <span>{{subscription.company.email}}, {{subscription.company.website}}</span>
           </p>

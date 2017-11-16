@@ -55,7 +55,7 @@
       <mat-chip-list *ngIf='readonly'>
         <mat-chip [color]="'warn'" *ngFor="let tax of model?.taxes; let i = index">{{tax.name}} ({{tax.amount}}%)</mat-chip>
       </mat-chip-list>
-
+      <label *ngIf="readonly && (!model.taxes || model.taxes.length==0)">Δεν έχουν οριστεί φόροι</label>
       <ng-container *ngIf='!readonly'>
         <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let tax of model?.taxes; let i = index">
           <mat-chip class="list">{{i+1}}</mat-chip>
@@ -84,7 +84,7 @@
         </div>
 
         <div *ngIf='!readonly' fxLayout="row" fxLayoutAlign="start center">
-          <mat-chip color="warn" class="list">...</mat-chip>
+          <mat-chip class="list">...</mat-chip>
 
           <mat-form-field class="shorter list">
             <input matInput [readonly]='readonly' #newtaxname="ngModel" name="newtaxname" [(ngModel)]='newtax.name' placeholder="Ονομασία"
