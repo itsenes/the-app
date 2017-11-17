@@ -15,7 +15,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   params_sub = null;
   documentType: DocumentTypeViewModel = null;
   documents: DocumentViewModel[] = null;
-
+  viewmode = 'grid';
+  norecords = null;
   constructor(private appState: AppStateService, private route: ActivatedRoute, private apiClient: ApiClient) { }
 
   ngOnInit() {
@@ -25,14 +26,20 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         const id = params['typeId'];
         this.subscription.getDocumentType(id).subscribe((docType) => {
           this.documentType = docType;
-          this.apiClient.getDocuments(this.subscription.id).subscribe((response) => {
-            this.documents = response.items.map((doc) => {
-              return new DocumentViewModel(doc, docType, '');
+          this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
+            undefined, undefined, undefined, undefined, [docType.id]).subscribe((response) => {
+              this.documents = response.items.map((doc) => {
+                return new DocumentViewModel(doc, docType, '');
+              });
+              this.norecords = (this.documents == null || this.documents.length === 0);
             });
-          });
         });
       });
     });
+  }
+
+  add_new() {
+
   }
 
   ngOnDestroy() {

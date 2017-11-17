@@ -4,23 +4,26 @@
   <span class="app-toolbar-filler"></span>
   <span>
     <input class="search-input" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='none' maxlength="150">
-    <button mat-icon-button disabled="true">
-      <mat-icon>search</mat-icon>
+    <button mat-icon-button>
+      <mat-icon color="primary">search</mat-icon>
     </button>
   </span>
   <label class="divider">|</label>
-  <mat-button-toggle>
-    <mat-icon>view_module</mat-icon>
-  </mat-button-toggle>
-  <mat-button-toggle>
-    <mat-icon>list</mat-icon>
-  </mat-button-toggle>
+  <mat-button-toggle-group [value]="viewmode">
+    <mat-button-toggle color="primary" value="grid">
+      <mat-icon>view_module</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle color="primary" value="list">
+      <mat-icon>list</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <label class="divider">|</label>
-  <button color="primary" mat-button>Νέο τιμολόγιο</button>
+  <button color="primary" (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
+  <span class="app-toolbar-right-filler"></span>
 </mat-toolbar>
 
 <div class="view-content">
-  <mat-grid-list cols="4" rowHeight="300px" gutter="0">
+  <mat-grid-list *ngIf="!norecords && viewmode=='grid'" cols="4" rowHeight="300px" gutter="0">
     <mat-grid-tile *ngFor="let doc of documents">
       <mat-card fxFlexAlign="stretch" class="doc-card">
         <mat-card-header>
@@ -46,4 +49,13 @@
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
+
+
+  <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="norecords">
+    <label class="small">δεν βρέθηκαν έγγραφα.</label>
+    <img src="assets/images/no-records.png" class="no-records">
+    <button color="primary" (click)="add_new()" mat-button>
+      <label class="small">ΞΕΚΙΝΗΣΤΕ ΕΔΩ!</label>
+    </button>
+  </div>
 </div>

@@ -1,9 +1,16 @@
 @import "./custom-theme.scss";
+
 /* You can add global styles to this file, and also import other style files */
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 // @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
+
+
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";  */
+
+
 /* https://blog.thoughtram.io/angular/2017/05/23/custom-themes-with-angular-material.html */
 
 body {
@@ -62,6 +69,10 @@ a.mat-list-item.active-route {
 
 .app-toolbar-filler {
   flex: 1 1 auto;
+}
+
+.app-toolbar-right-filler {
+  width: 20px;
 }
 
 .mat-tab-group.mat-primary .mat-tab-label:focus,
@@ -192,13 +203,28 @@ h3 {
 }
 
 .search-input {
-  border:0;
+  border: 0;
   border-bottom: solid 1 whismoke;
 }
 
 .divider {
   margin-left: 6px;
   margin-right: 6px;
-  color:black;
+  color: black;
   opacity: 0.2;
+}
+
+.no-records-card {
+  margin-top: 30px;
+  width: 350px;
+  height: 400px;
+}
+
+div.no-records {
+  padding-top: 20px;
+}
+
+img.no-records {
+  height: 160px;
+  margin: 20px;
 }
