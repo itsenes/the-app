@@ -244,6 +244,14 @@ export class DocumentViewModel {
     return `${environment.api_url}${this.model.permaLink}`;
   }
 
+  private _safe_portal_link;
+  public get safe_portal_link() {
+    return this._safe_portal_link;
+  }
+  public set safe_portal_link(value) {
+    this._safe_portal_link = value;
+  }
+
   public get edit_path() {
     return `${this.homePath}/documents/${this.documentType.id}/${this.model.id}`;
   }

@@ -1,0 +1,90 @@
+.doc-card {
+  min-width: 200px;
+  height: 260px;
+  margin: 4px;
+}
+
+.mat-card-actions {
+  padding: 0px;
+}
+
+.new-doc-button {
+  width: 140px;
+}
+
+.mat-select.toolbar {
+  max-width: 160px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.mat-button-toggle-label-content {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  padding: 0;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+.mat-button-toggle-checked {
+  background-color: #e0e0e0;
+  color: primary;
+}
+
+.doc-info-panel {
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 75%, rgba(255,255,255,0) 100%);
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
+  border-left: solid 1 whitesmoke;
+  padding: 10px;
+  margin-top: -5px;
+}
+
+.preview-doc {
+  
+  border: 0;
+  background: whitesmoke;
+}
+
+.wrap {
+  padding: 0;
+  width: 315px; 
+  height: 280px;
+  overflow: hidden;
+  float: left;
+}
+
+.frame {
+  width: 1024px;
+  height: 1280px;
+  border: 0;
+}
+
+.frame {
+  // zoom: 0.25;
+  -moz-transform: scale(0.25);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.25);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.25);
+  -webkit-transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.mat-card-header {
+  height: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.selected-icon {
+  color:green;
+  opacity: 0.6;
+  font-size:24px;
+}

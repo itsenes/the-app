@@ -1,54 +1,111 @@
-<mat-toolbar class="view-header">
+<mat-toolbar class="view-header mat-elevation-z1">
   <span class="title">{{documentType?.folder}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
-  <span>
-    <input class="search-input" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='none' maxlength="150">
-    <button mat-icon-button>
-      <mat-icon color="primary">search</mat-icon>
-    </button>
-  </span>
+
+  <button color="primary" (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
+
   <label class="divider">|</label>
-  <mat-button-toggle-group [value]="viewmode">
+  <button color="warn" (click)="toggleInfoPanel()" mat-icon-button>
+    <mat-icon>info</mat-icon>
+  </button>
+
+  <!-- <label class="divider">|</label>
+  <mat-button-toggle-group name="viewoptions" #viewoptions="matButtonToggleGroup" [value]="viewmode">
     <mat-button-toggle color="primary" value="grid">
       <mat-icon>view_module</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle color="primary" value="list">
       <mat-icon>list</mat-icon>
     </mat-button-toggle>
-  </mat-button-toggle-group>
-  <label class="divider">|</label>
-  <button color="primary" (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
+  </mat-button-toggle-group> -->
+  <!-- <label class="divider">|</label>
+  <mat-select placeholder="ταξινόμηση" class="toolbar" [(value)]="sortfield">
+    <mat-option value="date">Ημερομηνία</mat-option>
+    <mat-option value="dueDate">Ημερομηνία πληρωμής</mat-option>
+    <mat-option value="numberPrintable">Αριθμός</mat-option>
+    <mat-option value="status">Κατάσταση</mat-option>
+    <mat-option value="recipient">Πελάτης</mat-option>
+  </mat-select>
+  <mat-button-toggle-group name="sortoptions" #sortoptions="matButtonToggleGroup" [value]="sortdirection">
+    <mat-button-toggle color="primary" value="+">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle color="primary" value="-">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group> -->
+  <!-- <label class="divider">|</label> -->
+
   <span class="app-toolbar-right-filler"></span>
 </mat-toolbar>
 
 <div class="view-content">
-  <mat-grid-list *ngIf="!norecords && viewmode=='grid'" cols="4" rowHeight="300px" gutter="0">
-    <mat-grid-tile *ngFor="let doc of documents">
-      <mat-card fxFlexAlign="stretch" class="doc-card">
-        <mat-card-header>
-          <mat-card-title>
-            <h3 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h3>
-            <h3 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h3>
-          </mat-card-title>
-          <mat-card-title>{{doc.documentType.name}}</mat-card-title>
-          <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode}}</mat-card-title>
-          <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode}}</mat-card-subtitle>
-          <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
-          <mat-card-title>{{doc.model?.recipient?.organisation?.name}}</mat-card-title>
-          <mat-card-subtitle>{{doc.model?.recipient?.contact?.displayName}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
+  <div fxLayout="row" *ngIf="!norecords">
+    <div fxFlex>
+      <mat-toolbar>
+        <mat-form-field>
+          <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='auto'
+            maxlength="150">
+          <button mat-icon-button (click)="search()">
+            <mat-icon color="primary">search</mat-icon>
+          </button>
+        </mat-form-field>
 
-        </mat-card-content>
-        <mat-card-actions>
-          <a [href]="doc.portal_link" target="__new" mat-button>Προβολή</a>
-          <button mat-button>Μεταβολή</button>
-          <button disabled="doc.model.status=='Draft'" mat-button>Διαγραφή</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+        <span class="app-toolbar-filler"></span>
+        <!-- put pager here -->
+        <span class="app-toolbar-right-filler"></span>
+      </mat-toolbar>
+      <!-- *ngIf="viewoptions.value=='grid'" -->
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
+        <mat-card class="doc-card" *ngFor="let doc of documents;let i = index;">
+          <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon>
+          <mat-card-header>
+            <mat-card-title>
+              <h3 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h3>
+              <h3 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h3>
+            </mat-card-title>
+            <mat-card-title>{{doc.documentType.name}}</mat-card-title>
+            <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode}}</mat-card-title>
+            <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode}}</mat-card-subtitle>
+            <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
+            <mat-card-title>{{doc.model?.recipient?.organisation?.name}}</mat-card-title>
+            <mat-card-subtitle>{{doc.model?.recipient?.contact?.displayName}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="setSelected(doc)">Πληροφορίες</button>
+            <a [href]="doc.portal_link" target="__new" mat-button>Προβολή</a>
+            <button disabled="doc.model.status=='Draft'" mat-button>Διαγραφή</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <div fxFlex="380px" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
+
+      <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="!selected">
+        <label class="small">δεν έχετε επιλέξει καποιο έγγραφο.</label>
+        <img src="assets/images/no-records.png" class="no-records">
+        <button color="primary" (click)="add_new()" mat-button>
+          <label class="small">ΝΕΟ ΠΑΡΑΣΤΑΤΙΚΟ!</label>
+        </button>
+      </div>
+      <div *ngIf="selected">
+        <label class="small">{{selected.documentType.name}}</label>
+        <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
+        <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date}}</h2>
+        <!-- <iframe class="preview-doc" ></iframe> -->
+        <label class="small">Σελίδα πελάτη</label>
+        <div class="wrap">
+          <iframe class="frame" [attr.src]="selected.safe_portal_link">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="norecords">
