@@ -1,6 +1,6 @@
 .doc-card {
-  min-width: 200px;
-  height: 260px;
+  min-width: 250px;
+  height: 220px;
   margin: 4px;
 }
 
@@ -57,6 +57,8 @@
   height: 280px;
   overflow: hidden;
   float: left;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .frame {
@@ -87,4 +89,28 @@
   color:green;
   opacity: 0.6;
   font-size:24px;
+  position: absolute;
+}
+
+.selected-item {
+  width: 100%;
+  background:black;
+  opacity: 0.1;
+  position: absolute;
+  height: 80px;
+  vertical-align: bottom;
+  margin: -24px;
+}
+
+h1,h2,h3 {
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+
+.clickable-header {
+  cursor: hand;
+}
+
+label.small {
+  font-size: 12px;
 }

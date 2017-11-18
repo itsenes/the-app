@@ -43,29 +43,31 @@
 <div class="view-content">
   <div fxLayout="row" *ngIf="!norecords">
     <div fxFlex>
-      <mat-toolbar>
+      <div>
         <mat-form-field>
-          <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='auto'
-            maxlength="150">
-          <button mat-icon-button (click)="search()">
-            <mat-icon color="primary">search</mat-icon>
-          </button>
+          <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='none' maxlength="150">
         </mat-form-field>
+        <button mat-icon-button (click)="search()">
+          <mat-icon color="primary">search</mat-icon>
+        </button>
 
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
         <span class="app-toolbar-right-filler"></span>
-      </mat-toolbar>
+      </div>
+
       <!-- *ngIf="viewoptions.value=='grid'" -->
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
         <mat-card class="doc-card" *ngFor="let doc of documents;let i = index;">
-          <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon>
-          <mat-card-header>
+          <div class="selected-item" *ngIf="selected && doc.id===selected.id" fxFlexAlign="end"></div>
+          <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
+          <mat-card-header (click)="setSelected(doc)" class="clickable-header">
             <mat-card-title>
-              <h3 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h3>
-              <h3 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h3>
+              <h2 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h2>
+              <h2 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h2>
+              <label class="small">{{doc.documentType.name}}</label>
             </mat-card-title>
-            <mat-card-title>{{doc.documentType.name}}</mat-card-title>
+            <mat-divider></mat-divider>
             <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode}}</mat-card-title>
             <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode}}</mat-card-subtitle>
             <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
@@ -75,16 +77,10 @@
           <mat-card-content>
 
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="setSelected(doc)">Πληροφορίες</button>
-            <a [href]="doc.portal_link" target="__new" mat-button>Προβολή</a>
-            <button disabled="doc.model.status=='Draft'" mat-button>Διαγραφή</button>
-          </mat-card-actions>
         </mat-card>
       </div>
     </div>
-    <div fxFlex="380px" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
-
+    <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
       <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="!selected">
         <label class="small">δεν έχετε επιλέξει καποιο έγγραφο.</label>
         <img src="assets/images/no-records.png" class="no-records">
@@ -95,13 +91,22 @@
       <div *ngIf="selected">
         <label class="small">{{selected.documentType.name}}</label>
         <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
-        <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date}}</h2>
+        <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h2>
+        <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
-        <label class="small">Σελίδα πελάτη</label>
-        <div class="wrap">
-          <iframe class="frame" [attr.src]="selected.safe_portal_link">
-          </iframe>
-        </div>
+        <a [href]="selected.safe_portal_link" target="__new" mat-button>
+          <div class="wrap">
+            <iframe class="frame" [attr.src]="selected.safe_portal_link">
+            </iframe>
+          </div>
+        </a>
+        <!-- <label class="small">ΣΕΛΙΔΑ ΠΕΛΑΤΗ</label> -->
+        <h2 *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.name}}</h2>
+        <label *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.legalName}}</label>
+        <h2 *ngIf="selected.model.recipient.contact">{{selected.model.recipient.contact.firstName}} {{selected.model.recipient.contact.lastName}}</h2>
+        <h2>{{selected.model.total | currency:selected.model.currencyCode}}</h2>
+        <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode}}</h3>
+
       </div>
     </div>
   </div>
