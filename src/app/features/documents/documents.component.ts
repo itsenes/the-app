@@ -31,6 +31,9 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   selected: DocumentViewModel = null;
   file_url;
   count = 0;
+  filtertext: string = null;
+  starthere = false;
+  firsttime = true;
 
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
@@ -42,6 +45,9 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         const id = params['typeId'];
         this.subscription.getDocumentType(id).subscribe((docType) => {
           this.documentType = docType;
+          this.showInfo = false;
+          this.selected = null;
+          this.firsttime = true;
           this.search();
         });
       });
@@ -55,14 +61,23 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     } else {
       this.pageindex = pagerEvent.pageIndex;
     }
-    this.showInfo = false;
-    this.selected = null;
-    // and search!
+    // if we wanted to reset the showinfo panel...
+    // this.showInfo = false;
+    // this.selected = null;
     this.search();
   }
 
+  cansearch() {
+    return this.filtertext !== this.searchText;
+  }
+
+  canclear() {
+    return this.filtertext && (this.filtertext === this.searchText);
+  }
+
   search() {
-    const observable = this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
+    this.filtertext = this.searchText;
+    this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
       undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
       this.pageindex + 1, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true).subscribe((response) => {
         this.count = response.count;
@@ -72,11 +87,24 @@ export class DocumentsComponent implements OnInit, OnDestroy {
           return vm;
         });
         this.norecords = (this.documents == null || this.documents.length === 0);
+        if (this.norecords) {
+          this.showInfo = false;
+          this.selected = null;
+        }
+        if (this.firsttime) {
+          this.starthere = this.norecords;
+          this.firsttime = false;
+        }
       });
   }
 
   clear() {
     this.searchText = '';
+    this.search();
+  }
+
+  dosearch() {
+    this.pageindex = 0;
     this.search();
   }
 
