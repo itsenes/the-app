@@ -1,2 +1,2 @@
 # the-app
-the-app: testing angular2 
+the-app: angular test client
