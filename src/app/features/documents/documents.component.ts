@@ -24,9 +24,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   busy = false;
   searchText = '';
   pageindex = 1;
-  pagesize = 100;
+  pagesize = 10;
   showInfo = false;
   selected: DocumentViewModel = null;
+  file_url;
+  count = 0;
+
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
 
@@ -47,6 +50,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     const observable = this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
       undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
       this.pageindex, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true).subscribe((response) => {
+        this.count = response.count;
         this.documents = response.items.map((doc) => {
           const vm = new DocumentViewModel(doc, this.documentType, '');
           vm.safe_portal_link = this.sanitizer.bypassSecurityTrustResourceUrl(vm.portal_link);
@@ -71,6 +75,26 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   setSelected(doc) {
     this.selected = doc;
     this.showInfo = true;
+  }
+
+  download_file(event) {
+    const target = event.currentTarget;
+    if (null != this.selected.model.permaLink) {
+      return;
+    }
+    const file_type = this.selected.documentType.model.template.contentType;
+    this.apiClient.getDocument(this.subscription.id, this.selected.id)
+      .subscribe((response) => {
+        // const blob: Blob = new Blob([response.data], {
+        //   type: `"${file_type}"`
+        // });
+        const blob: Blob = new Blob([], {
+          type: `"${file_type}"`
+        });
+        this.file_url = window.URL.createObjectURL(blob);
+        target.href = this.file_url;
+        target.click();
+      });
   }
 
   ngOnDestroy() {

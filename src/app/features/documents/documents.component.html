@@ -1,5 +1,5 @@
 <mat-toolbar class="view-header mat-elevation-z1">
-  <span class="title">{{documentType?.folder}}</span>
+  <span class="title">{{documentType?.folder | uppercase}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
 
@@ -43,9 +43,9 @@
 <div class="view-content">
   <div fxLayout="row" *ngIf="!norecords">
     <div fxFlex>
-      <div>
-        <mat-form-field>
-          <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" floatPlaceholder='none' maxlength="150">
+      <mat-toolbar>
+        <mat-form-field floatPlaceholder='never'>
+          <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" maxlength="300">
         </mat-form-field>
         <button mat-icon-button (click)="search()">
           <mat-icon color="primary">search</mat-icon>
@@ -53,8 +53,10 @@
 
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
+        <mat-paginator [length]="count" [pageIndex]="pageindex" nextPageLabel="επόμενη" previousPageLabel="προηγούμενη"  itemsPerPageLabel="έγγραφα ανα σελίδα" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
         <span class="app-toolbar-right-filler"></span>
-      </div>
+      </mat-toolbar>
 
       <!-- *ngIf="viewoptions.value=='grid'" -->
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
@@ -79,6 +81,14 @@
           </mat-card-content>
         </mat-card>
       </div>
+      
+      <mat-toolbar>
+        <span class="app-toolbar-filler"></span>
+        <!-- put pager here -->
+        <mat-paginator [length]="count" [pageIndex]="pageindex" nextPageLabel="επόμενη" previousPageLabel="προηγούμενη"  itemsPerPageLabel="έγγραφα ανα σελίδα" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+        <span class="app-toolbar-right-filler"></span>
+      </mat-toolbar>
     </div>
     <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
       <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="!selected">
@@ -94,19 +104,26 @@
         <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h2>
         <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
-        <a [href]="selected.safe_portal_link" target="__new" mat-button>
+        <a class="portal-link" [href]="selected.safe_portal_link" target="__new" mat-button>
           <div class="wrap">
             <iframe class="frame" [attr.src]="selected.safe_portal_link">
             </iframe>
           </div>
         </a>
         <!-- <label class="small">ΣΕΛΙΔΑ ΠΕΛΑΤΗ</label> -->
+        <br>
+        <label class="small" *ngIf="selected.model.recipient.organisation || selected.model.recipient.contact">ΠΕΛΑΤΗΣ</label>
         <h2 *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.name}}</h2>
         <label *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.legalName}}</label>
         <h2 *ngIf="selected.model.recipient.contact">{{selected.model.recipient.contact.firstName}} {{selected.model.recipient.contact.lastName}}</h2>
+        <label class="small">ΣΥΝΟΛΟ</label>
         <h2>{{selected.model.total | currency:selected.model.currencyCode}}</h2>
+        <label class="small">ΠΛΗΡΩΤΕΟ</label>
         <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode}}</h3>
-
+        <mat-divider></mat-divider>
+        <a [download]='selected.model.id+".docx"' (click)='download_file($event)' mat-button class="download-link">
+          <img class="word-logo small">
+        </a>
       </div>
     </div>
   </div>
