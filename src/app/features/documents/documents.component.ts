@@ -5,6 +5,8 @@ import { AppStateService } from '../../services/app-state.service';
 import { SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../view-models/view-models';
 import { ApiClient, Document } from '../../services/incontrl-apiclient';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PageEvent } from '@angular/material';
+
 
 @Component({
   selector: 'app-documents',
@@ -23,7 +25,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   sortdirection = '+';
   busy = false;
   searchText = '';
-  pageindex = 1;
+  pageindex = 0;
   pagesize = 10;
   showInfo = false;
   selected: DocumentViewModel = null;
@@ -46,10 +48,23 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     });
   }
 
+  pagerEvent(pagerEvent: PageEvent) {
+    if (this.pagesize !== pagerEvent.pageSize) {
+      this.pagesize = pagerEvent.pageSize;
+      this.pageindex = 0;
+    } else {
+      this.pageindex = pagerEvent.pageIndex;
+    }
+    this.showInfo = false;
+    this.selected = null;
+    // and search!
+    this.search();
+  }
+
   search() {
     const observable = this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
       undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
-      this.pageindex, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true).subscribe((response) => {
+      this.pageindex + 1, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true).subscribe((response) => {
         this.count = response.count;
         this.documents = response.items.map((doc) => {
           const vm = new DocumentViewModel(doc, this.documentType, '');

@@ -53,7 +53,7 @@
 
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
-        <mat-paginator [length]="count" [pageIndex]="pageindex" nextPageLabel="επόμενη" previousPageLabel="προηγούμενη"  itemsPerPageLabel="έγγραφα ανα σελίδα" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-paginator [length]="count" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pagerEvent($event)">
         </mat-paginator>
         <span class="app-toolbar-right-filler"></span>
       </mat-toolbar>
@@ -65,9 +65,9 @@
           <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
           <mat-card-header (click)="setSelected(doc)" class="clickable-header">
             <mat-card-title>
+              <label class="small">{{doc.documentType.name}}</label>
               <h2 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h2>
               <h2 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h2>
-              <label class="small">{{doc.documentType.name}}</label>
             </mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode}}</mat-card-title>
@@ -81,11 +81,11 @@
           </mat-card-content>
         </mat-card>
       </div>
-      
+
       <mat-toolbar>
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
-        <mat-paginator [length]="count" [pageIndex]="pageindex" nextPageLabel="επόμενη" previousPageLabel="προηγούμενη"  itemsPerPageLabel="έγγραφα ανα σελίδα" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-paginator [length]="count" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pagerEvent($event)">
         </mat-paginator>
         <span class="app-toolbar-right-filler"></span>
       </mat-toolbar>
