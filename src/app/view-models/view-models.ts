@@ -244,6 +244,14 @@ export class DocumentViewModel {
     return `${environment.api_url}${this.model.permaLink}`;
   }
 
+  public get doc_link() {
+    return `${environment.api_url}${this.model.permaLink}.docx`;
+  }
+
+  public get pdf_link() {
+    return `${environment.api_url}${this.model.permaLink}.pdf`;
+  }
+
   private _safe_portal_link;
   public get safe_portal_link() {
     return this._safe_portal_link;

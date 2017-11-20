@@ -94,7 +94,7 @@
       </mat-toolbar>
     </div>
     <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
-      <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="!selected">
+      <div class="no-records" fxLayout="column" fxLayoutAlign="start center" *ngIf="!selected">
         <label class="small">δεν έχετε επιλέξει καποιο έγγραφο.</label>
         <img src="assets/images/no-records.png" class="no-records">
         <button color="primary" (click)="add_new()" mat-button>
@@ -124,7 +124,10 @@
         <label class="small">ΠΛΗΡΩΤΕΟ</label>
         <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode}}</h3>
         <mat-divider></mat-divider>
-        <a [download]='selected.model.id+".docx"' (click)='download_file($event)' mat-button class="download-link">
+        <a [download]='selected.model.id+".pdf"' [href]="selected.pdf_link" mat-button class="download-link">
+          <img class="pdf-logo small">
+        </a>
+        <a [download]='selected.model.id+".docx"' [href]="selected.doc_link" mat-button class="download-link">
           <img class="word-logo small">
         </a>
       </div>
