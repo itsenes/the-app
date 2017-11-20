@@ -3,11 +3,11 @@
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
 
-  <button color="primary" (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
+  <button (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
 
   <label class="divider" *ngIf="!starthere">|</label>
-  <button color="warn" *ngIf="!starthere" (click)="toggleInfoPanel()" mat-icon-button>
-    <mat-icon>info</mat-icon>
+  <button *ngIf="!starthere" (click)="toggleInfoPanel()" mat-icon-button>
+    <mat-icon>info_outline</mat-icon>
   </button>
 
   <!-- <label class="divider">|</label>
@@ -48,10 +48,10 @@
           <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" maxlength="300">
         </mat-form-field>
         <button mat-icon-button (click)="dosearch()" [disabled]="!cansearch()">
-          <mat-icon color="primary">search</mat-icon>
+          <mat-icon>search</mat-icon>
         </button>
         <button mat-icon-button (click)="clear()" *ngIf="canclear()">
-          <mat-icon color="primary">close</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
 
         <span class="app-toolbar-filler"></span>
@@ -106,6 +106,15 @@
       </div>
       <div *ngIf="selected">
         <label class="small">{{selected.documentType.name}}</label>
+
+        <button class="menu-status" mat-button [ngClass]="selected.model.status" [matMenuTriggerFor]="menu">{{selected.model.status | uppercase}}
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+
         <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
         <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h2>
         <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
