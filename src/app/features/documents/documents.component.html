@@ -65,6 +65,9 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
         <mat-card class="doc-card" *ngFor="let doc of documents;let i = index;">
           <div class="selected-item" *ngIf="selected && doc.id===selected.id" fxFlexAlign="end"></div>
+          <mat-chip class="status-chip" [ngClass]="doc.model.status">
+            <label class="status-label">{{doc.model.status | uppercase}}</label>
+          </mat-chip>
           <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
           <mat-card-header (click)="setSelected(doc)" class="clickable-header">
             <mat-card-title>
