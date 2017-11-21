@@ -232,6 +232,16 @@ export class DocumentViewModel {
     return this.model.id;
   }
 
+  public get displayName() {
+    if (null == this.model || null == this.model.id) {
+      return 'ΝΕΟ ΠΑΡΑΣΤΑΤΙΚΟ';
+    } else if (this.model.numberPrintable == null) {
+      return `${this.model.status} ${this.model.date}`;
+    } else {
+      return this.model.numberPrintable;
+    }
+  }
+
   public get folder() {
     return this.documentType.folder;
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../services/app-state.service';
 import { SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../view-models/view-models';
 import { ApiClient, Document } from '../../services/incontrl-apiclient';
@@ -35,7 +35,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   starthere = false;
   firsttime = true;
 
-  constructor(private appState: AppStateService, private route: ActivatedRoute,
+  constructor(private router: Router, private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
@@ -113,6 +113,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   add_new() {
+    this.router.navigateByUrl(`app/${this.subscription.alias}/documents/${this.documentType.id}/new`);
   }
 
   setSelected(doc) {

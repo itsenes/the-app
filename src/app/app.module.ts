@@ -19,7 +19,6 @@ import { ShellComponent } from './layout/shell/shell.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { DocumentsComponent } from './features/documents/documents.component';
-import { DocumentViewComponent } from './features/documents/document-view/document-view.component';
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
 import { UnauthorizedComponent } from './common/unauthorized/unauthorized.component';
 import { AuthCallbackComponent } from './common/auth-callback/auth-callback.component';
@@ -45,6 +44,7 @@ import { environment } from '../environments/environment';
 import { DocumentTypeFormComponent } from './features/forms/document-type-form/document-type-form.component';
 import { ItemFormComponent } from './features/forms/item-form/item-form.component';
 import { ErrorComponent } from './common/error/error.component';
+import { DocumentFormComponent } from './features/forms/document-form/document-form.component';
 
 
 // my api url factory method :)
@@ -72,7 +72,8 @@ const appRoutes: Routes = [
         children: [
           { path: '', component: DashboardComponent },
           { path: 'documents/:typeId', component: DocumentsComponent },
-          { path: 'documents/:typeId/:documentId', component: DocumentViewComponent },
+          { path: 'documents/:typeId/:documentId', component: DocumentFormComponent },
+          { path: 'documents/:typeId/new', component: DocumentFormComponent },
           {
             path: 'settings', component: SettingsComponent,
             children: [
@@ -99,7 +100,6 @@ const appRoutes: Routes = [
     SettingsComponent,
     DashboardComponent,
     DocumentsComponent,
-    DocumentViewComponent,
     PageNotFoundComponent,
     UnauthorizedComponent,
     AuthCallbackComponent,
@@ -113,7 +113,8 @@ const appRoutes: Routes = [
     ItemsComponent,
     DocumentTypeFormComponent,
     ItemFormComponent,
-    ErrorComponent
+    ErrorComponent,
+    DocumentFormComponent
   ],
   entryComponents: [SelectImageDialogComponent],
   imports: [

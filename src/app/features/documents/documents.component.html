@@ -2,41 +2,11 @@
   <span class="title">{{documentType?.folder | uppercase}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
-
   <button (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
-
   <label class="divider" *ngIf="!starthere">|</label>
   <button *ngIf="!starthere" (click)="toggleInfoPanel()" mat-icon-button>
     <mat-icon>info_outline</mat-icon>
   </button>
-
-  <!-- <label class="divider">|</label>
-  <mat-button-toggle-group name="viewoptions" #viewoptions="matButtonToggleGroup" [value]="viewmode">
-    <mat-button-toggle color="primary" value="grid">
-      <mat-icon>view_module</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle color="primary" value="list">
-      <mat-icon>list</mat-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group> -->
-  <!-- <label class="divider">|</label>
-  <mat-select placeholder="ταξινόμηση" class="toolbar" [(value)]="sortfield">
-    <mat-option value="date">Ημερομηνία</mat-option>
-    <mat-option value="dueDate">Ημερομηνία πληρωμής</mat-option>
-    <mat-option value="numberPrintable">Αριθμός</mat-option>
-    <mat-option value="status">Κατάσταση</mat-option>
-    <mat-option value="recipient">Πελάτης</mat-option>
-  </mat-select>
-  <mat-button-toggle-group name="sortoptions" #sortoptions="matButtonToggleGroup" [value]="sortdirection">
-    <mat-button-toggle color="primary" value="+">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle color="primary" value="-">
-      <mat-icon>keyboard_arrow_up</mat-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group> -->
-  <!-- <label class="divider">|</label> -->
-
   <span class="app-toolbar-right-filler"></span>
 </mat-toolbar>
 
