@@ -69,7 +69,9 @@
 
 .frame {
   // zoom: 0.25;
+  transform: scale(0.25);
   -moz-transform: scale(0.25);
+  transform-origin: 0 0;
   -moz-transform-origin: 0 0;
   -o-transform: scale(0.25);
   -o-transform-origin: 0 0;
@@ -243,26 +245,10 @@ label.status-label {
   margin-right: 4px;
 }
 
-label.status {
-  margin-left: -20px;
-  margin-right: 4px;
-}
-
-.mat-menu-panel {
-  min-width: 150px;
-  max-width: 280px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  max-height: calc(100vh - 48px);
-  border-radius: 2px;
-  margin-left: -30px;
-  margin-top: 30px;
-}
-
-.mat-menu.status-actions {
-  margin-left: -30px;
-  margin-top: 30px; 
-}
+// label.status {
+//   margin-left: -20px;
+//   margin-right: 4px;
+// }
 
 .mat-menu-item {
   padding-left: 4px;
@@ -274,11 +260,4 @@ label.status {
   margin-left: 4px;
   margin-right: 4px;
   font-size: 22px;
-}
-
-.mat-menu-below {
-  transform-origin: left top 0px;
-  margin-top: 30px;
-  margin-left: -30px;
-  width: 155px;
 }

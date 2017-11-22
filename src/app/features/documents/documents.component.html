@@ -81,23 +81,23 @@
           <label class="status">{{selected.model.status | uppercase}}</label>
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
-        <mat-menu #menu="matMenu" class="status-actions">
+        <mat-menu #menu="matMenu" class="status-actions" [overlapTrigger]="false">
           <button mat-menu-item>
             <mat-icon>library_books</mat-icon>Προβολή</button>
           <button mat-menu-item>
-              <mat-icon>edit</mat-icon>Μεταβολή</button>
+            <mat-icon>edit</mat-icon>Μεταβολή</button>
           <button mat-menu-item>
-              <mat-icon>share</mat-icon>Αποστολή</button>
-              <button mat-menu-item>
-                  <mat-icon>content_copy</mat-icon>Αντίγραφο</button>
+            <mat-icon>share</mat-icon>Αποστολή</button>
+          <button mat-menu-item>
+            <mat-icon>content_copy</mat-icon>Αντίγραφο</button>
           <mat-divider></mat-divider>
           <button mat-menu-item>
-              <mat-icon>payment</mat-icon>Πληρωμή</button>
+            <mat-icon>payment</mat-icon>Πληρωμή</button>
           <mat-divider></mat-divider>
           <button mat-menu-item>
-              <mat-icon>close</mat-icon>Ακύρωση</button>  
+            <mat-icon>close</mat-icon>Ακύρωση</button>
           <button mat-menu-item>
-              <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
+            <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
         </mat-menu>
 
         <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
