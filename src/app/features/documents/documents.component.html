@@ -35,9 +35,9 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
         <mat-card class="doc-card" *ngFor="let doc of documents;let i = index;">
           <div class="selected-item" *ngIf="selected && doc.id===selected.id" fxFlexAlign="end"></div>
-          <mat-chip class="status-chip" [ngClass]="doc.model.status">
+          <div class="status-chip" [ngClass]="doc.model.status">
             <label class="status-label">{{doc.model.status | uppercase}}</label>
-          </mat-chip>
+          </div>
           <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
           <mat-card-header (click)="setSelected(doc)" class="clickable-header">
             <mat-card-title>
@@ -77,12 +77,27 @@
       <div *ngIf="selected">
         <label class="small">{{selected.documentType.name}}</label>
 
-        <button class="menu-status" mat-button [ngClass]="selected.model.status" [matMenuTriggerFor]="menu">{{selected.model.status | uppercase}}
+        <button class="menu-status" mat-button [ngClass]="selected.model.status" [matMenuTriggerFor]="menu">
+          <label class="status">{{selected.model.status | uppercase}}</label>
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Item 1</button>
-          <button mat-menu-item>Item 2</button>
+        <mat-menu #menu="matMenu" class="status-actions">
+          <button mat-menu-item>
+            <mat-icon>library_books</mat-icon>Προβολή</button>
+          <button mat-menu-item>
+              <mat-icon>edit</mat-icon>Μεταβολή</button>
+          <button mat-menu-item>
+              <mat-icon>share</mat-icon>Αποστολή</button>
+              <button mat-menu-item>
+                  <mat-icon>content_copy</mat-icon>Αντίγραφο</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+              <mat-icon>payment</mat-icon>Πληρωμή</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+              <mat-icon>close</mat-icon>Ακύρωση</button>  
+          <button mat-menu-item>
+              <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
         </mat-menu>
 
         <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>

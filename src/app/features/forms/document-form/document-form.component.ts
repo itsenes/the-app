@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-document-form',
   templateUrl: './document-form.component.html',
-  styleUrls: ['./document-form.component.css']
+  styleUrls: ['../forms.components.scss']
 })
 export class DocumentFormComponent implements OnInit, OnDestroy {
   private params_sub = null;
