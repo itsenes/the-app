@@ -2,10 +2,14 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, UpdateDocumentTypeRequest, CreateDocumentTypeRequest } from '../../../services/incontrl-apiclient';
+import {
+  ApiClient, DocumentType, UpdateDocumentTypeRequest,
+  CreateDocumentTypeRequest, LookupEntry
+} from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
 import { environment } from '../../../../environments/environment';
+import { LookupsService } from '../../../services/lookups.service';
 
 @Component({
   selector: 'app-document-type-form',
@@ -37,19 +41,21 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   }
   public get model(): any { return this._model; }
 
+  public get recordType(): string {
+    if (null != this.model && null != this.model.recordType) {
+      const rt = this.lookups.getRecordType(this.model.recordType);
+      return rt.Description;
+    } else {
+      return 'Έσοδα';
+    }
+  }
+
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
-    private apiClient: ApiClient) {
-    this.model = {};
+    private apiClient: ApiClient, private lookups: LookupsService) {
   }
 
   ngOnInit() {
-    // this.appState.currencies.subscribe((items) => {
-    //   this.currencies = items;
-    // });
-    // this.appState.countries.subscribe((items) => {
-    //   this.countries = items;
-    // });
     this.params_sub = this.route.parent.params.subscribe((params) => {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
@@ -124,7 +130,7 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
     request.notes = this.model.notes;
     request.numberFormat = this.model.numberFormat;
     request.numberOffset = this.model.numberOffset;
-    request.recordType = this.model.recordType;
+    // request.recordType = this.model.recordType;
     request.tags = this.model.tags;
     request.uiHint = this.model.uiHint;
     this.apiClient.updateDocumentType(this.subscription_id, this.model.id, request).subscribe((documentType) => {
@@ -164,19 +170,19 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  openLogoDialog(): void {
-    const dialogRef = this.dialog.open(SelectImageDialogComponent, {
-      width: '550px',
-      data: {
-        imagePath: this.model.company.logoPath
-      }
-    });
+  // openLogoDialog(): void {
+  //   const dialogRef = this.dialog.open(SelectImageDialogComponent, {
+  //     width: '550px',
+  //     data: {
+  //       imagePath: this.model.company.logoPath
+  //     }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result != null) {
-        this.model.company.logoPath = result;
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //     if (result != null) {
+  //       this.model.company.logoPath = result;
+  //     }
+  //   });
+  // }
 }

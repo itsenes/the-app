@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../../services/app-state.service';
-import { SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../../view-models/view-models';
+import { ViewModelLocator, SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../../view-models/view-models';
 import { ApiClient, DocumentType, Document } from '../../../services/incontrl-apiclient';
+import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 
@@ -17,6 +18,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public subscription: SubscriptionViewModel = null;
   public documentType: DocumentTypeViewModel = null;
   private _model: DocumentViewModel = null;
+  private _bak: DocumentViewModel = null;
   public readonly = true;
 
   public set model(value: DocumentViewModel) {
@@ -28,7 +30,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public get model(): DocumentViewModel { return this._model; }
 
   constructor(private appState: AppStateService, private route: ActivatedRoute,
-    private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
+    private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) { }
 
   ngOnInit() {
     this.params_sub = this.route.params.subscribe((params) => {
@@ -40,10 +42,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           this.documentType = docType;
           // get the document now!
           if ('new' === docid || null == docid) {
-            this.model = new DocumentViewModel(new Document(), this.documentType, null);
+            this.model = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
           } else {
             this.apiClient.getDocument(this.subscription.id, docid).subscribe((response) => {
-              this.model = new DocumentViewModel(response, this.documentType, null);
+              this.model = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, response);
             });
           }
         });
@@ -55,4 +57,23 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     this.params_sub.unsubscribe();
   }
 
+  toggle_edit_mode() {
+    this.readonly = !this.readonly;
+    if (!this.readonly) {
+      this.bak(this.model);
+    }
+  }
+
+  private bak(value: any) {
+    this._bak = value.clone();
+  }
+
+  cancel() {
+    this.readonly = true;
+    this.model = this._bak;
+  }
+
+  save() {
+
+  }
 }

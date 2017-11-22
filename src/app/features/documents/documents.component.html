@@ -26,7 +26,7 @@
 
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
-        <mat-paginator [length]="count" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="pagerEvent($event)">
+        <mat-paginator [length]="count" *ngIf="showPager" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="pagerEvent($event)">
         </mat-paginator>
         <span class="app-toolbar-right-filler"></span>
       </mat-toolbar>
@@ -58,7 +58,7 @@
         </mat-card>
       </div>
 
-      <mat-toolbar *ngIf="!norecords">
+      <mat-toolbar *ngIf="!norecords && showPager && showPagerBottom">
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
         <mat-paginator [length]="count" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="pagerEvent($event)">
@@ -67,7 +67,7 @@
       </mat-toolbar>
     </div>
     <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
-      <div class="no-records" fxLayout="column" fxLayoutAlign="start center" *ngIf="!selected">
+      <div class="no-records" fxLayout="column" fxLayoutAlign="center start" *ngIf="!selected">
         <label class="small">δεν έχετε επιλέξει καποιο έγγραφο.</label>
         <img src="assets/images/no-records.png" class="no-records">
         <button color="primary" (click)="add_new()" mat-button>
@@ -76,7 +76,6 @@
       </div>
       <div *ngIf="selected">
         <label class="small">{{selected.documentType.name}}</label>
-
         <button class="menu-status" mat-button [ngClass]="selected.model.status" [matMenuTriggerFor]="menu">
           <label class="status">{{selected.model.status | uppercase}}</label>
           <mat-icon>keyboard_arrow_down</mat-icon>
@@ -130,8 +129,6 @@
       </div>
     </div>
   </div>
-
-
 
   <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="starthere">
     <label class="small">δεν βρέθηκαν έγγραφα.</label>

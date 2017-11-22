@@ -5,6 +5,7 @@ import { AppStateService } from '../../../services/app-state.service';
 import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
+import { LookupsService } from '../../../services/lookups.service';
 
 @Component({
   selector: 'app-company-form',
@@ -33,15 +34,15 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
-    private apiClient: ApiClient) {
+    private apiClient: ApiClient, private lookups: LookupsService) {
     this.model = { company: { address: {} }, contact: {} };
   }
 
   ngOnInit() {
-    this.appState.currencies.subscribe((currencies) => {
+    this.lookups.currencies.subscribe((currencies) => {
       this.currencies = currencies;
     });
-    this.appState.countries.subscribe((countries) => {
+    this.lookups.countries.subscribe((countries) => {
       this.countries = countries;
     });
     this.params_sub = this.route.parent.params.subscribe((params) => {

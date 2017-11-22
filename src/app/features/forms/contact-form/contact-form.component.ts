@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import { LookupsService } from '../../../services/lookups.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     private appState: AppStateService,
-    private apiClient: ApiClient) {
+    private apiClient: ApiClient, private lookups: LookupsService) {
     this.model = new Contact();
     this.model.address = new Address();
     this.countryCtrl = new FormControl();
@@ -52,7 +53,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.appState.countries.subscribe((items) => {
+    this.lookups.countries.subscribe((items) => {
       this.countries = items;
     });
     this.params_sub = this.route.parent.params.subscribe((params) => {

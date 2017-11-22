@@ -4,10 +4,31 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { ApiClient, Subscription, LookupEntry, DocumentType, Product, Tax, Document } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
+import { LookupsService } from '../services/lookups.service';
+import { _document } from '@angular/platform-browser/src/browser';
+// import { AppStateService } from '../services/app-state.service';
 
+@Injectable()
+export class ServiceLocator {
+  constructor(public apiClient: ApiClient, public lookups: LookupsService) {
+  }
+}
+
+export abstract class ViewModelBase {
+  constructor(serviceLocator: ServiceLocator) {
+
+  }
+}
 export class ViewModel<T> {
-  constructor(data: T, protected apiClient: ApiClient) {
-    this.model = data;
+  constructor() {
+  }
+  private _serviceLocator: ServiceLocator = null;
+  public get serviceLocator(): ServiceLocator {
+    return this._serviceLocator;
+  }
+
+  public set serviceLocator(value: ServiceLocator) {
+    this._serviceLocator = value;
   }
 
   private _model: T = null;
@@ -21,18 +42,23 @@ export class ViewModel<T> {
 }
 
 @Injectable()
-export class ViewModelLocator<T> {
-  constructor(private apiClient: ApiClient) { }
+export class ViewModelLocator {
+  constructor(private serviceLocator: ServiceLocator) { }
 
-  getInstance(data: T): ViewModel<T> {
-    return new ViewModel<T>(data, this.apiClient);
+  public getInstance<TViewModel extends ViewModel<T>, T>(type: { new(): TViewModel; }, data: T): TViewModel {
+    // const vmType: new () => TViewModel = null;
+    const vm = new type();
+    vm.model = data;
+    vm.serviceLocator = this.serviceLocator;
+    return vm;
   }
+
 }
 
 export class SubscriptionViewModel extends ViewModel<Subscription> {
 
-  constructor(subscription: Subscription, apiClient: ApiClient) {
-    super(subscription, apiClient);
+  constructor() {
+    super();
   }
 
   public get id() {
@@ -89,18 +115,24 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
 
   // todo:rename
   add_document_type() {
-    this._document_types.push(new DocumentTypeViewModel(new DocumentType(), this.home_path, this.apiClient));
+    const vm = new DocumentTypeViewModel(null);
+    vm.model = new Document();
+    vm.serviceLocator = this.serviceLocator;
+    this._document_types.push(vm);
   }
 
   loadDocumentTypes(): Observable<DocumentTypeViewModel[]> {
-    return this.apiClient.getDocumentTypes(this.id)
+    return this.serviceLocator.apiClient.getDocumentTypes(this.id)
       .map((response) => {
         if (response.count === 0) {
           this._document_types = DocumentTypeViewModel[0];
         } else {
           this._document_types = response.items.
             map((doc) => {
-              return new DocumentTypeViewModel(doc, this.home_path, this.apiClient);
+              const vm = new DocumentTypeViewModel(this.home_path);
+              vm.model = doc;
+              vm.serviceLocator = this.serviceLocator;
+              return vm;
             });
           return this._document_types;
         }
@@ -132,7 +164,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   }
 
   loadProducts(): Observable<any> {
-    return this.apiClient.getProducts(this.id)
+    return this.serviceLocator.apiClient.getProducts(this.id)
       .map((response) => {
         if (response.count === 0) {
           this._products = [];
@@ -155,9 +187,9 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
 
 }
 
-export class DocumentTypeViewModel {
-  constructor(documentType: DocumentType, private homePath: string, private apiClient: ApiClient) {
-    this.model = documentType;
+export class DocumentTypeViewModel extends ViewModel<DocumentType> {
+  constructor(private homePath: string) {
+    super();
   }
 
   public get id() {
@@ -181,7 +213,7 @@ export class DocumentTypeViewModel {
   }
 
   public get icon() {
-    return `${environment.api_url}/subscriptions/${this._model.id}/image`;
+    return `${environment.api_url}/subscriptions/${this.model.id}/image`;
   }
 
   public get search_path() {
@@ -191,21 +223,11 @@ export class DocumentTypeViewModel {
   public get addnew_path() {
     return `${this.homePath}/documents/new`;
   }
-
-  private _model: DocumentType = null;
-  public get model(): DocumentType {
-    return this._model;
-  }
-
-  public set model(value: DocumentType) {
-    this._model = value;
-  }
-
 }
 
-export class ItemViewModel {
-  constructor(item: Product, private homePath: string) {
-    this.model = item;
+export class ItemViewModel extends ViewModel<Product> {
+  constructor(item: Product, private homePath: string, protected apiClient: ApiClient) {
+    super();
   }
 
   public get id() {
@@ -231,21 +253,21 @@ export class ItemViewModel {
   public get addnew_path() {
     return `${this.homePath}/items/new`;
   }
-
-  private _model: Product = null;
-  public get model(): Product {
-    return this._model;
-  }
-
-  public set model(value: Product) {
-    this._model = value;
-  }
-
 }
 
-export class DocumentViewModel {
-  constructor(item: Document, public documentType: DocumentTypeViewModel, private homePath: string) {
-    this.model = item;
+export class DocumentViewModel extends ViewModel<Document> {
+  constructor() {
+    super();
+  }
+
+  public homePath;
+  private _documentType: DocumentTypeViewModel = null;
+  public get documentType(): DocumentTypeViewModel {
+    return this._documentType;
+  }
+
+  public set documentType(value: DocumentTypeViewModel) {
+    this._documentType = value;
   }
 
   public get id() {
@@ -296,14 +318,5 @@ export class DocumentViewModel {
 
   public get preview_path() {
     return `${this.homePath}/documents/new`;
-  }
-
-  private _model: Document = null;
-  public get model(): Document {
-    return this._model;
-  }
-
-  public set model(value: Document) {
-    this._model = value;
   }
 }

@@ -6,7 +6,7 @@ import { SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from 
 import { ApiClient, Document } from '../../services/incontrl-apiclient';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PageEvent } from '@angular/material';
-
+import { ViewModelLocator } from '../../view-models/view-models';
 
 @Component({
   selector: 'app-documents',
@@ -34,9 +34,11 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   filtertext: string = null;
   starthere = false;
   firsttime = true;
+  showPager = false;
+  showPagerBottom = false;
 
   constructor(private router: Router, private appState: AppStateService, private route: ActivatedRoute,
-    private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
+    private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) { }
 
   ngOnInit() {
     this.params_sub = this.route.params.subscribe((params) => {
@@ -82,11 +84,14 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       this.pageindex + 1, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true).subscribe((response) => {
         this.count = response.count;
         this.documents = response.items.map((doc) => {
-          const vm = new DocumentViewModel(doc, this.documentType, '');
+          const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
+          vm.documentType = this.documentType;
           vm.safe_portal_link = this.sanitizer.bypassSecurityTrustResourceUrl(vm.portal_link);
           return vm;
         });
         this.norecords = (this.documents == null || this.documents.length === 0);
+        this.showPager = !this.norecords;
+        this.showPagerBottom = this.showPager && this.documents.length > 9;
         if (this.norecords) {
           this.showInfo = false;
           this.selected = null;

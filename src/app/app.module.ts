@@ -45,7 +45,8 @@ import { DocumentTypeFormComponent } from './features/forms/document-type-form/d
 import { ItemFormComponent } from './features/forms/item-form/item-form.component';
 import { ErrorComponent } from './common/error/error.component';
 import { DocumentFormComponent } from './features/forms/document-form/document-form.component';
-
+import { LookupsService } from './services/lookups.service';
+import { ViewModelLocator, ServiceLocator } from './view-models/view-models';
 
 // my api url factory method :)
 export const getApiUrl = function () {
@@ -132,6 +133,9 @@ const appRoutes: Routes = [
     AuthGuardService,
     ApiClient,
     AppStateService,
+    LookupsService,
+    ViewModelLocator,
+    ServiceLocator,
     { provide: BrowserXhr, useClass: NgProgressBrowserXhr },
     { provide: RequestOptions, useClass: SecureApiRequestOptions },
     { provide: API_BASE_URL, useFactory: getApiUrl }

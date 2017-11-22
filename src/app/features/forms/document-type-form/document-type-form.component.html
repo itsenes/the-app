@@ -38,14 +38,13 @@
         <mat-hint align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Κατηγορία: {{model.recordType}}</label>
+      <label *ngIf='readonly && !isnew()'>Κατηγορία: {{recordType}}</label>
       <mat-form-field class="shorter" *ngIf='!readonly'>
-          <mat-select [disabled]='readonly' name="recordType" [(value)]='model.recordType' placeholder="Κατηγορία"
+          <mat-select [disabled]='readonly && !isnew()' name="recordType" [(value)]='model.recordType' placeholder="Κατηγορία"
           floatPlaceholder='auto'>
               <mat-option value="AccountsReceivable">Έσοδα</mat-option>
               <mat-option value="AccountsPayable">Έξοδα</mat-option>
             </mat-select>          
-        <input matInput  maxlength="150">
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
 
