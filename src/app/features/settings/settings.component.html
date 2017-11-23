@@ -7,9 +7,9 @@
 <div class="view-content">
   <mat-card class="action-card" fxShow fxHide.lt-lg fxFlex="20">
     <mat-card-header>
-      <img mat-card-avatar [src]="subscription.company.logoPath" class="avatar-large" />
+      <img mat-card-avatar [src]="subscription.company.logoPath" class="avatar-large  mat-elevation-z6" />
       <mat-card-title>
-        {{subscription.company.name}}
+        <strong>{{subscription.company.name}}</strong>
         <br /> {{subscription.company.legalName}}
       </mat-card-title>
     </mat-card-header>
@@ -38,19 +38,44 @@
       <br/>
       <br/>
     </mat-card-actions>
+    <mat-card-subtitle>
+      Η συνδρομή σας
+    </mat-card-subtitle>
+    <mat-card-header>
+      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" class="avatar-icon mat-elevation-z6" />
+      <mat-card-title>
+        <strong>{{subscription.plan?.name}}</strong>
+        <br>{{subscription.plan?.description}}
+      </mat-card-title>
+    </mat-card-header>
     <mat-card-content>
       <!-- plan info -->
-    <!-- name?: string | undefined;
+      <!-- name?: string | undefined;
       description?: string | undefined;
       richText?: string | undefined;
       uiHint?: UiHint | undefined;
       services?: Service[] | undefined;
       limits?: LimitPolicy[] | undefined; -->
-      <mat-icon>widgets</mat-icon>
-      <mat-card-subtitle>{{subscription.plan?.name}} {{subscription.plan?.description}}
-        <br>{{subscription.plan?.richText}} </mat-card-subtitle>
+      <mat-card-subtitle>
+        {{subscription.plan?.richText}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <label>ΥΠΗΡΕΣΙΕΣ</label>
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <div *ngFor="let service of subscription.plan?.services; let i = index">
+          {{service.name}}
+        </div>
+        <br>{{subscription.plan?.description}}
+        <br>{{subscription.plan?.richText}}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <div *ngFor="let policy of subscription.plan?.limits; let i = index">
+          {{policy.name}}
+        </div>
+      </mat-card-subtitle>
     </mat-card-content>
-    
+
 
   </mat-card>
   <div fxFlex="96">

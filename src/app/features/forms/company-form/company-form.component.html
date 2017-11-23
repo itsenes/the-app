@@ -15,7 +15,7 @@
     </mat-card-title>
     <mat-card-content>
       <div class="form-container">
-        <img class="mat-elavation-z6 company-avatar-large" [src]="model.company?.logoPath">
+        <img class="company-avatar-large mat-elavation-z6" [src]="model.company?.logoPath">
         <button *ngIf='!readonly' color="accent" class="company-avatar-button" mat-mini-fab (click)='openLogoDialog($event)'>
           <mat-icon aria-label="icon-button">add_a_photo</mat-icon>
         </button>

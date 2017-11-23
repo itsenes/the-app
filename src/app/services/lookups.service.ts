@@ -120,9 +120,17 @@ export class LookupsService {
     return observable;
   }
 
-  getTimezone(id) {
+  getTimezone(id): Observable<LookupEntry> {
+    // return this.asObservable<LookupEntry>(this._timezones.find(t => t.id === id));
     return Observable.create((observer) => {
       observer.next(this._timezones.find(t => t.id === id));
+      observer.complete();
+    });
+  }
+
+  asObservable<T>(value): Observable<T> {
+    return Observable.create((observer) => {
+      observer.next(value);
       observer.complete();
     });
   }
