@@ -2,12 +2,13 @@ import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
-import { ApiClient, Subscription, LookupEntry, DocumentType, Product, Tax, Document } from '../services/incontrl-apiclient';
+import { ApiClient, Subscription, LookupEntry, DocumentType, Product, Tax, Document, Plan } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
-import { _document } from '@angular/platform-browser/src/browser';
+// causes circular...
 // import { AppStateService } from '../services/app-state.service';
 
+// what you need the service locator will provide...
 @Injectable()
 export class ServiceLocator {
   constructor(public apiClient: ApiClient, public lookups: LookupsService) {
@@ -43,6 +44,11 @@ export class ViewModel<T> {
   public set model(value: T) {
     this._model = value;
   }
+
+  getClassName() {
+    const comp: any = this.constructor;
+    return comp.name;
+  }
 }
 
 @Injectable()
@@ -62,13 +68,16 @@ export class ViewModelLocator {
     vm.model = data;
     vm.serviceLocator = this.serviceLocator;
     vm.basePath = this.basePath;
-    console.log('getinstance - homepath in resolved vm: ' + vm.basePath);
+    console.log('getinstance -' + vm.getClassName() + ' homepath in resolved vm: ' + vm.basePath);
     return vm;
   }
 
 }
 
 export class SubscriptionViewModel extends ViewModel<Subscription> {
+  private _documentTypes: DocumentTypeViewModel[];
+  private _products: any[];
+  private _plan: Plan;
 
   constructor() {
     super();
@@ -112,9 +121,6 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     return `/app/${this.model.alias}/settings`;
   }
 
-  private _documentTypes: DocumentTypeViewModel[];
-  private _products: any[];
-
   public get documentTypes(): Observable<DocumentTypeViewModel[]> {
     if (null == this._documentTypes) {
       return this.loadDocumentTypes();
@@ -133,10 +139,12 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   }
 
   // todo:rename
-  add_document_type() {
+  addDocumentType() {
+    // each vm requires 3 things: data (model), a servicelocator and the parent path (which contains the subscription alias)
     const vm = new DocumentTypeViewModel();
     vm.model = new Document();
     vm.serviceLocator = this.serviceLocator;
+    vm.basePath = this.basePath;
     this._documentTypes.push(vm);
   }
 
@@ -203,6 +211,24 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
         }
         return this._products;
       });
+  }
+
+  public get Plan(): Observable<Plan> {
+    if (null == this._plan) {
+      return this.loadPlan();
+    } else {
+      return Observable.create((observer) => {
+        observer.next(this._products);
+        observer.complete();
+      });
+    }
+  }
+
+  private loadPlan(): Observable<Plan> {
+    return this.serviceLocator.apiClient.getSubscriptionPlan(this.id).map((plan) => {
+      this._plan = plan;
+      return this._plan;
+    });
   }
 
 }

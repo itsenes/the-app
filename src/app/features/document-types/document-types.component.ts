@@ -81,7 +81,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
   }
 
   add_new() {
-    this.model.add_document_type();
+    this.model.addDocumentType();
     this.norecords = false;
   }
 }

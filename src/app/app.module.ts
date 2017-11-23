@@ -136,8 +136,8 @@ const appRoutes: Routes = [
     LookupsService,
     ViewModelLocator,
     ServiceLocator,
-    { provide: BrowserXhr, useClass: NgProgressBrowserXhr },
     { provide: RequestOptions, useClass: SecureApiRequestOptions },
+    { provide: BrowserXhr, useClass: NgProgressBrowserXhr },
     { provide: API_BASE_URL, useFactory: getApiUrl }
   ],
   bootstrap: [AppComponent]

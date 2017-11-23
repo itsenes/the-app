@@ -10,33 +10,48 @@
       <img mat-card-avatar [src]="subscription.company.logoPath" class="avatar-large" />
       <mat-card-title>
         {{subscription.company.name}}
-        <br /> 
-        {{subscription.company.legalName}}
+        <br /> {{subscription.company.legalName}}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-card-subtitle>{{subscription.contact.firstName}} {{subscription.contact.lastName}} <br>{{subscription.contact.email}} </mat-card-subtitle>
+      <mat-card-subtitle>{{subscription.contact.firstName}} {{subscription.contact.lastName}}
+        <br>{{subscription.contact.email}} </mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions>
-      <a routerLink="company" routerLinkActive="active-route" mat-button >
+      <a routerLink="company" routerLinkActive="active-route" mat-button>
         <mat-icon>business</mat-icon>
         <label>Στοιχεία Επιχείρησης</label>
       </a>
-      <a routerLink="contact" routerLinkActive="active-route" mat-button >
+      <a routerLink="contact" routerLinkActive="active-route" mat-button>
         <mat-icon>person</mat-icon>
         <label>Στοιχεία Επικοινωνίας</label>
       </a>
-      <a routerLink="document-types" routerLinkActive="active-route" mat-button >
+      <a routerLink="document-types" routerLinkActive="active-route" mat-button>
         <mat-icon class="orange">folder</mat-icon>
         <label>Τύποι εγγράφων</label>
       </a>
-      <a routerLink="items" routerLinkActive="active-route" mat-button >
+      <a routerLink="items" routerLinkActive="active-route" mat-button>
         <mat-icon>apps</mat-icon>
         <label>Προϊόντα - Υπηρεσίες</label>
       </a>
       <!-- malakia, allh mia -->
-      <br/><br/>
+      <br/>
+      <br/>
     </mat-card-actions>
+    <mat-card-content>
+      <!-- plan info -->
+    <!-- name?: string | undefined;
+      description?: string | undefined;
+      richText?: string | undefined;
+      uiHint?: UiHint | undefined;
+      services?: Service[] | undefined;
+      limits?: LimitPolicy[] | undefined; -->
+      <mat-icon>widgets</mat-icon>
+      <mat-card-subtitle>{{subscription.plan?.name}} {{subscription.plan?.description}}
+        <br>{{subscription.plan?.richText}} </mat-card-subtitle>
+    </mat-card-content>
+    
+
   </mat-card>
   <div fxFlex="96">
     <router-outlet></router-outlet>

@@ -53,14 +53,14 @@ export class AppStateService {
     });
   }
 
-  getSubscriptionByKey(key: string): Observable<SubscriptionViewModel> {
+  public getSubscriptionByKey(key: string): Observable<SubscriptionViewModel> {
     return Observable.create((observer) => {
       observer.next(this._subscriptions.find(sub => sub.alias === key));
       observer.complete();
     });
   }
 
-  selectSubscription(subscription: SubscriptionViewModel): SubscriptionViewModel {
+  public selectSubscription(subscription: SubscriptionViewModel): SubscriptionViewModel {
     if (subscription.alias !== this._current_subscriptionkey) {
       this.viewModelLocator.basePath = subscription.homePath;
       if (subscription.alias === this._current_subscriptionkey) {
@@ -71,7 +71,7 @@ export class AppStateService {
     return subscription;
   }
 
-  loadSubscriptions(): Observable<SubscriptionViewModel[]> {
+  private loadSubscriptions(): Observable<SubscriptionViewModel[]> {
     const observable = this.apiClient.getSubscriptions().map((response) => {
       this._subscriptions = response.items.map((subscription) => {
         const vm = this.viewModelLocator.getInstance<SubscriptionViewModel, Subscription>(SubscriptionViewModel, subscription);
