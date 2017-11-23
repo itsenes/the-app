@@ -18,7 +18,7 @@ export class AuthCallbackComponent implements OnInit {
 
   selectSubscription(subscription: any) {
     this.appState.selectSubscription(subscription);
-    this.router.navigate([subscription.home_path]);
+    this.router.navigate([subscription.homePath]);
   }
 
   constructor(public appState: AppStateService, private authService: AuthService, private router: Router) { }
@@ -45,7 +45,7 @@ export class AuthCallbackComponent implements OnInit {
           this.appState.onError(error);
         });
       } else {
-        console.log('should redirect to unauthorized!');
+        console.log('redirect to unauthorized!');
         this.router.navigate(['/unauthorized']);
       }
     });

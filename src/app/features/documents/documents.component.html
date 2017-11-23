@@ -81,8 +81,8 @@
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu" class="status-actions" [overlapTrigger]="false">
-          <button mat-menu-item>
-            <mat-icon>library_books</mat-icon>Προβολή</button>
+          <a mat-menu-item>
+            <mat-icon>library_books</mat-icon>Προβολή</a>
           <button mat-menu-item>
             <mat-icon>edit</mat-icon>Μεταβολή</button>
           <button mat-menu-item>
@@ -103,9 +103,9 @@
         <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h2>
         <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
-        <a class="portal-link" [href]="selected.safe_portal_link" target="__new" mat-button>
+        <a class="portal-link" [href]="selected.portalLink" target="__new" mat-button>
           <div class="wrap">
-            <iframe class="frame" [attr.src]="selected.safe_portal_link">
+            <iframe class="frame" [attr.src]="selected.safePortalLink">
             </iframe>
           </div>
         </a>
@@ -120,10 +120,10 @@
         <label class="small">ΠΛΗΡΩΤΕΟ</label>
         <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode}}</h3>
         <mat-divider></mat-divider>
-        <a [download]='selected.model.id+".pdf"' [href]="selected.pdf_link" mat-button class="download-link">
+        <a [download]='selected.model.id+".pdf"' [href]="selected.portalPdfLink" mat-button class="download-link">
           <img class="pdf-logo small">
         </a>
-        <a [download]='selected.model.id+".docx"' [href]="selected.doc_link" mat-button class="download-link">
+        <a [download]='selected.model.id+".docx"' [href]="selected.portalDoclink" mat-button class="download-link">
           <img class="word-logo small">
         </a>
       </div>

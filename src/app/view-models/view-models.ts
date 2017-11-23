@@ -14,14 +14,18 @@ export class ServiceLocator {
   }
 }
 
-export abstract class ViewModelBase {
-  constructor(serviceLocator: ServiceLocator) {
-
-  }
-}
 export class ViewModel<T> {
   constructor() {
   }
+
+  private _basePath: string = null;
+  public get basePath() {
+    return this._basePath;
+  }
+  public set basePath(value: string) {
+    this._basePath = value;
+  }
+
   private _serviceLocator: ServiceLocator = null;
   public get serviceLocator(): ServiceLocator {
     return this._serviceLocator;
@@ -44,12 +48,21 @@ export class ViewModel<T> {
 @Injectable()
 export class ViewModelLocator {
   constructor(private serviceLocator: ServiceLocator) { }
+  private _basePath: string = null;
+  public get basePath() {
+    return this._basePath;
+  }
+  public set basePath(value: string) {
+    this._basePath = value;
+  }
 
   public getInstance<TViewModel extends ViewModel<T>, T>(type: { new(): TViewModel; }, data: T): TViewModel {
     // const vmType: new () => TViewModel = null;
     const vm = new type();
     vm.model = data;
     vm.serviceLocator = this.serviceLocator;
+    vm.basePath = this.basePath;
+    console.log('getinstance - homepath in resolved vm: ' + vm.basePath);
     return vm;
   }
 
@@ -81,60 +94,67 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     return this.model.company;
   }
 
-  public get company_logo() {
+  public get companyLogo() {
     return `${environment.api_url}/subscriptions/${this.model.id}/image?size=64`;
   }
 
-  public get home_path() {
+  public get basePath() {
+    return this.homePath;
+  }
+  // no setter that is...
+  public set basePath(value: string) { }
+
+  public get homePath() {
     return `/app/${this.model.alias}`;
   }
 
-  public get settings_path() {
+  public get settingsPath() {
     return `/app/${this.model.alias}/settings`;
   }
 
-  private _document_types: DocumentTypeViewModel[];
+  private _documentTypes: DocumentTypeViewModel[];
   private _products: any[];
 
-  public get document_types(): Observable<DocumentTypeViewModel[]> {
-    if (null == this._document_types) {
+  public get documentTypes(): Observable<DocumentTypeViewModel[]> {
+    if (null == this._documentTypes) {
       return this.loadDocumentTypes();
     }
     return Observable.create((observer) => {
-      observer.next(this._document_types);
+      observer.next(this._documentTypes);
       observer.complete();
     });
   }
 
   getDocumentType(id) {
     return Observable.create((observer) => {
-      observer.next(this._document_types.find(doc => doc.id === id));
+      observer.next(this._documentTypes.find(doc => doc.id === id));
       observer.complete();
     });
   }
 
   // todo:rename
   add_document_type() {
-    const vm = new DocumentTypeViewModel(null);
+    const vm = new DocumentTypeViewModel();
     vm.model = new Document();
     vm.serviceLocator = this.serviceLocator;
-    this._document_types.push(vm);
+    this._documentTypes.push(vm);
   }
 
   loadDocumentTypes(): Observable<DocumentTypeViewModel[]> {
     return this.serviceLocator.apiClient.getDocumentTypes(this.id)
       .map((response) => {
         if (response.count === 0) {
-          this._document_types = DocumentTypeViewModel[0];
+          this._documentTypes = DocumentTypeViewModel[0];
         } else {
-          this._document_types = response.items.
+          this._documentTypes = response.items.
             map((doc) => {
-              const vm = new DocumentTypeViewModel(this.home_path);
+              const vm = new DocumentTypeViewModel();
               vm.model = doc;
               vm.serviceLocator = this.serviceLocator;
+              vm.basePath = this.basePath;
               return vm;
             });
-          return this._document_types;
+          return this._documentTypes;
         }
       });
   }
@@ -156,7 +176,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     });
   }
 
-  add_product() {
+  addProduct() {
     const product = new Product();
     this._products.push({
       model: product
@@ -175,8 +195,8 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
                 id: product.id,
                 name: product.name,
                 notes: product.notes,
-                search_path: `${this.home_path}/products/${product.id}`,
-                addnew_path: `${this.home_path}/products/new`,
+                searchPath: `${this.basePath}/products/${product.id}`,
+                addNewPath: `${this.basePath}/products/new`,
                 model: product
               };
             });
@@ -188,7 +208,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
 }
 
 export class DocumentTypeViewModel extends ViewModel<DocumentType> {
-  constructor(private homePath: string) {
+  constructor() {
     super();
   }
 
@@ -212,21 +232,17 @@ export class DocumentTypeViewModel extends ViewModel<DocumentType> {
     return this.model.code;
   }
 
-  public get icon() {
-    return `${environment.api_url}/subscriptions/${this.model.id}/image`;
+  public get searchPath() {
+    return `${this.basePath}/documents/${this.model.id}`;
   }
 
-  public get search_path() {
-    return `${this.homePath}/documents/${this.model.id}`;
-  }
-
-  public get addnew_path() {
-    return `${this.homePath}/documents/new`;
+  public get addNewPath() {
+    return `${this.basePath}/documents/${this.model.id}/new`;
   }
 }
 
 export class ItemViewModel extends ViewModel<Product> {
-  constructor(item: Product, private homePath: string, protected apiClient: ApiClient) {
+  constructor() {
     super();
   }
 
@@ -246,12 +262,12 @@ export class ItemViewModel extends ViewModel<Product> {
     return this.model.notes;
   }
 
-  public get search_path() {
-    return `${this.homePath}/items/${this.model.id}`;
+  public get searchPath() {
+    return `${this.basePath}/items/${this.model.id}`;
   }
 
-  public get addnew_path() {
-    return `${this.homePath}/items/new`;
+  public get addNewPath() {
+    return `${this.basePath}/items/new`;
   }
 }
 
@@ -260,7 +276,6 @@ export class DocumentViewModel extends ViewModel<Document> {
     super();
   }
 
-  public homePath;
   private _documentType: DocumentTypeViewModel = null;
   public get documentType(): DocumentTypeViewModel {
     return this._documentType;
@@ -292,31 +307,31 @@ export class DocumentViewModel extends ViewModel<Document> {
     return this.model.notes;
   }
 
-  public get portal_link() {
+  public get portalLink() {
     return `${environment.api_url}${this.model.permaLink}`;
   }
 
-  public get doc_link() {
+  public get portalDocLink() {
     return `${environment.api_url}${this.model.permaLink}.docx`;
   }
 
-  public get pdf_link() {
+  public get portalPdfLink() {
     return `${environment.api_url}${this.model.permaLink}.pdf`;
   }
 
-  private _safe_portal_link;
-  public get safe_portal_link() {
-    return this._safe_portal_link;
+  private _safePortalLink;
+  public get safePortalLink() {
+    return this._safePortalLink;
   }
-  public set safe_portal_link(value) {
-    this._safe_portal_link = value;
-  }
-
-  public get edit_path() {
-    return `${this.homePath}/documents/${this.documentType.id}/${this.model.id}`;
+  public set safePortalLink(value) {
+    this._safePortalLink = value;
   }
 
-  public get preview_path() {
-    return `${this.homePath}/documents/new`;
+  public get editPath() {
+    return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}`;
+  }
+
+  public get addNewPath() {
+    return `${this.basePath}/documents/new`;
   }
 }

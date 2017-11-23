@@ -60,11 +60,14 @@ export class AppStateService {
     });
   }
 
-  selectSubscription(subscription: any): any {
-    if (subscription.alias === this._current_subscriptionkey) {
-      return subscription;
+  selectSubscription(subscription: SubscriptionViewModel): SubscriptionViewModel {
+    if (subscription.alias !== this._current_subscriptionkey) {
+      this.viewModelLocator.basePath = subscription.homePath;
+      if (subscription.alias === this._current_subscriptionkey) {
+        return subscription;
+      }
+      this._current_subscriptionkey = subscription.alias;
     }
-    this._current_subscriptionkey = subscription.alias;
     return subscription;
   }
 

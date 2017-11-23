@@ -83,7 +83,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   add_new() {
-    this.model.add_product();
+    this.model.addProduct();
     this.norecords = false;
   }
 }

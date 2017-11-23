@@ -32,6 +32,7 @@ export class AuthService {
     if (null !== this.user) {
       return `${this.user.token_type} ${this.user.access_token}`;
     } else {
+      console.log('getAuthorizationHeaderValue returned null');
       return undefined;
     }
   }
@@ -61,39 +62,6 @@ export class AuthService {
 
 export function getClientSettings(): UserManagerSettings {
   return environment.auth_settings;
-
-  // return {
-  //   authority: 'http://localhost:20200/',
-  //   client_id: 'spa',
-  //   redirect_uri: 'http://localhost:4200/auth-callback',
-  //   post_logout_redirect_uri: 'http://localhost:4200/logged-out',
-  //   response_type: 'id_token token',
-  //   scope: 'openid profile core',
-  //   filterProtocolClaims: true,
-  //   loadUserInfo: true
-  // };
-
-  // return {
-  //   authority: 'https://incontrl.io/',
-  //   client_id: 'spa',
-  //   redirect_uri: 'http://localhost:4200/auth-callback',
-  //   post_logout_redirect_uri: 'http://localhost:4200/logged-out',
-  //   response_type: 'id_token token',
-  //   scope: 'openid profile email core',
-  //   filterProtocolClaims: true,
-  //   loadUserInfo: true
-  // };
-
-  // return {
-  //   authority: 'https://incontrl.io/',
-  //   client_id: 'spa',
-  //   redirect_uri: 'https://app.incontrl.io/auth-callback',
-  //   post_logout_redirect_uri: 'https://app.incontrl.io/logged-out',
-  //   response_type: 'id_token token',
-  //   scope: 'openid profile email core',
-  //   filterProtocolClaims: true,
-  //   loadUserInfo: true
-  // };
 }
 
 export class SecureApiRequestOptions extends BaseRequestOptions {

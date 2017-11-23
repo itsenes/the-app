@@ -7,7 +7,7 @@
     </button>
   </mat-card-title>
   <mat-card-content>
-    <app-document-type-form (onDelete)='delete($event,i)' *ngFor="let doc of document_types; let i = index" [model]='doc.model'></app-document-type-form>
+    <app-document-type-form (onDelete)='delete($event,i)' *ngFor="let doc of documentTypes; let i = index" [model]='doc.model'></app-document-type-form>
   </mat-card-content>
 </mat-card>
 
@@ -25,7 +25,7 @@
           <br />
         </p>
         <br />
-        <a mat-mini-fab class="fab-icon-link" class="fab-icon-link" color="warn" [routerLink]="doc.settings_path">
+        <a mat-mini-fab class="fab-icon-link" class="fab-icon-link" color="warn" [routerLink]="doc.settingsPath">
           <mat-icon>settings</mat-icon>
         </a>
       </mat-list-item>

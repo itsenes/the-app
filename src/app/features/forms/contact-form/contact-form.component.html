@@ -70,6 +70,7 @@
   </mat-card-title>
   <mat-card-content>
     <div class="form-container">
+      <label *ngIf='readonly && !model.address'>Δεν έχει οριστεί διεύθυνση</label>
       <label *ngIf='readonly'>{{model.address.line1}}</label>
       <mat-form-field *ngIf='!readonly'>
         <input matInput [readonly]='readonly' #address1="ngModel" name="address1" [(ngModel)]='model.address.line1' placeholder="Διεύθυνση #1"

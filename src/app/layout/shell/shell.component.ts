@@ -67,16 +67,16 @@ export class ShellComponent implements OnInit, OnDestroy {
           // set this subscription as "current"
           this.subscription = sub;
           this.appState.selectSubscription(this.subscription);
-          this.subscription.document_types.subscribe((types) => {
+          this.subscription.documentTypes.subscribe((types) => {
             this.navLinks = [
-              { path: this.subscription.home_path, icon: 'home', label: 'Η εταιρεία μου' }
+              { path: this.subscription.homePath, icon: 'home', label: 'Η εταιρεία μου' }
             ];
             if (types != null) {
               types.forEach((doc) => {
-                this.navLinks.push({ path: doc.search_path, icon: 'folder', label: doc.folder });
+                this.navLinks.push({ path: doc.searchPath, icon: 'folder', label: doc.folder });
               });
             }
-            this.navLinks.push({ path: this.subscription.settings_path, icon: 'settings', label: 'Ρυθμίσεις' });
+            this.navLinks.push({ path: this.subscription.settingsPath, icon: 'settings', label: 'Ρυθμίσεις' });
           });
         });
       }

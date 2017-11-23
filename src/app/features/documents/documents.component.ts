@@ -81,12 +81,13 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this.filtertext = this.searchText;
     this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
       undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
-      this.pageindex + 1, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true).subscribe((response) => {
+      this.pageindex + 1, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true)
+      .subscribe((response) => {
         this.count = response.count;
         this.documents = response.items.map((doc) => {
           const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
           vm.documentType = this.documentType;
-          vm.safe_portal_link = this.sanitizer.bypassSecurityTrustResourceUrl(vm.portal_link);
+          vm.safePortalLink = this.sanitizer.bypassSecurityTrustResourceUrl(vm.portalLink);
           return vm;
         });
         this.norecords = (this.documents == null || this.documents.length === 0);

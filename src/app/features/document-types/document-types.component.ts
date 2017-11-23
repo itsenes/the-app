@@ -18,7 +18,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
   private busy = false;
   params_sub: any = null;
   norecords = false;
-  document_types: any[];
+  documentTypes: any[];
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -37,7 +37,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
 
   delete(documentType, index) {
     if (documentType.id == null) {
-      this.model.document_types.subscribe((types) => {
+      this.model.documentTypes.subscribe((types) => {
         types.splice(index, 1);
         this.alertsService.create('success', 'Η διαγραφή του τύπου εγγράφων έγινε με επιτυχία!');
         this.norecords = (types == null || types.length === 0);
@@ -49,7 +49,7 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
           if (ans.resolved) {
             this.apiClient.deleteDocumentType(this.model.id, documentType.id)
               .subscribe(() => {
-                this.model.document_types.subscribe((types) => {
+                this.model.documentTypes.subscribe((types) => {
                   types.splice(index, 1);
                   this.alertsService.create('success', 'Η διαγραφή του τύπου εγγράφων έγινε με επιτυχία!');
                   this.norecords = (types == null || types.length === 0);
@@ -68,9 +68,9 @@ export class DocumentTypesComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((subscription) => {
           this.model = subscription;
-          subscription.document_types.subscribe((types) => {
-            this.document_types = types;
-            this.norecords = (this.document_types == null || this.document_types.length === 0);
+          subscription.documentTypes.subscribe((types) => {
+            this.documentTypes = types;
+            this.norecords = (this.documentTypes == null || this.documentTypes.length === 0);
           });
         });
     });

@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   columns = default_columns;
   user = null;
   subscription: SubscriptionViewModel;
-  document_types: DocumentTypeViewModel[];
+  documentTypes: DocumentTypeViewModel[];
   private media_sub: any = null;
   private router_params_sub: any;
   api_url = environment.api_url;
@@ -47,8 +47,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (null != alias) {
         this.appState.getSubscriptionByKey(alias).subscribe((sub) => {
           this.subscription = sub;
-          this.subscription.document_types.subscribe((types) => {
-            this.document_types = types;
+          this.subscription.documentTypes.subscribe((types) => {
+            this.documentTypes = types;
           });
         });
       }

@@ -1,5 +1,5 @@
 <mat-toolbar class="view-header  mat-elevation-z1">
-  <img mat-card-avatar class="company-avatar mat-elevation-z3" [src]='subscription?.company_logo' />
+  <img mat-card-avatar class="company-avatar mat-elevation-z3" [src]='subscription?.companyLogo' />
   <span class="title">&nbsp;{{subscription?.company?.name}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
@@ -8,7 +8,7 @@
 
 <div class="view-content">
   <mat-grid-list [cols]="columns" rowHeight="340" gutterSize="10">
-    <mat-grid-tile *ngFor="let doc of document_types">
+    <mat-grid-tile *ngFor="let doc of documentTypes">
       <mat-card class="action-card">
         <mat-card-header>
           <mat-card-title class="action-card-title">
@@ -24,11 +24,11 @@
           <mat-card-subtitle>{{doc.notes}}.</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-button [routerLink]="doc.search_path">
+          <a mat-button [routerLink]="doc.searchPath">
             <mat-icon>search</mat-icon>
             <label fxShow fxHide.sm fxHide.md>Αναζήτηση</label>
           </a>
-          <a mat-button [routerLink]="doc.addnew_path">
+          <a mat-button [routerLink]="doc.addNewPath">
             <mat-icon>add_circle</mat-icon>
             <label fxShow fxHide.sm fxHide.md>Προσθήκη</label>
           </a>
@@ -101,7 +101,7 @@
           <mat-card-subtitle>Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-button [routerLink]="subscription.settings_path" routerLinkActive="active-route">
+          <a mat-button [routerLink]="subscription.settingsPath" routerLinkActive="active-route">
             <mat-icon>settings</mat-icon>
             <label fxShow fxHide.sm fxHide.md>Ξεκινήστε εδώ!</label>
           </a>
