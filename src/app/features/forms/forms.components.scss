@@ -73,6 +73,28 @@ hr {
   border: solid 1 whitesmoke;
 }
 
+.mat-card-avatar.icon-avatar-large {
+  width: 22px;
+  height: 22px;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 0px;
+  padding: 18px;  
+  border: solid 1 whitesmoke;
+  background: red;
+}
+
+.mat-card-avatar.icon-avatar-large.Custom {
+  border: solid 1 whitesmoke;
+  background: coral;
+}
+
+.mat-card-avatar.icon-avatar-large.Basic {
+  border: solid 1 whitesmoke;
+  background: cornflowerblue;
+}
+
 .form-container .company-avatar-button {
   width: 36px;
   height: 36px;
@@ -167,4 +189,15 @@ a.form-link {
 .mat-icon.warn-icon {
   background: whitesmoke;
   color: orangered;
+}
+
+.mat-card.form-card {
+  height: 98%;
+  width: 98%;
+  max-width: 900px;
+  background-color: white;
+  color: #1C1D21;
+  line-height: 14px;
+  opacity: 0.9;
+  margin-right: 10px;
 }

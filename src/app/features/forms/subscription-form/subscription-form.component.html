@@ -1,0 +1,48 @@
+<form type="submit" #companyForm="ngForm">
+  <mat-card class="form-card">
+    <mat-card-title>
+      <label class="small">Η ΣΥΝΔΡΟΜΗ ΣΑΣ</label>
+      <span class="app-toolbar-filler"></span>
+      <!-- <button *ngIf='!readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
+        <mat-icon class="form-button-icon">edit</mat-icon>
+      </button>
+      <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
+        <label class="small">ΑΠΟΘΗΚΕΥΣΗ</label>
+      </button>
+      <button *ngIf='!readonly' (click)="cancel()" mat-button color="warn">
+        <label class="small">ΑΚΥΡΩΣΗ</label>
+      </button> -->
+    </mat-card-title>
+    <mat-card-content>
+      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" [ngClass]="model.plan.name" class="icon-avatar-large mat-elavation-z6"
+      />
+      <div class="form-container">
+        <h3>{{model.plan.name}}</h3>
+        <br>
+        <label>{{model.plan.description}}</label>
+        <mat-card-subtitle>
+          {{model.plan.richText}}
+        </mat-card-subtitle>
+      </div>
+    </mat-card-content>
+    <!-- address  -->
+    <mat-card-title>
+      <label class="small inline">ΥΠΗΡΕΣΙΕΣ</label>
+    </mat-card-title>
+    <mat-card-content>
+      <div class="form-container">
+        <mat-card-subtitle>
+          <div *ngFor="let service of model.plan?.services; let i = index">
+              <label>{{service.name}}</label><br>
+          </div>
+        </mat-card-subtitle>
+        <mat-card-subtitle>
+          <div *ngFor="let policy of model.plan?.limits; let i = index">
+              <label>{{policy.name}}</label><br>
+          </div>
+        </mat-card-subtitle>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+</form>

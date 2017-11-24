@@ -18,6 +18,10 @@
         <br>{{subscription.contact.email}} </mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions>
+      <a routerLink="subscription" routerLinkActive="active-route" mat-button>
+        <mat-icon>assignment_ind</mat-icon>
+        <label>Η συνδρομή σας</label>
+      </a>
       <a routerLink="company" routerLinkActive="active-route" mat-button>
         <mat-icon>business</mat-icon>
         <label>Στοιχεία Επιχείρησης</label>
@@ -38,45 +42,6 @@
       <br/>
       <br/>
     </mat-card-actions>
-    <mat-card-subtitle>
-      Η συνδρομή σας
-    </mat-card-subtitle>
-    <mat-card-header>
-      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" class="avatar-icon mat-elevation-z6" />
-      <mat-card-title>
-        <strong>{{subscription.plan?.name}}</strong>
-        <br>{{subscription.plan?.description}}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <!-- plan info -->
-      <!-- name?: string | undefined;
-      description?: string | undefined;
-      richText?: string | undefined;
-      uiHint?: UiHint | undefined;
-      services?: Service[] | undefined;
-      limits?: LimitPolicy[] | undefined; -->
-      <mat-card-subtitle>
-        {{subscription.plan?.richText}}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-        <label>ΥΠΗΡΕΣΙΕΣ</label>
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-        <div *ngFor="let service of subscription.plan?.services; let i = index">
-          {{service.name}}
-        </div>
-        <br>{{subscription.plan?.description}}
-        <br>{{subscription.plan?.richText}}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-        <div *ngFor="let policy of subscription.plan?.limits; let i = index">
-          {{policy.name}}
-        </div>
-      </mat-card-subtitle>
-    </mat-card-content>
-
-
   </mat-card>
   <div fxFlex="96">
     <router-outlet></router-outlet>

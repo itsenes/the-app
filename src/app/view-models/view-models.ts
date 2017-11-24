@@ -213,12 +213,12 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
       });
   }
 
-  public get Plan(): Observable<Plan> {
+  public get plan(): Observable<Plan> {
     if (null == this._plan) {
       return this.loadPlan();
     } else {
       return Observable.create((observer) => {
-        observer.next(this._products);
+        observer.next(this._plan);
         observer.complete();
       });
     }
