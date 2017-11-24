@@ -149,7 +149,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   }
 
   loadDocumentTypes(): Observable<DocumentTypeViewModel[]> {
-    return this.serviceLocator.apiClient.getDocumentTypes(this.id)
+    return this.serviceLocator.apiClient.getDocumentTypes(this.id, 1, 100)
       .map((response) => {
         if (response.count === 0) {
           this._documentTypes = DocumentTypeViewModel[0];
@@ -192,7 +192,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   }
 
   loadProducts(): Observable<any> {
-    return this.serviceLocator.apiClient.getProducts(this.id)
+    return this.serviceLocator.apiClient.getProducts(this.id, 1, 100)
       .map((response) => {
         if (response.count === 0) {
           this._products = [];

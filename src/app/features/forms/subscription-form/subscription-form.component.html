@@ -14,14 +14,14 @@
       </button> -->
     </mat-card-title>
     <mat-card-content>
-      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" [ngClass]="model.plan.name" class="icon-avatar-large mat-elavation-z6"
+      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" [ngClass]="model.plan?.name" class="icon-avatar-large mat-elavation-z6"
       />
       <div class="form-container">
-        <h3>{{model.plan.name}}</h3>
+        <h3>{{model.plan?.name}}</h3>
         <br>
-        <label>{{model.plan.description}}</label>
+        <label>{{model.plan?.description}}</label>
         <mat-card-subtitle>
-          {{model.plan.richText}}
+          {{model.plan?.richText}}
         </mat-card-subtitle>
       </div>
     </mat-card-content>

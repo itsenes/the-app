@@ -1,7 +1,10 @@
 .list-card {
   background: none;
-  box-shadow: 0px 0px 0px 0px; 
+  box-shadow: 0px 0px 0px 0px;
+  padding: 0px;
+  max-width: 900px;
 }
+
 
 .mat-card-title.list-card-title {
   margin-bottom: 20px;

@@ -9,6 +9,7 @@ export class LookupsService {
   private _currencies: LookupEntry[] = null;
   private _timezones: LookupEntry[] = null;
   private _recordTypes: LookupEntry[] = null;
+  private readonly maxcount = 10000;
 
   constructor(private apiClient: ApiClient) {
     this._recordTypes = this.loadRecordTypes();
@@ -26,7 +27,7 @@ export class LookupsService {
   }
 
   private loadCountries(): Observable<LookupEntry[]> {
-    const observable = this.apiClient.getLookup('countries').map((response) => {
+    const observable = this.apiClient.getLookup('countries', 1, this.maxcount).map((response) => {
       this._countries = response.items.map((item) => {
         return item;
       });
@@ -83,7 +84,7 @@ export class LookupsService {
   }
 
   private loadCurrencies(): Observable<LookupEntry[]> {
-    const observable = this.apiClient.getLookup('currencies').map((response) => {
+    const observable = this.apiClient.getLookup('currencies', 1, this.maxcount).map((response) => {
       this._countries = response.items.map((item) => {
         return item;
       });
@@ -111,7 +112,7 @@ export class LookupsService {
   }
 
   private loadTimezones(): Observable<LookupEntry[]> {
-    const observable = this.apiClient.getLookup('timezones').map((response) => {
+    const observable = this.apiClient.getLookup('timezones', 1, this.maxcount).map((response) => {
       this._timezones = response.items.map((item) => {
         return item;
       });

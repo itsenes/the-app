@@ -79,9 +79,9 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   search() {
     this.filtertext = this.searchText;
-    this.apiClient.getDocuments(this.subscription.id, undefined, undefined,
+    this.apiClient.getDocuments(this.subscription.id, this.pageindex + 1, this.pagesize, false, undefined, undefined,
       undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
-      this.pageindex + 1, this.pagesize, `${this.sortfield}${this.sortdirection}`, this.searchText, true)
+      `${this.sortfield}${this.sortdirection}`, this.searchText)
       .subscribe((response) => {
         this.count = response.count;
         this.documents = response.items.map((doc) => {
