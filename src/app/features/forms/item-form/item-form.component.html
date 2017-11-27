@@ -65,10 +65,10 @@
           </mat-form-field>
 
           <mat-form-field class="shorter list">
-            <mat-select [(value)]="tax.type" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
-              <mat-option value="UnitRate">Είναι ΦΠΑ</mat-option>
-              <mat-option value="FixedRate">Είναι Φόρος Παρακράτησης</mat-option>
-              <mat-option value="Fixed">Άλλο</mat-option>
+            <mat-select [(value)]="tax.code" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
+              <mat-option value="VAT">Είναι ΦΠΑ</mat-option>
+              <mat-option value="DEDUCTABLE">Είναι Φόρος Παρακράτησης</mat-option>
+              <mat-option value="OTHER">Άλλο</mat-option>
             </mat-select>
           </mat-form-field>
 

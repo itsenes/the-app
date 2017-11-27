@@ -36,6 +36,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   firsttime = true;
   showPager = false;
   showPagerBottom = false;
+  status = '';
 
   constructor(private router: Router, private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) { }
@@ -46,6 +47,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         this.subscription = sub;
         const id = params['typeId'];
         this.subscription.getDocumentType(id).subscribe((docType) => {
+          this.status = '';
           this.documentType = docType;
           this.showInfo = false;
           this.selected = null;
@@ -78,11 +80,13 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   }
 
   search() {
+    this.status = 'αναζήτηση, παρακαλώ περιμένετε...';
     this.filtertext = this.searchText;
     this.apiClient.getDocuments(this.subscription.id, this.pageindex + 1, this.pagesize, false, undefined, undefined,
       undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
       `${this.sortfield}${this.sortdirection}`, this.searchText)
       .subscribe((response) => {
+        this.status = `βρέθηκαν ${response.count} παραστατικά.`;
         this.count = response.count;
         this.documents = response.items.map((doc) => {
           const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
@@ -96,10 +100,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         if (this.norecords) {
           this.showInfo = false;
           this.selected = null;
+          this.status = 'δεν βρέθηκαν εγγραφές.';
         }
         if (this.firsttime) {
           this.starthere = this.norecords;
           this.firsttime = false;
+          this.status = '';
         }
       });
   }
