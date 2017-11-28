@@ -26,7 +26,8 @@
         <label class="search-status">{{status}}</label>
         <span class="app-toolbar-filler"></span>
         <!-- put pager here -->
-        <mat-paginator [length]="count" *ngIf="showPager" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="pagerEvent($event)">
+        <mat-paginator [length]="count" *ngIf="showPager" [pageIndex]="pageindex" [pageSize]="pagesize" [pageSizeOptions]="[5, 10, 25, 50, 100]"
+          (page)="pagerEvent($event)">
         </mat-paginator>
         <span class="app-toolbar-right-filler"></span>
       </mat-toolbar>
@@ -107,8 +108,18 @@
             </iframe>
           </div>
         </a>
+        <div>
+          <a mat-icon-button disabled="true" class="download-link">
+            <mat-icon>share</mat-icon>
+          </a>
+          <a [download]='selected.model.id+".pdf"' [href]="selected.portalPdfLink" mat-icon-button>
+            <img class="small" src="assets/images/pdf.svg">
+          </a>
+          <a [download]='selected.model.id+".docx"' [href]="selected.portalDocLink" mat-icon-button>
+            <img class="small" src="assets/images/word.svg">
+          </a>
+        </div>
         <!-- <label class="small">ΣΕΛΙΔΑ ΠΕΛΑΤΗ</label> -->
-        <br>
         <label class="small" *ngIf="selected.model.recipient.organisation || selected.model.recipient.contact">ΠΕΛΑΤΗΣ</label>
         <h2 *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.name}}</h2>
         <label *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.legalName}}</label>
@@ -117,16 +128,7 @@
         <h2>{{selected.model.total | currency:selected.model.currencyCode}}</h2>
         <label class="small">ΠΛΗΡΩΤΕΟ</label>
         <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode}}</h3>
-        <mat-divider></mat-divider>
-        <a mat-button class="download-link">
-          <mat-icon>share</mat-icon>Αποστολή
-        </a>
-        <a [download]='selected.model.id+".pdf"' [href]="selected.portalPdfLink" mat-button class="download-link">
-          <img class="pdf-logo small">
-        </a>
-        <a [download]='selected.model.id+".docx"' [href]="selected.portalDocLink" mat-button class="download-link">
-          <img class="word-logo small">
-        </a>
+
       </div>
     </div>
   </div>
