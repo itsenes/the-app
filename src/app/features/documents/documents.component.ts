@@ -105,6 +105,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         if (this.firsttime) {
           this.starthere = this.norecords;
           this.firsttime = false;
+        }
+        if (this.starthere && this.norecords) {
           this.status = '';
         }
       });

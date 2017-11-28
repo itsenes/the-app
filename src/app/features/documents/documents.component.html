@@ -68,7 +68,7 @@
       </mat-toolbar>
     </div>
     <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
-      <div class="no-records" fxLayout="column" fxLayoutAlign="center start" *ngIf="!selected">
+      <div class="no-records" fxFlex fxLayout="column" fxLayoutAlign="center center" *ngIf="!selected">
         <label class="small">δεν έχετε επιλέξει καποιο έγγραφο.</label>
         <img src="assets/images/no-records.png" class="no-records">
         <button color="primary" (click)="add_new()" mat-button>
