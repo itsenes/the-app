@@ -1,11 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
 import { ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../../services/app-state.service';
-import { ViewModelLocator, SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../../view-models/view-models';
-import { ApiClient, Document, DocumentType, Recipient, Contact, Organisation } from '../../../services/incontrl-apiclient';
+import {
+  ViewModelLocator, SubscriptionViewModel,
+  DocumentTypeViewModel,
+  DocumentViewModel
+} from '../../../view-models/view-models';
+import {
+  ApiClient, Document, DocumentType, Recipient, Contact,
+  Organisation, Address, Tax, TaxType
+} from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -20,7 +31,12 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   private _viewmodel: DocumentViewModel = null;
   private _model: Document = null;
   private _bak: Document = null;
-  public readonly = false;
+  public readonly = true;
+  public editcompany = false;
+  public companyfilter;
+  searchCompanyControl: FormControl = new FormControl();
+  filteredcompanies: Organisation[];
+
 
   /// viewmodel
   public set vm(value: DocumentViewModel) {
@@ -48,7 +64,29 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
   }
 
+  filter(name: string): Organisation[] {
+    return [];
+  }
+
+  displayFn(org: Organisation): string {
+    return org ? org.name : '';
+  }
+
+  companyChanged(event) {
+    this.vm.model.recipient.organisation = event.option.value;
+    this.searchCompanyControl.setValue(null);
+  }
+
   ngOnInit() {
+    this.searchCompanyControl.valueChanges.subscribe((filter) => {
+      if (null !== filter && filter !== '') {
+        this.apiClient.getOrganisations(this.subscription.id, 1, 100, true, false, undefined, undefined, filter)
+          .subscribe((response) => {
+            this.filteredcompanies = response.items;
+          });
+      }
+    });
+
     this.params_sub = this.route.params.subscribe((params) => {
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
         this.subscription = sub;
@@ -78,8 +116,14 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     if (doc.recipient.organisation == null) {
       doc.recipient.organisation = new Organisation();
     }
+    if (doc.recipient.organisation.address == null) {
+      doc.recipient.organisation.address = new Address();
+    }
     if (doc.recipient.contact == null) {
       doc.recipient.contact = new Contact();
+    }
+    if (doc.recipient.contact.address == null) {
+      doc.recipient.contact.address = new Address();
     }
     return doc;
   }
@@ -95,6 +139,13 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggle_company_edit_mode() {
+    this.editcompany = !this.editcompany;
+    // if (!this.readonly) {
+    //   this.bak(this.model);
+    // }
+  }
+
   private bak(value: any) {
     this._bak = value.clone();
   }
@@ -104,7 +155,20 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     this.model = this._bak;
   }
 
-  save() {
+  isnew() {
+    return (null == this.model || this.model.id == null);
+  }
 
+  save() {
+  }
+
+  toggleInfoPanel() { }
+
+  cansearch() {
+    // return this.companyfilter !== this.searchText;
+    return true;
+  }
+
+  companysearch() {
   }
 }

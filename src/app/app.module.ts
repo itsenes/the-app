@@ -1,7 +1,7 @@
 // angular modules
 import { NgModule, Injectable, Inject, Injector, ReflectiveInjector, InjectionToken } from '@angular/core';
 import { BrowserXhr, HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -125,7 +125,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     RouterModule.forChild(appRoutes),
-    BrowserModule, FormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
+    BrowserModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
     GravatarModule,
     JasperoAlertsModule,
     JasperoConfirmationsModule,

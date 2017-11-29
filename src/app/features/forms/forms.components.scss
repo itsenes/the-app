@@ -27,6 +27,9 @@ label {
   max-width: 800px;
 }
 
+.mat-card-title.short, .mat-card-content.short {
+  max-width: 420px;
+}
 .mat-form-field.short {
   max-width: 400px;
 }
