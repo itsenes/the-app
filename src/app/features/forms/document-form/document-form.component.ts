@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../../services/app-state.service';
 import { ViewModelLocator, SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../../view-models/view-models';
-import { ApiClient, DocumentType, Document } from '../../../services/incontrl-apiclient';
+import { ApiClient, Document, DocumentType, Recipient, Contact, Organisation } from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -17,20 +17,36 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   private params_sub = null;
   public subscription: SubscriptionViewModel = null;
   public documentType: DocumentTypeViewModel = null;
-  private _model: DocumentViewModel = null;
-  private _bak: DocumentViewModel = null;
-  public readonly = true;
+  private _viewmodel: DocumentViewModel = null;
+  private _model: Document = null;
+  private _bak: Document = null;
+  public readonly = false;
 
-  public set model(value: DocumentViewModel) {
-    this._model = value;
-    if (value != null) {
-      this.readonly = (value.id != null);
-    }
+  /// viewmodel
+  public set vm(value: DocumentViewModel) {
+    this._viewmodel = value;
   }
-  public get model(): DocumentViewModel { return this._model; }
+  public get vm(): DocumentViewModel { return this._viewmodel; }
+
+  public set model(value: Document) {
+    this.vm.model = value;
+  }
+
+  public get model(): Document { return this.vm.model; }
+
+  public get company(): Organisation {
+    return this.vm.model.recipient.organisation;
+  }
+
+  public get contact(): Contact {
+    return this.vm.model.recipient.contact;
+  }
 
   constructor(private appState: AppStateService, private route: ActivatedRoute,
-    private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) { }
+    private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) {
+    const newdoc = this.expand(new Document());
+    this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
+  }
 
   ngOnInit() {
     this.params_sub = this.route.params.subscribe((params) => {
@@ -42,15 +58,30 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           this.documentType = docType;
           // get the document now!
           if ('new' === docid || null == docid) {
-            this.model = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
+            const newdoc = this.expand(new Document());
+            this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
           } else {
-            this.apiClient.getDocument(this.subscription.id, docid).subscribe((response) => {
-              this.model = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, response);
+            this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
+              const vmdoc = this.expand(doc);
+              this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, vmdoc);
             });
           }
         });
       });
     });
+  }
+
+  expand(doc: Document): Document {
+    if (doc.recipient == null) {
+      doc.recipient = new Recipient();
+    }
+    if (doc.recipient.organisation == null) {
+      doc.recipient.organisation = new Organisation();
+    }
+    if (doc.recipient.contact == null) {
+      doc.recipient.contact = new Contact();
+    }
+    return doc;
   }
 
   ngOnDestroy() {

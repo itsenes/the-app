@@ -4,6 +4,10 @@ hr {
   margin-top: 20px;
 }
 
+label {
+  color: black;
+}
+
 .mat-button,
 .mat-fab,
 .mat-icon-button,
@@ -36,11 +40,12 @@ hr {
 }
 
 .mat-form-field {
-  font-size: 16px; // color: black;
-  margin-bottom: 4px;
+  font-size: 14px; // color: black;
 }
 
-.mat-form-field.shorter.list, .mat-form-field.small, .mat-slide-toggle.list {
+.mat-form-field.shorter.list,
+.mat-form-field.small,
+.mat-slide-toggle.list {
   margin-right: 6px;
 }
 
@@ -51,7 +56,6 @@ hr {
 .mat-chip.list.new-line {
   font-size: 20px;
 }
-
 
 .form-container {
   display: flex;
@@ -80,7 +84,7 @@ hr {
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 0px;
-  padding: 18px;  
+  padding: 18px;
   border: solid 1 whitesmoke;
   background: red;
 }
@@ -184,7 +188,6 @@ button.form-link {
 a.form-link {
   color: black;
 }
-
 
 .mat-icon.warn-icon {
   background: whitesmoke;

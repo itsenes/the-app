@@ -2,7 +2,10 @@ import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
-import { ApiClient, Subscription, LookupEntry, DocumentType, Product, Tax, Document, Plan } from '../services/incontrl-apiclient';
+import {
+  ApiClient, Subscription, LookupEntry, DocumentType,
+  Product, Tax, Document, Plan, Recipient, Organisation, Contact
+} from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
 // causes circular...
@@ -354,6 +357,10 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get editPath() {
+    return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}?edit`;
+  }
+
+  public get viewPath() {
     return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}`;
   }
 

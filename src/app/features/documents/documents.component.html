@@ -82,10 +82,10 @@
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu" class="status-actions" [overlapTrigger]="false">
-          <a mat-menu-item>
+          <a mat-menu-item [routerLink]="selected.viewPath">
             <mat-icon>library_books</mat-icon>Προβολή</a>
-          <button mat-menu-item>
-            <mat-icon>edit</mat-icon>Μεταβολή</button>
+          <a mat-menu-item [routerLink]="selected.editPath">
+            <mat-icon>edit</mat-icon>Μεταβολή</a>
           <button mat-menu-item>
             <mat-icon>content_copy</mat-icon>Αντίγραφο</button>
           <mat-divider></mat-divider>
