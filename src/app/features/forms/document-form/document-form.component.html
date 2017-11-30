@@ -1,6 +1,6 @@
 <mat-toolbar class="view-header mat-elevation-z1">
   <span class="title">{{documentType?.folder | uppercase}} \
-    <strong> {{documentType?.name | uppercase}} {{ vm?.displayName | uppercase }}</strong>
+    <strong> {{documentType?.name | uppercase}}: {{ vm?.displayName | uppercase }}</strong>
   </span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
@@ -41,6 +41,10 @@
               <mat-form-field floatPlaceholder='never' class="short" *ngIf='!readonly'>
                 <input mat-input [formControl]="searchCompanyControl" name="filter" matInput type="text" placeholder="αναζήτηση επιχείρησης"
                   maxlength="300" [matAutocomplete]="autocompany">
+                <mat-hint align="end">
+                  <label *ngIf="company && company.name!==null">για αλλαγή στοιχείων πατήστε</label>
+                  &nbsp;<a (click)="editcompany=!editcompany">εδώ</a>&nbsp;-&nbsp;<label>για προσθήκη πατήστε</label>&nbsp;<a href="www.google.com" target="__new">εδώ</a>
+                </mat-hint>
                 <mat-autocomplete #autocompany="matAutocomplete" (optionSelected)="companyChanged($event)" [displayWith]="displayFn">
                   <mat-option *ngFor="let company of filteredcompanies" [value]="company">
                     <label class="small">{{ company.name }}</label>
@@ -48,6 +52,7 @@
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
+              <br>
               <label *ngIf='!editcompany'>{{company.legalName}}</label>
               <mat-form-field *ngIf='editcompany' floatPlaceholder='never' class="short">
                 <input class="short" matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='company.legalName' placeholder="Επωνυμία επιχείρισης"
