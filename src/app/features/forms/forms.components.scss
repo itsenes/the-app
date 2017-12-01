@@ -27,9 +27,11 @@ label {
   max-width: 800px;
 }
 
-.mat-card-title.short, .mat-card-content.short {
+.mat-card-title.short,
+.mat-card-content.short {
   max-width: 420px;
 }
+
 .mat-form-field.short {
   max-width: 400px;
 }
@@ -46,6 +48,7 @@ label {
   font-size: 14px; // color: black;
 }
 
+.mat-form-field.list,
 .mat-form-field.shorter.list,
 .mat-form-field.small,
 .mat-slide-toggle.list {
@@ -110,7 +113,7 @@ label {
 }
 
 .form-container .mat-icon {
-  margin-left: -10px;
+  // margin-left: -10px;
   margin-top: -2px;
   font-size: 16px;
 }
@@ -206,4 +209,35 @@ a.form-link {
   line-height: 14px;
   opacity: 0.9;
   margin-right: 10px;
+}
+
+.extrasmall {
+  font-size: 10px;
+}
+
+
+.line-container{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.line-container.even {
+  background: whitesmoke;
+}
+
+.mat-mini-fab.xsmall {
+  width:30px;
+  height: 30px;
+}
+
+.search-icon {
+  margin-top:2px;
+  opacity:0.4;
+}
+
+.total {
+  text-align: center;
+  margin-top: -4px;
 }

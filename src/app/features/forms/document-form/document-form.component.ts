@@ -10,14 +10,21 @@ import {
   DocumentViewModel
 } from '../../../view-models/view-models';
 import {
-  ApiClient, Document, DocumentType, Recipient, Contact,
-  Organisation, Address, Tax, TaxType
+  Address,
+  ApiClient,
+  Contact,
+  Document,
+  DocumentLine,
+  DocumentType,
+  Organisation,
+  Product,
+  Recipient,
+  Tax,
+  TaxType,
 } from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
-
-
 
 @Component({
   selector: 'app-document-form',
@@ -36,7 +43,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public companyfilter;
   searchCompanyControl: FormControl = new FormControl();
   filteredcompanies: Organisation[];
-
+  newline: DocumentLine = new DocumentLine();
 
   /// viewmodel
   public set vm(value: DocumentViewModel) {
@@ -125,6 +132,17 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     if (doc.recipient.contact.address == null) {
       doc.recipient.contact.address = new Address();
     }
+    if (doc.lines == null || doc.lines === undefined) {
+      doc.lines = [];
+    }
+    doc.lines.forEach((line) => {
+      if (line.product == null) {
+        line.product = new Product();
+      }
+      if (line.taxes == null) {
+        line.taxes = [];
+      }
+    });
     return doc;
   }
 
@@ -141,9 +159,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   toggle_company_edit_mode() {
     this.editcompany = !this.editcompany;
-    // if (!this.readonly) {
-    //   this.bak(this.model);
-    // }
   }
 
   private bak(value: any) {
@@ -159,16 +174,15 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     return (null == this.model || this.model.id == null);
   }
 
-  save() {
-  }
+  save() { }
 
   toggleInfoPanel() { }
 
-  cansearch() {
-    // return this.companyfilter !== this.searchText;
-    return true;
-  }
+  removeline(index) { }
 
-  companysearch() {
+  addline() { }
+
+  isEven(n) {
+    return n % 2 === 0;
   }
 }

@@ -134,7 +134,7 @@
       <label *ngIf='readonly'>{{model.address.notes}}</label>
       <mat-form-field *ngIf='!readonly'>
         <textarea matInput [readonly]='readonly' #addressnotes="ngModel" name="addressnotes" [(ngModel)]='model.address.notes' placeholder="Σχόλια"
-          floatPlaceholder='auto' maxlength="150"></textarea>
+          floatPlaceholder='auto' maxlength="500"></textarea>
         <mat-hint align="end">{{addressnotes.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
     </div>
