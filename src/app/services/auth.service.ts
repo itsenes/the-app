@@ -8,9 +8,11 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
 
-  private manager: UserManager = new UserManager(getClientSettings());
+  // private manager: UserManager = new UserManager(getClientSettings());
+  private manager: UserManager;
   private user: User = null;
   constructor() {
+    this.manager = new UserManager(environment.auth_settings);
     this.manager.getUser().then(user => {
       this.user = user;
     });
