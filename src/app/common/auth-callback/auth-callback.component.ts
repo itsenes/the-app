@@ -26,23 +26,27 @@ export class AuthCallbackComponent implements OnInit {
   ngOnInit() {
     this.authService.completeAuthentication().then(() => {
       if (this.authService.isLoggedIn) {
-        this.status = 'loading your subscription information, please wait...';
-        // ok get the subscriptions for the user
-        this.appState.subscriptions.subscribe((subs) => {
-          this.subscriptions = subs;
-          if (subs === null || subs.length === 0) {
-            console.log('user must create a subscription');
-            this.router.navigate(['/new-subscription']);
-          } else if (subs.length === 1) {
-            this.status = 'loading your configuration information, please wait...';
-            this.selectSubscription(subs[0]);
-          } else {
-            this.status = 'Please select a subscription to proceed...';
-            this.displaySubscriptionsList = true;
-          }
-        }, (error) => {
-          console.log('error loading subscriptions' + error);
-          this.appState.onError(error);
+        console.log('auth-callback: user is logged in!');
+        this.authService.loadUser().then((user) => {
+          console.log('auth-callback: going to load subscriptions!');
+          this.status = `hello ${user.profile.name}, we're loading your subscription information, please wait...`;
+          // ok get the subscriptions for the user
+          this.appState.subscriptions.subscribe((subs) => {
+            this.subscriptions = subs;
+            if (subs === null || subs.length === 0) {
+              console.log('user must create a subscription');
+              this.router.navigate(['/new-subscription']);
+            } else if (subs.length === 1) {
+              this.status = 'loading your configuration information, please wait...';
+              this.selectSubscription(subs[0]);
+            } else {
+              this.status = 'Please select a subscription to proceed...';
+              this.displaySubscriptionsList = true;
+            }
+          }, (error) => {
+            console.log('error loading subscriptions' + error);
+            this.appState.onError(error);
+          });
         });
       } else {
         console.log('redirect to unauthorized!');

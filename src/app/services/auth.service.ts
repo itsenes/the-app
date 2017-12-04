@@ -8,22 +8,31 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
 
-  // private manager: UserManager = new UserManager(getClientSettings());
   private manager: UserManager;
   private user: User = null;
   constructor() {
     this.manager = new UserManager(environment.auth_settings);
-    this.manager.getUser().then(user => {
+    // this.manager.getUser().then(user => {
+    //   this.user = user;
+    // });
+  }
+
+  loadUser(): Promise<User> {
+    console.log('getUser: getting user info');
+    return this.manager.getUser().then((user) => {
       this.user = user;
+      return user;
     });
   }
 
   currentUser(): User {
+    console.log('currentUser: return current user');
     return this.user;
   }
 
   isLoggedIn(): boolean {
-    return this.user != null && !this.user.expired;
+    console.log('isLoggedIn: check user');
+    return this.user !== null && !this.user.expired;
   }
 
   getClaims(): any {
@@ -40,11 +49,15 @@ export class AuthService {
   }
 
   startAuthentication(url): Promise<void> {
-    return this.manager.signinRedirect({ data: url }).catch(function (err) { console.log(err); });
+    // return this.manager.signinRedirect({ data: url }).catch(function (err) { console.log(err); });
+    console.log('startAuthentication!');
+    return this.manager.signinRedirect().catch(function (err) { console.log(err); });
   }
 
   completeAuthentication(): Promise<void> {
+    console.log('completeAuthentication started!');
     return this.manager.signinRedirectCallback().then(user => {
+      console.log('completeAuthentication completed :)');
       this.user = user;
     }).catch(function (err) {
       console.log(err);
