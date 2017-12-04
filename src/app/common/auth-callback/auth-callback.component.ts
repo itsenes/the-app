@@ -37,10 +37,10 @@ export class AuthCallbackComponent implements OnInit {
               console.log('user must create a subscription');
               this.router.navigate(['/new-subscription']);
             } else if (subs.length === 1) {
-              this.status = 'loading your configuration information, please wait...';
+              this.status = `hello ${user.profile.name}, we're loading your configuration information, please wait...`;
               this.selectSubscription(subs[0]);
             } else {
-              this.status = 'Please select a subscription to proceed...';
+              this.status = `welcome ${user.profile.name}, please select a subscription to proceed...`;
               this.displaySubscriptionsList = true;
             }
           }, (error) => {
