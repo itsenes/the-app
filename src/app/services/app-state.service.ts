@@ -54,10 +54,13 @@ export class AppStateService {
   }
 
   public getSubscriptionByKey(key: string): Observable<SubscriptionViewModel> {
-    return Observable.create((observer) => {
-      observer.next(this._subscriptions.find(sub => sub.alias === key));
-      observer.complete();
+    return this.subscriptions.map((s) => {
+      return s.find(sub => sub.alias === key);
     });
+    // return Observable.create((observer) => {
+    //   observer.next(this._subscriptions.find(sub => sub.alias === key));
+    //   observer.complete();
+    // });
   }
 
   public selectSubscription(subscription: SubscriptionViewModel): SubscriptionViewModel {

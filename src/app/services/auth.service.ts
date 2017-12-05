@@ -1,20 +1,28 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, EventEmitter } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { HttpModule, JsonpModule, Http, RequestOptions, BaseRequestOptions, RequestMethod, Headers } from '@angular/http';
 import { RequestOptionsArgs } from '@angular/http';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs/Rx';
 
-// https://github.com/damienbod/AspNet5IdentityServerAngularImplicitFlow/tree/npm-lib-test/src/AngularClient/angularApp/app
+
+// https://www.scottbrady91.com/Angular/SPA-Authentiction-using-OpenID-Connect-Angular-CLI-and-oidc-client
 @Injectable()
 export class AuthService {
 
-  private manager: UserManager;
+  private manager: UserManager = new UserManager(environment.auth_settings);
+  userLoadededEvent: EventEmitter<User> = new EventEmitter<User>();
   private user: User = null;
+
   constructor() {
     this.manager = new UserManager(environment.auth_settings);
-    // this.manager.getUser().then(user => {
-    //   this.user = user;
-    // });
+    this.manager.getUser().then(user => {
+      this.user = user;
+      this.userLoadededEvent.emit(user);
+    });
+    this.manager.events.addUserLoaded((user) => {
+      this.user = user;
+    });
   }
 
   loadUser(): Promise<User> {
@@ -30,9 +38,17 @@ export class AuthService {
     return this.user;
   }
 
-  isLoggedIn(): boolean {
+  isLoggedIn(): Observable<boolean> {
     console.log('isLoggedIn: check user');
-    return this.user !== null && !this.user.expired;
+    return Observable.fromPromise(this.manager.getUser())
+      .map<User, boolean>((user) => {
+        if (user) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    // return !(this.user === undefined) && !this.user.expired;
   }
 
   getClaims(): any {
@@ -40,7 +56,7 @@ export class AuthService {
   }
 
   getAuthorizationHeaderValue(): string {
-    if (null !== this.user) {
+    if (this.user != null && this.user !== undefined) {
       return `${this.user.token_type} ${this.user.access_token}`;
     } else {
       console.log('getAuthorizationHeaderValue returned null');
@@ -51,17 +67,21 @@ export class AuthService {
   startAuthentication(url): Promise<void> {
     // return this.manager.signinRedirect({ data: url }).catch(function (err) { console.log(err); });
     console.log('startAuthentication!');
-    return this.manager.signinRedirect().catch(function (err) { console.log(err); });
+    return this.manager.signinRedirect({ data: url }).catch(function (err) { console.log(err); });
   }
 
   completeAuthentication(): Promise<void> {
     console.log('completeAuthentication started!');
-    return this.manager.signinRedirectCallback().then(user => {
+    const p = this.manager.signinRedirectCallback().then(user => {
       console.log('completeAuthentication completed :)');
       this.user = user;
+    }, (error) => {
+      console.log(error);
     }).catch(function (err) {
       console.log(err);
+      throw new Error('signinRedirectCallback did not return the user' + err);
     });
+    return p;
   }
 
   startSignout(): Promise<void> {

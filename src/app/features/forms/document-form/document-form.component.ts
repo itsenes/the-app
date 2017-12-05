@@ -44,6 +44,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   searchCompanyControl: FormControl = new FormControl();
   filteredcompanies: Organisation[];
   newline: DocumentLine = new DocumentLine();
+  showPane = true;
 
   /// viewmodel
   public set vm(value: DocumentViewModel) {
@@ -176,7 +177,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   save() { }
 
-  toggleInfoPanel() { }
+  togglePanel() {
+    this.showPane = !this.showPane;
+  }
 
   removeline(index) { }
 

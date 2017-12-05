@@ -135,9 +135,8 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   }
 
   getDocumentType(id) {
-    return Observable.create((observer) => {
-      observer.next(this._documentTypes.find(doc => doc.id === id));
-      observer.complete();
+    return this.documentTypes.map((s) => {
+      return s.find(doc => doc.id === id);
     });
   }
 
