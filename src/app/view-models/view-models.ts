@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import {
   ApiClient, Subscription, LookupEntry, DocumentType,
-  Product, Tax, Document, Plan, Recipient, Organisation, Contact
+  Product, Tax, Document, Plan, Recipient, Organisation, Contact,
+  DocumentLine
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
@@ -366,4 +367,26 @@ export class DocumentViewModel extends ViewModel<Document> {
   public get addNewPath() {
     return `${this.basePath}/documents/new`;
   }
+}
+
+
+export class DocumentLineViewModel extends ViewModel<DocumentLine> {
+  constructor() {
+    super();
+  }
+
+  public get id() {
+    return this.model.id;
+  }
+
+  public get productName() {
+    if (null == this.model.product) {
+      return 'δεν έχει οριστεί προϊόν ή υπηρεσία';
+    } else {
+      return this.model.product.name;
+    }
+  }
+
+
+
 }
