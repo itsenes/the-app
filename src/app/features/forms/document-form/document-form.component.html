@@ -1,6 +1,6 @@
 <mat-toolbar class="view-header mat-elevation-z1">
   <span class="title">{{documentType?.folder | uppercase}} \
-    <strong> {{documentType?.name | uppercase}}: ΤΠΥ-{{ vm?.displayName | uppercase }}</strong>
+    <strong> {{documentType?.name | uppercase}}: {{ vm?.displayName | uppercase }}</strong>
   </span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
@@ -49,7 +49,7 @@
               <mat-form-field floatLabel='auto' class="shorter">
                 <mat-icon *ngIf='!readonly' matPrefix class="search-icon">search</mat-icon>
                 <input mat-input [readonly]='readonly' [formControl]="searchCurrencyControl" name="currencyfilter" matInput type="text" placeholder="νόμισμα"
-                  maxlength="30" [matAutocomplete]="autocurrency">
+                  maxlength="30" [matAutocomplete]="autocurrency" >
                 <mat-autocomplete #autocurrency="matAutocomplete" (optionSelected)="currencyChanged($event)" [displayWith]="displayCurrencyFn">
                   <mat-option *ngFor="let currency of filteredcurrencies" [value]="currency">
                     <label class="small">{{ currency.description }}</label>

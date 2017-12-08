@@ -5,7 +5,7 @@ import { map } from 'rxjs/operator/map';
 import {
   ApiClient, Subscription, LookupEntry, DocumentType,
   Product, Tax, Document, Plan, Recipient, Organisation, Contact,
-  DocumentLine
+  DocumentLine, Address
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
@@ -338,9 +338,6 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   private _currency: LookupEntry;
   public get currency(): LookupEntry {
-    if (null === this._currency && null != this.model && null != this.model.currencyCode) {
-        this._currency = this.serviceLocator.lookups.getCurrency(this.model.currencyCode);
-    }
     return this._currency;
   }
 
@@ -384,6 +381,53 @@ export class DocumentViewModel extends ViewModel<Document> {
   public get addNewPath() {
     return `${this.basePath}/documents/new`;
   }
+
+  public init(): Observable<void> {
+    if (null == this.model) {
+      return Observable.create((observer) => {
+        observer.next();
+        observer.complete();
+      });
+    }
+    if (this.model.recipient == null) {
+      this.model.recipient = new Recipient();
+    }
+    if (this.model.recipient.organisation == null) {
+      this.model.recipient.organisation = new Organisation();
+    }
+    if (this.model.recipient.organisation.address == null) {
+      this.model.recipient.organisation.address = new Address();
+    }
+    if (this.model.recipient.contact == null) {
+      this.model.recipient.contact = new Contact();
+    }
+    if (this.model.recipient.contact.address == null) {
+      this.model.recipient.contact.address = new Address();
+    }
+    if (this.model.lines == null || this.model.lines === undefined) {
+      this.model.lines = [];
+    }
+    this.model.lines.forEach((line) => {
+      if (line.product == null) {
+        line.product = new Product();
+      }
+      if (line.discountRate == null) {
+        line.discountRate = 0;
+      }
+      if (line.taxes == null) {
+        line.taxes = [];
+      }
+    });
+
+    let currencySubscription = null;
+    if (null != this.model && null != this.model.currencyCode) {
+      currencySubscription = this.serviceLocator.lookups.getCurrency(this.model.currencyCode);
+    }
+    return Observable.forkJoin(currencySubscription).map((val1) => {
+      this._currency = val1[0] as LookupEntry;
+      return;
+    });
+  }
 }
 
 
@@ -403,7 +447,5 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
       return this.model.product.name;
     }
   }
-
-
 
 }

@@ -93,10 +93,9 @@ export class LookupsService {
     return observable;
   }
 
-  getCurrency(id) {
-    return Observable.create((observer) => {
-      observer.next(this._currencies.find(c => c.id === id));
-      observer.complete();
+  getCurrency(id): Observable<LookupEntry> {
+    return this.currencies.map((s) => {
+      return s.find(currency => currency.id === id);
     });
   }
 

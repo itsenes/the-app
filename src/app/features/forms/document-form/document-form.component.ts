@@ -12,7 +12,8 @@ import { map } from 'rxjs/operators/map';
 import { ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../../services/app-state.service';
 import {
-  ViewModelLocator, SubscriptionViewModel,
+  ViewModelLocator,
+  SubscriptionViewModel,
   DocumentTypeViewModel,
   DocumentViewModel
 } from '../../../view-models/view-models';
@@ -38,6 +39,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './document-form.component.html',
   styleUrls: ['../forms.components.scss']
 })
+
 export class DocumentFormComponent implements OnInit, OnDestroy {
   private params_sub = null;
   public subscription: SubscriptionViewModel = null;
@@ -79,8 +81,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
     private viewModelLocator: ViewModelLocator, private lookups: LookupsService) {
-    const newdoc = this.expand(new Document());
+    const newdoc = new Document();
     this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
+    this.vm.init();
   }
 
   displayCompanyFn(org: Organisation): string {
@@ -146,47 +149,28 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           this.documentType = docType;
           // get the document now!
           if ('new' === docid || null == docid) {
-            const newdoc = this.expand(new Document());
-            this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
+            const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
+            vm.init().subscribe(() => {
+              this.initControls();
+              this.vm = vm;
+            });
           } else {
             this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
-              const vmdoc = this.expand(doc);
-              this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, vmdoc);
+              const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
+              vm.init().subscribe(() => {
+                this.initControls();
+                this.vm = vm;
+              });
             });
+
           }
         });
       });
     });
   }
 
-  expand(doc: Document): Document {
-    if (doc.recipient == null) {
-      doc.recipient = new Recipient();
-    }
-    if (doc.recipient.organisation == null) {
-      doc.recipient.organisation = new Organisation();
-    }
-    if (doc.recipient.organisation.address == null) {
-      doc.recipient.organisation.address = new Address();
-    }
-    if (doc.recipient.contact == null) {
-      doc.recipient.contact = new Contact();
-    }
-    if (doc.recipient.contact.address == null) {
-      doc.recipient.contact.address = new Address();
-    }
-    if (doc.lines == null || doc.lines === undefined) {
-      doc.lines = [];
-    }
-    doc.lines.forEach((line) => {
-      if (line.product == null) {
-        line.product = new Product();
-      }
-      if (line.taxes == null) {
-        line.taxes = [];
-      }
-    });
-    return doc;
+  initControls() {
+    this.searchCurrencyControl.setValue(this.vm.currency, { onlySelf: true, emitEvent: false });
   }
 
   ngOnDestroy() {
@@ -211,6 +195,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   cancel() {
     this.readonly = true;
     this.model = this._bak;
+    this.vm.init().subscribe(() => {
+      this.initControls();
+    });
   }
 
   isnew() {
