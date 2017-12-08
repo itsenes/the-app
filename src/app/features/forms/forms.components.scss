@@ -48,11 +48,11 @@ label {
   font-size: 14px; // color: black;
 }
 
-.mat-form-field.list,
-.mat-form-field.shorter.list,
+.mat-form-field.list-column,
+.mat-form-field.shorter.list-column,
 .mat-form-field.small,
-.mat-slide-toggle.list {
-  margin-right: 6px;
+.mat-slide-toggle.list-column {
+  margin-right: 4px;
 }
 
 .mat-chip.list {

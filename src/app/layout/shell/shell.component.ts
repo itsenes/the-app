@@ -59,26 +59,34 @@ export class ShellComponent implements OnInit, OnDestroy {
       if (null != alias) {
         getsub = this.appState.getSubscriptionByKey(alias);
       } else {
-        getsub = this.appState.current_subscription;
+        getsub = this.appState.currentSubscription;
       }
       // if i did get a valid observable
       if (null != getsub) {
         getsub.subscribe((sub) => {
           // set this subscription as "current"
-          this.subscription = sub;
-          this.appState.selectSubscription(this.subscription);
-          this.subscription.documentTypes.subscribe((types) => {
-            this.navLinks = [
-              { path: this.subscription.homePath, icon: 'home', label: 'Η εταιρεία μου' }
-            ];
-            if (types != null) {
-              types.forEach((doc) => {
-                this.navLinks.push({ path: doc.searchPath, icon: 'folder', label: doc.folder });
-              });
-            }
-            this.navLinks.push({ path: this.subscription.settingsPath, icon: 'settings', label: 'Ρυθμίσεις' });
-          });
+          if (null != sub) {
+            this.subscription = sub;
+            this.appState.selectSubscription(this.subscription);
+            this.subscription.documentTypes.subscribe((types) => {
+              this.navLinks = [
+                { path: this.subscription.homePath, icon: 'home', label: 'Η εταιρεία μου' }
+              ];
+              if (types != null) {
+                types.forEach((doc) => {
+                  this.navLinks.push({ path: doc.searchPath, icon: 'folder', label: doc.folder });
+                });
+              }
+              this.navLinks.push({ path: this.subscription.settingsPath, icon: 'settings', label: 'Ρυθμίσεις' });
+            });
+          } else {
+            alert('no active subscription');
+            console.log('no active subscription - redirecting to auth-callback');
+            this.router.navigateByUrl('/auth-callback');
+          }
         });
+      } else {
+        alert('subscription not specifed and more than one?');
       }
 
       // monitor navigation events to display progress!

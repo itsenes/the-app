@@ -1,5 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import { Subject } from 'rxjs/Subject';
+
+
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +27,7 @@ import {
   Product,
   Recipient,
   Tax,
-  TaxType,
+  TaxType, LookupEntry
 } from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -42,9 +49,13 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public editcompany = false;
   public companyfilter;
   searchCompanyControl: FormControl = new FormControl();
+  searchCurrencyControl: FormControl = new FormControl();
   filteredcompanies: Organisation[];
+  currencies: LookupEntry[] = null;
+  filteredcurrencies: LookupEntry[];
   newline: DocumentLine = new DocumentLine();
   showPane = true;
+  showAddCompany = false;
 
   /// viewmodel
   public set vm(value: DocumentViewModel) {
@@ -55,7 +66,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public set model(value: Document) {
     this.vm.model = value;
   }
-
   public get model(): Document { return this.vm.model; }
 
   public get company(): Organisation {
@@ -67,33 +77,65 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   constructor(private appState: AppStateService, private route: ActivatedRoute,
-    private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) {
+    private apiClient: ApiClient, private sanitizer: DomSanitizer,
+    private viewModelLocator: ViewModelLocator, private lookups: LookupsService) {
     const newdoc = this.expand(new Document());
     this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
   }
 
-  filter(name: string): Organisation[] {
-    return [];
-  }
-
-  displayFn(org: Organisation): string {
+  displayCompanyFn(org: Organisation): string {
     return org ? org.name : '';
   }
 
+  displayCurrencyFn(currrency: LookupEntry): string {
+    return currrency ? currrency.description : '';
+  }
+
   companyChanged(event) {
-    this.vm.model.recipient.organisation = event.option.value;
+    if (this.model.recipient.organisation !== event.option.value) {
+      this.model.recipient.organisation = event.option.value;
+    }
     this.searchCompanyControl.setValue(null);
   }
 
+  currencyChanged(event) {
+    if (this.vm.currency !== event.option.value) {
+      this.vm.currency = event.option.value;
+    }
+    // this.searchCurrencyControl.setValue(event.option.viewValue);
+  }
+
+  isObject(obj) {
+    return obj === Object(obj);
+  }
+
   ngOnInit() {
-    this.searchCompanyControl.valueChanges.subscribe((filter) => {
-      if (null !== filter && filter !== '') {
-        this.apiClient.getOrganisations(this.subscription.id, 1, 100, true, false, undefined, undefined, filter)
-          .subscribe((response) => {
-            this.filteredcompanies = response.items;
-          });
-      }
+    this.lookups.currencies.subscribe((entries) => {
+      this.currencies = entries;
     });
+
+    this.searchCompanyControl.valueChanges.debounceTime(400)
+      .distinctUntilChanged()
+      .subscribe((filter) => {
+        if (null !== filter && filter !== '') {
+          this.apiClient.getOrganisations(this.subscription.id, 1, 100, true, false, undefined, undefined, filter)
+            .subscribe((response) => {
+              this.filteredcompanies = response.items;
+            });
+        }
+      });
+
+
+    this.searchCurrencyControl.valueChanges.debounceTime(400)
+      .distinctUntilChanged().subscribe((filter: string) => {
+        if (null !== filter && undefined !== filter && filter !== '' && !this.isObject(filter)) {
+          alert(filter);
+          this.filteredcurrencies = this.currencies.filter(c => c.description
+            && c.description.toLowerCase().startsWith(filter.toLowerCase()));
+        } else {
+          this.filteredcurrencies = [];
+        }
+      });
 
     this.params_sub = this.route.params.subscribe((params) => {
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
@@ -175,15 +217,18 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     return (null == this.model || this.model.id == null);
   }
 
-  save() { }
+  save() {
+  }
 
   togglePanel() {
     this.showPane = !this.showPane;
   }
 
-  removeline(index) { }
+  removeline(index) {
+  }
 
-  addline() { }
+  addline() {
+  }
 
   isEven(n) {
     return n % 2 === 0;

@@ -40,6 +40,10 @@ export class ViewModel<T> {
     this._serviceLocator = value;
   }
 
+  public get lookups(): LookupsService {
+    return this.serviceLocator.lookups;
+  }
+
   private _model: T = null;
   public get model(): T {
     return this._model;
@@ -330,6 +334,19 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public get folder() {
     return this.documentType.folder;
+  }
+
+  private _currency: LookupEntry;
+  public get currency(): LookupEntry {
+    if (null === this._currency && null != this.model && null != this.model.currencyCode) {
+        this._currency = this.serviceLocator.lookups.getCurrency(this.model.currencyCode);
+    }
+    return this._currency;
+  }
+
+  public set currency(value: LookupEntry) {
+    this._currency = value;
+    this.model.currencyCode = value.id;
   }
 
   public get notes() {

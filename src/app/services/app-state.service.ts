@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AppStateService {
   private _subscriptions: SubscriptionViewModel[] = null;
-  private _current_subscriptionkey: string = null;
+  private _currentSubscriptionKey: string = null;
   private _lastError = null;
 
 
@@ -32,7 +32,7 @@ export class AppStateService {
   }
 
   public get current_subscriptionkey(): string {
-    return this._current_subscriptionkey;
+    return this._currentSubscriptionKey;
   }
 
   public get subscriptions(): Observable<SubscriptionViewModel[]> {
@@ -46,30 +46,23 @@ export class AppStateService {
     }
   }
 
-  public get current_subscription(): Observable<SubscriptionViewModel> {
-    return Observable.create((observer) => {
-      observer.next(this._subscriptions.find(sub => sub.alias === this._current_subscriptionkey));
-      observer.complete();
-    });
+  public get currentSubscription(): Observable<SubscriptionViewModel> {
+    return this.getSubscriptionByKey(this._currentSubscriptionKey);
   }
 
   public getSubscriptionByKey(key: string): Observable<SubscriptionViewModel> {
     return this.subscriptions.map((s) => {
       return s.find(sub => sub.alias === key);
     });
-    // return Observable.create((observer) => {
-    //   observer.next(this._subscriptions.find(sub => sub.alias === key));
-    //   observer.complete();
-    // });
   }
 
   public selectSubscription(subscription: SubscriptionViewModel): SubscriptionViewModel {
-    if (subscription.alias !== this._current_subscriptionkey) {
+    if (subscription != null && subscription.alias !== this._currentSubscriptionKey) {
       this.viewModelLocator.basePath = subscription.homePath;
-      if (subscription.alias === this._current_subscriptionkey) {
+      if (subscription.alias === this._currentSubscriptionKey) {
         return subscription;
       }
-      this._current_subscriptionkey = subscription.alias;
+      this._currentSubscriptionKey = subscription.alias;
     }
     return subscription;
   }
