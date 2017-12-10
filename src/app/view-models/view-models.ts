@@ -343,7 +343,7 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public set currency(value: LookupEntry) {
     this._currency = value;
-    this.model.currencyCode = value.id;
+    this.model.currencyCode = value ? value.id : undefined;
   }
 
   public get notes() {
@@ -407,6 +407,7 @@ export class DocumentViewModel extends ViewModel<Document> {
     if (this.model.lines == null || this.model.lines === undefined) {
       this.model.lines = [];
     }
+
     this.model.lines.forEach((line) => {
       if (line.product == null) {
         line.product = new Product();
@@ -414,6 +415,7 @@ export class DocumentViewModel extends ViewModel<Document> {
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
+      line.discountRate = line.discountRate * 100;
       if (line.taxes == null) {
         line.taxes = [];
       }

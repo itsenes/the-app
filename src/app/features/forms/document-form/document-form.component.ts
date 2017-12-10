@@ -52,6 +52,8 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public companyfilter;
   searchCompanyControl: FormControl = new FormControl();
   searchCurrencyControl: FormControl = new FormControl();
+  invoicedate: FormControl = new FormControl();
+  invoicedueDate: FormControl = new FormControl();
   filteredcompanies: Organisation[];
   currencies: LookupEntry[] = null;
   filteredcurrencies: LookupEntry[];
@@ -81,8 +83,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
     private viewModelLocator: ViewModelLocator, private lookups: LookupsService) {
-    const newdoc = new Document();
-    this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, newdoc);
+    this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
     this.vm.init();
   }
 
@@ -105,7 +106,16 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     if (this.vm.currency !== event.option.value) {
       this.vm.currency = event.option.value;
     }
-    // this.searchCurrencyControl.setValue(event.option.viewValue);
+  }
+
+  duedateChanged(event) {
+    alert('duedateChanged');
+    this.model.dueDate = event.value;
+  }
+
+  dateChanged(event) {
+    alert('dateChanged');
+    this.model.date = event.value;
   }
 
   isObject(obj) {
@@ -120,7 +130,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     this.searchCompanyControl.valueChanges.debounceTime(400)
       .distinctUntilChanged()
       .subscribe((filter) => {
-        if (null !== filter && filter !== '') {
+        if (this.isValidFilter(filter)) {
           this.apiClient.getOrganisations(this.subscription.id, 1, 100, true, false, undefined, undefined, filter)
             .subscribe((response) => {
               this.filteredcompanies = response.items;
@@ -131,14 +141,12 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
     this.searchCurrencyControl.valueChanges.debounceTime(400)
       .distinctUntilChanged().subscribe((filter: string) => {
-        if (null !== filter && undefined !== filter && filter !== '' && !this.isObject(filter)) {
-          alert(filter);
+        if (this.isValidFilter(filter)) {
           this.filteredcurrencies = this.currencies.filter(c => c.description
             && c.description.toLowerCase().startsWith(filter.toLowerCase()));
-        } else {
-          this.filteredcurrencies = [];
         }
       });
+
 
     this.params_sub = this.route.params.subscribe((params) => {
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
@@ -151,26 +159,31 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           if ('new' === docid || null == docid) {
             const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
             vm.init().subscribe(() => {
-              this.initControls();
               this.vm = vm;
+              this.initControls();
             });
           } else {
             this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
               const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
               vm.init().subscribe(() => {
-                this.initControls();
                 this.vm = vm;
+                this.initControls();
               });
             });
-
           }
         });
       });
     });
   }
 
+  isValidFilter(filter: string): boolean {
+    return null !== filter && undefined !== filter && filter !== '' && !this.isObject(filter);
+  }
+
   initControls() {
     this.searchCurrencyControl.setValue(this.vm.currency, { onlySelf: true, emitEvent: false });
+    this.invoicedate.setValue(this.model.date, { onlySelf: true, emitEvent: false });
+    this.invoicedueDate.setValue(this.model.dueDate, { onlySelf: true, emitEvent: false });
   }
 
   ngOnDestroy() {

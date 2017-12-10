@@ -36,13 +36,17 @@
             <div class="form-container" fxLayout="row" fxLayoutAlign="start center">
               <!-- <label *ngIf='readonly'><strong>{{model.date | date}}</strong></label> -->
               <!-- https://material.angular.io/components/datepicker/examples -->
-              <mat-form-field class="small" floatLabel='auto'>
-                <input matInput [readonly]='readonly' #invoicedate="ngModel" name="invoicedate" [(ngModel)]="model.date" placeholder="Ημερομηνία">
+              <mat-form-field class="medium" floatLabel='auto'>
+                <input matInput [matDatepicker]="datepicker" [readonly]='readonly' [formControl]="invoicedate" (dateChange)='dateChanged($event)' placeholder="Ημερομηνία">
+                <mat-datepicker-toggle matSuffix *ngIf="!readonly" [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker></mat-datepicker>              
               </mat-form-field>
 
               <!-- <label *ngIf='readonly'>{{model.duedate | date}}</label> -->
-              <mat-form-field class="small" floatLabel='auto'>
-                <input matInput [readonly]='readonly' #duedate="ngModel" name="duedate" [(ngModel)]='model.dueDate' placeholder="Ημερομηνία πληρωμής">
+              <mat-form-field class="medium" floatLabel='auto'>
+                <input matInput [matDatepicker]="duedatepicker" [readonly]='readonly' (dateChange)='duedateChanged($event)' [formControl]='invoicedueDate' placeholder="Ημερομηνία πληρωμής">
+                <mat-datepicker-toggle matSuffix *ngIf="!readonly" [for]="duedatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #duedatepicker></mat-datepicker>              
               </mat-form-field>
 
               <!-- <label *ngIf='readonly'>{{model.currencyCode}}</label> -->
@@ -192,7 +196,7 @@
 
                   <!-- actions - delete, duplicate -->
                   <div *ngIf="!readonly" fxFlex="40px" fxFlexAlign="center">
-                    <button color="primary" (click)="removeline(i)" mat-mini-fab class="xsmall">
+                    <button color="default" (click)="removeline(i)" mat-mini-fab class="xsmall">
                       <mat-icon>delete_forever</mat-icon>
                     </button>
                   </div>

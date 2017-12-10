@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, Routes } from '@angular/router';
 // 3rd party cool modules
 import { MaterialModule } from './material-module';
+import { MatNativeDateModule } from '@angular/material';
 import { GravatarModule } from 'ng2-gravatar-directive';
 import { NgProgressModule, NgProgressBrowserXhr } from 'ngx-progressbar';
 // https://jaspero.co/resources/projects/ng-alerts
@@ -125,7 +126,9 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     RouterModule.forChild(appRoutes),
-    BrowserModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, BrowserAnimationsModule, MaterialModule,
+    BrowserModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, BrowserAnimationsModule,
+    MaterialModule,
+    MatNativeDateModule,
     GravatarModule,
     JasperoAlertsModule,
     JasperoConfirmationsModule,
