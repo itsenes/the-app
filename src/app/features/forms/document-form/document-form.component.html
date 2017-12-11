@@ -96,7 +96,6 @@
                   <label class="small">ΝΕΟΣ ΠΕΛΑΤΗΣ</label>
                 </button>
               </span>
-              <br>
               <label>{{company.name}}, {{company.legalName}}</label>
               <label>{{company.taxCode}}, {{company.taxOffice}}</label>
               <label>{{company.lineOfBusiness}}</label>
@@ -148,19 +147,19 @@
                           </mat-form-field>
 
                           <mat-form-field class="list-column" fxFlex="120px" floatPlaceholder='auto'>
-                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #lineunitAmount="ngModel" name="lineunitAmount-{{i}}" [(ngModel)]='line.unitAmount'
-                              placeholder="αξία">
+                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #lineunitAmount="ngModel" name="lineunitAmount-{{i}}"
+                              [(ngModel)]='line.unitAmount' placeholder="αξία">
                             <span matSuffix class="extrasmall">{{model.currencyCode}}</span>
                           </mat-form-field>
 
                           <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
-                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #linequantity="ngModel" name="linequantity-{{i}}" [(ngModel)]='line.quantity'
-                              placeholder="ποσότητα">
+                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #linequantity="ngModel" name="linequantity-{{i}}"
+                              [(ngModel)]='line.quantity' placeholder="ποσότητα">
                           </mat-form-field>
 
                           <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
-                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #linediscount="ngModel" name="linediscount-{{i}}" [(ngModel)]='line.discountRate'
-                              placeholder="έκπτωση">
+                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #linediscount="ngModel" name="linediscount-{{i}}"
+                              [(ngModel)]='line.discountRate' placeholder="έκπτωση">
                             <span matSuffix class="extrasmall">%</span>
                           </mat-form-field>
 
@@ -170,8 +169,7 @@
                             </span>
                           </div>
 
-                          <div *ngIf="!readonly" fxFlex="40px" fxFlexAlign="center">
-                          </div>
+
                         </div>
                         <!-- line 2 -->
                         <div fxLayout="row" fxLayoutAlign="start start">
@@ -180,13 +178,20 @@
                               name="linedescription-{{i}}" [(ngModel)]='line.model.description' placeholder="περιγραφή" maxlength="500"></textarea>
                             <mat-hint *ngIf="!readonly" align="end">{{line.model.description?.length || 0}}/500</mat-hint>
                           </mat-form-field>
+                          <div fxFlex="260px">
+                            <mat-chip-list #chipList>
+                              <mat-chip *ngFor="let tax of line.taxes" [selectable]="!readonly" [removable]="!readonly" (remove)="line.removeTax(tax)">
+                                {{tax.code}} {{tax.rate}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                              </mat-chip>
+                            </mat-chip-list>
+                          </div>
                           <div fxFlex="120px">
                             <span fxFlex class="total">
                               {{line.totalSalesTax | currency:model.currencyCode:true}}
                             </span>
                           </div>
-                          <div *ngIf="!readonly" fxFlex="40px" fxFlexAlign="center">
-                          </div>
+
                         </div>
                       </div>
                     </div>

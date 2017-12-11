@@ -31,6 +31,9 @@ import {
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
+import {ENTER} from '@angular/cdk/keycodes';
+
+
 
 @Component({
   selector: 'app-document-form',
@@ -58,6 +61,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   newline: DocumentLine = new DocumentLine();
   showPane = false;
   showAddCompany = false;
+
+  // Enter, comma
+  separatorKeysCodes = [ENTER];
+
 
   /// viewmodel
   public set vm(value: DocumentViewModel) {

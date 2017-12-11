@@ -546,6 +546,14 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     this._document = value;
   }
 
+  public removeTax(tax) {
+    alert('remove tax');
+  }
+
+  public addTax(event) {
+    alert('add tax');
+  }
+ 
   private calcTotals() {
     this.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
     this.model.totalSalesTax = 0;
