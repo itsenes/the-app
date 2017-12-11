@@ -169,7 +169,6 @@
                             </span>
                           </div>
 
-
                         </div>
                         <!-- line 2 -->
                         <div fxLayout="row" fxLayoutAlign="start start">
@@ -178,7 +177,7 @@
                               name="linedescription-{{i}}" [(ngModel)]='line.model.description' placeholder="περιγραφή" maxlength="500"></textarea>
                             <mat-hint *ngIf="!readonly" align="end">{{line.model.description?.length || 0}}/500</mat-hint>
                           </mat-form-field>
-                          <div fxFlex="260px">
+                          <div fxFlex="250px">
                             <mat-chip-list #chipList>
                               <mat-chip *ngFor="let tax of line.taxes" [selectable]="!readonly" [removable]="!readonly" (remove)="line.removeTax(tax)">
                                 {{tax.code}} {{tax.rate}}
