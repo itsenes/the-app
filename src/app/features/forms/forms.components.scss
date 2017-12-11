@@ -230,6 +230,13 @@ a.form-link {
   padding-right: 10px;
 }
 
+.line-header-container{
+  padding-top: 10px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .line-container-total{
   padding-top: 20px;
   padding-bottom: 10px;
@@ -237,9 +244,11 @@ a.form-link {
   padding-right: 10px;
 }
 
-.line-container.even {
+.line-container.even, .line-header-container.even, .line-container-total.even {
   background: whitesmoke;
 }
+
+
 
 .mat-mini-fab.xsmall {
   width:30px;
@@ -258,6 +267,11 @@ a.form-link {
 .total-header {
   text-align: center;
   margin-top: -4px;
+}
+
+.total-line {
+  margin-top: 12px;
+  margin-left: 10px;
 }
 
 .total {

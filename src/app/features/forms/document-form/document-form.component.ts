@@ -5,8 +5,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { Subject } from 'rxjs/Subject';
-
-
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { ActivatedRoute } from '@angular/router';
@@ -58,7 +56,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   currencies: LookupEntry[] = null;
   filteredcurrencies: LookupEntry[];
   newline: DocumentLine = new DocumentLine();
-  showPane = true;
+  showPane = false;
   showAddCompany = false;
 
   /// viewmodel
@@ -109,12 +107,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   duedateChanged(event) {
-    alert('duedateChanged');
     this.model.dueDate = event.value;
   }
 
   dateChanged(event) {
-    alert('dateChanged');
     this.model.date = event.value;
   }
 

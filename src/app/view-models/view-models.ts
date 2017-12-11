@@ -1,3 +1,4 @@
+import { _document } from '@angular/platform-browser/src/browser';
 import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +10,7 @@ import {
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
+import { MethodCall } from '@angular/compiler';
 // causes circular...
 // import { AppStateService } from '../services/app-state.service';
 
@@ -382,6 +384,37 @@ export class DocumentViewModel extends ViewModel<Document> {
     return `${this.basePath}/documents/new`;
   }
 
+  private _lines: Array<DocumentLineViewModel>;
+  public get lines(): Array<DocumentLineViewModel> {
+    return this._lines;
+  }
+  public set lines(value: Array<DocumentLineViewModel>) {
+    this._lines = value;
+  }
+
+  public removeline(index) {
+  }
+
+  public addline(index) {
+  }
+
+  public calcTotals() {
+    // alert('calc totals callback');
+    this.model.subTotal = 0;
+    this.model.totalSalesTax = 0;
+    this.model.totalTax = 0;
+    this.model.total = 0;
+    this.model.totalPayable = 0;
+
+    this.lines.forEach((line) => {
+      this.model.subTotal = this.model.subTotal + line.subTotal;
+      this.model.totalSalesTax = this.model.totalSalesTax + line.totalSalesTax;
+      this.model.total = this.model.total + line.total;
+      this.model.totalTax = this.model.totalTax + line.totalTax;
+      this.model.totalPayable = this.model.totalPayable + (line.total + line.totalTax);
+    });
+  }
+
   public init(): Observable<void> {
     if (null == this.model) {
       return Observable.create((observer) => {
@@ -408,17 +441,19 @@ export class DocumentViewModel extends ViewModel<Document> {
       this.model.lines = [];
     }
 
+    this.lines = new Array<DocumentLineViewModel>();
     this.model.lines.forEach((line) => {
-      if (line.product == null) {
-        line.product = new Product();
-      }
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
-      line.discountRate = line.discountRate * 100;
       if (line.taxes == null) {
         line.taxes = [];
       }
+      const newline = new DocumentLineViewModel();
+      newline.model = line;
+      newline.serviceLocator = this.serviceLocator;
+      newline.document = this;
+      this.lines.push(newline);
     });
 
     let currencySubscription = null;
@@ -447,6 +482,88 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
       return 'δεν έχει οριστεί προϊόν ή υπηρεσία';
     } else {
       return this.model.product.name;
+    }
+  }
+
+  public get quantity() {
+    return this.model.quantity;
+  }
+  public set quantity(value: number) {
+    this.model.quantity = value;
+    this.calcTotals();
+  }
+
+  public get unitAmount() {
+    return this.model.unitAmount;
+  }
+
+  public set unitAmount(value: number) {
+    this.model.unitAmount = value;
+    this.calcTotals();
+  }
+
+  public get discountRate() {
+    return this.model.discountRate * 100;
+  }
+
+  public set discountRate(value: number) {
+    this.model.discountRate = value / 100;
+    this.calcTotals();
+  }
+
+  public get subTotal() {
+    return this.model.subTotal;
+  }
+  public set subTotal(value) {
+    this.model.subTotal = value;
+  }
+
+  public get totalTax() {
+    return this.model.totalTax;
+  }
+
+  public get totalSalesTax() {
+    return this.model.totalSalesTax;
+  }
+
+  public get total() {
+    return this.model.total;
+  }
+
+  public set total(value) {
+    this.model.total = value;
+  }
+
+  public get taxes() {
+    return this.model.taxes;
+  }
+
+  private _document: DocumentViewModel = null;
+  public get document(): DocumentViewModel {
+    return this._document;
+  }
+  public set document(value: DocumentViewModel) {
+    this._document = value;
+  }
+
+  private calcTotals() {
+    this.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
+    this.model.totalSalesTax = 0;
+    this.model.totalTax = 0;
+    this.model.total = 0;
+    if (null != this.taxes) {
+      this.taxes.forEach((tax) => {
+        tax.amount = tax.rate * this.subTotal;
+        if (tax.isSalesTax) {
+          this.model.totalSalesTax = this.totalSalesTax + tax.amount;
+        } else {
+          this.model.totalTax = this.totalTax + tax.amount;
+        }
+      });
+    }
+    this.model.total = this.subTotal + this.totalSalesTax;
+    if (null != this.document) {
+      this.document.calcTotals();
     }
   }
 

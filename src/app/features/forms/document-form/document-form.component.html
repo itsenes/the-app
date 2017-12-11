@@ -5,7 +5,7 @@
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
   <button *ngIf="!isnew()" (click)="togglePanel()" mat-icon-button>
-    <mat-icon>info_outline</mat-icon>
+    <mat-icon color="warn">info_outline</mat-icon>
   </button>
   <span class="app-toolbar-right-filler"></span>
 </mat-toolbar>
@@ -37,23 +37,25 @@
               <!-- <label *ngIf='readonly'><strong>{{model.date | date}}</strong></label> -->
               <!-- https://material.angular.io/components/datepicker/examples -->
               <mat-form-field class="medium" floatLabel='auto'>
-                <input matInput [matDatepicker]="datepicker" [readonly]='readonly' [formControl]="invoicedate" (dateChange)='dateChanged($event)' placeholder="Ημερομηνία">
+                <input matInput [matDatepicker]="datepicker" [readonly]='readonly' [formControl]="invoicedate" (dateChange)='dateChanged($event)'
+                  placeholder="Ημερομηνία">
                 <mat-datepicker-toggle matSuffix *ngIf="!readonly" [for]="datepicker"></mat-datepicker-toggle>
-                <mat-datepicker #datepicker></mat-datepicker>              
+                <mat-datepicker #datepicker></mat-datepicker>
               </mat-form-field>
 
               <!-- <label *ngIf='readonly'>{{model.duedate | date}}</label> -->
               <mat-form-field class="medium" floatLabel='auto'>
-                <input matInput [matDatepicker]="duedatepicker" [readonly]='readonly' (dateChange)='duedateChanged($event)' [formControl]='invoicedueDate' placeholder="Ημερομηνία πληρωμής">
+                <input matInput [matDatepicker]="duedatepicker" [readonly]='readonly' (dateChange)='duedateChanged($event)' [formControl]='invoicedueDate'
+                  placeholder="Ημερομηνία πληρωμής">
                 <mat-datepicker-toggle matSuffix *ngIf="!readonly" [for]="duedatepicker"></mat-datepicker-toggle>
-                <mat-datepicker #duedatepicker></mat-datepicker>              
+                <mat-datepicker #duedatepicker></mat-datepicker>
               </mat-form-field>
 
               <!-- <label *ngIf='readonly'>{{model.currencyCode}}</label> -->
               <mat-form-field floatLabel='auto' class="shorter">
                 <mat-icon *ngIf='!readonly' matPrefix class="search-icon">search</mat-icon>
                 <input mat-input [readonly]='readonly' [formControl]="searchCurrencyControl" name="currencyfilter" matInput type="text" placeholder="νόμισμα"
-                  maxlength="30" [matAutocomplete]="autocurrency" >
+                  maxlength="30" [matAutocomplete]="autocurrency">
                 <mat-autocomplete #autocurrency="matAutocomplete" (optionSelected)="currencyChanged($event)" [displayWith]="displayCurrencyFn">
                   <mat-option *ngFor="let currency of filteredcurrencies" [value]="currency">
                     <label class="small">{{ currency.description }}</label>
@@ -96,156 +98,148 @@
               </span>
               <br>
               <label>{{company.name}}, {{company.legalName}}</label>
-              <!-- <mat-form-field *ngIf='editcompany' floatPlaceholder='never' class="short">
-                <input class="short" matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='company.legalName' placeholder="Επωνυμία επιχείρισης"
-                  maxlength="150">
-              </mat-form-field> -->
-
               <label>{{company.taxCode}}, {{company.taxOffice}}</label>
-              <!-- <mat-form-field *ngIf='editcompany' class="short" floatPlaceholder='never'>
-                <input matInput [readonly]='readonly' #taxcode="ngModel" name="taxcode" [(ngModel)]='company.taxCode' placeholder="ΑΦΜ" floatPlaceholder='auto'
-                  maxlength="50">
-              </mat-form-field> -->
-              <!-- <mat-form-field *ngIf='editcompany' class="short" floatPlaceholder='never'>
-                <input matInput [readonly]='readonly' #taxoffice="ngModel" name="taxoffice" [(ngModel)]='company.taxOffice' placeholder="ΔΟΥ"
-                  floatPlaceholder='auto' maxlength="150">
-              </mat-form-field> -->
-
               <label>{{company.lineOfBusiness}}</label>
-              <!-- <mat-form-field *ngIf='editcompany' class="short" floatPlaceholder='never'>
-                <input matInput [readonly]='readonly' #lineofbusiness="ngModel" name="lineofbusiness" [(ngModel)]='company.lineOfBusiness'
-                  placeholder="Επάγγελμα, δραστηριότητα" floatPlaceholder='auto' maxlength="150">
-              </mat-form-field> -->
-
               <label>{{company.address.name}}</label>
-              <!-- <mat-form-field *ngIf='editcompany' class="short" floatPlaceholder='never'>
-                <input matInput [readonly]='readonly' #address1="ngModel" name="address1" [(ngModel)]='company.address.name' placeholder="Διεύθυνση #1"
-                  floatPlaceholder='auto' maxlength="150">
-              </mat-form-field> -->
-
               <label>{{company.address.zipCode}}, {{company.address.city}}, {{company.address.countryCode}}</label>
-
-              <!-- <mat-form-field *ngIf='editcompany' class="small" floatPlaceholder='never'>
-                <input matInput [readonly]='readonly' #zipCode="ngModel" name="zipCode" [(ngModel)]='company.address.zipCode' placeholder="ΤΚ"
-                  floatPlaceholder='auto' maxlength="150">
-              </mat-form-field>
-              <mat-form-field *ngIf='editcompany' class="short" floatPlaceholder='never'>
-                <input matInput [readonly]='readonly' #city="ngModel" name="city" [(ngModel)]='company.address.city' placeholder="Πόλη" floatPlaceholder='auto'
-                  maxlength="150">
-              </mat-form-field>
-              <mat-form-field *ngIf='editcompany' class="short" floatPlaceholder='auto' name="country" #country>
-                <mat-select [disabled]='readonly' name="country" #currency="ngModel" [(ngModel)]='company.address.countryCode' placeholder="Χώρα">
-                </mat-select>
-              </mat-form-field> -->
             </div>
           </mat-card-content>
 
           <mat-card-title>
-            <label class="small inline">ΠΡΟΪΟΝΤΑ \ ΥΠΗΡΕΣΙΕΣ</label>
+            <label class="small">ΠΡΟΪΟΝΤΑ \ ΥΠΗΡΕΣΙΕΣ</label>
+            <span class="app-toolbar-filler"></span>
+            <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
+              <label class="small">ΠΡΟΣΘΗΚΗ</label>
+            </button>
           </mat-card-title>
+
           <mat-card-content>
             <div class="form-container">
               <label *ngIf="readonly && (!model.lines || model.lines.length==0)">Δεν έχουν οριστεί προιόντα ή υπηρεσίες</label>
               <ng-container>
-                <div class="line-container" [ngClass]="{'even':isEven(i)}" fxLayout="row" fxLayoutAlign="start start" *ngFor="let line of model?.lines; let i = index">
+                <!-- LINES -->
+                <ng-container *ngFor="let line of vm?.lines; let i = index">
 
-                  <div fxFlexAlign="center center" fxFlex="30px">
-                    <label>{{i+1}}</label>
-                  </div>
-                  <!-- main info - separated in to two lines -->
-                  <!-- line 1 is product lookup and line 2 is the description and taxes ? -->
-                  <div fxFlex>
-                    <div fxLayout="column" fxLayoutAlign="space-between none">
-                      <!-- line 1 -->
-                      <div fxLayout="row" fxLayoutAlign="space-between center">
-                        <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
-                          <mat-icon *ngIf="!readonly" matPrefix class="search-icon">search</mat-icon>
-                          <input [readonly]="readonly" matInput #lineproductname="ngModel" name="lineproductname-{{i}}" [(ngModel)]='line.product.name'
-                            placeholder="προϊόν ή υπηρεσία">
-                        </mat-form-field>
+                  <!-- <div class="line-header-container" [ngClass]="{'even':isEven(i)}" fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlexAlign="center center" fxFlex="30px">
+                      <mat-chip-list>
+                        <mat-chip>{{i+1}}</mat-chip>
+                      </mat-chip-list>
+                    </div>
+                    
+                    <div *ngIf="!readonly" fxFlexAlign="end center">
+                      <button mat-button color="warn" (click)="removeline(i)">
+                        <label class="small">ΔΙΑΓΡΑΦΗ</label>
+                      </button>
+                    </div>
+                  </div> -->
 
-                        <mat-form-field class="list-column" fxFlex="120px" floatPlaceholder='auto'>
-                          <input matInput [readonly]="readonly" type="number" #lineunitAmount="ngModel" name="lineunitAmount-{{i}}" [(ngModel)]='line.unitAmount'
-                            placeholder="αξία">
-                          <span matSuffix class="extrasmall">{{model.currencyCode}}</span>
-                        </mat-form-field>
+                  <div class="line-container" [ngClass]="{'even':isEven(i)}" fxLayout="row" fxLayoutAlign="start start">
+                    <!-- main info - separated in to two lines -->
+                    <!-- line 1 is product lookup and line 2 is the description and taxes ? -->
+                    <div fxFlex>
+                      <div fxLayout="column" fxLayoutAlign="space-between none">
+                        <!-- line 1 -->
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
+                            <mat-icon *ngIf="!readonly" matPrefix class="search-icon">search</mat-icon>
+                            <input autocomplete="off" [readonly]="readonly" matInput #lineproductname="ngModel" name="lineproductname-{{i}}" [(ngModel)]='line.productName'
+                              placeholder="προϊόν ή υπηρεσία">
+                          </mat-form-field>
 
-                        <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
-                          <input matInput [readonly]="readonly" type="number" #linequantity="ngModel" name="linequantity-{{i}}" [(ngModel)]='line.quantity'
-                            placeholder="ποσότητα">
-                        </mat-form-field>
+                          <mat-form-field class="list-column" fxFlex="120px" floatPlaceholder='auto'>
+                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #lineunitAmount="ngModel" name="lineunitAmount-{{i}}" [(ngModel)]='line.unitAmount'
+                              placeholder="αξία">
+                            <span matSuffix class="extrasmall">{{model.currencyCode}}</span>
+                          </mat-form-field>
 
-                        <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
-                          <input matInput [readonly]="readonly" type="number" #linediscount="ngModel" name="linediscount-{{i}}" [(ngModel)]='line.discountRate'
-                            placeholder="έκπτωση">
+                          <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
+                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #linequantity="ngModel" name="linequantity-{{i}}" [(ngModel)]='line.quantity'
+                              placeholder="ποσότητα">
+                          </mat-form-field>
+
+                          <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
+                            <input autocomplete="off" matInput [readonly]="readonly" type="number" #linediscount="ngModel" name="linediscount-{{i}}" [(ngModel)]='line.discountRate'
+                              placeholder="έκπτωση">
                             <span matSuffix class="extrasmall">%</span>
-                        </mat-form-field>
-                      </div>
-                      <!-- line 2 -->
-                      <div fxLayout="row" fxLayoutAlign="start start">
-                        <mat-form-field fxFlex class="list" floatPlaceholder='auto'>
-                          <textarea [readonly]="readonly" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" matInput #linedescription="ngModel"
-                            name="linedescription-{{i}}" [(ngModel)]='line.description' placeholder="περιγραφή" maxlength="500"></textarea>
-                          <mat-hint *ngIf="!readonly" align="end">{{line.description?.length || 0}}/500</mat-hint>
-                        </mat-form-field>
+                          </mat-form-field>
+
+                          <div fxFlex="120px">
+                            <span fxFlex class="total">
+                              <strong>{{line.subTotal | currency:model.currencyCode:true}}</strong>
+                            </span>
+                          </div>
+
+                          <div *ngIf="!readonly" fxFlex="40px" fxFlexAlign="center">
+                          </div>
+                        </div>
+                        <!-- line 2 -->
+                        <div fxLayout="row" fxLayoutAlign="start start">
+                          <mat-form-field fxFlex class="list" floatPlaceholder='auto'>
+                            <textarea [readonly]="readonly" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5" matInput #linedescription="ngModel"
+                              name="linedescription-{{i}}" [(ngModel)]='line.model.description' placeholder="περιγραφή" maxlength="500"></textarea>
+                            <mat-hint *ngIf="!readonly" align="end">{{line.model.description?.length || 0}}/500</mat-hint>
+                          </mat-form-field>
+                          <div fxFlex="120px">
+                            <span fxFlex class="total">
+                              {{line.totalSalesTax | currency:model.currencyCode:true}}
+                            </span>
+                          </div>
+                          <div *ngIf="!readonly" fxFlex="40px" fxFlexAlign="center">
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <!-- totals / subtotals -->
-                  <div class="total-header">ΣΥΝΟΛΟ</div>
-
-                  <!-- actions - delete, duplicate -->
-                  <div *ngIf="!readonly" fxFlex="40px" fxFlexAlign="center">
-                    <button color="default" (click)="removeline(i)" mat-mini-fab class="xsmall">
-                      <mat-icon>delete_forever</mat-icon>
-                    </button>
-                  </div>
-                </div>
-                <mat-divider *ngIf="(model.lines && model.lines.length>0)"></mat-divider>
-                <!-- subTotal LINE -->
+                  <mat-divider></mat-divider>
+                </ng-container>
+                <!-- TOTALS -->
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
-                  <div fxFlex>SUB TOTAL</div>
+                  <div fxFlex></div>
+                  <div class="total">ΣΥΝΟΛΟ ΑΞΙΑΣ:</div>
                   <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.subTotal | currency:model.currencyCode}}</span>
+                    <span fxFlex class="total">{{model.subTotal | currency:model.currencyCode:true}}</span>
                   </div>
                   <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
-                <!-- totalSalesTax LINE -->
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
-                  <div fxFlex>TOTAL SALES TAX</div>
+                  <div fxFlex></div>
+                  <div class="total">ΦΠΑ:</div>
                   <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode}}</span>
+                    <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode:true}}</span>
                   </div>
                   <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
-                <!-- totalTax LINE -->
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
+                <div class="line-container-total even" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
-                  <div fxFlex>TOTAL TAX</div>
-                  <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.totalTax | currency:model.currencyCode}}</span>
+                  <div fxFlex></div>
+                  <div class="total">
+                    <strong>ΣΥΝΟΛΟ:</strong>
                   </div>
-                  <div *ngIf="!readonly" fxFlex="40px"></div>
-                </div>
-                <!-- total LINE -->
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <div fxFlex="30px"></div>
-                  <div fxFlex>TOTAL</div>
                   <div fxFlex="120px">
                     <span fxFlex class="grand-total">
-                      <strong>{{model.total | currency:model.currencyCode}}</strong>
+                      <strong>{{model.total | currency:model.currencyCode:true}}</strong>
                     </span>
                   </div>
                   <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
-                <!-- totalPayable LINE -->
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
-                  <div fxFlex>TOTAL PAYABLE</div>
+                  <div fxFlex></div>
+                  <div class="total">ΠΑΡΑΚΡΑΤΗΣΕΙΣ:</div>
                   <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.totalPayable | currency:model.currencyCode}}</span>
+                    <span fxFlex class="total">{{model.totalTax | currency:model.currencyCode:true}}</span>
+                  </div>
+                  <div *ngIf="!readonly" fxFlex="40px"></div>
+                </div>
+                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
+                  <div fxFlex="30px"></div>
+                  <div fxFlex></div>
+                  <div class="total">ΠΛΗΡΩΤΕΟ:</div>
+                  <div fxFlex="120px">
+                    <span fxFlex class="total">{{model.totalPayable | currency:model.currencyCode:true}}</span>
                   </div>
                   <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
@@ -255,8 +249,8 @@
         </mat-card>
       </form>
     </div>
-    <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showPane">
-      lalala
+    <div fxFlex="400px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showPane">
+      <app-company-form *ngIf="showAddCompany"></app-company-form>
     </div>
   </div>
 </div>
