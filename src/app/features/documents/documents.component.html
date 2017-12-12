@@ -125,9 +125,9 @@
         <label *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.legalName}}</label>
         <h2 *ngIf="selected.model.recipient.contact">{{selected.model.recipient.contact.firstName}} {{selected.model.recipient.contact.lastName}}</h2>
         <label class="small">ΣΥΝΟΛΟ</label>
-        <h2>{{selected.model.total | currency:selected.model.currencyCode}}</h2>
+        <h2>{{selected.model.total | currency:selected.model.currencyCode:true}}</h2>
         <label class="small">ΠΛΗΡΩΤΕΟ</label>
-        <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode}}</h3>
+        <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode:true}}</h3>
 
       </div>
     </div>

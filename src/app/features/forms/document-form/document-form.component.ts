@@ -31,7 +31,7 @@ import {
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
-import {ENTER} from '@angular/cdk/keycodes';
+import { ENTER } from '@angular/cdk/keycodes';
 
 
 
@@ -119,6 +119,11 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   dateChanged(event) {
     this.model.date = event.value;
+  }
+
+  toggleCompanyPanel() {
+    this.showPane = !this.showPane;
+    this.showAddCompany = !this.showAddCompany;
   }
 
   isObject(obj) {

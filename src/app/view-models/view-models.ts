@@ -109,8 +109,15 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     return this.model.contact;
   }
 
+  private _company: OrganisationViewModel;
   public get company() {
-    return this.model.company;
+    if (null == this._company) {
+      this._company = new OrganisationViewModel();
+      this._company.basePath = this.basePath;
+      this._company.model = this.model.company;
+      this._company.serviceLocator = this.serviceLocator;
+    }
+    return this._company;
   }
 
   public get companyLogo() {
@@ -238,6 +245,36 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
       this._plan = plan;
       return this._plan;
     });
+  }
+}
+
+export class OrganisationViewModel extends ViewModel<Organisation> {
+  constructor() {
+    super();
+  }
+
+  public get id() {
+    return this.model.id;
+  }
+
+  public get logo() {
+    if (null == this.model.logoPath) {
+      return `${environment.api_url}/subscriptions/${this.model.id}/image?size=64`;
+    } else if (this.model.logoPath.indexOf('http') >= 0) {
+      return this.model.logoPath;
+    } else {
+      return `${environment.api_url}/${this.model.logoPath}`;
+    }
+  }
+
+  private _currency: LookupEntry;
+  public get currency(): LookupEntry {
+    return this._currency;
+  }
+
+  public set currency(value: LookupEntry) {
+    this._currency = value;
+    this.model.currencyCode = value ? value.id : undefined;
   }
 
 }
@@ -553,7 +590,7 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   public addTax(event) {
     alert('add tax');
   }
- 
+
   private calcTotals() {
     this.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
     this.model.totalSalesTax = 0;

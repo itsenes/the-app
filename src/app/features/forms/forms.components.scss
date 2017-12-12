@@ -218,6 +218,23 @@ a.form-link {
   margin-right: 10px;
 }
 
+.mat-mini-fab .mat-icon {
+  margin-left: -10px;
+}
+
+
+div.panel-form .mat-card .form-card {
+  width: 100%;
+  padding:0;
+  // max-width: 900px;
+  background-color: red;
+  color: #1C1D21;
+  line-height: 14px;
+  opacity: 0.9;
+  // margin-right: 10px;
+  padding: 4px;
+}
+
 .extrasmall {
   font-size: 10px;
 }

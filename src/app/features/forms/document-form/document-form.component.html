@@ -92,7 +92,7 @@
                   </mat-autocomplete>
                 </mat-form-field>
                 <label class="small">&nbsp;&nbsp;&nbsp;&nbsp;ή</label>
-                <button mat-button (click)="togglePanel()" color="primary">
+                <button mat-button (click)="toggleCompanyPanel()" color="primary">
                   <label class="small">ΝΕΟΣ ΠΕΛΑΤΗΣ</label>
                 </button>
               </span>
@@ -205,7 +205,6 @@
                   <div fxFlex="120px">
                     <span fxFlex class="total">{{model.subTotal | currency:model.currencyCode:true}}</span>
                   </div>
-                  <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
@@ -214,7 +213,6 @@
                   <div fxFlex="120px">
                     <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode:true}}</span>
                   </div>
-                  <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
                 <div class="line-container-total even" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
@@ -227,7 +225,6 @@
                       <strong>{{model.total | currency:model.currencyCode:true}}</strong>
                     </span>
                   </div>
-                  <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
@@ -236,7 +233,6 @@
                   <div fxFlex="120px">
                     <span fxFlex class="total">{{model.totalTax | currency:model.currencyCode:true}}</span>
                   </div>
-                  <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
@@ -245,7 +241,6 @@
                   <div fxFlex="120px">
                     <span fxFlex class="total">{{model.totalPayable | currency:model.currencyCode:true}}</span>
                   </div>
-                  <div *ngIf="!readonly" fxFlex="40px"></div>
                 </div>
               </ng-container>
             </div>
@@ -254,7 +249,9 @@
       </form>
     </div>
     <div fxFlex="400px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showPane">
-      <app-company-form *ngIf="showAddCompany"></app-company-form>
+      <div class="panel-form" *ngIf="showAddCompany">
+        <app-company-form title="" readonly="false" [(model)]="company"></app-company-form>
+      </div>
     </div>
   </div>
 </div>
