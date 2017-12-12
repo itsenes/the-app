@@ -6,11 +6,10 @@ import { map } from 'rxjs/operator/map';
 import {
   ApiClient, Subscription, LookupEntry, DocumentType,
   Product, Tax, Document, Plan, Recipient, Organisation, Contact,
-  DocumentLine, Address
+  DocumentLine, Address, DocumentStatus
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
-import { MethodCall } from '@angular/compiler';
 // causes circular...
 // import { AppStateService } from '../services/app-state.service';
 
@@ -55,9 +54,18 @@ export class ViewModel<T> {
     this._model = value;
   }
 
+  protected init() { }
+
   getClassName() {
     const comp: any = this.constructor;
     return comp.name;
+  }
+
+  asObservable<TObservable>(value?: TObservable) {
+    return Observable.create((observer) => {
+      observer.next(value);
+      observer.complete();
+    });
   }
 }
 
@@ -73,15 +81,13 @@ export class ViewModelLocator {
   }
 
   public getInstance<TViewModel extends ViewModel<T>, T>(type: { new(): TViewModel; }, data: T): TViewModel {
-    // const vmType: new () => TViewModel = null;
     const vm = new type();
-    vm.model = data;
     vm.serviceLocator = this.serviceLocator;
     vm.basePath = this.basePath;
+    vm.model = data;
     console.log('getinstance -' + vm.getClassName() + ' homepath in resolved vm: ' + vm.basePath);
     return vm;
   }
-
 }
 
 export class SubscriptionViewModel extends ViewModel<Subscription> {
@@ -142,10 +148,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     if (null == this._documentTypes) {
       return this.loadDocumentTypes();
     }
-    return Observable.create((observer) => {
-      observer.next(this._documentTypes);
-      observer.complete();
-    });
+    return this.asObservable(this._documentTypes);
   }
 
   getDocumentType(id) {
@@ -158,9 +161,9 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   addDocumentType() {
     // each vm requires 3 things: data (model), a servicelocator and the parent path (which contains the subscription alias)
     const vm = new DocumentTypeViewModel();
-    vm.model = new Document();
     vm.serviceLocator = this.serviceLocator;
     vm.basePath = this.basePath;
+    vm.model = new Document();
     this._documentTypes.push(vm);
   }
 
@@ -173,9 +176,9 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
           this._documentTypes = response.items.
             map((doc) => {
               const vm = new DocumentTypeViewModel();
-              vm.model = doc;
               vm.serviceLocator = this.serviceLocator;
               vm.basePath = this.basePath;
+              vm.model = doc;
               return vm;
             });
           return this._documentTypes;
@@ -187,10 +190,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     if (null == this._products) {
       return this.loadProducts();
     }
-    return Observable.create((observer) => {
-      observer.next(this._products);
-      observer.complete();
-    });
+    return this.asObservable(this._products);
   }
 
   getProduct(id) {
@@ -233,10 +233,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     if (null == this._plan) {
       return this.loadPlan();
     } else {
-      return Observable.create((observer) => {
-        observer.next(this._plan);
-        observer.complete();
-      });
+      return this.asObservable(this._plan);
     }
   }
 
@@ -255,6 +252,14 @@ export class OrganisationViewModel extends ViewModel<Organisation> {
 
   public get id() {
     return this.model.id;
+  }
+
+  public get name() {
+    return this.model.name;
+  }
+
+  public get legalName() {
+    return this.model.legalName;
   }
 
   public get logo() {
@@ -454,10 +459,7 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public init(): Observable<void> {
     if (null == this.model) {
-      return Observable.create((observer) => {
-        observer.next();
-        observer.complete();
-      });
+      return this.asObservable();
     }
     if (this.model.recipient == null) {
       this.model.recipient = new Recipient();
@@ -483,18 +485,27 @@ export class DocumentViewModel extends ViewModel<Document> {
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
+      // since the document is still in DRAFT status! - i'll sync the product taxes with the line taxes!
+      if (this.model.status === DocumentStatus.Draft && line.product != null && line.product.taxes != null) {
+        line.taxes = new Array<Tax>();
+        line.product.taxes.forEach((tax) => {
+          line.taxes.push(tax.clone());
+        });
+      }
       if (line.taxes == null) {
         line.taxes = [];
       }
       const newline = new DocumentLineViewModel();
-      newline.model = line;
       newline.serviceLocator = this.serviceLocator;
       newline.document = this;
+      newline.model = line;
+      newline.calcTotals();
       this.lines.push(newline);
     });
-
+    this.calcTotals();
     let currencySubscription = null;
-    if (null != this.model && null != this.model.currencyCode) {
+    if ((null != this.model) && (null != this.model.currencyCode)
+      && (null != this.serviceLocator) && (null != this.serviceLocator.lookups)) {
       currencySubscription = this.serviceLocator.lookups.getCurrency(this.model.currencyCode);
     }
     return Observable.forkJoin(currencySubscription).map((val1) => {
@@ -575,6 +586,14 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     return this.model.taxes;
   }
 
+  public get salesTaxes() {
+    return this.taxes ? this.taxes.filter(t => t.isSalesTax) : new Array<Tax>();
+  }
+
+  public get nonSalesTaxes() {
+    return this.taxes ? this.taxes.filter(t => !t.isSalesTax) : new Array<Tax>();
+  }
+
   private _document: DocumentViewModel = null;
   public get document(): DocumentViewModel {
     return this._document;
@@ -591,7 +610,7 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     alert('add tax');
   }
 
-  private calcTotals() {
+  public calcTotals() {
     this.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
     this.model.totalSalesTax = 0;
     this.model.totalTax = 0;

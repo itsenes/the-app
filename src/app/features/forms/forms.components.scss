@@ -291,9 +291,14 @@ div.panel-form .mat-card .form-card {
   margin-left: 10px;
 }
 
-.total {
+span.total {
   text-align: right;
-  margin-top: -4px;
+  //margin-top: -4px;
+}
+
+label.total {
+  text-align: right;
+  //margin-top: -4px;
 }
 
 .grand-total {
