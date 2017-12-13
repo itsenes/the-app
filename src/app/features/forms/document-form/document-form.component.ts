@@ -33,8 +33,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { ENTER } from '@angular/cdk/keycodes';
 
-
-
 @Component({
   selector: 'app-document-form',
   templateUrl: './document-form.component.html',
@@ -58,7 +56,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   filteredcompanies: Organisation[];
   currencies: LookupEntry[] = null;
   filteredcurrencies: LookupEntry[];
-  newline: DocumentLine = new DocumentLine();
+  newline: DocumentLine = null;
   showPane = false;
   showAddCompany = false;
   products: any;
@@ -89,8 +87,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
     private viewModelLocator: ViewModelLocator, private lookups: LookupsService) {
-    this.vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
-    this.vm.init();
   }
 
   displayCompanyFn(org: Organisation): string {
@@ -162,27 +158,42 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         this.subscription = sub;
         const typeid = params['typeId'];
         const docid = params['documentId'];
-        this.subscription.products.subscribe((items) => {
-          this.products = items;
-        });
         this.subscription.getDocumentType(typeid).subscribe((docType) => {
           this.documentType = docType;
-          // get the document now!
-          if ('new' === docid || null == docid) {
-            const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, new Document());
-            vm.init().subscribe(() => {
-              this.vm = vm;
-              this.initControls();
-            });
-          } else {
-            this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
+          this.subscription.products.subscribe((items) => {
+            this.products = items;
+            // if no items then "Nothing else matters :)"
+
+            // get the document now!
+            if ('new' === docid || null == docid) {
+              const doc = new Document();
+              doc.currencyCode = this.subscription.company.model.currencyCode;
+              doc.date = new Date();
+              doc.dueDate = new Date();
+              doc.lines = new Array<DocumentLine>();
+              const newLine = new DocumentLine();
+              newLine.unitAmount = 0;
+              newLine.quantity = 0;
+              newLine.discountRate = 0;
+              doc.lines.push(newLine);
               const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
               vm.init().subscribe(() => {
                 this.vm = vm;
                 this.initControls();
+                this.readonly = false;
               });
-            });
-          }
+            } else {
+              this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
+                const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
+                vm.init().subscribe(() => {
+                  this.vm = vm;
+                  this.initControls();
+                });
+              });
+            }
+
+          });
+
         });
       });
     });

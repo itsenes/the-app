@@ -1,16 +1,16 @@
-<mat-toolbar class="view-header mat-elevation-z1">
+<mat-toolbar class="view-header mat-elevation-z1" *ngIf="vm">
   <span class="title">{{documentType?.folder | uppercase}} \
     <strong> {{documentType?.name | uppercase}} {{ vm?.displayName | uppercase }}</strong>
   </span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
-  <button *ngIf="!isnew()" (click)="togglePanel()" mat-icon-button>
+  <button (click)="togglePanel()" mat-icon-button>
     <mat-icon color="warn">info_outline</mat-icon>
   </button>
   <span class="app-toolbar-right-filler"></span>
 </mat-toolbar>
 
-<div class="view-content">
+<div class="view-content" *ngIf="vm">
   <div fxLayout="row">
     <div fxFlex>
       <form type="submit" #companyForm="ngForm">
@@ -61,7 +61,6 @@
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
-
             </div>
           </mat-card-content>
 
@@ -90,11 +89,13 @@
                   <label class="small">ΝΕΟΣ ΠΕΛΑΤΗΣ</label>
                 </button>
               </span>
-              <label>{{company.name}}, {{company.legalName}}</label>
-              <label>{{company.taxCode}}, {{company.taxOffice}}</label>
-              <label>{{company.lineOfBusiness}}</label>
-              <label>{{company.address.name}}</label>
-              <label>{{company.address.zipCode}}, {{company.address.city}}, {{company.address.countryCode}}</label>
+              <ng-container *ngIf="company.name">
+                <label>{{company.name}}, {{company.legalName}}</label>
+                <label>{{company.taxCode}}, {{company.taxOffice}}</label>
+                <label>{{company.lineOfBusiness}}</label>
+                <label>{{company.address.name}}</label>
+                <label>{{company.address.zipCode}}, {{company.address.city}}, {{company.address.countryCode}}</label>
+              </ng-container>
             </div>
           </mat-card-content>
 
@@ -178,7 +179,7 @@
                           <mat-form-field class="list-column" fxFlex="250px" floatPlaceholder='auto'>
                             <input autocomplete="off" matInput [readonly]="true" type="text" #linesalestaxes="ngModel" name="linesalestaxes-{{i}}" [(ngModel)]='line.salesTaxesLabel'
                               placeholder="ΦΠΑ">
-                              <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>
+                            <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>
                           </mat-form-field>
 
                           <div fxFlex="120px" class="total-column" fxLayout="row" fxLayoutAlign="end center">
@@ -188,10 +189,7 @@
 
                         <!-- line 3 -->
                         <div *ngIf="line.hasNonSalesTaxes" fxLayout="row" fxLayoutAlign="start start">
-                          <div fxFlex class="list-column"></div>
-
-
-                          <mat-form-field class="list-column" fxFlex="250px" floatPlaceholder='auto'>
+                          <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
                             <input autocomplete="off" matInput [readonly]="true" type="text" #linenonsalestaxes="ngModel" name="linenonsalestaxes-{{i}}"
                               [(ngModel)]='line.nonSalesTaxesLabel' placeholder="Παρακρατήσεις">
                             <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>

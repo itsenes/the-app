@@ -607,9 +607,9 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     const labelArr = new Array<string>();
     if (this.nonSalesTaxes && this.nonSalesTaxes.length) {
       this.nonSalesTaxes.forEach((tax) => {
-       labelArr.push(`${this.nonSalesTaxes[0].name} (${this.nonSalesTaxes[0].rate * 100}%)`);
+        labelArr.push(`${tax.name} (${tax.rate * 100}%)`);
       });
-      label = labelArr.join(',');
+      label = labelArr.join(', ');
     }
     return label;
   }
