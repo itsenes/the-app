@@ -13,10 +13,6 @@ label {
 .mat-icon-button,
 .mat-mini-fab,
 .mat-raised-button {
-  line-height: 40px;
-  padding: 0 16px;
-  padding-right: 18px;
-  margin-right: 5px;
   color: white;
 }
 
@@ -177,7 +173,6 @@ button label.small {
 }
 
 .mat-icon.form-button-icon {
-  margin-left: -7px;
   color: white;
 }
 
@@ -218,9 +213,6 @@ a.form-link {
   margin-right: 10px;
 }
 
-.mat-mini-fab .mat-icon {
-  margin-left: -10px;
-}
 
 
 div.panel-form .mat-card .form-card {
@@ -243,15 +235,15 @@ div.panel-form .mat-card .form-card {
 .line-container{
   padding-top: 20px;
   padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .line-header-container{
   padding-top: 10px;
   padding-bottom: 4px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .line-container-total{
@@ -291,14 +283,18 @@ div.panel-form .mat-card .form-card {
   margin-left: 10px;
 }
 
-span.total {
+div.total-column {
+  height:100%;
+}
+
+label.total , span.total {
   text-align: right;
   //margin-top: -4px;
 }
 
-label.total {
+span.total-negative, label.total-negative {
   text-align: right;
-  //margin-top: -4px;
+  color:orangered;
 }
 
 .grand-total {
@@ -316,4 +312,14 @@ label.total {
   padding: 10px;
   padding-left: 20px;
   margin-top: -4px;
+}
+
+.mat-icon.button-icon {
+  color:black;
+  cursor: pointer;
+}
+
+.line-index {
+  position: absolute;
+  margin-left:-35px;
 }

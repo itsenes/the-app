@@ -61,6 +61,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   newline: DocumentLine = new DocumentLine();
   showPane = false;
   showAddCompany = false;
+  products: any;
 
   // Enter, comma
   separatorKeysCodes = [ENTER];
@@ -161,6 +162,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         this.subscription = sub;
         const typeid = params['typeId'];
         const docid = params['documentId'];
+        this.subscription.products.subscribe((items) => {
+          this.products = items;
+        });
         this.subscription.getDocumentType(typeid).subscribe((docType) => {
           this.documentType = docType;
           // get the document now!
@@ -205,8 +209,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggle_company_edit_mode() {
-    this.editcompany = !this.editcompany;
+
+  toggleTaxEditPanel(line: any) {
+    this.showPane = !this.showPane;
+    this.showAddCompany = !this.showAddCompany;
   }
 
   private bak(value: any) {

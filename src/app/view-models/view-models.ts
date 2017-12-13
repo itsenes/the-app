@@ -590,8 +590,28 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     return this.taxes ? this.taxes.filter(t => t.isSalesTax) : new Array<Tax>();
   }
 
+  public get salesTaxesLabel() {
+    return this.salesTaxes && this.salesTaxes.length > 0 ?
+      `${this.salesTaxes[0].name} (${this.salesTaxes[0].rate * 100}%)` : 'δεν έχουν οριστεί φόροι';
+  }
+
+  public get hasNonSalesTaxes() {
+    return this.nonSalesTaxes && this.nonSalesTaxes.length > 0;
+  }
   public get nonSalesTaxes() {
     return this.taxes ? this.taxes.filter(t => !t.isSalesTax) : new Array<Tax>();
+  }
+
+  public get nonSalesTaxesLabel() {
+    let label = 'δεν έχουν οριστεί φόροι';
+    const labelArr = new Array<string>();
+    if (this.nonSalesTaxes && this.nonSalesTaxes.length) {
+      this.nonSalesTaxes.forEach((tax) => {
+       labelArr.push(`${this.nonSalesTaxes[0].name} (${this.nonSalesTaxes[0].rate * 100}%)`);
+      });
+      label = labelArr.join(',');
+    }
+    return label;
   }
 
   private _document: DocumentViewModel = null;
