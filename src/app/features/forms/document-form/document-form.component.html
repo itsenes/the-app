@@ -191,7 +191,7 @@
                         <div *ngIf="line.hasNonSalesTaxes" fxLayout="row" fxLayoutAlign="start start">
                           <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
                             <input autocomplete="off" matInput [readonly]="true" type="text" #linenonsalestaxes="ngModel" name="linenonsalestaxes-{{i}}"
-                              [(ngModel)]='line.nonSalesTaxesLabel' placeholder="Παρακρατήσεις">
+                              [(ngModel)]='line.nonSalesTaxesLabel' placeholder="Παρακρατήσεις, εισφορές">
                             <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>
                           </mat-form-field>
 
