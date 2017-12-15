@@ -524,6 +524,7 @@ export class DocumentViewModel extends ViewModel<Document> {
 
 
 export class DocumentLineViewModel extends ViewModel<DocumentLine> {
+  private _document: DocumentViewModel = null;
   constructor() {
     super();
   }
@@ -538,11 +539,6 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     } else {
       return this.model.product.name;
     }
-  }
-
-  private _productControl: FormControl = new FormControl();
-  public get productControl(): FormControl {
-    return this._productControl;
   }
 
   productComparer(o1: Product, o2: Product) {
@@ -641,7 +637,6 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     return label;
   }
 
-  private _document: DocumentViewModel = null;
   public get document(): DocumentViewModel {
     return this._document;
   }
@@ -677,5 +672,4 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
       this.document.calcTotals();
     }
   }
-
 }
