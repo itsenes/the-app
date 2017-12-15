@@ -10,6 +10,7 @@ import {
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
+import { FormControl } from '@angular/forms';
 // causes circular...
 // import { AppStateService } from '../services/app-state.service';
 
@@ -67,6 +68,12 @@ export class ViewModel<T> {
       observer.complete();
     });
   }
+
+  round(n, decimalPlaces) {
+    const scale = Math.pow(10, decimalPlaces);
+    return Math.round(scale * n) / scale;
+  }
+
 }
 
 @Injectable()
@@ -533,6 +540,26 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     }
   }
 
+  private _productControl: FormControl = new FormControl();
+  public get productControl(): FormControl {
+    return this._productControl;
+  }
+
+  productComparer(o1: Product, o2: Product) {
+    return o1.id === o2.id;
+  }
+
+  public get product(): Product {
+    return this.model.product;
+  }
+
+  public set product(value: Product) {
+    if (!this.model.product || this.model.product.id !== value.id) {
+      alert('should change taxes !');
+    }
+    this.model.product = value;
+  }
+
   public get quantity() {
     return this.model.quantity;
   }
@@ -551,11 +578,11 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   }
 
   public get discountRate() {
-    return this.model.discountRate * 100;
+    return this.round(this.model.discountRate * 100, 2);
   }
 
   public set discountRate(value: number) {
-    this.model.discountRate = value / 100;
+    this.model.discountRate = this.round(value / 100, 2);
     this.calcTotals();
   }
 

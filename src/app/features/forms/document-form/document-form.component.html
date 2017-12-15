@@ -139,8 +139,8 @@
                             <!-- <mat-icon *ngIf="!readonly" matPrefix class="search-icon">search</mat-icon>
                             <input autocomplete="off" [readonly]="readonly" matInput #lineproductname="ngModel" name="lineproductname-{{i}}" [(ngModel)]='line.productName'
                               placeholder="προϊόν ή υπηρεσία"> -->
-                            <mat-select [disabled]='readonly' name="lineproductname-{{i}}" [(ngModel)]='line.model.product' placeholder="προϊόν ή υπηρεσία">
-                              <mat-option *ngFor='let product of products' [value]="line.model.product">{{product.name}}</mat-option>
+                            <mat-select [compareWith]="line.productComparer" [disabled]='readonly' [(value)]='line.product' placeholder="προϊόν ή υπηρεσία">
+                              <mat-option *ngFor='let product of products' [value]="product">{{product.name}}</mat-option>
                             </mat-select>
                           </mat-form-field>
 
@@ -194,7 +194,6 @@
                               [(ngModel)]='line.nonSalesTaxesLabel' placeholder="Παρακρατήσεις, εισφορές">
                             <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>
                           </mat-form-field>
-
                           <div fxFlex="120px" class="total-column" fxLayout="row" fxLayoutAlign="end center">
                             <label class="total-negative">{{line.totalTax | currency:model.currencyCode:true}}</label>
                           </div>
@@ -221,10 +220,10 @@
                     <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode:true}}</span>
                   </div>
                 </div>
-                <div class="line-container-total even" *ngIf="(model.lines && model.lines.length>0)">
+                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
                   <div fxFlex></div>
-                  <div class="total">
+                  <div class="grand-total">
                     <strong>ΣΥΝΟΛΟ:</strong>
                   </div>
                   <div fxFlex="120px">
@@ -234,19 +233,28 @@
                   </div>
                 </div>
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
+                  <mat-divider></mat-divider>
+                </div>
+                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
                   <div fxFlex></div>
                   <div class="total">ΠΑΡΑΚΡΑΤΗΣΕΙΣ:</div>
                   <div fxFlex="120px">
-                    <span fxFlex class="total-negative">{{model.totalTax | currency:model.currencyCode:true}}</span>
+                    <span fxFlex class="total-negative">
+                      <strong>{{model.totalTax | currency:model.currencyCode:true}}</strong>
+                    </span>
                   </div>
                 </div>
                 <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
                   <div fxFlex="30px"></div>
                   <div fxFlex></div>
-                  <div class="total">ΠΛΗΡΩΤΕΟ:</div>
+                  <div class="total">
+                    <strong>ΠΛΗΡΩΤΕΟ:</strong>
+                  </div>
                   <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.totalPayable | currency:model.currencyCode:true}}</span>
+                    <span fxFlex class="total">
+                      <strong>{{model.totalPayable | currency:model.currencyCode:true}}</strong>
+                    </span>
                   </div>
                 </div>
               </ng-container>
