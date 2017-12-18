@@ -99,7 +99,7 @@
         </mat-menu>
 
         <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
-        <h2 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h2>
+        <h3 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h3>
         <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
         <a class="portal-link" [href]="selected.portalLink" target="__new" mat-button>
