@@ -102,7 +102,7 @@
           <mat-card-title>
             <label class="small">ΠΡΟΪΟΝΤΑ \ ΥΠΗΡΕΣΙΕΣ</label>
             <span class="app-toolbar-filler"></span>
-            <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
+            <button *ngIf='!readonly' (click)="addline()" mat-button color="primary">
               <label class="small">ΠΡΟΣΘΗΚΗ</label>
             </button>
           </mat-card-title>
@@ -111,6 +111,7 @@
             <div class="form-container">
               <label *ngIf="readonly && (!model.lines || model.lines.length==0)">Δεν έχουν οριστεί προιόντα ή υπηρεσίες</label>
               <ng-container>
+
                 <!-- LINES -->
                 <ng-container *ngFor="let line of vm?.lines; let i = index">
                   <!-- <div class="line-header-container" [ngClass]="{'even':isEven(i)}" fxLayout="row" fxLayoutAlign="start start">
@@ -204,59 +205,62 @@
                   <mat-divider></mat-divider>
                 </ng-container>
                 <!-- TOTALS -->
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <div fxFlex="30px"></div>
-                  <div fxFlex></div>
-                  <div class="total">ΣΥΝΟΛΟ ΑΞΙΑΣ:</div>
-                  <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.subTotal | currency:model.currencyCode:true}}</span>
+                <ng-container *ngIf="(model.lines && model.lines.length>0)">
+                  <div class="line-container-total">
+                    <div fxFlex="30px"></div>
+                    <div fxFlex></div>
+                    <div class="total">ΣΥΝΟΛΟ ΑΞΙΑΣ:</div>
+                    <div fxFlex="120px">
+                      <span fxFlex class="total">{{model.subTotal | currency:model.currencyCode:true}}</span>
+                    </div>
                   </div>
-                </div>
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <div fxFlex="30px"></div>
-                  <div fxFlex></div>
-                  <div class="total">ΦΠΑ:</div>
-                  <div fxFlex="120px">
-                    <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode:true}}</span>
+                  <div class="line-container-total">
+                    <div fxFlex="30px"></div>
+                    <div fxFlex></div>
+                    <div class="total">ΦΠΑ:</div>
+                    <div fxFlex="120px">
+                      <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode:true}}</span>
+                    </div>
                   </div>
-                </div>
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <div fxFlex="30px"></div>
-                  <div fxFlex></div>
-                  <div class="grand-total">
-                    <strong>ΣΥΝΟΛΟ:</strong>
+                  <div class="line-container-total">
+                    <div fxFlex="30px"></div>
+                    <div fxFlex></div>
+                    <div class="grand-total">
+                      <strong>ΣΥΝΟΛΟ:</strong>
+                    </div>
+                    <div fxFlex="120px">
+                      <span fxFlex class="grand-total">
+                        <strong>{{model.total | currency:model.currencyCode:true}}</strong>
+                      </span>
+                    </div>
                   </div>
-                  <div fxFlex="120px">
-                    <span fxFlex class="grand-total">
-                      <strong>{{model.total | currency:model.currencyCode:true}}</strong>
-                    </span>
+                  <div class="line-container-total">
+                    <mat-divider></mat-divider>
                   </div>
-                </div>
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <mat-divider></mat-divider>
-                </div>
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <div fxFlex="30px"></div>
-                  <div fxFlex></div>
-                  <div class="total">ΠΑΡΑΚΡΑΤΗΣΕΙΣ:</div>
-                  <div fxFlex="120px">
-                    <span fxFlex class="total-negative">
-                      <strong>{{model.totalTax | currency:model.currencyCode:true}}</strong>
-                    </span>
+                  <div class="line-container-total" *ngFor="let tax of vm.nonSalesTaxes; let i = index">
+                    <div fxFlex="30px"></div>
+                    <div fxFlex></div>
+                    <div class="total"></div>
+                    <div fxFlex="120px">
+                      <span fxFlex class="total-negative">
+                        <strong>{{tax.amount | currency:model.currencyCode:true}}</strong>
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div class="line-container-total" *ngIf="(model.lines && model.lines.length>0)">
-                  <div fxFlex="30px"></div>
-                  <div fxFlex></div>
-                  <div class="total">
-                    <strong>ΠΛΗΡΩΤΕΟ:</strong>
+                  <div class="line-container-total">
+                    <div fxFlex="30px"></div>
+                    <div fxFlex></div>
+                    <div class="total">
+                      <strong>ΠΛΗΡΩΤΕΟ:</strong>
+                    </div>
+                    <div fxFlex="120px">
+                      <span fxFlex class="total">
+                        <strong>{{model.totalPayable | currency:model.currencyCode:true}}</strong>
+                      </span>
+                    </div>
                   </div>
-                  <div fxFlex="120px">
-                    <span fxFlex class="total">
-                      <strong>{{model.totalPayable | currency:model.currencyCode:true}}</strong>
-                    </span>
-                  </div>
-                </div>
+                </ng-container>
+
               </ng-container>
             </div>
           </mat-card-content>

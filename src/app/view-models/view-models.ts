@@ -5,12 +5,13 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import {
   ApiClient, Subscription, LookupEntry, DocumentType,
-  Product, Tax, Document, Plan, Recipient, Organisation, Contact,
-  DocumentLine, Address, DocumentStatus
+  Product, Tax, TaxAmount, Document, Plan, Recipient, Organisation, Contact,
+  DocumentLine, Address, DocumentStatus, TaxAmountType
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
 import { FormControl } from '@angular/forms';
+import { retry } from 'rxjs/operator/retry';
 // causes circular...
 // import { AppStateService } from '../services/app-state.service';
 
@@ -72,6 +73,20 @@ export class ViewModel<T> {
   round(n, decimalPlaces) {
     const scale = Math.pow(10, decimalPlaces);
     return Math.round(scale * n) / scale;
+  }
+
+  groupBy(list, keyGetter) {
+    const group_map = new Map();
+    list.forEach((item) => {
+      const key = keyGetter(item);
+      const collection = group_map.get(key);
+      if (!collection) {
+        group_map.set(key, [item]);
+      } else {
+        collection.push(item);
+      }
+    });
+    return map;
   }
 
 }
@@ -222,14 +237,11 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
         } else {
           this._products = response.items.
             map((product) => {
-              return {
-                id: product.id,
-                name: product.name,
-                notes: product.notes,
-                searchPath: `${this.basePath}/products/${product.id}`,
-                addNewPath: `${this.basePath}/products/new`,
-                model: product
-              };
+              const vm = new ProductViewModel();
+              vm.basePath = this.basePath;
+              vm.serviceLocator = this.serviceLocator;
+              vm.model = product;
+              return vm;
             });
         }
         return this._products;
@@ -325,7 +337,7 @@ export class DocumentTypeViewModel extends ViewModel<DocumentType> {
   }
 }
 
-export class ItemViewModel extends ViewModel<Product> {
+export class ProductViewModel extends ViewModel<Product> {
   constructor() {
     super();
   }
@@ -356,11 +368,16 @@ export class ItemViewModel extends ViewModel<Product> {
 }
 
 export class DocumentViewModel extends ViewModel<Document> {
+  private _salesTaxes: Array<Tax>;
+  private _nonSalesTaxes: Array<Tax>;
+  private _documentType: DocumentTypeViewModel = null;
+  private _currency: LookupEntry;
+  private _safePortalLink: any;
+
   constructor() {
     super();
   }
 
-  private _documentType: DocumentTypeViewModel = null;
   public get documentType(): DocumentTypeViewModel {
     return this._documentType;
   }
@@ -377,7 +394,7 @@ export class DocumentViewModel extends ViewModel<Document> {
     if (null == this.model || null == this.model.id) {
       return 'ΝΕΟ ΠΑΡΑΣΤΑΤΙΚΟ';
     } else if (this.model.numberPrintable == null) {
-      return `${this.model.status} ${this.model.date}`;
+      return `${this.model.status} ${this.model.date.toLocaleString()}`;
     } else {
       return this.model.numberPrintable;
     }
@@ -387,7 +404,6 @@ export class DocumentViewModel extends ViewModel<Document> {
     return this.documentType.folder;
   }
 
-  private _currency: LookupEntry;
   public get currency(): LookupEntry {
     return this._currency;
   }
@@ -397,23 +413,15 @@ export class DocumentViewModel extends ViewModel<Document> {
     this.model.currencyCode = value ? value.id : undefined;
   }
 
-  public get notes() {
-    return this.model.notes;
-  }
-
   public get portalLink() {
     return `${environment.api_url}${this.model.permaLink}`;
   }
-
   public get portalDocLink() {
     return `${environment.api_url}${this.model.permaLink}.docx`;
   }
-
   public get portalPdfLink() {
     return `${environment.api_url}${this.model.permaLink}.pdf`;
   }
-
-  private _safePortalLink;
   public get safePortalLink() {
     return this._safePortalLink;
   }
@@ -424,11 +432,9 @@ export class DocumentViewModel extends ViewModel<Document> {
   public get editPath() {
     return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}?edit`;
   }
-
   public get viewPath() {
     return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}`;
   }
-
   public get addNewPath() {
     return `${this.basePath}/documents/new`;
   }
@@ -445,15 +451,38 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public addline(index) {
+    const newline = new DocumentLineViewModel();
+    newline.model = new DocumentLine();
+    newline.serviceLocator = this.serviceLocator;
+    newline.basePath = this.basePath;
+    newline.unitAmount = 0;
+    newline.quantity = 0;
+    newline.discountRate = 0;
+    this.lines.push(newline);
+  }
+
+  public get salesTaxes(): any {
+    return this._salesTaxes;
+  }
+  public set salesTaxes(value: any) {
+    this._salesTaxes = value;
+  }
+
+  public get nonSalesTaxes(): any {
+    return this._nonSalesTaxes;
+  }
+  public set nonSalesTaxes(value: any) {
+    this._nonSalesTaxes = value;
   }
 
   public calcTotals() {
-    // alert('calc totals callback');
     this.model.subTotal = 0;
     this.model.totalSalesTax = 0;
     this.model.totalTax = 0;
     this.model.total = 0;
     this.model.totalPayable = 0;
+    const salesTaxes = new Array<TaxAmount>();
+    const nonSalesTaxes = new Array<TaxAmount>();
 
     this.lines.forEach((line) => {
       this.model.subTotal = this.model.subTotal + line.subTotal;
@@ -461,7 +490,18 @@ export class DocumentViewModel extends ViewModel<Document> {
       this.model.total = this.model.total + line.total;
       this.model.totalTax = this.model.totalTax + line.totalTax;
       this.model.totalPayable = this.model.totalPayable + (line.total + line.totalTax);
+      // update taxes list...
+      line.taxes.forEach((tax) => {
+        if (tax.isSalesTax) {
+          salesTaxes.push(tax.clone());
+        } else {
+          nonSalesTaxes.push(tax.clone());
+        }
+      });
     });
+    // λαστ βθτ νοτ λεαστ :)
+    const group_nonSalesTaxes = this.groupBy(nonSalesTaxes, tax => tax.name);
+    const group_salesTaxes = this.groupBy(salesTaxes, tax => tax.name);
   }
 
   public init(): Observable<void> {
@@ -492,13 +532,15 @@ export class DocumentViewModel extends ViewModel<Document> {
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
-      // since the document is still in DRAFT status! - i'll sync the product taxes with the line taxes!
-      if (this.model.status === DocumentStatus.Draft && line.product != null && line.product.taxes != null) {
-        line.taxes = new Array<Tax>();
-        line.product.taxes.forEach((tax) => {
-          line.taxes.push(tax.clone());
-        });
-      }
+      // OXI TELIKA!
+      // // since the document is still in DRAFT status! - i'll sync the product taxes with the line taxes!
+      // if (this.model.status === DocumentStatus.Draft && line.product != null && line.product.taxes != null) {
+      //   line.taxes = new Array<Tax>();
+      //   line.product.taxes.forEach((tax) => {
+      //     line.taxes.push(tax.clone());
+      //   });
+      // }
+
       if (line.taxes == null) {
         line.taxes = [];
       }
@@ -522,9 +564,9 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 }
 
-
 export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   private _document: DocumentViewModel = null;
+  private _product: ProductViewModel = null;
   constructor() {
     super();
   }
@@ -541,19 +583,48 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     }
   }
 
-  productComparer(o1: Product, o2: Product) {
-    return o1.id === o2.id;
-  }
-
-  public get product(): Product {
-    return this.model.product;
-  }
-
-  public set product(value: Product) {
-    if (!this.model.product || this.model.product.id !== value.id) {
-      alert('should change taxes !');
+  productComparer(p1: any, p2: any) {
+    if (p1 == null || p2 == null) {
+      return false;
     }
-    this.model.product = value;
+    return p1.id === p2.id;
+  }
+
+
+  public get product(): ProductViewModel {
+    if (null == this._product && null != this.model.product) {
+      const vm = new ProductViewModel();
+      vm.serviceLocator = this.serviceLocator;
+      vm.basePath = this.basePath;
+      vm.model = this.model.product;
+      this._product = vm;
+    }
+    return this._product; // this.model.product;
+  }
+
+  public set product(value: ProductViewModel) {
+    if (!this.model.product || this.model.product.id !== value.id) {
+      console.log('should change taxes !');
+      this.model.description = value.name;
+      this.model.unitAmount = value.model.amount;
+      this.model.taxes = new Array<TaxAmount>();
+      if (value.model.taxes) {
+        value.model.taxes.forEach((tax) => {
+          const newtax = new TaxAmount();
+          newtax.rate = tax.rate;
+          newtax.amount = tax.rate;
+          newtax.type = TaxAmountType.UnitRate;
+          newtax.code = tax.code;
+          newtax.name = tax.name;
+          newtax.inclusive = tax.inclusive;
+          newtax.isSalesTax = tax.isSalesTax;
+          this.model.taxes.push(newtax);
+        });
+      }
+    }
+    this._product = value;
+    this.model.product = value.model;
+    this.calcTotals();
   }
 
   public get quantity() {
@@ -610,23 +681,30 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   }
 
   public get salesTaxes() {
-    return this.taxes ? this.taxes.filter(t => t.isSalesTax) : new Array<Tax>();
+    return this.taxes ? this.taxes.filter(t => t.isSalesTax) : new Array<TaxAmount>();
   }
 
   public get salesTaxesLabel() {
-    return this.salesTaxes && this.salesTaxes.length > 0 ?
-      `${this.salesTaxes[0].name} (${this.salesTaxes[0].rate * 100}%)` : 'δεν έχουν οριστεί φόροι';
+    let label = 'δεν έχουν οριστεί φόροι';
+    const labelArr = new Array<string>();
+    if (this.salesTaxes && this.salesTaxes.length) {
+      this.salesTaxes.forEach((tax) => {
+        labelArr.push(`${tax.name} (${tax.rate * 100}%)`);
+      });
+      label = labelArr.join(', ');
+    }
+    return label;
   }
 
   public get hasNonSalesTaxes() {
     return this.nonSalesTaxes && this.nonSalesTaxes.length > 0;
   }
   public get nonSalesTaxes() {
-    return this.taxes ? this.taxes.filter(t => !t.isSalesTax) : new Array<Tax>();
+    return this.taxes ? this.taxes.filter(t => !t.isSalesTax) : new Array<TaxAmount>();
   }
 
   public get nonSalesTaxesLabel() {
-    let label = 'δεν έχουν οριστεί φόροι';
+    let label = 'δεν έχουν οριστεί παρακρατήσεις ή εισφορές';
     const labelArr = new Array<string>();
     if (this.nonSalesTaxes && this.nonSalesTaxes.length) {
       this.nonSalesTaxes.forEach((tax) => {

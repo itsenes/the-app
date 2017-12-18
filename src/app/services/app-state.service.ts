@@ -68,7 +68,7 @@ export class AppStateService {
   }
 
   private loadSubscriptions(): Observable<SubscriptionViewModel[]> {
-    const observable = this.apiClient.getSubscriptions(1, 100).map((response) => {
+    const observable = this.apiClient.getSubscriptions(false, 1, 100).map((response) => {
       this._subscriptions = response.items.map((subscription) => {
         const vm = this.viewModelLocator.getInstance<SubscriptionViewModel, Subscription>(SubscriptionViewModel, subscription);
         return vm;

@@ -16,22 +16,16 @@ import {
   DocumentViewModel
 } from '../../../view-models/view-models';
 import {
-  Address,
   ApiClient,
-  Contact,
-  Document,
-  DocumentLine,
-  DocumentType,
-  Organisation,
-  Product,
-  Recipient,
-  Tax,
-  TaxType, LookupEntry
+  Address, Contact, Document, DocumentLine, DocumentType, Organisation,
+  Product, Recipient, Tax, TaxAmount, TaxType, TaxAmountType, LookupEntry,
+  UpdateDocumentRequest, CreateDocumentRequest
 } from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { ENTER } from '@angular/cdk/keycodes';
+import { AlertsService } from '@jaspero/ng2-alerts';
 
 @Component({
   selector: 'app-document-form',
@@ -86,7 +80,8 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
-    private viewModelLocator: ViewModelLocator, private lookups: LookupsService) {
+    private viewModelLocator: ViewModelLocator, private lookups: LookupsService,
+    private alertsService: AlertsService) {
   }
 
   displayCompanyFn(org: Organisation): string {
@@ -162,8 +157,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           this.documentType = docType;
           this.subscription.products.subscribe((items) => {
             this.products = items;
-            // if no items then "Nothing else matters :)"
-
             // get the document now!
             if ('new' === docid || null == docid) {
               const doc = new Document();
@@ -197,6 +190,22 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+
+  getNewDocument(): Document {
+    const doc = new Document();
+    doc.currencyCode = this.subscription.company.model.currencyCode;
+    doc.typeId = this.documentType.id;
+    doc.date = new Date();
+    doc.dueDate = new Date();
+    doc.lines = new Array<DocumentLine>();
+    const newLine = new DocumentLine();
+    newLine.unitAmount = 0;
+    newLine.quantity = 0;
+    newLine.discountRate = 0;
+    doc.lines.push(newLine);
+    return doc;
   }
 
   isValidFilter(filter: string): boolean {
@@ -243,6 +252,81 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    let action: Observable<Document> = null;
+    if (!this.isnew()) {
+      const request: UpdateDocumentRequest = new UpdateDocumentRequest();
+      request.date = this.model.date;
+      request.dueDate = this.model.dueDate;
+      request.currencyCode = this.model.currencyCode;
+      request.lines = new Array<DocumentLine>();
+      this.vm.lines.forEach((line) => {
+        const newline = new DocumentLine();
+        newline.description = line.model.description;
+        newline.unitAmount = line.unitAmount;
+        newline.quantity = line.quantity;
+        newline.discount = line.model.discount;
+        newline.taxes = new Array<TaxAmount>();
+        if (line.taxes) {
+          line.taxes.forEach((tax) => {
+            const newlineTax = tax.clone();
+            newlineTax.amount = undefined;
+            newlineTax.inclusive = false;
+            newline.taxes.push(tax.clone());
+          });
+        }
+        if (line.product) {
+          newline.product = line.product.model.clone();
+        }
+        request.lines.push(newline);
+      });
+      request.number = this.model.number;
+      request.paymentCode = this.model.paymentCode;
+      request.recipient = this.model.recipient;
+      request.serverCalculations = true;
+      console.log(request.toJSON());
+      action = this.apiClient.updateDocument(this.subscription.id, this.model.id, request);
+    } else {
+      const request: CreateDocumentRequest = new CreateDocumentRequest();
+      request.typeId = this.documentType.id;
+      request.date = this.model.date;
+      request.dueDate = this.model.dueDate;
+      request.currencyCode = this.model.currencyCode;
+      request.lines = new Array<DocumentLine>();
+      this.vm.lines.forEach((line) => {
+        const newline = new DocumentLine();
+        newline.description = line.model.description;
+        newline.unitAmount = line.unitAmount;
+        newline.quantity = line.quantity;
+        newline.discount = line.model.discount;
+        newline.taxes = new Array<TaxAmount>();
+        if (line.taxes) {
+          line.taxes.forEach((tax) => {
+            const newlineTax = tax.clone();
+            newlineTax.amount = undefined;
+            newlineTax.inclusive = false;
+            newline.taxes.push(tax.clone());
+          });
+        }
+        if (line.product) {
+          newline.product = line.product.model.clone();
+        }
+        request.lines.push(newline);
+      });
+      request.number = this.model.number;
+      request.paymentCode = this.model.paymentCode;
+      request.recipient = this.model.recipient;
+      request.serverCalculations = true;
+      console.log(request.toJSON());
+      action = this.apiClient.createDocument(this.subscription.id, request);
+    }
+    action.subscribe((document) => {
+      this.model = document;
+      this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
+    }, (error) => {
+      this.readonly = false; // continue editing
+      console.log(error);
+      this.alertsService.create('error', 'Σφάλμα κατα την αποθήκευση! Μύνημα συστήματος: ' + error + ' ' + error.response);
+    });
   }
 
   togglePanel() {
@@ -253,6 +337,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   addline() {
+    this.vm.addline(0);
   }
 
   isEven(n) {

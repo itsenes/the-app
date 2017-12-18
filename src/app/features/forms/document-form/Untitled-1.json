@@ -1,0 +1,61 @@
+{
+  "number": 0,
+  "date": "2017-12-18T10:59:03.988Z",
+  "dueDate": "2017-12-18T10:59:03.988Z",
+  "currencyCode": "EUR",
+  "recipient": {
+    "organisation": {
+      "id": "1824089f-64e2-4281-ae6e-254233258b3f",
+      "name": "Indice",
+      "legalName": "ΙΝΝΤΑΙΣ ΟΕ||Indice",
+      "lineOfBusiness": "Independent software vendor (ISV)",
+      "taxCode": "EL998132816",
+      "taxOffice": "ST' Athinon",
+      "currencyCode": "EUR",
+      "address": {
+        "line1": "Iakchou 22",
+        "city": "Athens",
+        "zipCode": "11854",
+        "countryCode": "GR",
+        "country": "Greece",
+        "phone1": "+302106985955"
+      },
+      "email": "info@indice.gr",
+      "website": "www.indice.gr",
+      "paymentMethods": []
+    },
+    "contact": {
+      "id": "98554d93-5b10-42a4-8e74-d6f294335d50",
+      "address": {}
+    }
+  },
+  "paymentCode": "171218",
+  "lines": [{
+    "description": "Software development services",
+    "quantity": 100,
+    "unitAmount": 1000,
+    "taxes": [{
+      "amount": 24000,
+      "type": "UnitRate",
+      "code": "VAT",
+      "name": "ΦΠΑ",
+      "rate": 0.24,
+      "isSalesTax": true
+    }, {
+      "amount": -9220,
+      "type": "UnitRate",
+      "code": "DEDUCTABLE",
+      "name": "ΕΦΚΑ",
+      "rate": -0.0922,
+      "inclusive": true
+    }, {
+      "amount": -20000,
+      "type": "UnitRate",
+      "code": "DEDUCTABLE",
+      "name": "ΦΕΕ",
+      "rate": -0.2,
+      "inclusive": true
+    }]
+  }],
+  "serverCalculations": true
+}
