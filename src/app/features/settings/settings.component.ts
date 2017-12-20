@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.busy = true;
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
         this.subscription_key = params['subscription-alias'];
-        this.subscription = sub.model;
+        this.subscription = sub;
         this.busy = false;
       });
     });

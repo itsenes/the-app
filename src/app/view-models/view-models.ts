@@ -6,7 +6,8 @@ import { map } from 'rxjs/operator/map';
 import {
   ApiClient, Subscription, LookupEntry, DocumentType,
   Product, Tax, TaxAmount, Document, Plan, Recipient, Organisation, Contact,
-  DocumentLine, Address, DocumentStatus, TaxAmountType
+  DocumentLine, Address, DocumentStatus, TaxAmountType,
+  DocumentCalculationRequest, DocumentCalculationResult, PricedLine, TaxType
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
@@ -504,6 +505,32 @@ export class DocumentViewModel extends ViewModel<Document> {
     const group_salesTaxes = this.groupBy(salesTaxes, tax => tax.name);
   }
 
+  public serverCalc() {
+    const request: DocumentCalculationRequest = new DocumentCalculationRequest();
+    request.currencyCode = this.model.currencyCode;
+    request.lines = new Array<PricedLine>();
+    this.model.lines.forEach((line) => {
+      const newline = new PricedLine();
+      newline.discountRate = line.discountRate;
+      newline.quantity = line.quantity;
+      newline.unitAmount = line.unitAmount;
+      newline.taxes = new Array<Tax>();
+      line.taxes.forEach((t) => {
+        const newtax = new Tax();
+        newtax.isSalesTax = t.isSalesTax;
+        newtax.rate = t.rate;
+        newtax.type = TaxType.UnitRate;
+        newtax.code = t.code;
+        newtax.inclusive = t.inclusive;
+        newline.taxes.push(newtax);
+      });
+    });
+
+    this.serviceLocator.apiClient.calculate('', request).subscribe((response) => {
+      console.log(response.toJSON());
+    });
+  }
+
   public init(): Observable<void> {
     if (null == this.model) {
       return this.asObservable();
@@ -606,7 +633,7 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     if (!this.model.product || this.model.product.id !== value.id) {
       console.log('should change taxes !');
       this.model.description = value.name;
-      this.model.unitAmount = value.model.amount;
+      this.model.unitAmount = value.model.unitAmount;
       this.model.taxes = new Array<TaxAmount>();
       if (value.model.taxes) {
         value.model.taxes.forEach((tax) => {

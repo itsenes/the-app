@@ -26,7 +26,7 @@ export class ApiClient {
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+    constructor( @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://api.incontrl.io";
     }
@@ -40,30 +40,30 @@ export class ApiClient {
         let url_ = this.baseUrl + "/{lookupType}/lookup?";
         if (lookupType === undefined || lookupType === null)
             throw new Error("The parameter 'lookupType' must be defined.");
-        url_ = url_.replace("{lookupType}", encodeURIComponent("" + lookupType)); 
+        url_ = url_.replace("{lookupType}", encodeURIComponent("" + lookupType));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetLookup(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -104,26 +104,26 @@ export class ApiClient {
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetCountries(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -164,26 +164,26 @@ export class ApiClient {
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetCurrencies(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -224,26 +224,26 @@ export class ApiClient {
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetServices(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -287,34 +287,34 @@ export class ApiClient {
         if (filter_WithAisp === undefined || filter_WithAisp === null)
             throw new Error("The parameter 'filter_WithAisp' must be defined and cannot be null.");
         else
-            url_ += "Filter.WithAisp=" + encodeURIComponent("" + filter_WithAisp) + "&"; 
+            url_ += "Filter.WithAisp=" + encodeURIComponent("" + filter_WithAisp) + "&";
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (filter_Code !== undefined)
-            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&";
         if (filter_MemberId !== undefined)
-            url_ += "Filter.MemberId=" + encodeURIComponent("" + filter_MemberId) + "&"; 
+            url_ += "Filter.MemberId=" + encodeURIComponent("" + filter_MemberId) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptions(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -362,16 +362,16 @@ export class ApiClient {
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateSubscription(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -417,18 +417,18 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscription(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -477,18 +477,18 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/company";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptionCompany(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -536,21 +536,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/company";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionCompany(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -598,14 +598,14 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/company/logo";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();
         if (file !== null && file !== undefined)
             content_.append("file", file.data, file.fileName ? file.fileName : "file");
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
@@ -613,7 +613,7 @@ export class ApiClient {
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionCompanyLogo(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -662,18 +662,18 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contact";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptionContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -721,21 +721,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contact";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -785,32 +785,32 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contacts?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (filter_Code !== undefined)
-            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetContacts(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -855,21 +855,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contacts";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -913,21 +913,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contacts/{contactId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (contactId === undefined || contactId === null)
             throw new Error("The parameter 'contactId' must be defined.");
-        url_ = url_.replace("{contactId}", encodeURIComponent("" + contactId)); 
+        url_ = url_.replace("{contactId}", encodeURIComponent("" + contactId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -975,24 +975,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contacts/{contactId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (contactId === undefined || contactId === null)
             throw new Error("The parameter 'contactId' must be defined.");
-        url_ = url_.replace("{contactId}", encodeURIComponent("" + contactId)); 
+        url_ = url_.replace("{contactId}", encodeURIComponent("" + contactId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1044,39 +1044,39 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/contacts/{contactId}/companies?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (contactId === undefined || contactId === null)
             throw new Error("The parameter 'contactId' must be defined.");
-        url_ = url_.replace("{contactId}", encodeURIComponent("" + contactId)); 
+        url_ = url_.replace("{contactId}", encodeURIComponent("" + contactId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (filter_Customers !== undefined)
-            url_ += "Filter.Customers=" + encodeURIComponent("" + filter_Customers) + "&"; 
+            url_ += "Filter.Customers=" + encodeURIComponent("" + filter_Customers) + "&";
         if (filter_Suppliers !== undefined)
-            url_ += "Filter.Suppliers=" + encodeURIComponent("" + filter_Suppliers) + "&"; 
+            url_ += "Filter.Suppliers=" + encodeURIComponent("" + filter_Suppliers) + "&";
         if (filter_Code !== undefined)
-            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetCompaniesByContact(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1133,50 +1133,50 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (summary === undefined || summary === null)
             throw new Error("The parameter 'summary' must be defined and cannot be null.");
         else
-            url_ += "summary=" + encodeURIComponent("" + summary) + "&"; 
+            url_ += "summary=" + encodeURIComponent("" + summary) + "&";
         if (filter_Number !== undefined)
-            url_ += "Filter.Number=" + encodeURIComponent("" + filter_Number) + "&"; 
+            url_ += "Filter.Number=" + encodeURIComponent("" + filter_Number) + "&";
         if (filter_From !== undefined)
-            url_ += "Filter.From=" + encodeURIComponent(filter_From ? "" + filter_From.toJSON() : "") + "&"; 
+            url_ += "Filter.From=" + encodeURIComponent(filter_From ? "" + filter_From.toJSON() : "") + "&";
         if (filter_To !== undefined)
-            url_ += "Filter.To=" + encodeURIComponent(filter_To ? "" + filter_To.toJSON() : "") + "&"; 
+            url_ += "Filter.To=" + encodeURIComponent(filter_To ? "" + filter_To.toJSON() : "") + "&";
         if (filter_Status !== undefined)
             filter_Status && filter_Status.forEach(item => { url_ += "Filter.Status=" + encodeURIComponent("" + item) + "&"; });
         if (filter_RecipientCode !== undefined)
-            url_ += "Filter.RecipientCode=" + encodeURIComponent("" + filter_RecipientCode) + "&"; 
+            url_ += "Filter.RecipientCode=" + encodeURIComponent("" + filter_RecipientCode) + "&";
         if (filter_RecipientId !== undefined)
-            url_ += "Filter.RecipientId=" + encodeURIComponent("" + filter_RecipientId) + "&"; 
+            url_ += "Filter.RecipientId=" + encodeURIComponent("" + filter_RecipientId) + "&";
         if (filter_TypeId !== undefined)
             filter_TypeId && filter_TypeId.forEach(item => { url_ += "Filter.TypeId=" + encodeURIComponent("" + item) + "&"; });
         if (filter_PaymentCode !== undefined)
-            url_ += "Filter.PaymentCode=" + encodeURIComponent("" + filter_PaymentCode) + "&"; 
+            url_ += "Filter.PaymentCode=" + encodeURIComponent("" + filter_PaymentCode) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocuments(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1221,21 +1221,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateDocument(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1280,23 +1280,23 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         if (format !== undefined)
-            url_ += "format=" + encodeURIComponent("" + format) + "&"; 
+            url_ += "format=" + encodeURIComponent("" + format) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocument(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1344,24 +1344,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateDocument(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1405,20 +1405,20 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "delete",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processDeleteDocument(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1464,33 +1464,33 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/payments?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocumentPayments(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1535,24 +1535,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/payments";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateDocumentPayment(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1596,23 +1596,23 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/payments/{transactionId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         if (transactionId === undefined || transactionId === null)
             throw new Error("The parameter 'transactionId' must be defined.");
-        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId)); 
+        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "delete",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processDeleteDocumentPayment(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1654,26 +1654,26 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/payments/{transactionId}/state";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         if (transactionId === undefined || transactionId === null)
             throw new Error("The parameter 'transactionId' must be defined.");
-        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId)); 
+        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(approval);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateDocumentPaymentState(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1714,21 +1714,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/status";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocumentStatus(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1776,24 +1776,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/status";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processChangeDocumentStatus(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1842,33 +1842,33 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/trackings?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetViews(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1913,24 +1913,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/trackings";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGenerateTracker(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -1974,21 +1974,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/type";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocumentType(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2036,24 +2036,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/{documentId}/type";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentId === undefined || documentId === null)
             throw new Error("The parameter 'documentId' must be defined.");
-        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId)); 
+        url_ = url_.replace("{documentId}", encodeURIComponent("" + documentId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processChangeDocumentType(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2101,21 +2101,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents/calculate";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCalculate(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2161,30 +2161,30 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocumentTypes(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2229,21 +2229,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateDocumentType(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2287,21 +2287,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocumentType2(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2349,24 +2349,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateDocumentType(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2413,20 +2413,20 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "delete",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processDeleteDocumentType(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2472,33 +2472,33 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}/payment-options?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetPaymentOptions(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2543,24 +2543,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}/payment-options";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processAddPaymentOption(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2604,23 +2604,23 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}/payment-options/{paymentOptionId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "delete",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processDeletePaymentOption(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2661,22 +2661,22 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}/template";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             responseType: ResponseContentType.Blob,
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/octet-stream"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetDocumentTypeTemplate(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2716,7 +2716,7 @@ export class ApiClient {
             return Observable.of({ fileName: fileName, data: <any>response.blob(), status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
             return blobToText(response.blob()).flatMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Observable.of<FileResponse>(<any>null);
@@ -2730,24 +2730,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{documentTypeId}/template";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (documentTypeId === undefined || documentTypeId === null)
             throw new Error("The parameter 'documentTypeId' must be defined.");
-        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId)); 
+        url_ = url_.replace("{documentTypeId}", encodeURIComponent("" + documentTypeId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();
         if (file !== null && file !== undefined)
             content_.append("file", file.data, file.fileName ? file.fileName : "file");
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateDocumentTypeTemplate(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2791,21 +2791,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types/{recordType}/themes";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (recordType === undefined || recordType === null)
             throw new Error("The parameter 'recordType' must be defined.");
-        url_ = url_.replace("{recordType}", encodeURIComponent("" + recordType)); 
+        url_ = url_.replace("{recordType}", encodeURIComponent("" + recordType));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetAvailableThemes(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2851,30 +2851,30 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/members?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptionMembers(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2922,34 +2922,34 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/metrics?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (filter_From !== undefined)
-            url_ += "Filter.From=" + encodeURIComponent(filter_From ? "" + filter_From.toJSON() : "") + "&"; 
+            url_ += "Filter.From=" + encodeURIComponent(filter_From ? "" + filter_From.toJSON() : "") + "&";
         if (filter_To !== undefined)
-            url_ += "Filter.To=" + encodeURIComponent(filter_To ? "" + filter_To.toJSON() : "") + "&"; 
+            url_ += "Filter.To=" + encodeURIComponent(filter_To ? "" + filter_To.toJSON() : "") + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptionMetrics(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -2998,36 +2998,36 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/organisations?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (filter_Customers !== undefined)
-            url_ += "Filter.Customers=" + encodeURIComponent("" + filter_Customers) + "&"; 
+            url_ += "Filter.Customers=" + encodeURIComponent("" + filter_Customers) + "&";
         if (filter_Suppliers !== undefined)
-            url_ += "Filter.Suppliers=" + encodeURIComponent("" + filter_Suppliers) + "&"; 
+            url_ += "Filter.Suppliers=" + encodeURIComponent("" + filter_Suppliers) + "&";
         if (filter_Code !== undefined)
-            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetOrganisations(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3072,21 +3072,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/organisations";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateOrganisation(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3130,21 +3130,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/organisations/{organisationId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (organisationId === undefined || organisationId === null)
             throw new Error("The parameter 'organisationId' must be defined.");
-        url_ = url_.replace("{organisationId}", encodeURIComponent("" + organisationId)); 
+        url_ = url_.replace("{organisationId}", encodeURIComponent("" + organisationId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetOrganisation(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3192,24 +3192,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/organisations/{organisationId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (organisationId === undefined || organisationId === null)
             throw new Error("The parameter 'organisationId' must be defined.");
-        url_ = url_.replace("{organisationId}", encodeURIComponent("" + organisationId)); 
+        url_ = url_.replace("{organisationId}", encodeURIComponent("" + organisationId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateOrganisation(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3258,30 +3258,30 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetPaymentOptions2(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3326,21 +3326,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreatePaymentOption(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3384,21 +3384,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetPaymentOption(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3446,24 +3446,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdatePaymentOption(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3512,33 +3512,33 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/document-types?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetPaymentOptionDocumentTypes(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3587,39 +3587,39 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (filter_BatchId !== undefined)
-            url_ += "Filter.BatchId=" + encodeURIComponent("" + filter_BatchId) + "&"; 
+            url_ += "Filter.BatchId=" + encodeURIComponent("" + filter_BatchId) + "&";
         if (filter_From !== undefined)
-            url_ += "Filter.From=" + encodeURIComponent(filter_From ? "" + filter_From.toJSON() : "") + "&"; 
+            url_ += "Filter.From=" + encodeURIComponent(filter_From ? "" + filter_From.toJSON() : "") + "&";
         if (filter_To !== undefined)
-            url_ += "Filter.To=" + encodeURIComponent(filter_To ? "" + filter_To.toJSON() : "") + "&"; 
+            url_ += "Filter.To=" + encodeURIComponent(filter_To ? "" + filter_To.toJSON() : "") + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetTransactions(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3667,24 +3667,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateTransaction(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3728,24 +3728,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         if (transactionId === undefined || transactionId === null)
             throw new Error("The parameter 'transactionId' must be defined.");
-        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId)); 
+        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetTransaction(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3794,36 +3794,36 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         if (transactionId === undefined || transactionId === null)
             throw new Error("The parameter 'transactionId' must be defined.");
-        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId)); 
+        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetTransactionPayments(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3868,27 +3868,27 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/{transactionId}/payments";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         if (transactionId === undefined || transactionId === null)
             throw new Error("The parameter 'transactionId' must be defined.");
-        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId)); 
+        url_ = url_.replace("{transactionId}", encodeURIComponent("" + transactionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateTransactionPayment(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3933,23 +3933,23 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/transactions/bulk";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined.");
-        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId)); 
+        url_ = url_.replace("{paymentOptionId}", encodeURIComponent("" + paymentOptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processBulkCreateTransactions(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -3992,18 +3992,18 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/plan";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptionPlan(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4051,21 +4051,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/plan";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionPlan(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4113,24 +4113,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/plan/services/{serviceId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (serviceId === undefined || serviceId === null)
             throw new Error("The parameter 'serviceId' must be defined.");
-        url_ = url_.replace("{serviceId}", encodeURIComponent("" + serviceId)); 
+        url_ = url_.replace("{serviceId}", encodeURIComponent("" + serviceId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionService(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4179,30 +4179,30 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/products?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetProducts(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4247,21 +4247,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/products";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processCreateProduct(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4305,21 +4305,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/products/{productId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (productId === undefined || productId === null)
             throw new Error("The parameter 'productId' must be defined.");
-        url_ = url_.replace("{productId}", encodeURIComponent("" + productId)); 
+        url_ = url_.replace("{productId}", encodeURIComponent("" + productId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetProduct(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4367,24 +4367,24 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/products/{productId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (productId === undefined || productId === null)
             throw new Error("The parameter 'productId' must be defined.");
-        url_ = url_.replace("{productId}", encodeURIComponent("" + productId)); 
+        url_ = url_.replace("{productId}", encodeURIComponent("" + productId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateProduct(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4431,20 +4431,20 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/products/{productId}";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         if (productId === undefined || productId === null)
             throw new Error("The parameter 'productId' must be defined.");
-        url_ = url_.replace("{productId}", encodeURIComponent("" + productId)); 
+        url_ = url_.replace("{productId}", encodeURIComponent("" + productId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "delete",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processDeleteProduct(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4488,18 +4488,18 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/status";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetSubscriptionStatus(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4547,21 +4547,21 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/status";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionStatus(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4609,20 +4609,20 @@ export class ApiClient {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/time-zone";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
-        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId)); 
+        url_ = url_.replace("{subscriptionId}", encodeURIComponent("" + subscriptionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processUpdateSubscriptionTimeZone(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4669,26 +4669,26 @@ export class ApiClient {
         if (page === undefined || page === null)
             throw new Error("The parameter 'page' must be defined and cannot be null.");
         else
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+            url_ += "Page=" + encodeURIComponent("" + page) + "&";
         if (size === undefined || size === null)
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
-            url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+            url_ += "Size=" + encodeURIComponent("" + size) + "&";
         if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&";
         if (search !== undefined)
-            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request(url_, options_).flatMap((response_ : any) => {
+        return this.http.request(url_, options_).flatMap((response_: any) => {
             return this.processGetTimeZones(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
@@ -4749,7 +4749,7 @@ export class ResultSetOfLookupEntry {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -4781,7 +4781,7 @@ export class LookupEntry {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["description"] = this.description;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -4821,7 +4821,7 @@ export class ResultSetOfCountryInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -4862,7 +4862,7 @@ export class Country {
         data["twoLetterLanguageCode"] = this.twoLetterLanguageCode;
         data["numericCode"] = this.numericCode;
         data["locale"] = this.locale;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -4902,7 +4902,7 @@ export class ResultSetOfCurrencyInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -4946,7 +4946,7 @@ export class Currency {
         data["alignRight"] = this.alignRight;
         data["isoSymbol"] = this.isoSymbol;
         data["fraction"] = this.fraction ? this.fraction.toJSON() : <any>undefined;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -4984,7 +4984,7 @@ export class Fraction {
         data["symbol"] = this.symbol;
         data["denominator"] = this.denominator;
         data["decimalPlaces"] = this.decimalPlaces;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5024,7 +5024,7 @@ export class ResultSetOfPlanInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5084,7 +5084,7 @@ export class Plan {
             for (let item of this.limits)
                 data["limits"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5134,7 +5134,7 @@ export class UiHint {
                     data["stuff"][key] = this.stuff[key];
             }
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5211,7 +5211,7 @@ export class Service {
             }
         }
         data["type"] = this.type;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5251,7 +5251,7 @@ export class LimitPolicy {
             for (let item of this.rules)
                 data["rules"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5286,7 +5286,7 @@ export class AccentColor {
         data["type"] = this.type;
         data["foreground"] = this.foreground;
         data["background"] = this.background;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5324,7 +5324,7 @@ export class LimitRule {
         data["period"] = this.period;
         data["periodTimespan"] = this.periodTimespan;
         data["limit"] = this.limit;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5364,7 +5364,7 @@ export class ResultSetOfSubscriptionInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5432,7 +5432,7 @@ export class Subscription {
                     data["customData"][key] = this.customData[key];
             }
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5523,7 +5523,7 @@ export class Organisation {
             for (let item of this.paymentMethods)
                 data["paymentMethods"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5597,7 +5597,7 @@ export class Contact {
                     data["customData"][key] = this.customData[key];
             }
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5653,7 +5653,7 @@ export class Address {
         data["phone1"] = this.phone1;
         data["phone2"] = this.phone2;
         data["notes"] = this.notes;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5691,7 +5691,7 @@ export class PaymentMethod {
         data["name"] = this.name;
         data["description"] = this.description;
         data["type"] = this.type;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5756,7 +5756,7 @@ export class CreateSubscriptionRequest {
                     data["customData"][key] = this.customData[key];
             }
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5844,7 +5844,7 @@ export class UpdateSubscriptionCompanyRequest {
             for (let item of this.paymentMethods)
                 data["paymentMethods"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5876,7 +5876,7 @@ export class Link {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["uri"] = this.uri;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5929,7 +5929,7 @@ export class UpdateContactRequest {
         data["phone2"] = this.phone2;
         data["skype"] = this.skype;
         data["notes"] = this.notes;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -5969,7 +5969,7 @@ export class ResultSetOfContactInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6009,7 +6009,7 @@ export class ResultSetOfOrganisationInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6049,7 +6049,7 @@ export class ResultSetOfDocumentInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6079,6 +6079,7 @@ export class Document {
     readonly permaLink?: string | undefined;
     subTotal?: number | undefined;
     totalDiscount?: number | undefined;
+    totalNet?: number | undefined;
     totalSalesTax?: number | undefined;
     totalTax?: number | undefined;
     total?: number | undefined;
@@ -6108,6 +6109,7 @@ export class Document {
             (<any>this).permaLink = data["permaLink"];
             this.subTotal = data["subTotal"];
             this.totalDiscount = data["totalDiscount"];
+            this.totalNet = data["totalNet"];
             this.totalSalesTax = data["totalSalesTax"];
             this.totalTax = data["totalTax"];
             this.total = data["total"];
@@ -6145,11 +6147,12 @@ export class Document {
         data["permaLink"] = this.permaLink;
         data["subTotal"] = this.subTotal;
         data["totalDiscount"] = this.totalDiscount;
+        data["totalNet"] = this.totalNet;
         data["totalSalesTax"] = this.totalSalesTax;
         data["totalTax"] = this.totalTax;
         data["total"] = this.total;
         data["totalPayable"] = this.totalPayable;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6181,7 +6184,7 @@ export class Recipient {
         data = typeof data === 'object' ? data : {};
         data["organisation"] = this.organisation ? this.organisation.toJSON() : <any>undefined;
         data["contact"] = this.contact ? this.contact.toJSON() : <any>undefined;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6199,9 +6202,11 @@ export class DocumentLine {
     quantity?: number | undefined;
     unitAmountNet?: number | undefined;
     unitAmount?: number | undefined;
+    unitType?: string | undefined;
     discountRate?: number | undefined;
     discount?: number | undefined;
     subTotal?: number | undefined;
+    totalNet?: number | undefined;
     totalTax?: number | undefined;
     totalSalesTax?: number | undefined;
     total?: number | undefined;
@@ -6218,9 +6223,11 @@ export class DocumentLine {
             this.quantity = data["quantity"];
             this.unitAmountNet = data["unitAmountNet"];
             this.unitAmount = data["unitAmount"];
+            this.unitType = data["unitType"];
             this.discountRate = data["discountRate"];
             this.discount = data["discount"];
             this.subTotal = data["subTotal"];
+            this.totalNet = data["totalNet"];
             this.totalTax = data["totalTax"];
             this.totalSalesTax = data["totalSalesTax"];
             this.total = data["total"];
@@ -6249,9 +6256,11 @@ export class DocumentLine {
         data["quantity"] = this.quantity;
         data["unitAmountNet"] = this.unitAmountNet;
         data["unitAmount"] = this.unitAmount;
+        data["unitType"] = this.unitType;
         data["discountRate"] = this.discountRate;
         data["discount"] = this.discount;
         data["subTotal"] = this.subTotal;
+        data["totalNet"] = this.totalNet;
         data["totalTax"] = this.totalTax;
         data["totalSalesTax"] = this.totalSalesTax;
         data["total"] = this.total;
@@ -6263,7 +6272,7 @@ export class DocumentLine {
         data["taxesDescription"] = this.taxesDescription;
         data["notes"] = this.notes;
         data["tags"] = this.tags;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6278,7 +6287,8 @@ export class Product {
     id?: string | undefined;
     code?: string | undefined;
     name?: string | undefined;
-    amount?: number | undefined;
+    unitAmount?: number | undefined;
+    unitType?: string | undefined;
     taxes?: Tax[] | undefined;
     notes?: string | undefined;
     publicNotes?: string | undefined;
@@ -6289,7 +6299,8 @@ export class Product {
             this.id = data["id"];
             this.code = data["code"];
             this.name = data["name"];
-            this.amount = data["amount"];
+            this.unitAmount = data["unitAmount"];
+            this.unitType = data["unitType"];
             if (data["taxes"] && data["taxes"].constructor === Array) {
                 this.taxes = [];
                 for (let item of data["taxes"])
@@ -6312,7 +6323,8 @@ export class Product {
         data["id"] = this.id;
         data["code"] = this.code;
         data["name"] = this.name;
-        data["amount"] = this.amount;
+        data["unitAmount"] = this.unitAmount;
+        data["unitType"] = this.unitType;
         if (this.taxes && this.taxes.constructor === Array) {
             data["taxes"] = [];
             for (let item of this.taxes)
@@ -6321,7 +6333,7 @@ export class Product {
         data["notes"] = this.notes;
         data["publicNotes"] = this.publicNotes;
         data["tags"] = this.tags;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6368,7 +6380,7 @@ export class TaxAmount {
         data["rate"] = this.rate;
         data["inclusive"] = this.inclusive;
         data["isSalesTax"] = this.isSalesTax;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6412,7 +6424,7 @@ export class Tax {
         data["rate"] = this.rate;
         data["inclusive"] = this.inclusive;
         data["isSalesTax"] = this.isSalesTax;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6440,6 +6452,7 @@ export class CreateDocumentRequest {
     tags?: string | undefined;
     subTotal?: number | undefined;
     totalDiscount?: number | undefined;
+    totalNet?: number | undefined;
     totalSalesTax?: number | undefined;
     totalTax?: number | undefined;
     total?: number | undefined;
@@ -6467,6 +6480,7 @@ export class CreateDocumentRequest {
             this.tags = data["tags"];
             this.subTotal = data["subTotal"];
             this.totalDiscount = data["totalDiscount"];
+            this.totalNet = data["totalNet"];
             this.totalSalesTax = data["totalSalesTax"];
             this.totalTax = data["totalTax"];
             this.total = data["total"];
@@ -6502,11 +6516,12 @@ export class CreateDocumentRequest {
         data["tags"] = this.tags;
         data["subTotal"] = this.subTotal;
         data["totalDiscount"] = this.totalDiscount;
+        data["totalNet"] = this.totalNet;
         data["totalSalesTax"] = this.totalSalesTax;
         data["totalTax"] = this.totalTax;
         data["total"] = this.total;
         data["totalPayable"] = this.totalPayable;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6532,6 +6547,7 @@ export class UpdateDocumentRequest {
     tags?: string | undefined;
     subTotal?: number | undefined;
     totalDiscount?: number | undefined;
+    totalNet?: number | undefined;
     totalSalesTax?: number | undefined;
     totalTax?: number | undefined;
     total?: number | undefined;
@@ -6557,6 +6573,7 @@ export class UpdateDocumentRequest {
             this.tags = data["tags"];
             this.subTotal = data["subTotal"];
             this.totalDiscount = data["totalDiscount"];
+            this.totalNet = data["totalNet"];
             this.totalSalesTax = data["totalSalesTax"];
             this.totalTax = data["totalTax"];
             this.total = data["total"];
@@ -6590,11 +6607,12 @@ export class UpdateDocumentRequest {
         data["tags"] = this.tags;
         data["subTotal"] = this.subTotal;
         data["totalDiscount"] = this.totalDiscount;
+        data["totalNet"] = this.totalNet;
         data["totalSalesTax"] = this.totalSalesTax;
         data["totalTax"] = this.totalTax;
         data["total"] = this.total;
         data["totalPayable"] = this.totalPayable;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6647,7 +6665,7 @@ export class Payment {
         data["modified"] = this.modified ? this.modified.toISOString() : <any>undefined;
         data["state"] = this.state;
         data["referenceNumber"] = this.referenceNumber;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6703,7 +6721,7 @@ export class Transaction {
         data["balance"] = this.balance ? this.balance.toJSON() : <any>undefined;
         data["batchId"] = this.batchId;
         data["subscriptionId"] = this.subscriptionId;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6735,7 +6753,7 @@ export class Money {
         data = typeof data === 'object' ? data : {};
         data["currency"] = this.currency;
         data["amount"] = this.amount;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6775,7 +6793,7 @@ export class ResultSetOfPaymentInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6804,7 +6822,7 @@ export class UpdateApprovalRequest {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["state"] = this.state;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6833,7 +6851,7 @@ export class DocumentStatusResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["status"] = this.status;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6865,7 +6883,7 @@ export class ChangeDocumentStatusRequest {
         data = typeof data === 'object' ? data : {};
         data["status"] = this.status;
         data["validationRules"] = this.validationRules;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6894,7 +6912,7 @@ export class DocumentTrackingRequest {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["recipient"] = this.recipient;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6932,7 +6950,7 @@ export class Tracker {
         data["type"] = this.type;
         data["url"] = this.url;
         data["printoutUrl"] = this.printoutUrl;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -6972,7 +6990,7 @@ export class ResultSetOfTrackingInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7013,7 +7031,7 @@ export class Tracking {
         data["created"] = this.created ? this.created.toISOString() : <any>undefined;
         data["lastRead"] = this.lastRead ? this.lastRead.toISOString() : <any>undefined;
         data["tracker"] = this.tracker ? this.tracker.toJSON() : <any>undefined;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7086,7 +7104,7 @@ export class DocumentType {
             for (let item of this.paymentOptions)
                 data["paymentOptions"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7136,7 +7154,7 @@ export class Attachment {
         data["contentLength"] = this.contentLength;
         data["data"] = this.data;
         data["uri"] = this.uri;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7183,7 +7201,7 @@ export class PaymentOption {
         data["name"] = this.name;
         data["description"] = this.description;
         data["provider"] = this.provider ? this.provider.toJSON() : <any>undefined;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7212,7 +7230,7 @@ export class ChangeDocumentTypeRequest {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["typeId"] = this.typeId;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7252,7 +7270,7 @@ export class DocumentCalculationRequest {
             for (let item of this.lines)
                 data["lines"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7304,7 +7322,7 @@ export class PricedLine {
                 data["taxes"].push(item.toJSON());
         }
         data["taxesDescription"] = this.taxesDescription;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7321,6 +7339,7 @@ export class DocumentCalculationResult {
     readonly taxesInclusive?: TaxAmount[] | undefined;
     readonly taxesExclusive?: TaxAmount[] | undefined;
     subTotal?: number | undefined;
+    totalNet?: number | undefined;
     totalDiscount?: number | undefined;
     totalSalesTax?: number | undefined;
     totalTax?: number | undefined;
@@ -7350,6 +7369,7 @@ export class DocumentCalculationResult {
                     (<any>this).taxesExclusive.push(TaxAmount.fromJS(item));
             }
             this.subTotal = data["subTotal"];
+            this.totalNet = data["totalNet"];
             this.totalDiscount = data["totalDiscount"];
             this.totalSalesTax = data["totalSalesTax"];
             this.totalTax = data["totalTax"];
@@ -7387,12 +7407,13 @@ export class DocumentCalculationResult {
                 data["taxesExclusive"].push(item.toJSON());
         }
         data["subTotal"] = this.subTotal;
+        data["totalNet"] = this.totalNet;
         data["totalDiscount"] = this.totalDiscount;
         data["totalSalesTax"] = this.totalSalesTax;
         data["totalTax"] = this.totalTax;
         data["total"] = this.total;
         data["totalPayable"] = this.totalPayable;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7407,6 +7428,7 @@ export class PricedLineResult {
     subTotal?: number | undefined;
     discount?: number | undefined;
     totalTax?: number | undefined;
+    totalNet?: number | undefined;
     totalSalesTax?: number | undefined;
     total?: number | undefined;
     taxes?: TaxAmount[] | undefined;
@@ -7421,6 +7443,7 @@ export class PricedLineResult {
             this.subTotal = data["subTotal"];
             this.discount = data["discount"];
             this.totalTax = data["totalTax"];
+            this.totalNet = data["totalNet"];
             this.totalSalesTax = data["totalSalesTax"];
             this.total = data["total"];
             if (data["taxes"] && data["taxes"].constructor === Array) {
@@ -7447,6 +7470,7 @@ export class PricedLineResult {
         data["subTotal"] = this.subTotal;
         data["discount"] = this.discount;
         data["totalTax"] = this.totalTax;
+        data["totalNet"] = this.totalNet;
         data["totalSalesTax"] = this.totalSalesTax;
         data["total"] = this.total;
         if (this.taxes && this.taxes.constructor === Array) {
@@ -7459,7 +7483,7 @@ export class PricedLineResult {
         data["unitAmount"] = this.unitAmount;
         data["discountRate"] = this.discountRate;
         data["taxesDescription"] = this.taxesDescription;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7499,7 +7523,7 @@ export class ResultSetOfDocumentTypeInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7555,7 +7579,7 @@ export class CreateDocumentTypeRequest {
         data["notes"] = this.notes;
         data["uiHint"] = this.uiHint ? this.uiHint.toJSON() : <any>undefined;
         data["generatesPrintouts"] = this.generatesPrintouts;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7608,7 +7632,7 @@ export class UpdateDocumentTypeRequest {
         data["notes"] = this.notes;
         data["uiHint"] = this.uiHint ? this.uiHint.toJSON() : <any>undefined;
         data["generatesPrintouts"] = this.generatesPrintouts;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7648,7 +7672,7 @@ export class ResultSetOfPaymentOptionInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7688,7 +7712,7 @@ export class ResultSetOfSubscriptionMemberInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7720,7 +7744,7 @@ export class SubscriptionMember {
         data = typeof data === 'object' ? data : {};
         data["memberId"] = this.memberId;
         data["memberType"] = this.memberType;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7763,7 +7787,7 @@ export class ResultSetOfMetricsRecord {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7804,7 +7828,7 @@ export class Metrics {
         data["writes"] = this.writes;
         data["reads"] = this.reads;
         data["documents"] = this.documents;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7839,7 +7863,7 @@ export class MetricsRecord {
         data["timestamp"] = this.timestamp ? this.timestamp.toISOString() : <any>undefined;
         data["period"] = this.period;
         data["metrics"] = this.metrics ? this.metrics.toJSON() : <any>undefined;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7927,7 +7951,7 @@ export class UpdateOrganisationRequest {
             for (let item of this.paymentMethods)
                 data["paymentMethods"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -7967,7 +7991,7 @@ export class ResultSetOfTransactionInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8007,7 +8031,7 @@ export class BulkLoadTransactionsRequest {
             for (let item of this.data)
                 data["data"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8051,7 +8075,7 @@ export class UpdateServiceRequest {
                     data["settings"][key] = this.settings[key];
             }
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8091,7 +8115,7 @@ export class ResultSetOfProductInfo {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8120,7 +8144,7 @@ export class UpdateSubscriptionStatusRequest {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["status"] = this.status;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8149,7 +8173,7 @@ export class UpdateSubscriptionTimeZoneRequest {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["timeZone"] = this.timeZone;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8189,7 +8213,7 @@ export class ResultSetOfTimeZone {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8239,7 +8263,7 @@ export class TimeZone {
         data["longitude"] = this.longitude;
         data["countryName"] = this.countryName;
         data["displayName"] = this.displayName;
-        return data; 
+        return data;
     }
 
     clone() {
@@ -8251,146 +8275,146 @@ export class TimeZone {
 }
 
 export enum Status {
-    Draft = <any>"Draft", 
-    Issued = <any>"Issued", 
-    Overdue = <any>"Overdue", 
-    Partial = <any>"Partial", 
-    Paid = <any>"Paid", 
-    Void = <any>"Void", 
-    Deleted = <any>"Deleted", 
+    Draft = <any>"Draft",
+    Issued = <any>"Issued",
+    Overdue = <any>"Overdue",
+    Partial = <any>"Partial",
+    Paid = <any>"Paid",
+    Void = <any>"Void",
+    Deleted = <any>"Deleted",
 }
 
 export enum RecordType {
-    AccountsReceivable = <any>"AccountsReceivable", 
-    AccountsPayable = <any>"AccountsPayable", 
+    AccountsReceivable = <any>"AccountsReceivable",
+    AccountsPayable = <any>"AccountsPayable",
 }
 
 export enum ServiceType {
-    Reconciliation = <any>"Reconciliation", 
-    WebHooks = <any>"WebHooks", 
-    PaymentOption = <any>"PaymentOption", 
-    Trial = <any>"Trial", 
+    Reconciliation = <any>"Reconciliation",
+    WebHooks = <any>"WebHooks",
+    PaymentOption = <any>"PaymentOption",
+    Trial = <any>"Trial",
 }
 
 export enum AccentColorType {
-    Bright = <any>"Bright", 
-    Dark = <any>"Dark", 
+    Bright = <any>"Bright",
+    Dark = <any>"Dark",
 }
 
 export enum SubscriptionStatus {
-    Enabled = <any>"Enabled", 
-    Disabled = <any>"Disabled", 
-    Deleted = <any>"Deleted", 
+    Enabled = <any>"Enabled",
+    Disabled = <any>"Disabled",
+    Deleted = <any>"Deleted",
 }
 
 export enum PaymentMethodType {
-    BankTransfer = <any>"BankTransfer", 
-    Online = <any>"Online", 
-    UponDelivery = <any>"UponDelivery", 
+    BankTransfer = <any>"BankTransfer",
+    Online = <any>"Online",
+    UponDelivery = <any>"UponDelivery",
 }
 
 export enum CreateSubscriptionRequestType {
-    Sandbox = <any>"Sandbox", 
-    Trial = <any>"Trial", 
-    Basic = <any>"Basic", 
-    Pro = <any>"Pro", 
-    Custom = <any>"Custom", 
+    Sandbox = <any>"Sandbox",
+    Trial = <any>"Trial",
+    Basic = <any>"Basic",
+    Pro = <any>"Pro",
+    Custom = <any>"Custom",
 }
 
 export enum DocumentStatus {
-    Draft = <any>"Draft", 
-    Issued = <any>"Issued", 
-    Overdue = <any>"Overdue", 
-    Partial = <any>"Partial", 
-    Paid = <any>"Paid", 
-    Void = <any>"Void", 
-    Deleted = <any>"Deleted", 
+    Draft = <any>"Draft",
+    Issued = <any>"Issued",
+    Overdue = <any>"Overdue",
+    Partial = <any>"Partial",
+    Paid = <any>"Paid",
+    Void = <any>"Void",
+    Deleted = <any>"Deleted",
 }
 
 export enum TaxAmountType {
-    UnitRate = <any>"UnitRate", 
-    FixedRate = <any>"FixedRate", 
-    Fixed = <any>"Fixed", 
+    UnitRate = <any>"UnitRate",
+    FixedRate = <any>"FixedRate",
+    Fixed = <any>"Fixed",
 }
 
 export enum TaxType {
-    UnitRate = <any>"UnitRate", 
-    FixedRate = <any>"FixedRate", 
-    Fixed = <any>"Fixed", 
+    UnitRate = <any>"UnitRate",
+    FixedRate = <any>"FixedRate",
+    Fixed = <any>"Fixed",
 }
 
 export enum CreateDocumentRequestStatus {
-    Draft = <any>"Draft", 
-    Issued = <any>"Issued", 
-    Overdue = <any>"Overdue", 
-    Partial = <any>"Partial", 
-    Paid = <any>"Paid", 
-    Void = <any>"Void", 
-    Deleted = <any>"Deleted", 
+    Draft = <any>"Draft",
+    Issued = <any>"Issued",
+    Overdue = <any>"Overdue",
+    Partial = <any>"Partial",
+    Paid = <any>"Paid",
+    Void = <any>"Void",
+    Deleted = <any>"Deleted",
 }
 
 export enum PaymentState {
-    Pending = <any>"Pending", 
-    Approved = <any>"Approved", 
-    Rejected = <any>"Rejected", 
+    Pending = <any>"Pending",
+    Approved = <any>"Approved",
+    Rejected = <any>"Rejected",
 }
 
 export enum TransactionType {
-    Credit = <any>"Credit", 
-    Debit = <any>"Debit", 
+    Credit = <any>"Credit",
+    Debit = <any>"Debit",
 }
 
 export enum UpdateApprovalRequestState {
-    Pending = <any>"Pending", 
-    Approved = <any>"Approved", 
-    Rejected = <any>"Rejected", 
+    Pending = <any>"Pending",
+    Approved = <any>"Approved",
+    Rejected = <any>"Rejected",
 }
 
 export enum DocumentStatusResponseStatus {
-    Draft = <any>"Draft", 
-    Issued = <any>"Issued", 
-    Overdue = <any>"Overdue", 
-    Partial = <any>"Partial", 
-    Paid = <any>"Paid", 
-    Void = <any>"Void", 
-    Deleted = <any>"Deleted", 
+    Draft = <any>"Draft",
+    Issued = <any>"Issued",
+    Overdue = <any>"Overdue",
+    Partial = <any>"Partial",
+    Paid = <any>"Paid",
+    Void = <any>"Void",
+    Deleted = <any>"Deleted",
 }
 
 export enum ChangeDocumentStatusRequestStatus {
-    Draft = <any>"Draft", 
-    Issued = <any>"Issued", 
-    Overdue = <any>"Overdue", 
-    Partial = <any>"Partial", 
-    Paid = <any>"Paid", 
-    Void = <any>"Void", 
-    Deleted = <any>"Deleted", 
+    Draft = <any>"Draft",
+    Issued = <any>"Issued",
+    Overdue = <any>"Overdue",
+    Partial = <any>"Partial",
+    Paid = <any>"Paid",
+    Void = <any>"Void",
+    Deleted = <any>"Deleted",
 }
 
 export enum DocumentTypeRecordType {
-    AccountsReceivable = <any>"AccountsReceivable", 
-    AccountsPayable = <any>"AccountsPayable", 
+    AccountsReceivable = <any>"AccountsReceivable",
+    AccountsPayable = <any>"AccountsPayable",
 }
 
 export enum PaymentOptionType {
-    Info = <any>"Info", 
-    AISP = <any>"AISP", 
-    PISP = <any>"PISP", 
+    Info = <any>"Info",
+    AISP = <any>"AISP",
+    PISP = <any>"PISP",
 }
 
 export enum CreateDocumentTypeRequestRecordType {
-    AccountsReceivable = <any>"AccountsReceivable", 
-    AccountsPayable = <any>"AccountsPayable", 
+    AccountsReceivable = <any>"AccountsReceivable",
+    AccountsPayable = <any>"AccountsPayable",
 }
 
 export enum SubscriptionMemberMemberType {
-    Application = <any>"Application", 
-    User = <any>"User", 
+    Application = <any>"Application",
+    User = <any>"User",
 }
 
 export enum UpdateSubscriptionStatusRequestStatus {
-    Enabled = <any>"Enabled", 
-    Disabled = <any>"Disabled", 
-    Deleted = <any>"Deleted", 
+    Enabled = <any>"Enabled",
+    Disabled = <any>"Disabled",
+    Deleted = <any>"Deleted",
 }
 
 export interface FileParameter {
@@ -8407,10 +8431,10 @@ export interface FileResponse {
 
 export class SwaggerException extends Error {
     message: string;
-    status: number; 
-    response: string; 
+    status: number;
+    response: string;
     headers: { [key: string]: any; };
-    result: any; 
+    result: any;
 
     constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
         super();
@@ -8430,7 +8454,7 @@ export class SwaggerException extends Error {
 }
 
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
-    if(result !== null && result !== undefined)
+    if (result !== null && result !== undefined)
         return Observable.throw(result);
     else
         return Observable.throw(new SwaggerException(message, status, response, headers, null));
@@ -8442,12 +8466,12 @@ function blobToText(blob: any): Observable<string> {
             observer.next("");
             observer.complete();
         } else {
-            let reader = new FileReader(); 
-            reader.onload = function() { 
+            let reader = new FileReader();
+            reader.onload = function () {
                 observer.next(this.result);
                 observer.complete();
             }
-            reader.readAsText(blob); 
+            reader.readAsText(blob);
         }
     });
 }

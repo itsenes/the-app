@@ -47,8 +47,8 @@
               <h2 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h2>
             </mat-card-title>
             <mat-divider></mat-divider>
-            <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode}}</mat-card-title>
-            <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode}}</mat-card-subtitle>
+            <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode:true}}</mat-card-title>
+            <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode:true}}</mat-card-subtitle>
             <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
             <mat-card-title>{{doc.model?.recipient?.organisation?.name}}</mat-card-title>
             <mat-card-subtitle>{{doc.model?.recipient?.contact?.displayName}}</mat-card-subtitle>
@@ -98,13 +98,14 @@
             <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
         </mat-menu>
 
+        <br>
         <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
         <h3 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h3>
         <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
         <a class="portal-link" [href]="selected.portalLink" target="__new" mat-button>
           <div class="wrap">
-            <iframe class="frame" [attr.src]="selected.safePortalLink">
+            <iframe #docframe class="frame" [attr.src]="selected.safePortalLink">
             </iframe>
           </div>
         </a>

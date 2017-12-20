@@ -143,9 +143,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     const file_type = this.selected.documentType.model.template.contentType;
     this.apiClient.getDocument(this.subscription.id, this.selected.id)
       .subscribe((response) => {
-        // const blob: Blob = new Blob([response.data], {
-        //   type: `"${file_type}"`
-        // });
         const blob: Blob = new Blob([], {
           type: `"${file_type}"`
         });
