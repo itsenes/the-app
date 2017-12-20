@@ -27,6 +27,7 @@ import { FormControl } from '@angular/forms';
 import { ENTER } from '@angular/cdk/keycodes';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { environment } from '../../../../environments/environment.azure-dev';
+import { subscribeOn } from 'rxjs/operator/subscribeOn';
 
 @Component({
   selector: 'app-document-form',
@@ -136,11 +137,8 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.lookups.currencies.subscribe((entries) => {
-      this.currencies = entries;
-    });
-
-    this.searchCompanyControl.valueChanges.debounceTime(400)
+    this.searchCompanyControl.valueChanges
+      .debounceTime(400)
       .distinctUntilChanged()
       .subscribe((filter) => {
         if (this.isValidFilter(filter)) {
@@ -151,60 +149,67 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         }
       });
 
-
-    this.searchCurrencyControl.valueChanges.debounceTime(400)
-      .distinctUntilChanged().subscribe((filter: string) => {
+    this.searchCurrencyControl.valueChanges
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .subscribe((filter: string) => {
         if (this.isValidFilter(filter)) {
           this.filteredcurrencies = this.currencies.filter(c => c.description
             && c.description.toLowerCase().startsWith(filter.toLowerCase()));
         }
       });
 
+    this.route.params.subscribe((params) => {
+      const typeid = params['typeId'];
+      const docid = params['documentId'];
+      const alias = params['subscription-alias'];
 
-    this.params_sub = this.route.params.subscribe((params) => {
-      this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
-        this.subscription = sub;
-        const typeid = params['typeId'];
-        const docid = params['documentId'];
-        this.subscription.getDocumentType(typeid).subscribe((docType) => {
-          this.documentType = docType;
-          this.subscription.products.subscribe((items) => {
-            this.products = items;
-            // get the document now!
-            if ('new' === docid || null == docid) {
-              const doc = new Document();
-              doc.currencyCode = this.subscription.company.model.currencyCode;
-              doc.date = new Date();
-              doc.dueDate = new Date();
-              doc.lines = new Array<DocumentLine>();
-              const newLine = new DocumentLine();
-              newLine.unitAmount = 0;
-              newLine.quantity = 0;
-              newLine.discountRate = 0;
-              doc.lines.push(newLine);
+      this.appState.getSubscriptionByKey(alias).subscribe((subcription) => {
+        this.subscription = subcription;
+        const load = Observable.forkJoin(
+          this.lookups.currencies,
+          this.subscription.products,
+          this.subscription.getDocumentType(typeid)
+        );
+
+        load.subscribe((result) => {
+          this.currencies = result[0];
+          this.products = result[1];
+          this.documentType = result[2];
+          // init the vm here!
+          if ('new' === docid || null == docid) {
+            const doc = this.getNewDocument();
+            const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
+            vm.init().subscribe(() => {
+              this.vm = vm;
+              this.initControls();
+              this.readonly = false;
+            }, (error) => {
+              this.appState.onError(error);
+            });
+          } else {
+            this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
               const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
               vm.init().subscribe(() => {
                 this.vm = vm;
                 this.initControls();
-                this.readonly = false;
+              }, (error) => {
+                this.appState.onError(error);
               });
-            } else {
-              this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
-                const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
-                vm.init().subscribe(() => {
-                  this.vm = vm;
-                  this.initControls();
-                });
-              });
-            }
-
-          });
-
+            }, (error) => {
+              this.appState.onError(error);
+            });
+          }
+        }, (error) => {
+          this.appState.onError(error);
         });
+      }, (error) => {
+        this.appState.onError(error);
       });
+    }, (error) => {
+      this.appState.onError(error);
     });
   }
-
 
   getNewDocument(): Document {
     const doc = new Document();
@@ -241,7 +246,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
       this.bak(this.model);
     }
   }
-
 
   toggleTaxEditPanel(line: any) {
     this.showPane = !this.showPane;
