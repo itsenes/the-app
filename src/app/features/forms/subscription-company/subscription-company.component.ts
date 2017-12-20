@@ -7,16 +7,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
 import { LookupsService } from '../../../services/lookups.service';
 import { SubscriptionViewModel } from '../../../view-models/view-models';
-import { environment } from '../../../../environments/environment.azure-dev';
 
 @Component({
-  selector: 'app-company-form',
-  templateUrl: './company-form.component.html',
+  selector: 'app-subscription-company',
+  templateUrl: './subscription-company.component.html',
   styleUrls: ['../forms.components.scss']
 })
 
 
-export class CompanyFormComponent implements OnInit, OnDestroy {
+export class SubscriptionCompanyComponent implements OnInit, OnDestroy {
   subscription: SubscriptionViewModel = null;
   subscription_key: any = null;
   private _bak: any = null;
@@ -42,14 +41,6 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
     this._model = value;
   }
   public get model(): any { return this._model; }
-
-  public get companyLogo(): string {
-    if (null != this.model && null != this.model.logoPath && this.model.logoPath !== '') {
-      return this.model.logoPath;
-    } else {
-      return 'assets/images/icon-business.png';
-    }
-  }
 
   @Input()
   public set readonly(value: any) {

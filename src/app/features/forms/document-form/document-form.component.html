@@ -90,11 +90,16 @@
                 </button>
               </span>
               <ng-container *ngIf="company.name">
-                <label>{{company.name}}, {{company.legalName}}</label>
-                <label>{{company.taxCode}}, {{company.taxOffice}}</label>
-                <label>{{company.lineOfBusiness}}</label>
-                <label>{{company.address.name}}</label>
-                <label>{{company.address.zipCode}}, {{company.address.city}}, {{company.address.countryCode}}</label>
+                <a (click)="toggleCompanyPanel()">
+                  <img class="customer-logo" [src]="companyLogo">
+                  <div>
+                    <label>{{company.name}}, {{company.legalName}}</label><br>
+                    <label>{{company.taxCode}}, {{company.taxOffice}}</label><br>
+                    <label>{{company.lineOfBusiness}}</label><br>
+                    <label>{{company.address.name}}</label><br>
+                    <label>{{company.address.zipCode}}, {{company.address.city}}, {{company.address.countryCode}}</label>
+                  </div>
+                </a>
               </ng-container>
             </div>
           </mat-card-content>
@@ -117,11 +122,7 @@
                   <!-- <div class="line-header-container" [ngClass]="{'even':isEven(i)}" fxLayout="row" fxLayoutAlign="start start">
                     
                     
-                    <div *ngIf="!readonly" fxFlexAlign="end center">
-                      <button mat-button color="warn" (click)="removeline(i)">
-                        <label class="small">ΔΙΑΓΡΑΦΗ</label>
-                      </button>
-                    </div>
+                    
                   </div> -->
 
                   <div class="line-container" [ngClass]="{'even':isEven(i)}" fxLayout="row" fxLayoutAlign="start start">
@@ -200,6 +201,11 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div *ngIf="!readonly" class="remove-line">
+                      <button mat-mini-fav color="warn" (click)="removeline(i)">
+                        <label class="small">ΔΙΑΓΡΑΦΗ</label>
+                      </button>
                     </div>
                   </div>
                   <mat-divider></mat-divider>

@@ -49,7 +49,7 @@ import { DocumentFormComponent } from './features/forms/document-form/document-f
 import { LookupsService } from './services/lookups.service';
 import { ViewModelLocator, ServiceLocator } from './view-models/view-models';
 import { SubscriptionFormComponent } from './features/forms/subscription-form/subscription-form.component';
-import { SubscriptionCompanyComponent } from './features/settings/subscription-company/subscription-company.component';
+import { SubscriptionCompanyComponent } from './features/forms/subscription-company/subscription-company.component';
 
 // my api url factory method :)
 export const getApiUrl = function () {
@@ -83,7 +83,7 @@ const appRoutes: Routes = [
             children: [
               { path: '', redirectTo: 'subscription', pathMatch: 'full' },
               { path: 'subscription', component: SubscriptionFormComponent },
-              { path: 'company', component: CompanyFormComponent },
+              { path: 'company', component: SubscriptionCompanyComponent },
               { path: 'contact', component: ContactFormComponent },
               { path: 'document-types', component: DocumentTypesComponent },
               { path: 'items', component: ItemsComponent },

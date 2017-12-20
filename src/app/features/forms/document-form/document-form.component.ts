@@ -26,6 +26,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { ENTER } from '@angular/cdk/keycodes';
 import { AlertsService } from '@jaspero/ng2-alerts';
+import { environment } from '../../../../environments/environment.azure-dev';
 
 @Component({
   selector: 'app-document-form',
@@ -72,6 +73,18 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   public get company(): Organisation {
     return this.vm.model.recipient.organisation;
+  }
+
+  public get companyLogo(): string {
+    if (null != this.model
+      && null != this.model.recipient
+      && null != this.model.recipient.organisation
+      && null != this.model.recipient.organisation.logoPath
+      && this.model.recipient.organisation.logoPath !== '') {
+      return this.model.recipient.organisation.logoPath;
+    } else {
+      return 'assets/images/icon-business.png';
+    }
   }
 
   public get contact(): Contact {

@@ -559,15 +559,6 @@ export class DocumentViewModel extends ViewModel<Document> {
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
-      // OXI TELIKA!
-      // // since the document is still in DRAFT status! - i'll sync the product taxes with the line taxes!
-      // if (this.model.status === DocumentStatus.Draft && line.product != null && line.product.taxes != null) {
-      //   line.taxes = new Array<Tax>();
-      //   line.product.taxes.forEach((tax) => {
-      //     line.taxes.push(tax.clone());
-      //   });
-      // }
-
       if (line.taxes == null) {
         line.taxes = [];
       }
