@@ -237,7 +237,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.params_sub.unsubscribe();
+    if (null != this.params_sub) {
+      this.params_sub.unsubscribe();
+    }
   }
 
   toggle_edit_mode() {

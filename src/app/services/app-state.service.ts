@@ -21,6 +21,9 @@ export class AppStateService {
     // implement telemetry
     this._lastError = error;
     this.router.navigate(['/error']);
+    if (!environment.production) {
+      console.log(error);
+    }
   }
 
   public getLastError(): any {
