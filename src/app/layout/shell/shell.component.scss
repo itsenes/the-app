@@ -109,3 +109,14 @@ article.mat-toolbar {
 .mat-progress-bar .hidden {
   display: none;
 }
+
+.jaspero__dialog-actions button.primary,
+.jaspero__dialog-actions button.default {
+  color: black !important;
+}
+
+.jaspero__dialog-actions button.primary:hover,
+.jaspero__dialog-actions button.default:hover {
+  color: black !important;
+  background-color: dimgrey;
+}

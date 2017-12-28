@@ -28,8 +28,8 @@ export class ShellComponent implements OnInit, OnDestroy {
   alertSettings: AlertSettings = {
     overlay: true,
     overlayClickToClose: true,
-    showCloseButton: false,
-    duration: 3000
+    showCloseButton: true,
+    duration: 5000
   };
   confirmOptions: any = {
     overlay: true,

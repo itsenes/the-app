@@ -3,6 +3,7 @@ import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
+import { groupBy } from 'rxjs/operator/groupBy';
 import {
   ApiClient, Subscription, LookupEntry, DocumentType,
   Product, Tax, TaxAmount, Document, Plan, Recipient, Organisation, Contact,
@@ -76,18 +77,18 @@ export class ViewModel<T> {
     return Math.round(scale * n) / scale;
   }
 
-  groupBy(list, keyGetter) {
-    const group_map = new Map();
-    list.forEach((item) => {
-      const key = keyGetter(item);
-      const collection = group_map.get(key);
-      if (!collection) {
-        group_map.set(key, [item]);
+
+  groupBy(array: any[], property: string) {
+    return array.reduce((prev, next) => {
+      // If the group doesn't exist, create it
+      if (!prev[property]) {
+        prev[property] = [next];
       } else {
-        collection.push(item);
+        prev[property].push(next);
       }
-    });
-    return map;
+      // Mandatory return
+      return prev;
+    }, {});
   }
 
 }
@@ -449,6 +450,8 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public removeline(index) {
+    this.model.lines.splice(index, 1);
+    this.lines.splice(index, 1);
   }
 
   public addline(index) {
@@ -460,6 +463,7 @@ export class DocumentViewModel extends ViewModel<Document> {
     newline.quantity = 0;
     newline.discountRate = 0;
     this.lines.push(newline);
+    this.calcTotals();
   }
 
   public get salesTaxes(): any {
@@ -484,7 +488,7 @@ export class DocumentViewModel extends ViewModel<Document> {
     this.model.totalPayable = 0;
     const salesTaxes = new Array<TaxAmount>();
     const nonSalesTaxes = new Array<TaxAmount>();
-
+    // https://coderwall.com/p/kvzbpa/don-t-use-array-foreach-use-for-instead
     this.lines.forEach((line) => {
       this.model.subTotal = this.model.subTotal + line.subTotal;
       this.model.totalSalesTax = this.model.totalSalesTax + line.totalSalesTax;
@@ -500,9 +504,36 @@ export class DocumentViewModel extends ViewModel<Document> {
         }
       });
     });
-    // λαστ βθτ νοτ λεαστ :)
-    const group_nonSalesTaxes = this.groupBy(nonSalesTaxes, tax => tax.name);
-    const group_salesTaxes = this.groupBy(salesTaxes, tax => tax.name);
+
+    // ok get unique tax descriptions
+    // calculate sums for each unique tax description
+    // push it to the corresponding array for ui binding!
+
+    // this.asObservable(nonSalesTaxes)
+    //   .groupBy((x) => x.code, (x) => x.name, )
+    //   .subscribe((result) => {
+    //     result.subscribe((t) => {
+    //       console.log(t);
+    //     });
+    //   });
+
+    console.log(this.groupBy(nonSalesTaxes, 'name'));
+    console.log(this.groupBy(salesTaxes, 'name'));
+
+    // this.asObservable(salesTaxes)
+    //   .groupBy((x) => x.code)
+    //   .subscribe((result) => {
+    //     result.subscribe((t) => {
+    //       console.log(t);
+    //     });
+    //   });
+    // this.groupBy(nonSalesTaxes, tax => tax.name)
+    //   .subscribe((result) => {
+    //     const group_nonSalesTaxes = result;
+    //   });
+    // this.groupBy(salesTaxes, tax => tax.name).subscribe((result) => {
+    //   const group_salesTaxes = result;
+    // });
   }
 
   public serverCalc() {

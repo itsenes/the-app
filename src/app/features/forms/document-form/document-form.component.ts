@@ -28,6 +28,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { environment } from '../../../../environments/environment.azure-dev';
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
+import { ConfirmationService } from '@jaspero/ng2-confirmations';
 
 @Component({
   selector: 'app-document-form',
@@ -95,7 +96,8 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   constructor(private appState: AppStateService, private route: ActivatedRoute,
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
     private viewModelLocator: ViewModelLocator, private lookups: LookupsService,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private confirmation: ConfirmationService) {
   }
 
   displayCompanyFn(org: Organisation): string {
@@ -159,7 +161,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.route.params.subscribe((params) => {
+    this.params_sub = this.route.params.subscribe((params) => {
       const typeid = params['typeId'];
       const docid = params['documentId'];
       const alias = params['subscription-alias'];
@@ -185,6 +187,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
               this.initControls();
               this.readonly = false;
             }, (error) => {
+              alert('vm.init()' + error);
               this.appState.onError(error);
             });
           } else {
@@ -194,19 +197,24 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
                 this.vm = vm;
                 this.initControls();
               }, (error) => {
+                alert('vm.init()' + error);
                 this.appState.onError(error);
               });
             }, (error) => {
+              alert('load' + error);
               this.appState.onError(error);
             });
           }
         }, (error) => {
+          alert('initial load' + error);
           this.appState.onError(error);
         });
       }, (error) => {
+        alert(' getSubscriptionByKey ' + error);
         this.appState.onError(error);
       });
     }, (error) => {
+      alert(' params sub ' + error);
       this.appState.onError(error);
     });
   }
@@ -287,9 +295,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         newline.taxes = new Array<TaxAmount>();
         if (line.taxes) {
           line.taxes.forEach((tax) => {
-            const newlineTax = tax.clone();
-            newlineTax.amount = undefined;
-            newlineTax.inclusive = false;
             newline.taxes.push(tax.clone());
           });
         }
@@ -320,9 +325,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         newline.taxes = new Array<TaxAmount>();
         if (line.taxes) {
           line.taxes.forEach((tax) => {
-            const newlineTax = tax.clone();
-            newlineTax.amount = undefined;
-            newlineTax.inclusive = false;
             newline.taxes.push(tax.clone());
           });
         }
@@ -339,6 +341,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
       action = this.apiClient.createDocument(this.subscription.id, request);
     }
     action.subscribe((document) => {
+      this.readonly = true; // end editing
       this.model = document;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
@@ -353,6 +356,12 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   removeline(index) {
+    this.confirmation.create('Διαγραφή', `Να γίνει η διαγραφή της γραμμής ${index + 1};`)
+      .subscribe((ans) => {
+        if (ans.resolved) {
+          this.vm.removeline(index);
+        }
+      });
   }
 
   addline() {

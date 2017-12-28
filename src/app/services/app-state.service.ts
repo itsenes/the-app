@@ -19,11 +19,14 @@ export class AppStateService {
 
   public onError(error) {
     // implement telemetry
-    this._lastError = error;
-    this.router.navigate(['/error']);
     if (!environment.production) {
-      console.log(error);
+      console.log('ERROR:' + JSON.stringify(error ? error : ''));
     }
+    // set last error
+    if (!this._lastError) {
+      this._lastError = error;
+    }
+    this.router.navigate(['/error']);
   }
 
   public getLastError(): any {
