@@ -249,10 +249,12 @@
                   <div class="line-container-total" *ngFor="let tax of vm.nonSalesTaxes; let i = index">
                     <div fxFlex="30px"></div>
                     <div fxFlex></div>
-                    <div class="total"></div>
+                    <div class="total">{{tax.name}}</div>
                     <div fxFlex="120px">
-                      <span fxFlex class="total-negative">
-                        <strong>{{tax.amount | currency:model.currencyCode:true}}</strong>
+                      <span fxFlex class="total">
+                        <label class="total-negative">
+                          {{tax.amount | currency:model.currencyCode:true}}
+                        </label>
                       </span>
                     </div>
                   </div>

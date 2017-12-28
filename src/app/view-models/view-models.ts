@@ -76,21 +76,6 @@ export class ViewModel<T> {
     const scale = Math.pow(10, decimalPlaces);
     return Math.round(scale * n) / scale;
   }
-
-
-  groupBy(array: any[], property: string) {
-    return array.reduce((prev, next) => {
-      // If the group doesn't exist, create it
-      if (!prev[property]) {
-        prev[property] = [next];
-      } else {
-        prev[property].push(next);
-      }
-      // Mandatory return
-      return prev;
-    }, {});
-  }
-
 }
 
 @Injectable()
@@ -480,6 +465,22 @@ export class DocumentViewModel extends ViewModel<Document> {
     this._nonSalesTaxes = value;
   }
 
+  private groupAndSumTaxes(array: TaxAmount[]) {
+    const result = [];
+    array.reduce(function (res, value) {
+      if (!res[value.name]) {
+        res[value.name] = {
+          amount: 0,
+          name: value.name
+        };
+        result.push(res[value.name]);
+      }
+      res[value.name].amount += value.amount;
+      return res;
+    }, {});
+    return result;
+  }
+
   public calcTotals() {
     this.model.subTotal = 0;
     this.model.totalSalesTax = 0;
@@ -506,34 +507,12 @@ export class DocumentViewModel extends ViewModel<Document> {
     });
 
     // ok get unique tax descriptions
+    this.salesTaxes = this.groupAndSumTaxes(salesTaxes);
+    this.nonSalesTaxes = this.groupAndSumTaxes(nonSalesTaxes);
     // calculate sums for each unique tax description
     // push it to the corresponding array for ui binding!
-
-    // this.asObservable(nonSalesTaxes)
-    //   .groupBy((x) => x.code, (x) => x.name, )
-    //   .subscribe((result) => {
-    //     result.subscribe((t) => {
-    //       console.log(t);
-    //     });
-    //   });
-
-    console.log(this.groupBy(nonSalesTaxes, 'name'));
-    console.log(this.groupBy(salesTaxes, 'name'));
-
-    // this.asObservable(salesTaxes)
-    //   .groupBy((x) => x.code)
-    //   .subscribe((result) => {
-    //     result.subscribe((t) => {
-    //       console.log(t);
-    //     });
-    //   });
-    // this.groupBy(nonSalesTaxes, tax => tax.name)
-    //   .subscribe((result) => {
-    //     const group_nonSalesTaxes = result;
-    //   });
-    // this.groupBy(salesTaxes, tax => tax.name).subscribe((result) => {
-    //   const group_salesTaxes = result;
-    // });
+    console.log(this.salesTaxes);
+    console.log(this.nonSalesTaxes);
   }
 
   public serverCalc() {
