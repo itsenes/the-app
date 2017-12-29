@@ -62,7 +62,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   // Enter, comma
   separatorKeysCodes = [ENTER];
 
-
   /// viewmodel
   public set vm(value: DocumentViewModel) {
     this._viewmodel = value;
