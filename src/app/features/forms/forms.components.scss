@@ -87,13 +87,16 @@ label {
 .mat-card-avatar.icon-avatar-large {
   width: 22px;
   height: 22px;
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
   border-radius: 0px;
   padding: 18px;
   border: solid 1 whitesmoke;
   background: red;
+}
+
+.mat-card-avatar.avatar-large {
+  height: 64px;
+  width: 64px;
+  border-radius: 0%;
 }
 
 .mat-card-avatar.icon-avatar-large.Custom {
@@ -330,4 +333,24 @@ label.total-negative {
   height: 64px;
   margin-top: 4px;
   margin-right: 6px;
+}
+
+.material-icons.size-64 {
+  font-size: 64px;
+}
+
+.mat-icon.size-64 {
+  font-size: 64px;
+}
+
+.material-icons.size-128 {
+  font-size: 128px;
+}
+
+.mat-icon.size-128 {
+  font-size: 128px;
+}
+
+.mat-card-header-text {
+  margin: 0 4px;
 }

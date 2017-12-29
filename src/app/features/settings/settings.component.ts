@@ -7,7 +7,7 @@ import { AlertsService } from '@jaspero/ng2-alerts';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss', '../features.components.scss']
+  styleUrls: ['../features.components.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   subscription_key: any = null;

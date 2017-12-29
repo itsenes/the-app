@@ -1,39 +1,49 @@
-<form type="submit" #companyForm="ngForm">
-  <mat-card class="form-card">
+<div *ngIf="model && model.plan">
+  <mat-card>
     <mat-card-title>
       <label class="small">Η ΣΥΝΔΡΟΜΗ ΣΑΣ</label>
       <span class="app-toolbar-filler"></span>
     </mat-card-title>
-    <mat-card-content>
-      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" [ngClass]="model.plan?.name" class="icon-avatar-large mat-elavation-z6"
+    <br>
+    <mat-card-header>
+      <img mat-card-avatar src="assets/images/incontrl_icon_transparent_white.png" class="icon-avatar-large mat-elevation-z3"
       />
-      <div class="form-container">
-        <h3>{{model.plan?.name}}</h3>
-        <br>
-        <label>{{model.plan?.description}}</label>
-        <mat-card-subtitle>
-          {{model.plan?.richText}}
-        </mat-card-subtitle>
-      </div>
-    </mat-card-content>
-    <mat-card-title>
-      <label class="small inline">ΥΠΗΡΕΣΙΕΣ</label>
-    </mat-card-title>
+      <mat-card-title>
+        <h2>{{model.plan?.name}}</h2>
+      </mat-card-title>
+    </mat-card-header>
     <mat-card-content>
-      <div class="form-container">
-        <mat-card-subtitle>
-          <div *ngFor="let service of model.plan?.services; let i = index">
-            <label>{{service.name}}</label>
-            <br>
-          </div>
-        </mat-card-subtitle>
-        <mat-card-subtitle>
-          <div *ngFor="let policy of model.plan?.limits; let i = index">
-            <label>{{policy.name}}</label>
-            <br>
-          </div>
-        </mat-card-subtitle>
-      </div>
+      <mat-card-subtitle>
+        <br> {{model.plan?.description}}
+        <br> {{model.plan?.richText}}
+      </mat-card-subtitle>
     </mat-card-content>
   </mat-card>
-</form>
+
+  <br>
+
+  <mat-grid-list [cols]="3" rowHeight="220" gutterSize="10">
+    <mat-grid-tile *ngFor="let service of model.plan?.services; let i = index">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <strong>{{service.name}}</strong>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="min-height">
+          <mat-icon color="primary" class="size-64">settings</mat-icon>
+          <!-- <span mat-card-avatar class="folder-count-badge accent">
+            <p class="folder-count">{{doc.count}}</p>
+          </span> -->
+          <!-- <img src="assets/images/donut.png" width="36px" height="36px"> -->
+          <mat-card-subtitle>{{service.description}}.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button>
+            <label>Ρυθμίσεις</label>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

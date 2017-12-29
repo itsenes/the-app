@@ -4,7 +4,7 @@
   <span class="fill-remaining-space"></span>
 </mat-toolbar>
 
-<div class="view-content">
+<div class="view-content" *ngIf="subscription && subscription.company">
   <mat-card class="action-card" fxShow fxHide.lt-lg fxFlex="20">
     <mat-card-header>
       <img mat-card-avatar [src]="subscription.companyLogo" class="avatar-large  mat-elevation-z3" />
