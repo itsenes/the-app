@@ -38,14 +38,15 @@
         <mat-list-item class="subscription-list-item" *ngFor="let subscription of subscriptions">
           <img matListAvatar class="user-avatar-large" src="{{subscription.companyLogo}}" alt="{{subscription.id}}">
           <h2 matLine>{{subscription.company.name}}</h2>
+          <h3 matLine>{{subscription.timezone}}</h3>
           <p matLine>
             <span class="label-small">{{subscription.company.legalName}}</span>
             <br />
-            <span>{{subscription.company.lineOfBusiness}}</span>
+            <span>{{subscription.company.model.lineOfBusiness}}</span>
             <br/>
-            <span>{{subscription.company.taxCode}}, {{subscription.company.taxOffice}}</span>
+            <span>{{subscription.company.model.taxCode}}, {{subscription.company.model.taxOffice}}</span>
             <br/>
-            <span>{{subscription.company.email}}, {{subscription.company.website}}</span>
+            <span>{{subscription.company.model.email}}, {{subscription.company.model.website}}</span>
           </p>
           <br />
           <h2 matLine>{{subscription.contact.firstName}} {{subscription.contact.lastName}}</h2>

@@ -7,14 +7,14 @@
 <div class="view-content">
   <mat-card class="action-card" fxShow fxHide.lt-lg fxFlex="20">
     <mat-card-header>
-      <img mat-card-avatar [src]="subscription.companyLogo" class="avatar-large  mat-elevation-z6" />
+      <img mat-card-avatar [src]="subscription.companyLogo" class="avatar-large  mat-elevation-z3" />
       <mat-card-title>
         <strong>{{subscription.company.name}}</strong>
         <br /> {{subscription.company.legalName}}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-card-subtitle>{{subscription.contact.firstName}} {{subscription.contact.lastName}}
+      <mat-card-subtitle><br>{{subscription.contact.firstName}} {{subscription.contact.lastName}}
         <br>{{subscription.contact.email}} </mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions>

@@ -80,7 +80,6 @@ export class ShellComponent implements OnInit, OnDestroy {
               this.navLinks.push({ path: this.subscription.settingsPath, icon: 'settings', label: 'Ρυθμίσεις' });
             });
           } else {
-            alert('no active subscription');
             console.log('no active subscription - redirecting to auth-callback');
             this.router.navigateByUrl('/auth-callback');
           }

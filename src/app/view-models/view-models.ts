@@ -103,6 +103,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   private _documentTypes: DocumentTypeViewModel[];
   private _products: any[];
   private _plan: Plan;
+  private _members: any[];
 
   constructor() {
     super();
