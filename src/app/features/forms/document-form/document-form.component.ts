@@ -129,7 +129,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     this.model.date = event.value;
   }
 
-  toggleCompanyPanel() {
+  toggleCompanyPanel(isnew?) {
+    if (isnew) {
+      this.model.recipient.organisation = new Organisation();
+    }
     this.showPane = !this.showPane;
     this.showAddCompany = !this.showAddCompany;
   }

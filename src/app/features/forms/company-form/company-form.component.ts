@@ -75,9 +75,6 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
           this.subscription = sub;
-          if (null == this.model || null == this.model.id) {
-            this.model = sub.model.company;
-          }
           if (!this.readonly) {
             this.bak(this.model);
           }

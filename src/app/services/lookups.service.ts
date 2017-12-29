@@ -85,10 +85,10 @@ export class LookupsService {
 
   private loadCurrencies(): Observable<LookupEntry[]> {
     const observable = this.apiClient.getLookup('currencies', 1, this.maxcount).map((response) => {
-      this._countries = response.items.map((item) => {
+      this._currencies = response.items.map((item) => {
         return item;
       });
-      return this._countries;
+      return this._currencies;
     });
     return observable;
   }
@@ -115,7 +115,7 @@ export class LookupsService {
       this._timezones = response.items.map((item) => {
         return item;
       });
-      return this._countries;
+      return this._timezones;
     });
     return observable;
   }
