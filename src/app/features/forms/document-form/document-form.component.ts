@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 import { Subject } from 'rxjs/Subject';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../../services/app-state.service';
 import {
   ViewModelLocator,
@@ -19,7 +19,7 @@ import {
   ApiClient,
   Address, Contact, Document, DocumentLine, DocumentType, Organisation,
   Product, Recipient, Tax, TaxAmount, TaxType, TaxAmountType, LookupEntry,
-  UpdateDocumentRequest, CreateDocumentRequest
+  UpdateDocumentRequest, CreateDocumentRequest, TaxDefinition
 } from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -52,6 +52,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   invoicedueDate: FormControl = new FormControl();
   filteredcompanies: Organisation[];
   currencies: LookupEntry[] = null;
+  taxes: Array<TaxDefinition> = null;
   filteredcurrencies: LookupEntry[];
   newline: DocumentLine = null;
   showPane = false;
@@ -97,7 +98,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
     private viewModelLocator: ViewModelLocator, private lookups: LookupsService,
     private alertsService: AlertsService,
-    private confirmation: ConfirmationService) {
+    private confirmation: ConfirmationService, private router: Router) {
   }
 
   displayCompanyFn(org: Organisation): string {
@@ -171,17 +172,20 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         const load = Observable.forkJoin(
           this.lookups.currencies,
           this.subscription.products,
-          this.subscription.getDocumentType(typeid)
+          this.subscription.getDocumentType(typeid),
+          this.subscription.taxes
         );
 
         load.subscribe((result) => {
           this.currencies = result[0];
           this.products = result[1];
           this.documentType = result[2];
+          this.taxes = result[3];
           // init the vm here!
           if ('new' === docid || null == docid) {
             const doc = this.getNewDocument();
             const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
+            vm.documentType = this.documentType;
             vm.init().subscribe(() => {
               this.vm = vm;
               this.initControls();
@@ -193,6 +197,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           } else {
             this.apiClient.getDocument(this.subscription.id, docid).subscribe((doc) => {
               const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
+              vm.documentType = this.documentType;
               vm.init().subscribe(() => {
                 this.vm = vm;
                 this.initControls();
@@ -280,6 +285,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   save() {
     let action: Observable<Document> = null;
+    let redirect = false;
     if (!this.isnew()) {
       const request: UpdateDocumentRequest = new UpdateDocumentRequest();
       request.date = this.model.date;
@@ -307,9 +313,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
       request.paymentCode = this.model.paymentCode;
       request.recipient = this.model.recipient;
       request.serverCalculations = true;
-      console.log(request.toJSON());
       action = this.apiClient.updateDocument(this.subscription.id, this.model.id, request);
     } else {
+      redirect = true;
       const request: CreateDocumentRequest = new CreateDocumentRequest();
       request.typeId = this.documentType.id;
       request.date = this.model.date;
@@ -337,13 +343,16 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
       request.paymentCode = this.model.paymentCode;
       request.recipient = this.model.recipient;
       request.serverCalculations = true;
-      console.log(request.toJSON());
       action = this.apiClient.createDocument(this.subscription.id, request);
     }
     action.subscribe((document) => {
       this.readonly = true; // end editing
       this.model = document;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
+      if (redirect) {
+        console.log(this.vm.viewPath);
+        this.router.navigateByUrl(this.vm.viewPath);
+      }
     }, (error) => {
       this.readonly = false; // continue editing
       console.log(error);

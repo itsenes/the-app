@@ -8,7 +8,7 @@ import {
   ApiClient, Subscription, LookupEntry, DocumentType,
   Product, Tax, TaxAmount, Document, Plan, Recipient, Organisation, Contact,
   DocumentLine, Address, DocumentStatus, TaxAmountType,
-  DocumentCalculationRequest, DocumentCalculationResult, PricedLine, TaxType
+  DocumentCalculationRequest, DocumentCalculationResult, PricedLine, TaxType, TaxDefinition
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
@@ -104,6 +104,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   private _products: any[];
   private _plan: Plan;
   private _members: any[];
+  private _taxes: TaxDefinition[];
 
   constructor() {
     super();
@@ -248,6 +249,21 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     return this.serviceLocator.apiClient.getSubscriptionPlan(this.id).map((plan) => {
       this._plan = plan;
       return this._plan;
+    });
+  }
+
+  public get taxes(): Observable<TaxDefinition[]> {
+    if (null == this._taxes) {
+      return this.loadTaxes();
+    } else {
+      return this.asObservable(this._taxes);
+    }
+  }
+
+  private loadTaxes(): Observable<TaxDefinition[]> {
+    return this.serviceLocator.apiClient.getTaxes(this.id, 1, 100).map((result) => {
+      this._taxes = result.items;
+      return this._taxes;
     });
   }
 }
