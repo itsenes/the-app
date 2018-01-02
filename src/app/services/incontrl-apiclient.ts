@@ -1178,14 +1178,16 @@ export class ApiClient {
      * @filter_To (optional) 
      * @filter_Status (optional) 
      * @filter_RecipientCode (optional) 
+     * @filter_RecipientName (optional) 
      * @filter_RecipientId (optional) 
      * @filter_TypeId (optional) 
      * @filter_PaymentCode (optional) 
+     * @filter_Code (optional) 
      * @sort (optional) 
      * @search (optional) 
      * @return Success
      */
-    getDocuments(subscriptionId: string, page: number, size: number, summary: boolean, filter_Number?: string | null | undefined, filter_From?: Date | null | undefined, filter_To?: Date | null | undefined, filter_Status?: Status[] | null | undefined, filter_RecipientCode?: string | null | undefined, filter_RecipientId?: string | null | undefined, filter_TypeId?: string[] | null | undefined, filter_PaymentCode?: string | null | undefined, sort?: string | null | undefined, search?: string | null | undefined): Observable<ResultSetOfDocumentInfo> {
+    getDocuments(subscriptionId: string, page: number, size: number, summary: boolean, filter_Number?: string | null | undefined, filter_From?: Date | null | undefined, filter_To?: Date | null | undefined, filter_Status?: Status[] | null | undefined, filter_RecipientCode?: string | null | undefined, filter_RecipientName?: string | null | undefined, filter_RecipientId?: string | null | undefined, filter_TypeId?: string[] | null | undefined, filter_PaymentCode?: string | null | undefined, filter_Code?: string | null | undefined, sort?: string | null | undefined, search?: string | null | undefined): Observable<ResultSetOfDocumentInfo> {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/documents?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
@@ -1212,12 +1214,16 @@ export class ApiClient {
             filter_Status && filter_Status.forEach(item => { url_ += "Filter.Status=" + encodeURIComponent("" + item) + "&"; });
         if (filter_RecipientCode !== undefined)
             url_ += "Filter.RecipientCode=" + encodeURIComponent("" + filter_RecipientCode) + "&"; 
+        if (filter_RecipientName !== undefined)
+            url_ += "Filter.RecipientName=" + encodeURIComponent("" + filter_RecipientName) + "&"; 
         if (filter_RecipientId !== undefined)
             url_ += "Filter.RecipientId=" + encodeURIComponent("" + filter_RecipientId) + "&"; 
         if (filter_TypeId !== undefined)
             filter_TypeId && filter_TypeId.forEach(item => { url_ += "Filter.TypeId=" + encodeURIComponent("" + item) + "&"; });
         if (filter_PaymentCode !== undefined)
             url_ += "Filter.PaymentCode=" + encodeURIComponent("" + filter_PaymentCode) + "&"; 
+        if (filter_Code !== undefined)
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (search !== undefined)
@@ -2209,11 +2215,12 @@ export class ApiClient {
     }
 
     /**
+     * @filter_Code (optional) 
      * @sort (optional) 
      * @search (optional) 
      * @return Success
      */
-    getDocumentTypes(subscriptionId: string, page: number, size: number, sort?: string | null | undefined, search?: string | null | undefined): Observable<ResultSetOfDocumentTypeInfo> {
+    getDocumentTypes(subscriptionId: string, page: number, size: number, filter_Code?: string | null | undefined, sort?: string | null | undefined, search?: string | null | undefined): Observable<ResultSetOfDocumentTypeInfo> {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/document-types?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
@@ -2226,6 +2233,8 @@ export class ApiClient {
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
             url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+        if (filter_Code !== undefined)
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (search !== undefined)
@@ -3560,11 +3569,12 @@ export class ApiClient {
     }
 
     /**
+     * @filter_Code (optional) 
      * @sort (optional) 
      * @search (optional) 
      * @return Success
      */
-    getPaymentOptionDocumentTypes(subscriptionId: string, paymentOptionId: string, page: number, size: number, sort?: string | null | undefined, search?: string | null | undefined): Observable<ResultSetOfDocumentTypeInfo> {
+    getPaymentOptionDocumentTypes(subscriptionId: string, paymentOptionId: string, page: number, size: number, filter_Code?: string | null | undefined, sort?: string | null | undefined, search?: string | null | undefined): Observable<ResultSetOfDocumentTypeInfo> {
         let url_ = this.baseUrl + "/subscriptions/{subscriptionId}/payment-options/{paymentOptionId}/document-types?";
         if (subscriptionId === undefined || subscriptionId === null)
             throw new Error("The parameter 'subscriptionId' must be defined.");
@@ -3580,6 +3590,8 @@ export class ApiClient {
             throw new Error("The parameter 'size' must be defined and cannot be null.");
         else
             url_ += "Size=" + encodeURIComponent("" + size) + "&"; 
+        if (filter_Code !== undefined)
+            url_ += "Filter.Code=" + encodeURIComponent("" + filter_Code) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (search !== undefined)
@@ -6554,7 +6566,9 @@ export class ResultSetOfDocumentInfo {
 
 export class Document {
     id?: string | undefined;
+    code?: string | undefined;
     typeId?: string | undefined;
+    typeName?: string | undefined;
     number?: number | undefined;
     numberPrintable?: string | undefined;
     date?: Date | undefined;
@@ -6580,7 +6594,9 @@ export class Document {
     init(data?: any) {
         if (data) {
             this.id = data["id"];
+            this.code = data["code"];
             this.typeId = data["typeId"];
+            this.typeName = data["typeName"];
             this.number = data["number"];
             this.numberPrintable = data["numberPrintable"];
             this.date = data["date"] ? new Date(data["date"].toString()) : <any>undefined;
@@ -6618,7 +6634,9 @@ export class Document {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["code"] = this.code;
         data["typeId"] = this.typeId;
+        data["typeName"] = this.typeName;
         data["number"] = this.number;
         data["numberPrintable"] = this.numberPrintable;
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
@@ -6940,6 +6958,7 @@ export class Tax {
 }
 
 export class CreateDocumentRequest {
+    code?: string | undefined;
     typeId?: string | undefined;
     number?: number | undefined;
     date?: Date | undefined;
@@ -6964,6 +6983,7 @@ export class CreateDocumentRequest {
 
     init(data?: any) {
         if (data) {
+            this.code = data["code"];
             this.typeId = data["typeId"];
             this.number = data["number"];
             this.date = data["date"] ? new Date(data["date"].toString()) : <any>undefined;
@@ -7000,6 +7020,7 @@ export class CreateDocumentRequest {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
         data["typeId"] = this.typeId;
         data["number"] = this.number;
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
@@ -7037,6 +7058,7 @@ export class CreateDocumentRequest {
 }
 
 export class UpdateDocumentRequest {
+    code?: string | undefined;
     number?: number | undefined;
     date?: Date | undefined;
     dueDate?: Date | undefined;
@@ -7059,6 +7081,7 @@ export class UpdateDocumentRequest {
 
     init(data?: any) {
         if (data) {
+            this.code = data["code"];
             this.number = data["number"];
             this.date = data["date"] ? new Date(data["date"].toString()) : <any>undefined;
             this.dueDate = data["dueDate"] ? new Date(data["dueDate"].toString()) : <any>undefined;
@@ -7093,6 +7116,7 @@ export class UpdateDocumentRequest {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
         data["number"] = this.number;
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
         data["dueDate"] = this.dueDate ? this.dueDate.toISOString() : <any>undefined;
@@ -7792,6 +7816,7 @@ export class PricedLine {
     id?: string | undefined;
     quantity?: number | undefined;
     unitAmount?: number | undefined;
+    unitAmountNet?: number | undefined;
     discountRate?: number | undefined;
     taxes?: Tax[] | undefined;
     readonly taxesDescription?: string | undefined;
@@ -7801,6 +7826,7 @@ export class PricedLine {
             this.id = data["id"];
             this.quantity = data["quantity"];
             this.unitAmount = data["unitAmount"];
+            this.unitAmountNet = data["unitAmountNet"];
             this.discountRate = data["discountRate"];
             if (data["taxes"] && data["taxes"].constructor === Array) {
                 this.taxes = [];
@@ -7822,6 +7848,7 @@ export class PricedLine {
         data["id"] = this.id;
         data["quantity"] = this.quantity;
         data["unitAmount"] = this.unitAmount;
+        data["unitAmountNet"] = this.unitAmountNet;
         data["discountRate"] = this.discountRate;
         if (this.taxes && this.taxes.constructor === Array) {
             data["taxes"] = [];
@@ -7942,6 +7969,7 @@ export class PricedLineResult {
     id?: string | undefined;
     quantity?: number | undefined;
     unitAmount?: number | undefined;
+    unitAmountNet?: number | undefined;
     discountRate?: number | undefined;
     readonly taxesDescription?: string | undefined;
 
@@ -7961,6 +7989,7 @@ export class PricedLineResult {
             this.id = data["id"];
             this.quantity = data["quantity"];
             this.unitAmount = data["unitAmount"];
+            this.unitAmountNet = data["unitAmountNet"];
             this.discountRate = data["discountRate"];
             (<any>this).taxesDescription = data["taxesDescription"];
         }
@@ -7988,6 +8017,7 @@ export class PricedLineResult {
         data["id"] = this.id;
         data["quantity"] = this.quantity;
         data["unitAmount"] = this.unitAmount;
+        data["unitAmountNet"] = this.unitAmountNet;
         data["discountRate"] = this.discountRate;
         data["taxesDescription"] = this.taxesDescription;
         return data; 

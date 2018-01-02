@@ -218,6 +218,11 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     });
   }
 
+  addTax() {
+    const tax = new TaxDefinition();
+    this._taxes.push(tax);
+  }
+
   loadProducts(): Observable<any> {
     return this.serviceLocator.apiClient.getProducts(this.id, 1, 100)
       .map((response) => {

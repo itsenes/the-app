@@ -1,0 +1,28 @@
+<mat-card class="list-card" *ngIf="!norecords">
+  <mat-card-title class="list-card-title">
+    <label class="small">ΦΟΡΟΙ, ΚΡΑΤΗΣΕΙΣ, ΕΙΣΦΟΡΕΣ</label>
+    <span class="app-toolbar-filler"></span>
+    <button color="primary" (click)="add_new()" mat-button>
+      <label class="small">ΠΡΟΣΘΗΚΗ</label>
+    </button>
+  </mat-card-title>
+  <mat-card-content>
+    <app-tax-form (onDelete)='delete($event,i)' *ngFor="let item of items; let i = index" [model]='item'></app-tax-form>
+  </mat-card-content>
+</mat-card>
+
+<div fxLayout="row" fxLayoutAlign="center center" *ngIf="norecords">
+  <mat-card class="no-records-card">
+    <mat-card-content fxLayout="column" fxLayoutAlign="center stretch">
+      <mat-card-title fxLayoutAlign="center center">
+        <label class="small">δεν βρέθηκαν εγγραφές.</label>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+        <img src="assets/images/no-records.png" class="no-records">
+        <button color="primary" (click)="add_new()" mat-button>
+          <label class="small">ΞΕΚΙΝΗΣΤΕ ΕΔΩ!</label>
+        </button>
+      </mat-card-content>
+    </mat-card-content>
+  </mat-card>
+</div>

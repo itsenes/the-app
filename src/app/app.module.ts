@@ -50,6 +50,8 @@ import { LookupsService } from './services/lookups.service';
 import { ViewModelLocator, ServiceLocator } from './view-models/view-models';
 import { SubscriptionFormComponent } from './features/forms/subscription-form/subscription-form.component';
 import { SubscriptionCompanyComponent } from './features/forms/subscription-company/subscription-company.component';
+import { TaxesComponent } from './features/taxes/taxes.component';
+import { TaxFormComponent } from './features/forms/tax-form/tax-form.component';
 
 // my api url factory method :)
 export const getApiUrl = function () {
@@ -87,6 +89,7 @@ const appRoutes: Routes = [
               { path: 'contact', component: ContactFormComponent },
               { path: 'document-types', component: DocumentTypesComponent },
               { path: 'items', component: ItemsComponent },
+              { path: 'taxes', component: TaxesComponent },
             ]
           },
         ]
@@ -121,7 +124,9 @@ const appRoutes: Routes = [
     ErrorComponent,
     DocumentFormComponent,
     SubscriptionFormComponent,
-    SubscriptionCompanyComponent
+    SubscriptionCompanyComponent,
+    TaxesComponent,
+    TaxFormComponent
   ],
   entryComponents: [SelectImageDialogComponent],
   imports: [

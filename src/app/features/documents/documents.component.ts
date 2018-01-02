@@ -82,8 +82,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   search() {
     this.status = 'αναζήτηση, παρακαλώ περιμένετε...';
     this.filtertext = this.searchText;
-    this.apiClient.getDocuments(this.subscription.id, this.pageindex + 1, this.pagesize, false, undefined, undefined,
-      undefined, undefined, undefined, undefined, [this.documentType.id], undefined,
+    this.apiClient.getDocuments(this.subscription.id, this.pageindex + 1, this.pagesize, true, undefined, undefined,
+      undefined, undefined, undefined, undefined, undefined, [this.documentType.id], undefined, undefined,
       `${this.sortfield}${this.sortdirection}`, this.searchText)
       .subscribe((response) => {
         this.status = `βρέθηκαν ${response.count} παραστατικά.`;
