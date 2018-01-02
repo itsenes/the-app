@@ -40,15 +40,15 @@
 
       <label *ngIf='readonly'>Τιμή μονάδος: {{model.unitAmount | currency:currencyCode:true}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
-        <input matInput type="number" [readonly]='readonly' #unitAmount="ngModel" name="unitAmount" [(ngModel)]='model.unitAmount' placeholder="Τιμή μονάδος"
-          floatPlaceholder='auto' maxlength="150">
+        <input matInput type="number" [readonly]='readonly' #unitAmount="ngModel" name="unitAmount" [(ngModel)]='model.unitAmount'
+          placeholder="Τιμή μονάδος" floatPlaceholder='auto' maxlength="150">
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
 
       <label *ngIf='readonly'>Μονάδα μέτρησης: {{model.unitType}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
-        <input matInput type="number" [readonly]='readonly' #unitType="ngModel" name="unitType" [(ngModel)]='model.unitType' placeholder="Μονάδα μέτρησης"
-          floatPlaceholder='auto' maxlength="150">
+        <input matInput [readonly]='readonly' #unitType="ngModel" name="unitType" [(ngModel)]='model.unitType' placeholder="Μονάδα μέτρησης"
+          floatPlaceholder='auto' maxlength="50">
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
     </div>
@@ -59,67 +59,20 @@
   </mat-card-title>
   <mat-card-content>
     <div class="form-container">
-      <mat-chip-list *ngIf='readonly'>
-        <mat-chip [color]="'warn'" *ngFor="let tax of model?.taxes; let i = index">{{tax.name}} ({{tax.rate * 100}}%)</mat-chip>
+      <span *ngIf="!readonly">
+        <mat-form-field class="shorter list">
+          <mat-select [disabled]='readonly' name="tax" #currency="ngModel" [(ngModel)]='selectedTax' placeholder="Επιλέξτε κατηγορία φόρου">
+            <mat-option *ngFor='let tax of taxes' [value]="tax">{{tax.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button (click)="addtax()" mat-button color="primary">
+          <label class="small">ΠΡΟΣΘΗΚΗ</label>
+        </button>
+      </span>
+      <mat-chip-list *ngIf='model?.taxes?.length>0'>
+        <mat-chip [color]="'warn'" *ngFor="let tax of model?.taxes; let i = index">{{tax.name}} ({{tax.rate}}%)</mat-chip>
       </mat-chip-list>
-      <label *ngIf="readonly && (!model.taxes || model.taxes.length==0)">Δεν έχουν οριστεί φόροι</label>
-      <ng-container *ngIf='!readonly'>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let tax of model?.taxes; let i = index">
-          <mat-chip class="list">{{i+1}}</mat-chip>
-          <mat-form-field class="shorter list">
-            <input matInput [readonly]='readonly' #taxname="ngModel" name="taxname" [(ngModel)]='tax.name' placeholder="Ονομασία" floatPlaceholder='auto'
-              maxlength="150">
-          </mat-form-field>
-
-          <mat-form-field class="shorter list">
-            <mat-select [(value)]="tax.code" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
-              <mat-option value="VAT">Είναι ΦΠΑ</mat-option>
-              <mat-option value="DEDUCTABLE">Είναι Φόρος Παρακράτησης</mat-option>
-              <mat-option value="OTHER">Άλλο</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="shorter list">
-            <input matInput type="number" [readonly]='readonly' #taxamount="ngModel" name="taxamount" [(ngModel)]='tax.rate' placeholder="Ποσοστό"
-              floatPlaceholder='auto' maxlength="150">
-            <span matSuffix>%</span>
-          </mat-form-field>
-
-          <button color="warn" (click)="removetax(i)" mat-icon-button>
-            <mat-icon class="warn-icon">delete_forever</mat-icon>
-          </button>
-        </div>
-
-        <div *ngIf='!readonly' fxLayout="row" fxLayoutAlign="start center">
-          <mat-chip class="list">...</mat-chip>
-
-          <mat-form-field class="shorter list">
-            <input matInput [readonly]='readonly' #newtaxname="ngModel" name="newtaxname" [(ngModel)]='newtax.name' placeholder="Ονομασία"
-              floatPlaceholder='auto' maxlength="150">
-            <mat-hint align="end"></mat-hint>
-          </mat-form-field>
-
-          <mat-form-field class="shorter list">
-            <mat-select [(value)]="newtax.type" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
-              <mat-option value="UnitRate">ΦΠΑ</mat-option>
-              <mat-option value="FixedRate">Φόρος Παρακράτησης</mat-option>
-              <mat-option value="Fixed">Άλλο</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="shorter list">
-            <input matInput type="number" [readonly]='readonly' #newtaxamount="ngModel" name="newtaxamount" [(ngModel)]='newtax.rate'
-              placeholder="Ποσοστό" floatPlaceholder='auto' maxlength="150">
-            <span matSuffix>%</span>
-            <mat-hint align="end"></mat-hint>
-          </mat-form-field>
-
-          <button (click)="addtax()" mat-button color="primary">
-            <label class="small">ΠΡΟΣΘΗΚΗ</label>
-          </button>
-        </div>
-      </ng-container>
-
+      <label *ngIf="(!model.taxes || model.taxes.length==0)">Δεν έχουν οριστεί φόροι</label>
     </div>
   </mat-card-content>
 

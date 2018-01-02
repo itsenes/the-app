@@ -19,12 +19,12 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   private _currencyCode: string = null;
   public readonly = true;
   private busy = false;
-  public currencies = [];
-  public countries = [];
+  public taxes = [];
   params_sub: any = null;
   api_path = environment.api_url + '/api/';
   private template_file_url;
   public newtax = new Tax();
+  selectedTax: any = null;
 
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
@@ -55,7 +55,9 @@ export class ItemFormComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
           this.subscription_id = sub.id;
-
+          sub.taxes.subscribe((result) => {
+            this.taxes = result;
+          });
         });
     });
   }
@@ -95,12 +97,17 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   }
 
   addtax() {
-    const tax = this.newtax.clone();
     if (null == this.model.taxes) {
       this.model.taxes = [];
     }
-    this.model.taxes.push(tax);
-    this.newtax = new Tax();
+    const newtax = new Tax();
+    newtax.code = this.selectedTax.code;
+    newtax.name = this.selectedTax.name;
+    newtax.isSalesTax = this.selectedTax.isSalesTax;
+    newtax.rate = this.selectedTax.rate;
+    newtax.type = this.selectedTax.type;
+    this.model.taxes.push(newtax);
+    this.selectedTax = null;
   }
 
   removetax(index) {
