@@ -62,7 +62,7 @@
       <span *ngIf="!readonly">
         <mat-form-field class="shorter list">
           <mat-select [disabled]='readonly' name="tax" #currency="ngModel" [(ngModel)]='selectedTax' placeholder="Επιλέξτε κατηγορία φόρου">
-            <mat-option *ngFor='let tax of taxes' [value]="tax">{{tax.name}}</mat-option>
+            <mat-option *ngFor='let tax of taxes' [value]="tax">{{tax.name}} ({{tax.rate}}%)</mat-option>
           </mat-select>
         </mat-form-field>
         <button (click)="addtax()" mat-button color="primary">
