@@ -72,9 +72,10 @@ export class ViewModel<T> {
     });
   }
 
-  round(n, decimalPlaces) {
-    const scale = Math.pow(10, decimalPlaces);
-    return Math.round(scale * n) / scale;
+  round(numberValue, decimalPlaces) {
+    return (numberValue.toFixed(decimalPlaces)) / 1;
+    // const scale = Math.pow(10, decimalPlaces);
+    // return Math.round(scale * n) / scale;
   }
 }
 
@@ -104,7 +105,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   private _products: any[];
   private _plan: Plan;
   private _members: any[];
-  private _taxes: TaxDefinition[];
+  private _taxes: TaxDefinitionViewModel[];
 
   constructor() {
     super();
@@ -218,11 +219,6 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     });
   }
 
-  addTax() {
-    const tax = new TaxDefinition();
-    this._taxes.push(tax);
-  }
-
   loadProducts(): Observable<any> {
     return this.serviceLocator.apiClient.getProducts(this.id, 1, 100)
       .map((response) => {
@@ -257,7 +253,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     });
   }
 
-  public get taxes(): Observable<TaxDefinition[]> {
+  public get taxes(): Observable<TaxDefinitionViewModel[]> {
     if (null == this._taxes) {
       return this.loadTaxes();
     } else {
@@ -265,11 +261,21 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     }
   }
 
-  private loadTaxes(): Observable<TaxDefinition[]> {
+  private loadTaxes(): Observable<TaxDefinitionViewModel[]> {
     return this.serviceLocator.apiClient.getTaxes(this.id, 1, 100).map((result) => {
-      this._taxes = result.items;
+      this._taxes = result.items.map((item) => {
+        const tax = new TaxDefinitionViewModel();
+        tax.model = item;
+        return tax;
+      });
       return this._taxes;
     });
+  }
+
+  addTax() {
+    const taxVM = new TaxDefinitionViewModel();
+    taxVM.model = new TaxDefinition();
+    this._taxes.push(taxVM);
   }
 }
 
@@ -346,6 +352,76 @@ export class DocumentTypeViewModel extends ViewModel<DocumentType> {
   }
 }
 
+export class TaxDefinitionViewModel extends ViewModel<TaxDefinition> {
+  constructor() {
+    super();
+  }
+
+  public get rateText(): number {
+    const rate = this.round(this.model.rate * 100, 2);
+    return rate;
+  }
+
+  public get rate(): number {
+    return this.model.rate;
+  }
+
+  public set rate(value: number) {
+    this.model.rate = value;
+    console.log(' ui set: ' + value + ' model: ' + this.model.rate);
+  }
+
+  public get id() {
+    return this.model.id;
+  }
+
+  public get type() {
+    return this.model.type;
+  }
+  public set type(value) {
+    this.model.type = value;
+  }
+
+  public get taxType() {
+    switch (this.model.code) {
+      case 'VAT': {
+        return 'Φόρος προστιθέμενης αξίας πώλησης αγαθών ή παροχής υπηρεσιών (ΦΠΑ)';
+      }
+      case 'DEDUCTABLE': {
+        return 'Κρατήσεις, παρακρατήσεις, εισφορές, χαρτόσημα, κτλ';
+      }
+      default: {
+        return 'Άλλος τύπος φόρου';
+      }
+    }
+  }
+
+  public get code() {
+    return this.model.code;
+  }
+  public set code(value) {
+    this.model.code = value;
+  }
+
+  public get name() {
+    return this.model.name;
+  }
+  public set name(value) {
+    this.model.name = value;
+  }
+
+  public get isSalesTax() {
+    return this.model.isSalesTax;
+  }
+  public set isSalesTax(value) {
+    this.model.isSalesTax = value;
+  }
+
+  public get displayName() {
+    return this.model.displayName;
+  }
+}
+
 export class ProductViewModel extends ViewModel<Product> {
   constructor() {
     super();
@@ -400,9 +476,7 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get displayName() {
-    if (null == this.model || null == this.model.id) {
-      return 'ΝΕΟ ΠΑΡΑΣΤΑΤΙΚΟ';
-    } else if (this.model.numberPrintable == null) {
+    if (null == this.model || null == this.model.id || this.model.numberPrintable == null) {
       return `${this.model.status} ${this.model.date.toLocaleString()}`;
     } else {
       return this.model.numberPrintable;
@@ -699,15 +773,12 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   }
 
   public set discountRate(value: number) {
-    this.model.discountRate = this.round(value / 100, 2);
+    this.model.discountRate = value / 100;
     this.calcTotals();
   }
 
   public get subTotal() {
     return this.model.subTotal;
-  }
-  public set subTotal(value) {
-    this.model.subTotal = value;
   }
 
   public get totalTax() {
@@ -720,10 +791,6 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
 
   public get total() {
     return this.model.total;
-  }
-
-  public set total(value) {
-    this.model.total = value;
   }
 
   public get taxes() {
@@ -781,7 +848,7 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   }
 
   public calcTotals() {
-    this.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
+    this.model.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
     this.model.totalSalesTax = 0;
     this.model.totalTax = 0;
     this.model.total = 0;

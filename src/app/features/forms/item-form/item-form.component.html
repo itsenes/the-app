@@ -62,7 +62,7 @@
       <span *ngIf="!readonly">
         <mat-form-field class="shorter list">
           <mat-select [disabled]='readonly' name="tax" #currency="ngModel" [(ngModel)]='selectedTax' placeholder="Επιλέξτε κατηγορία φόρου">
-            <mat-option *ngFor='let tax of taxes' [value]="tax">{{tax.name}} ({{tax.rate}}%)</mat-option>
+            <mat-option *ngFor='let tax of taxes' [value]="tax">{{tax.displayName}}</mat-option>
           </mat-select>
         </mat-form-field>
         <button (click)="addtax()" mat-button color="primary">
@@ -70,7 +70,9 @@
         </button>
       </span>
       <mat-chip-list *ngIf='model?.taxes?.length>0'>
-        <mat-chip [color]="'warn'" *ngFor="let tax of model?.taxes; let i = index">{{tax.name}} ({{tax.rate}}%)</mat-chip>
+        <mat-chip [removable]="!readonly" (remove)="removetax(i)" *ngFor="let tax of model?.taxes; let i = index">{{tax.displayName}}
+          <mat-icon matChipRemove *ngIf="!readonly">cancel</mat-icon>
+        </mat-chip>
       </mat-chip-list>
       <label *ngIf="(!model.taxes || model.taxes.length==0)">Δεν έχουν οριστεί φόροι</label>
     </div>

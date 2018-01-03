@@ -5,6 +5,7 @@ import { AppStateService } from '../../../services/app-state.service';
 import { ApiClient, Product, Tax, TaxType, TaxDefinition } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../environments/environment';
+import { TaxDefinitionViewModel } from '../../../view-models/view-models';
 
 @Component({
   selector: 'app-tax-form',
@@ -12,10 +13,9 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['../forms.components.scss']
 })
 export class TaxFormComponent implements OnInit, OnDestroy {
-  subscription_key: any = null;
-  subscription_id: any = null;
+  subscriptionId: any = null;
   private _bak: any = null;
-  private _model: TaxDefinition = null;
+  private _model: TaxDefinitionViewModel = null;
   public readonly = true;
   private busy = false;
   params_sub: any = null;
@@ -27,13 +27,13 @@ export class TaxFormComponent implements OnInit, OnDestroy {
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
-  public set model(value: TaxDefinition) {
+  public set model(value: TaxDefinitionViewModel) {
     this._model = value;
     if (value != null) {
       this.readonly = (value.id != null);
     }
   }
-  public get model(): TaxDefinition { return this._model; }
+  public get model(): TaxDefinitionViewModel { return this._model; }
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
@@ -42,10 +42,10 @@ export class TaxFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.params_sub = this.route.parent.params.subscribe((params) => {
-      this.subscription_key = params['subscription-alias'];
-      this.appState.getSubscriptionByKey(this.subscription_key)
+      const subscriptionKey = params['subscription-alias'];
+      this.appState.getSubscriptionByKey(subscriptionKey)
         .subscribe((sub) => {
-          this.subscription_id = sub.id;
+          this.subscriptionId = sub.id;
         });
     });
   }
@@ -71,7 +71,7 @@ export class TaxFormComponent implements OnInit, OnDestroy {
   toggle_edit_mode() {
     this.readonly = !this.readonly;
     if (!this.readonly) {
-      this.bak(this.model);
+      this.bak(this.model.model);
     }
   }
 
@@ -84,7 +84,7 @@ export class TaxFormComponent implements OnInit, OnDestroy {
       this.delete();
     } else {
       this.readonly = true;
-      this.model = this._bak;
+      this.model.model = this._bak;
     }
   }
 
@@ -99,16 +99,18 @@ export class TaxFormComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    this.model.isSalesTax = this.model.code === 'VAT';
+    this.readonly = true;
+
     if (this.isnew()) {
       this.savenew();
       return;
     }
 
-    this.readonly = true;
-    this.apiClient.updateTax(this.subscription_id, this.model.id, this.model).subscribe((tax) => {
+    this.apiClient.updateTax(this.subscriptionId, this.model.id, this.model.model).subscribe((tax) => {
       // create a new backup copy
-      this.bak(this.model);
-      this.model = tax;
+      this.bak(this.model.model);
+      this.model.model = tax;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing
@@ -118,10 +120,10 @@ export class TaxFormComponent implements OnInit, OnDestroy {
   }
 
   savenew() {
-    this.apiClient.createTax(this.subscription_id, this.model).subscribe((tax) => {
+    this.apiClient.createTax(this.subscriptionId, this.model.model).subscribe((tax) => {
       // create a new backup copy
       this.bak(this.model);
-      this.model = tax;
+      this.model.model = tax;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing

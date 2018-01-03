@@ -18,13 +18,14 @@
   <mat-card-content>
     <div class="form-container">
       <h3 *ngIf='readonly'>{{model.name}}</h3>
+      <small *ngIf='readonly'>{{(model.displayName)}}</small>
       <mat-form-field *ngIf='!readonly' class="shorter">
         <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.name' placeholder="Ονομασία" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint *ngIf='!readonly' align="end">{{name.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Τύπος: {{getTaxType(model.code)}}</label>
+      <label *ngIf='readonly'>Τύπος: {{model.taxType}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter list">
         <mat-select [(value)]="model.code" placeholder="Τύπος φόρου" floatPlaceholder='auto'>
           <mat-option value="VAT">ΦΠΑ</mat-option>
@@ -33,7 +34,7 @@
         </mat-select>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Ποσοστό: {{model.rate}}%</label>
+      <label *ngIf='readonly'>Ποσοστό: {{model.rateText}}%</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
         <input matInput type="number" [readonly]='readonly' #rate="ngModel" name="rate" [(ngModel)]='model.rate' placeholder="Ποσοστό"
           floatPlaceholder='auto' maxlength="150">

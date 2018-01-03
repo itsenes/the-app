@@ -13,7 +13,7 @@ import {
   ViewModelLocator,
   SubscriptionViewModel,
   DocumentTypeViewModel,
-  DocumentViewModel
+  DocumentViewModel, TaxDefinitionViewModel
 } from '../../../view-models/view-models';
 import {
   ApiClient,
@@ -52,7 +52,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   invoicedueDate: FormControl = new FormControl();
   filteredcompanies: Organisation[];
   currencies: LookupEntry[] = null;
-  taxes: Array<TaxDefinition> = null;
+  taxes: Array<TaxDefinitionViewModel> = null;
   filteredcurrencies: LookupEntry[];
   newline: DocumentLine = null;
   showPane = false;

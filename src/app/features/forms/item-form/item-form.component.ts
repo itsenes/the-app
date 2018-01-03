@@ -104,7 +104,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
     newtax.code = this.selectedTax.code;
     newtax.name = this.selectedTax.name;
     newtax.isSalesTax = this.selectedTax.isSalesTax;
-    newtax.rate = this.selectedTax.rate;
+    newtax.rate = this.selectedTax.model.rate;
     newtax.type = this.selectedTax.type;
     this.model.taxes.push(newtax);
     this.selectedTax = null;
