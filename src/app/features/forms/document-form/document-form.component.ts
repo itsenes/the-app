@@ -77,18 +77,6 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     return this.vm.data.recipient.organisation;
   }
 
-  public get companyLogo(): string {
-    if (null != this.model
-      && null != this.model.recipient
-      && null != this.model.recipient.organisation
-      && null != this.model.recipient.organisation.logoPath
-      && this.model.recipient.organisation.logoPath !== '') {
-      return this.model.recipient.organisation.logoPath;
-    } else {
-      return 'assets/images/icon-business.png';
-    }
-  }
-
   public get contact(): Contact {
     return this.vm.data.recipient.contact;
   }

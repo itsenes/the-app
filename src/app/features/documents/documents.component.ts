@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppStateService } from '../../services/app-state.service';
 import { SubscriptionViewModel, DocumentTypeViewModel, DocumentViewModel } from '../../view-models/view-models';
 import { ApiClient, Document } from '../../services/incontrl-apiclient';
-import { DomSanitizer } from '@angular/platform-browser';
 import { PageEvent } from '@angular/material';
 import { ViewModelLocator } from '../../view-models/view-models';
 
@@ -39,7 +38,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   status = '';
 
   constructor(private router: Router, private appState: AppStateService, private route: ActivatedRoute,
-    private apiClient: ApiClient, private sanitizer: DomSanitizer, private viewModelLocator: ViewModelLocator) { }
+    private apiClient: ApiClient, private viewModelLocator: ViewModelLocator) { }
 
   ngOnInit() {
     this.params_sub = this.route.params.subscribe((params) => {
@@ -91,7 +90,6 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         this.documents = response.items.map((doc) => {
           const vm = this.viewModelLocator.getInstance<DocumentViewModel, Document>(DocumentViewModel, doc);
           vm.documentType = this.documentType;
-          vm.safePortalLink = this.sanitizer.bypassSecurityTrustResourceUrl(vm.portalLink);
           return vm;
         });
         this.norecords = (this.documents == null || this.documents.length === 0);

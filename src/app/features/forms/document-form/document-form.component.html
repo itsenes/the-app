@@ -91,7 +91,7 @@
               </span>
               <ng-container *ngIf="company.name">
                 <a (click)="toggleCompanyPanel()">
-                  <img class="customer-logo" [src]="companyLogo">
+                  <img class="customer-logo" [src]="vm.companyLogo">
                   <div>
                     <label>{{company.name}}, {{company.legalName}}</label>
                     <br>

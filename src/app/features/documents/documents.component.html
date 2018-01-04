@@ -49,8 +49,9 @@
             <mat-card-title>ΣΥΝΟΛΟ: {{doc.data.total | currency:doc.data.currencyCode:true}}</mat-card-title>
             <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.data.totalPayable | currency:doc.data.currencyCode:true}}</mat-card-subtitle>
             <mat-card-subtitle>{{doc.data.date | date:'shortDate'}}</mat-card-subtitle>
-            <mat-card-title>{{doc.data?.recipient?.organisation?.name}}</mat-card-title>
-            <mat-card-subtitle>{{doc.data?.recipient?.contact?.displayName}}</mat-card-subtitle>
+
+            <mat-card-title>{{doc.recipientName}}</mat-card-title>
+            <mat-card-subtitle>{{doc.recipientName1}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
 

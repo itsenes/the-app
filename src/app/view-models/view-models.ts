@@ -1,6 +1,7 @@
 import { _document } from '@angular/platform-browser/src/browser';
 import { NgModule, Injectable, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operator/map';
 import { groupBy } from 'rxjs/operator/groupBy';
@@ -16,18 +17,17 @@ import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
 import { FormControl } from '@angular/forms';
 import { retry } from 'rxjs/operator/retry';
+import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 // what you need the service locator will provide...
 @Injectable()
 export class ServiceLocator {
-  constructor(public apiClient: ApiClient, public lookups: LookupsService) {
-    console.log('ServiceLocator initialized!');
+  constructor(public apiClient: ApiClient, public lookups: LookupsService, public sanitizer: DomSanitizer) {
   }
 }
 
 export class ViewModel<T> {
   constructor() {
-    console.log('ViewModel created of type: ' + this.getClassName());
   }
 
   private _basePath: string = null;
@@ -83,7 +83,6 @@ export class ViewModel<T> {
 @Injectable()
 export class ViewModelLocator {
   constructor(private serviceLocator: ServiceLocator) {
-    console.log('ViewModelLocator initialized');
   }
   private _basePath: string = null;
   public get basePath() {
@@ -489,7 +488,7 @@ export class DocumentViewModel extends ViewModel<Document> {
   private _nonSalesTaxes: Array<Tax>;
   private _documentType: DocumentTypeViewModel = null;
   private _currency: LookupEntry;
-  private _safePortalLink: any;
+  private _safePortalLink: SafeResourceUrl = null;
 
   constructor() {
     super();
@@ -508,10 +507,38 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get displayName() {
-    if (null == this.data || null == this.data.id || this.data.numberPrintable == null) {
+    if (!this.data || !this.data.id || !this.data.numberPrintable) {
       return `${this.data.status} ${this.data.date.toLocaleString()}`;
     } else {
       return this.data.numberPrintable;
+    }
+  }
+
+  public get hasCompany() {
+    return (this.data && this.data.recipient && this.data.recipient.organisation);
+  }
+
+  public get hasContact() {
+    return (this.data && this.data.recipient && this.data.recipient.contact);
+  }
+
+  public get recipientName() {
+    if (this.hasCompany) {
+      return this.data.recipient.organisation.name;
+    } else if (this.hasContact) {
+      return this.data.recipient.contact.displayName;
+    } else {
+      return '';
+    }
+  }
+
+  public get recipientName1() {
+    if (this.hasCompany) {
+      return this.data.recipient.organisation.legalName;
+    } else if (this.hasContact) {
+      return this.data.recipient.contact.email;
+    } else {
+      return '';
     }
   }
 
@@ -538,10 +565,20 @@ export class DocumentViewModel extends ViewModel<Document> {
     return `${environment.api_url}${this.data.permaLink}.pdf`;
   }
   public get safePortalLink() {
+    if (null == this._safePortalLink) {
+      this._safePortalLink = this.serviceLocator.sanitizer.bypassSecurityTrustResourceUrl(this.portalLink);
+    }
     return this._safePortalLink;
   }
-  public set safePortalLink(value) {
-    this._safePortalLink = value;
+
+  public get companyLogo(): string {
+    if (this.hasCompany
+      && this.data.recipient.organisation.logoPath
+      && this.data.recipient.organisation.logoPath !== '') {
+      return this.data.recipient.organisation.logoPath;
+    } else {
+      return 'assets/images/icon-business.png';
+    }
   }
 
   public get editPath() {

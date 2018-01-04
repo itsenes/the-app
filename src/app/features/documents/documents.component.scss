@@ -106,8 +106,10 @@
   // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fb7b84', endColorstr='#00fb7b84',GradientType=0 );
   opacity: 0.1;
   position: absolute; // height: 80px;
+  left: 0px;
+  top:0px;
   vertical-align: bottom;
-  margin: -24px;
+  //margin: -24px;
 }
 
 h1,
@@ -146,7 +148,7 @@ label.small {
 .mat-chip.status-chip,
 div.status-chip {
   position: absolute;
-  left: 70%;
+  left: 74%;
   min-width: 92px;
   font-size: 13px;
   line-height: 28px;
