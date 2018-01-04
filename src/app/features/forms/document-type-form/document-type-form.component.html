@@ -31,16 +31,16 @@
         <mat-hint align="end">{{notes.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Όνομα φακέλου: {{model.code}}</label>
+      <label *ngIf='readonly'>Όνομα φακέλου: {{model.data.code}}</label>
       <mat-form-field class="shorter" *ngIf='!readonly'>
-        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.code' placeholder="Όνομα φακέλου" floatPlaceholder='auto'
+        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.data.code' placeholder="Όνομα φακέλου" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly && !isnew()'>Κατηγορία: {{recordType}}</label>
+      <label *ngIf='readonly && !isnew()'>Κατηγορία: {{model.recordTypeText}}</label>
       <mat-form-field class="shorter" *ngIf='!readonly'>
-          <mat-select [disabled]='readonly && !isnew()' name="recordType" [(value)]='model.recordType' placeholder="Κατηγορία"
+          <mat-select [disabled]='readonly && !isnew()' name="recordType" [(value)]='model.data.recordType' placeholder="Κατηγορία"
           floatPlaceholder='auto'>
               <mat-option value="AccountsReceivable">Έσοδα</mat-option>
               <mat-option value="AccountsPayable">Έξοδα</mat-option>
@@ -48,25 +48,25 @@
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Μάσκα αρίθμησης: {{model.numberFormat}}</label>
+      <label *ngIf='readonly'>Μάσκα αρίθμησης: {{model.data.numberFormat}}</label>
       <mat-form-field class="shorter" *ngIf='!readonly'>
-        <input matInput [readonly]='readonly' #numberFormat="ngModel" name="numberFormat" [(ngModel)]='model.numberFormat' placeholder="Μάσκα αρίθμησης"
+        <input matInput [readonly]='readonly' #numberFormat="ngModel" name="numberFormat" [(ngModel)]='model.data.numberFormat' placeholder="Μάσκα αρίθμησης"
           floatPlaceholder='auto' maxlength="150">
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Αρίθμηση από: {{model.numberOffset}} - To επόμενο έγγραφο θα έχει τον αριθμό: {{model.numberOffset+1}}</label>
+      <label *ngIf='readonly'>Αρίθμηση από: {{model.data.numberOffset}} - To επόμενο έγγραφο θα έχει τον αριθμό: {{model.data.numberOffset+1}}</label>
       <mat-form-field class="shorter" *ngIf='!readonly'>
-        <input matInput type="number" [readonly]='readonly' #numberOffset="ngModel" name="numberOffset" [(ngModel)]='model.numberOffset'
+        <input matInput type="number" [readonly]='readonly' #numberOffset="ngModel" name="numberOffset" [(ngModel)]='model.data.numberOffset'
           placeholder="Αρίθμηση από" floatPlaceholder='auto' maxlength="150">
-        <mat-hint *ngIf='model.numberOffset' align="start">To επόμενο έγγραφο θα έχει τον αριθμό: {{model.numberOffset+1}}</mat-hint>
+        <mat-hint *ngIf='model.data.numberOffset' align="start">To επόμενο έγγραφο θα έχει τον αριθμό: {{model.data.numberOffset+1}}</mat-hint>
       </mat-form-field>
 
       <hr/>
 
-      <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.generatesPrintouts'
+      <mat-slide-toggle *ngIf='!readonly' #generatesPrintouts="ngModel" name="generatesPrintouts" [(ngModel)]='model.data.generatesPrintouts'
         placeholder="Παράγει έγγραφα" floatPlaceholder='auto' maxlength="150">
-        <label *ngIf="model.generatesPrintouts">Να παράγει έγγραφα</label>
+        <label *ngIf="model.data.generatesPrintouts">Να παράγει έγγραφα</label>
         <label *ngIf="!model.generatesPrintouts">Να μην παράγει έγγραφα</label>
       </mat-slide-toggle>
 
@@ -74,19 +74,19 @@
         <br>
       </mat-hint>
 
-      <mat-hint align="start" *ngIf="model.generatesPrintouts">
+      <mat-hint align="start" *ngIf="model.data.generatesPrintouts">
         <div fxLayout="row" fxLayoutAlign="start center" class="download-link-container">
-          <a fxFlex="80px" fxFlexAlign="center" [download]='this.model.code+"-template.docx"' (click)='download_file($event)' mat-button
+          <a fxFlex="80px" fxFlexAlign="center" [download]='this.model.data.code+"-template.docx"' (click)='download_file($event)' mat-button
             class="download-link">
             <img class="word-logo small">
           </a>
           <div>
             <label *ngIf='!readonly' align="start">Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο. </label>
-            <label *ngIf='readonly && model.generatesPrintouts' align="start">Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
+            <label *ngIf='readonly && model.data.generatesPrintouts' align="start">Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
           </div>
         </div>
       </mat-hint>
-      <label *ngIf='readonly && !model.generatesPrintouts' align="start">Αυτός ο τύπος
+      <label *ngIf='readonly && !model.data.generatesPrintouts' align="start">Αυτός ο τύπος
         <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf.</label>
     </div>
   </mat-card-content>

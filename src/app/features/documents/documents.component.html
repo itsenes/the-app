@@ -36,22 +36,21 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
         <mat-card class="doc-card" *ngFor="let doc of documents;let i = index;">
           <div class="selected-item" *ngIf="selected && doc.id===selected.id" fxFlexAlign="end"></div>
-          <div class="status-chip" [ngClass]="doc.model.status">
-            <label class="status-label">{{doc.model.status | uppercase}}</label>
+          <div class="status-chip" [ngClass]="doc.data.status">
+            <label class="status-label">{{doc.data.status | uppercase}}</label>
           </div>
           <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
           <mat-card-header (click)="setSelected(doc)" class="clickable-header">
             <mat-card-title>
               <label class="small">{{doc.documentType.name}}</label>
-              <h2 *ngIf="doc.model.numberPrintable">{{doc.model.numberPrintable}}</h2>
-              <h2 *ngIf="!doc.model.numberPrintable">{{doc.model.status}}</h2>
+              <h2>{{doc.displayName}}</h2>
             </mat-card-title>
             <mat-divider></mat-divider>
-            <mat-card-title>ΣΥΝΟΛΟ: {{doc.model.total | currency:doc.model.currencyCode:true}}</mat-card-title>
-            <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.model.totalPayable | currency:doc.model.currencyCode:true}}</mat-card-subtitle>
-            <mat-card-subtitle>{{doc.model.date | date:'shortDate'}}</mat-card-subtitle>
-            <mat-card-title>{{doc.model?.recipient?.organisation?.name}}</mat-card-title>
-            <mat-card-subtitle>{{doc.model?.recipient?.contact?.displayName}}</mat-card-subtitle>
+            <mat-card-title>ΣΥΝΟΛΟ: {{doc.data.total | currency:doc.data.currencyCode:true}}</mat-card-title>
+            <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.data.totalPayable | currency:doc.data.currencyCode:true}}</mat-card-subtitle>
+            <mat-card-subtitle>{{doc.data.date | date:'shortDate'}}</mat-card-subtitle>
+            <mat-card-title>{{doc.data?.recipient?.organisation?.name}}</mat-card-title>
+            <mat-card-subtitle>{{doc.data?.recipient?.contact?.displayName}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
 
@@ -77,8 +76,8 @@
       </div>
       <div *ngIf="selected">
         <label class="small">{{selected.documentType.name}}</label>
-        <button class="menu-status" mat-button [ngClass]="selected.model.status" [matMenuTriggerFor]="menu">
-          <label class="status">{{selected.model.status | uppercase}}</label>
+        <button class="menu-status" mat-button [ngClass]="selected.data.status" [matMenuTriggerFor]="menu">
+          <label class="status">{{selected.data.status | uppercase}}</label>
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu" class="status-actions" [overlapTrigger]="false">
@@ -99,9 +98,9 @@
         </mat-menu>
 
         <br>
-        <h1 *ngIf="selected.model.numberPrintable">{{selected.model.numberPrintable}}</h1>
-        <h3 *ngIf="!selected.model.numberPrintable">{{selected.model.status}} {{selected.model.date | date:'longDate'}}</h3>
-        <h3 *ngIf="selected.model.numberPrintable">{{selected.model.date | date:'shortDate'}}</h3>
+        <h1 *ngIf="selected.data.numberPrintable">{{selected.data.numberPrintable}}</h1>
+        <h3 *ngIf="!selected.data.numberPrintable">{{selected.data.status}} {{selected.data.date | date:'longDate'}}</h3>
+        <h3 *ngIf="selected.data.numberPrintable">{{selected.data.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
         <a class="portal-link" [href]="selected.portalLink" target="__new" mat-button>
           <div class="wrap">
@@ -113,22 +112,22 @@
           <a mat-icon-button disabled="true" class="download-link">
             <mat-icon>share</mat-icon>
           </a>
-          <a [download]='selected.model.id+".pdf"' [href]="selected.portalPdfLink" mat-icon-button>
+          <a [download]='selected.data.id+".pdf"' [href]="selected.portalPdfLink" mat-icon-button>
             <img class="small" src="assets/images/pdf.svg">
           </a>
-          <a [download]='selected.model.id+".docx"' [href]="selected.portalDocLink" mat-icon-button>
+          <a [download]='selected.data.id+".docx"' [href]="selected.portalDocLink" mat-icon-button>
             <img class="small" src="assets/images/word.svg">
           </a>
         </div>
         <!-- <label class="small">ΣΕΛΙΔΑ ΠΕΛΑΤΗ</label> -->
-        <label class="small" *ngIf="selected.model.recipient.organisation || selected.model.recipient.contact">ΠΕΛΑΤΗΣ</label>
-        <h2 *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.name}}</h2>
-        <label *ngIf="selected.model.recipient.organisation">{{selected.model.recipient.organisation.legalName}}</label>
-        <h2 *ngIf="selected.model.recipient.contact">{{selected.model.recipient.contact.firstName}} {{selected.model.recipient.contact.lastName}}</h2>
+        <label class="small" *ngIf="selected.data.recipient.organisation || selected.data.recipient.contact">ΠΕΛΑΤΗΣ</label>
+        <h2 *ngIf="selected.data.recipient.organisation">{{selected.data.recipient.organisation.name}}</h2>
+        <label *ngIf="selected.data.recipient.organisation">{{selected.data.recipient.organisation.legalName}}</label>
+        <h2 *ngIf="selected.data.recipient.contact">{{selected.data.recipient.contact.firstName}} {{selected.data.recipient.contact.lastName}}</h2>
         <label class="small">ΣΥΝΟΛΟ</label>
-        <h2>{{selected.model.total | currency:selected.model.currencyCode:true}}</h2>
+        <h2>{{selected.data.total | currency:selected.data.currencyCode:true}}</h2>
         <label class="small">ΠΛΗΡΩΤΕΟ</label>
-        <h3>{{selected.model.totalPayable | currency:selected.model.currencyCode:true}}</h3>
+        <h3>{{selected.data.totalPayable | currency:selected.data.currencyCode:true}}</h3>
 
       </div>
     </div>

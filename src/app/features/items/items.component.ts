@@ -69,7 +69,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((subscription) => {
           this.model = subscription;
-          this.currencyCode = subscription.company.model.currencyCode;
+          this.currencyCode = subscription.company.data.currencyCode;
           subscription.products.subscribe((products) => {
             this.products = products;
             this.norecords = (this.products == null || this.products.length === 0);

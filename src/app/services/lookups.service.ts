@@ -45,27 +45,29 @@ export class LookupsService {
 
   public get recordTypes(): Observable<LookupEntry> {
     return Observable.create((observer) => {
-      observer.next(this._recordTypes);
+      observer.next(this.loadRecordTypes());
       observer.complete();
     });
   }
 
   private loadRecordTypes(): LookupEntry[] {
-    const types: any[] = [];
-    // receivables
-    const accRec = new LookupEntry();
-    accRec.id = 'AccountsReceivable';
-    accRec.description = 'Έσοδα';
-    types.push(accRec);
-    // payables
-    const accPay = new LookupEntry();
-    accPay.id = 'AccountsPayable';
-    accPay.description = 'Έξοδα';
-    types.push(accPay);
-    return types;
+    if (null == this._recordTypes) {
+      this._recordTypes = new Array<LookupEntry>();
+      // receivables
+      const accRec = new LookupEntry();
+      accRec.id = 'AccountsReceivable';
+      accRec.description = 'Έσοδα';
+      this._recordTypes.push(accRec);
+      // payables
+      const accPay = new LookupEntry();
+      accPay.id = 'AccountsPayable';
+      accPay.description = 'Έξοδα';
+      this._recordTypes.push(accPay);
+    }
+    return this._recordTypes;
   }
 
-  getRecordType(id) {
+  getRecordType(id): Observable<LookupEntry> {
     return Observable.create((observer) => {
       observer.next(this._recordTypes.find(r => r.id === id));
       observer.complete();

@@ -8,7 +8,9 @@ import {
   ApiClient, Subscription, LookupEntry, DocumentType,
   Product, Tax, TaxAmount, Document, Plan, Recipient, Organisation, Contact,
   DocumentLine, Address, DocumentStatus, TaxAmountType,
-  DocumentCalculationRequest, DocumentCalculationResult, PricedLine, TaxType, TaxDefinition
+  DocumentCalculationRequest, DocumentCalculationResult,
+  PricedLine, TaxType, TaxDefinition, DocumentTypeRecordType,
+  RecordType, CreateDocumentTypeRequestRecordType
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
@@ -21,11 +23,13 @@ import { retry } from 'rxjs/operator/retry';
 @Injectable()
 export class ServiceLocator {
   constructor(public apiClient: ApiClient, public lookups: LookupsService) {
+    console.log('ServiceLocator initialized!');
   }
 }
 
 export class ViewModel<T> {
   constructor() {
+    console.log('ViewModel created of type: ' + this.getClassName());
   }
 
   private _basePath: string = null;
@@ -49,13 +53,13 @@ export class ViewModel<T> {
     return this.serviceLocator.lookups;
   }
 
-  private _model: T = null;
-  public get model(): T {
-    return this._model;
+  private _data: T = null;
+  public get data(): T {
+    return this._data;
   }
 
-  public set model(value: T) {
-    this._model = value;
+  public set data(value: T) {
+    this._data = value;
   }
 
   protected init() { }
@@ -73,15 +77,16 @@ export class ViewModel<T> {
   }
 
   round(numberValue, decimalPlaces) {
-    return (numberValue.toFixed(decimalPlaces)) / 1;
-    // const scale = Math.pow(10, decimalPlaces);
-    // return Math.round(scale * n) / scale;
+    const scale = Math.pow(10, decimalPlaces);
+    return Math.round(scale * numberValue) / scale;
   }
 }
 
 @Injectable()
 export class ViewModelLocator {
-  constructor(private serviceLocator: ServiceLocator) { }
+  constructor(private serviceLocator: ServiceLocator) {
+    console.log('ViewModelLocator initialized');
+  }
   private _basePath: string = null;
   public get basePath() {
     return this._basePath;
@@ -94,7 +99,7 @@ export class ViewModelLocator {
     const vm = new type();
     vm.serviceLocator = this.serviceLocator;
     vm.basePath = this.basePath;
-    vm.model = data;
+    vm.data = data;
     console.log('getinstance -' + vm.getClassName() + ' homepath in resolved vm: ' + vm.basePath);
     return vm;
   }
@@ -112,19 +117,19 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
   public get alias() {
-    return this.model.alias;
+    return this.data.alias;
   }
 
   public get status() {
-    return this.model.status;
+    return this.data.status;
   }
 
   public get contact() {
-    return this.model.contact;
+    return this.data.contact;
   }
 
   private _company: OrganisationViewModel;
@@ -132,14 +137,14 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     if (null == this._company) {
       this._company = new OrganisationViewModel();
       this._company.basePath = this.basePath;
-      this._company.model = this.model.company;
+      this._company.data = this.data.company;
       this._company.serviceLocator = this.serviceLocator;
     }
     return this._company;
   }
 
   public get companyLogo() {
-    return `${environment.api_url}/subscriptions/${this.model.id}/image?size=64`;
+    return `${environment.api_url}/subscriptions/${this.data.id}/image?size=64`;
   }
 
   public get basePath() {
@@ -149,11 +154,11 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   public set basePath(value: string) { }
 
   public get homePath() {
-    return `/app/${this.model.alias}`;
+    return `/app/${this.data.alias}`;
   }
 
   public get settingsPath() {
-    return `/app/${this.model.alias}/settings`;
+    return `/app/${this.data.alias}/settings`;
   }
 
   public get documentTypes(): Observable<DocumentTypeViewModel[]> {
@@ -175,7 +180,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
     const vm = new DocumentTypeViewModel();
     vm.serviceLocator = this.serviceLocator;
     vm.basePath = this.basePath;
-    vm.model = new Document();
+    vm.data = new Document();
     this._documentTypes.push(vm);
   }
 
@@ -190,7 +195,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
               const vm = new DocumentTypeViewModel();
               vm.serviceLocator = this.serviceLocator;
               vm.basePath = this.basePath;
-              vm.model = doc;
+              vm.data = doc;
               return vm;
             });
           return this._documentTypes;
@@ -230,7 +235,7 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
               const vm = new ProductViewModel();
               vm.basePath = this.basePath;
               vm.serviceLocator = this.serviceLocator;
-              vm.model = product;
+              vm.data = product;
               return vm;
             });
         }
@@ -264,9 +269,11 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
   private loadTaxes(): Observable<TaxDefinitionViewModel[]> {
     return this.serviceLocator.apiClient.getTaxes(this.id, 1, 100).map((result) => {
       this._taxes = result.items.map((item) => {
-        const tax = new TaxDefinitionViewModel();
-        tax.model = item;
-        return tax;
+        const vm = new TaxDefinitionViewModel();
+        vm.basePath = this.basePath;
+        vm.serviceLocator = this.serviceLocator;
+        vm.data = item;
+        return vm;
       });
       return this._taxes;
     });
@@ -274,7 +281,9 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
 
   addTax() {
     const taxVM = new TaxDefinitionViewModel();
-    taxVM.model = new TaxDefinition();
+    taxVM.basePath = this.basePath;
+    taxVM.serviceLocator = this.serviceLocator;
+    taxVM.data = new TaxDefinition();
     this._taxes.push(taxVM);
   }
 }
@@ -285,24 +294,24 @@ export class OrganisationViewModel extends ViewModel<Organisation> {
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
   public get name() {
-    return this.model.name;
+    return this.data.name;
   }
 
   public get legalName() {
-    return this.model.legalName;
+    return this.data.legalName;
   }
 
   public get logo() {
-    if (null == this.model.logoPath) {
-      return `${environment.api_url}/subscriptions/${this.model.id}/image?size=64`;
-    } else if (this.model.logoPath.indexOf('http') >= 0) {
-      return this.model.logoPath;
+    if (null == this.data.logoPath) {
+      return `${environment.api_url}/subscriptions/${this.id}/image?size=64`;
+    } else if (this.data.logoPath.indexOf('http') >= 0) {
+      return this.data.logoPath;
     } else {
-      return `${environment.api_url}/${this.model.logoPath}`;
+      return `${environment.api_url}/${this.data.logoPath}`;
     }
   }
 
@@ -313,7 +322,7 @@ export class OrganisationViewModel extends ViewModel<Organisation> {
 
   public set currency(value: LookupEntry) {
     this._currency = value;
-    this.model.currencyCode = value ? value.id : undefined;
+    this.data.currencyCode = value ? value.id : undefined;
   }
 
 }
@@ -324,31 +333,57 @@ export class DocumentTypeViewModel extends ViewModel<DocumentType> {
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
   public get folder() {
-    return this.model.code;
+    return this.data.code;
   }
 
   public get name() {
-    return this.model.name;
+    return this.data.name;
   }
 
   public get notes() {
-    return this.model.notes;
+    return this.data.notes;
+  }
+
+  public get recordTypeText() {
+    if (null != this.data) {
+      switch (this.data.recordType) {
+        case DocumentTypeRecordType.AccountsPayable:
+          return 'Έξοδα';
+        case DocumentTypeRecordType.AccountsReceivable:
+          return 'Έσοδα';
+        default:
+          return '';
+      }
+    } else {
+      return '';
+    }
+  }
+
+  public getCreateRecordType(): CreateDocumentTypeRequestRecordType {
+    switch (this.data.recordType) {
+      case DocumentTypeRecordType.AccountsPayable:
+        return CreateDocumentTypeRequestRecordType.AccountsPayable;
+      case DocumentTypeRecordType.AccountsReceivable:
+        return CreateDocumentTypeRequestRecordType.AccountsReceivable;
+      default:
+        return CreateDocumentTypeRequestRecordType.AccountsReceivable;
+    }
   }
 
   public get alias() {
-    return this.model.code;
+    return this.data.code;
   }
 
   public get searchPath() {
-    return `${this.basePath}/documents/${this.model.id}`;
+    return `${this.basePath}/documents/${this.id}`;
   }
 
   public get addNewPath() {
-    return `${this.basePath}/documents/${this.model.id}/new`;
+    return `${this.basePath}/documents/${this.id}/new`;
   }
 }
 
@@ -358,32 +393,31 @@ export class TaxDefinitionViewModel extends ViewModel<TaxDefinition> {
   }
 
   public get rateText(): number {
-    const rate = this.round(this.model.rate * 100, 2);
+    const rate = this.round(this.data.rate * 100, 2);
     return rate;
   }
 
   public get rate(): number {
-    return this.model.rate;
+    return this.data.rate;
   }
 
   public set rate(value: number) {
-    this.model.rate = value;
-    console.log(' ui set: ' + value + ' model: ' + this.model.rate);
+    this.data.rate = value;
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
   public get type() {
-    return this.model.type;
+    return this.data.type;
   }
   public set type(value) {
-    this.model.type = value;
+    this.data.type = value;
   }
 
   public get taxType() {
-    switch (this.model.code) {
+    switch (this.data.code) {
       case 'VAT': {
         return 'Φόρος προστιθέμενης αξίας πώλησης αγαθών ή παροχής υπηρεσιών (ΦΠΑ)';
       }
@@ -397,28 +431,28 @@ export class TaxDefinitionViewModel extends ViewModel<TaxDefinition> {
   }
 
   public get code() {
-    return this.model.code;
+    return this.data.code;
   }
   public set code(value) {
-    this.model.code = value;
+    this.data.code = value;
   }
 
   public get name() {
-    return this.model.name;
+    return this.data.name;
   }
   public set name(value) {
-    this.model.name = value;
+    this.data.name = value;
   }
 
   public get isSalesTax() {
-    return this.model.isSalesTax;
+    return this.data.isSalesTax;
   }
   public set isSalesTax(value) {
-    this.model.isSalesTax = value;
+    this.data.isSalesTax = value;
   }
 
   public get displayName() {
-    return this.model.displayName;
+    return this.data.displayName;
   }
 }
 
@@ -428,23 +462,23 @@ export class ProductViewModel extends ViewModel<Product> {
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
-  public get folder() {
-    return this.model.code;
+  public get code() {
+    return this.data.code;
   }
 
   public get name() {
-    return this.model.name;
+    return this.data.name;
   }
 
   public get notes() {
-    return this.model.notes;
+    return this.data.notes;
   }
 
   public get searchPath() {
-    return `${this.basePath}/items/${this.model.id}`;
+    return `${this.basePath}/items/${this.id}`;
   }
 
   public get addNewPath() {
@@ -472,14 +506,14 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
   public get displayName() {
-    if (null == this.model || null == this.model.id || this.model.numberPrintable == null) {
-      return `${this.model.status} ${this.model.date.toLocaleString()}`;
+    if (null == this.data || null == this.data.id || this.data.numberPrintable == null) {
+      return `${this.data.status} ${this.data.date.toLocaleString()}`;
     } else {
-      return this.model.numberPrintable;
+      return this.data.numberPrintable;
     }
   }
 
@@ -493,17 +527,17 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public set currency(value: LookupEntry) {
     this._currency = value;
-    this.model.currencyCode = value ? value.id : undefined;
+    this.data.currencyCode = value ? value.id : undefined;
   }
 
   public get portalLink() {
-    return `${environment.api_url}${this.model.permaLink}`;
+    return `${environment.api_url}${this.data.permaLink}`;
   }
   public get portalDocLink() {
-    return `${environment.api_url}${this.model.permaLink}.docx`;
+    return `${environment.api_url}${this.data.permaLink}.docx`;
   }
   public get portalPdfLink() {
-    return `${environment.api_url}${this.model.permaLink}.pdf`;
+    return `${environment.api_url}${this.data.permaLink}.pdf`;
   }
   public get safePortalLink() {
     return this._safePortalLink;
@@ -513,10 +547,10 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get editPath() {
-    return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}?edit`;
+    return `${this.basePath}/documents/${this.documentType.id}/${this.id}?edit`;
   }
   public get viewPath() {
-    return `${this.basePath}/documents/${this.documentType.id}/${this.model.id}`;
+    return `${this.basePath}/documents/${this.documentType.id}/${this.id}`;
   }
   public get addNewPath() {
     return `${this.basePath}/documents/new`;
@@ -531,13 +565,13 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public removeline(index) {
-    this.model.lines.splice(index, 1);
+    this.data.lines.splice(index, 1);
     this.lines.splice(index, 1);
   }
 
   public addline(index) {
     const newline = new DocumentLineViewModel();
-    newline.model = new DocumentLine();
+    newline.data = new DocumentLine();
     newline.serviceLocator = this.serviceLocator;
     newline.basePath = this.basePath;
     newline.unitAmount = 0;
@@ -578,20 +612,20 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public calcTotals() {
-    this.model.subTotal = 0;
-    this.model.totalSalesTax = 0;
-    this.model.totalTax = 0;
-    this.model.total = 0;
-    this.model.totalPayable = 0;
+    this.data.subTotal = 0;
+    this.data.totalSalesTax = 0;
+    this.data.totalTax = 0;
+    this.data.total = 0;
+    this.data.totalPayable = 0;
     const salesTaxes = new Array<TaxAmount>();
     const nonSalesTaxes = new Array<TaxAmount>();
     // https://coderwall.com/p/kvzbpa/don-t-use-array-foreach-use-for-instead
     this.lines.forEach((line) => {
-      this.model.subTotal = this.model.subTotal + line.subTotal;
-      this.model.totalSalesTax = this.model.totalSalesTax + line.totalSalesTax;
-      this.model.total = this.model.total + line.total;
-      this.model.totalTax = this.model.totalTax + line.totalTax;
-      this.model.totalPayable = this.model.totalPayable + (line.total + line.totalTax);
+      this.data.subTotal = this.data.subTotal + line.subTotal;
+      this.data.totalSalesTax = this.data.totalSalesTax + line.totalSalesTax;
+      this.data.total = this.data.total + line.total;
+      this.data.totalTax = this.data.totalTax + line.totalTax;
+      this.data.totalPayable = this.data.totalPayable + (line.total + line.totalTax);
       // update taxes list...
       line.taxes.forEach((tax) => {
         if (tax.isSalesTax) {
@@ -613,9 +647,9 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public serverCalc() {
     const request: DocumentCalculationRequest = new DocumentCalculationRequest();
-    request.currencyCode = this.model.currencyCode;
+    request.currencyCode = this.data.currencyCode;
     request.lines = new Array<PricedLine>();
-    this.model.lines.forEach((line) => {
+    this.data.lines.forEach((line) => {
       const newline = new PricedLine();
       newline.discountRate = line.discountRate;
       newline.quantity = line.quantity;
@@ -638,30 +672,30 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public init(): Observable<void> {
-    if (null == this.model) {
+    if (null == this.data) {
       return this.asObservable();
     }
-    if (this.model.recipient == null) {
-      this.model.recipient = new Recipient();
+    if (this.data.recipient == null) {
+      this.data.recipient = new Recipient();
     }
-    if (this.model.recipient.organisation == null) {
-      this.model.recipient.organisation = new Organisation();
+    if (this.data.recipient.organisation == null) {
+      this.data.recipient.organisation = new Organisation();
     }
-    if (this.model.recipient.organisation.address == null) {
-      this.model.recipient.organisation.address = new Address();
+    if (this.data.recipient.organisation.address == null) {
+      this.data.recipient.organisation.address = new Address();
     }
-    if (this.model.recipient.contact == null) {
-      this.model.recipient.contact = new Contact();
+    if (this.data.recipient.contact == null) {
+      this.data.recipient.contact = new Contact();
     }
-    if (this.model.recipient.contact.address == null) {
-      this.model.recipient.contact.address = new Address();
+    if (this.data.recipient.contact.address == null) {
+      this.data.recipient.contact.address = new Address();
     }
-    if (this.model.lines == null || this.model.lines === undefined) {
-      this.model.lines = [];
+    if (this.data.lines == null || this.data.lines === undefined) {
+      this.data.lines = [];
     }
 
     this.lines = new Array<DocumentLineViewModel>();
-    this.model.lines.forEach((line) => {
+    this.data.lines.forEach((line) => {
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
@@ -671,15 +705,15 @@ export class DocumentViewModel extends ViewModel<Document> {
       const newline = new DocumentLineViewModel();
       newline.serviceLocator = this.serviceLocator;
       newline.document = this;
-      newline.model = line;
+      newline.data = line;
       newline.calcTotals();
       this.lines.push(newline);
     });
     this.calcTotals();
     let currencySubscription = null;
-    if ((null != this.model) && (null != this.model.currencyCode)
+    if ((null != this.data) && (null != this.data.currencyCode)
       && (null != this.serviceLocator) && (null != this.serviceLocator.lookups)) {
-      currencySubscription = this.serviceLocator.lookups.getCurrency(this.model.currencyCode);
+      currencySubscription = this.serviceLocator.lookups.getCurrency(this.data.currencyCode);
     }
     return Observable.forkJoin(currencySubscription).map((val1) => {
       this._currency = val1[0] as LookupEntry;
@@ -696,14 +730,14 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   }
 
   public get id() {
-    return this.model.id;
+    return this.data.id;
   }
 
   public get productName() {
-    if (null == this.model.product) {
+    if (null == this.data.product) {
       return 'δεν έχει οριστεί προϊόν ή υπηρεσία';
     } else {
-      return this.model.product.name;
+      return this.data.product.name;
     }
   }
 
@@ -716,24 +750,24 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
 
 
   public get product(): ProductViewModel {
-    if (null == this._product && null != this.model.product) {
+    if (null == this._product && null != this.data.product) {
       const vm = new ProductViewModel();
       vm.serviceLocator = this.serviceLocator;
       vm.basePath = this.basePath;
-      vm.model = this.model.product;
+      vm.data = this.data.product;
       this._product = vm;
     }
-    return this._product; // this.model.product;
+    return this._product; // this.data.product;
   }
 
   public set product(value: ProductViewModel) {
-    if (!this.model.product || this.model.product.id !== value.id) {
+    if (!this.data.product || this.data.product.id !== value.id) {
       console.log('should change taxes !');
-      this.model.description = value.name;
-      this.model.unitAmount = value.model.unitAmount;
-      this.model.taxes = new Array<TaxAmount>();
-      if (value.model.taxes) {
-        value.model.taxes.forEach((tax) => {
+      this.data.description = value.name;
+      this.data.unitAmount = value.data.unitAmount;
+      this.data.taxes = new Array<TaxAmount>();
+      if (value.data.taxes) {
+        value.data.taxes.forEach((tax) => {
           const newtax = new TaxAmount();
           newtax.rate = tax.rate;
           newtax.amount = tax.rate;
@@ -742,59 +776,59 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
           newtax.name = tax.name;
           newtax.inclusive = tax.inclusive;
           newtax.isSalesTax = tax.isSalesTax;
-          this.model.taxes.push(newtax);
+          this.data.taxes.push(newtax);
         });
       }
     }
     this._product = value;
-    this.model.product = value.model;
+    this.data.product = value.data;
     this.calcTotals();
   }
 
   public get quantity() {
-    return this.model.quantity;
+    return this.data.quantity;
   }
   public set quantity(value: number) {
-    this.model.quantity = value;
+    this.data.quantity = value;
     this.calcTotals();
   }
 
   public get unitAmount() {
-    return this.model.unitAmount;
+    return this.data.unitAmount;
   }
 
   public set unitAmount(value: number) {
-    this.model.unitAmount = value;
+    this.data.unitAmount = value;
     this.calcTotals();
   }
 
   public get discountRate() {
-    return this.round(this.model.discountRate * 100, 2);
+    return this.round(this.data.discountRate * 100, 2);
   }
 
   public set discountRate(value: number) {
-    this.model.discountRate = value / 100;
+    this.data.discountRate = value / 100;
     this.calcTotals();
   }
 
   public get subTotal() {
-    return this.model.subTotal;
+    return this.data.subTotal;
   }
 
   public get totalTax() {
-    return this.model.totalTax;
+    return this.data.totalTax;
   }
 
   public get totalSalesTax() {
-    return this.model.totalSalesTax;
+    return this.data.totalSalesTax;
   }
 
   public get total() {
-    return this.model.total;
+    return this.data.total;
   }
 
   public get taxes() {
-    return this.model.taxes;
+    return this.data.taxes;
   }
 
   public get salesTaxes() {
@@ -848,21 +882,21 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   }
 
   public calcTotals() {
-    this.model.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.model.discountRate);
-    this.model.totalSalesTax = 0;
-    this.model.totalTax = 0;
-    this.model.total = 0;
+    this.data.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.data.discountRate);
+    this.data.totalSalesTax = 0;
+    this.data.totalTax = 0;
+    this.data.total = 0;
     if (null != this.taxes) {
       this.taxes.forEach((tax) => {
         tax.amount = tax.rate * this.subTotal;
         if (tax.isSalesTax) {
-          this.model.totalSalesTax = this.totalSalesTax + tax.amount;
+          this.data.totalSalesTax = this.totalSalesTax + tax.amount;
         } else {
-          this.model.totalTax = this.totalTax + tax.amount;
+          this.data.totalTax = this.totalTax + tax.amount;
         }
       });
     }
-    this.model.total = this.subTotal + this.totalSalesTax;
+    this.data.total = this.subTotal + this.totalSalesTax;
     if (null != this.document) {
       this.document.calcTotals();
     }

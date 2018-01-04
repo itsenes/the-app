@@ -28,7 +28,6 @@ import { AccountSettingsComponent } from './features/account-settings/account-se
 import { SubscriptionListComponent } from './common/subscription-list/subscription-list.component';
 import { DocumentTypesComponent } from './features/document-types/document-types.component';
 import { ItemsComponent } from './features/items/items.component';
-
 // forms
 import { CompanyFormComponent } from './features/forms/company-form/company-form.component';
 import { ContactFormComponent } from './features/forms/contact-form/contact-form.component';
@@ -158,5 +157,6 @@ const appRoutes: Routes = [
 
 export class AppModule {
   constructor() {
+    console.log('AppModule initialized!');
   }
 }

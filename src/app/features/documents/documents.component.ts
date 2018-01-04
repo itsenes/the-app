@@ -137,10 +137,10 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   download_file(event) {
     const target = event.currentTarget;
-    if (null != this.selected.model.permaLink) {
+    if (null != this.selected.data.permaLink) {
       return;
     }
-    const file_type = this.selected.documentType.model.template.contentType;
+    const file_type = this.selected.documentType.data.template.contentType;
     this.apiClient.getDocument(this.subscription.id, this.selected.id)
       .subscribe((response) => {
         const blob: Blob = new Blob([], {

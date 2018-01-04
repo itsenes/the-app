@@ -67,7 +67,7 @@ export class SubscriptionCompanyComponent implements OnInit, OnDestroy {
         .subscribe((sub) => {
           this.subscription = sub;
           if (null == this.model || null == this.model.id) {
-            this.model = sub.model.company;
+            this.model = sub.data.company;
           }
           if (!this.readonly) {
             this.bak(this.model);
@@ -120,8 +120,8 @@ export class SubscriptionCompanyComponent implements OnInit, OnDestroy {
       this.bak(this.model);
       this.model = company;
       this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
-        if (sub.model.company.id === this.model.id) {
-          sub.model.company = this.model.clone();
+        if (sub.data.company.id === this.model.id) {
+          sub.data.company = this.model.clone();
         }
         this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
       });

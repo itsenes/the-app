@@ -5,7 +5,7 @@ import { AppStateService } from '../../../services/app-state.service';
 import { ApiClient, Product, Tax, TaxType } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../environments/environment';
-
+import { ProductViewModel } from '../../../view-models/view-models';
 @Component({
   selector: 'app-item-form',
   templateUrl: './item-form.component.html',
@@ -15,7 +15,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   subscription_key: any = null;
   subscription_id: any = null;
   private _bak: any = null;
-  private _model: Product = null;
+  private _model: ProductViewModel = null;
   private _currencyCode: string = null;
   public readonly = true;
   private busy = false;
@@ -36,13 +36,13 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   public get currencyCode(): string { return this._currencyCode; }
 
   @Input()
-  public set model(value: Product) {
+  public set model(value: ProductViewModel) {
     this._model = value;
     if (value != null) {
       this.readonly = (value.id != null);
     }
   }
-  public get model(): Product { return this._model; }
+  public get model(): ProductViewModel { return this._model; }
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
@@ -69,7 +69,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   toggle_edit_mode() {
     this.readonly = !this.readonly;
     if (!this.readonly) {
-      this.bak(this.model);
+      this.bak(this.model.data);
     }
   }
 
@@ -82,7 +82,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
       this.delete();
     } else {
       this.readonly = true;
-      this.model = this._bak;
+      this.model.data = this._bak;
     }
   }
 
@@ -97,8 +97,8 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   }
 
   addtax() {
-    if (null == this.model.taxes) {
-      this.model.taxes = [];
+    if (null == this.model.data.taxes) {
+      this.model.data.taxes = [];
     }
     const newtax = new Tax();
     newtax.code = this.selectedTax.code;
@@ -106,12 +106,12 @@ export class ItemFormComponent implements OnInit, OnDestroy {
     newtax.isSalesTax = this.selectedTax.isSalesTax;
     newtax.rate = this.selectedTax.model.rate;
     newtax.type = this.selectedTax.type;
-    this.model.taxes.push(newtax);
+    this.model.data.taxes.push(newtax);
     this.selectedTax = null;
   }
 
   removetax(index) {
-    this.model.taxes.splice(index, 1);
+    this.model.data.taxes.splice(index, 1);
   }
 
   save() {
@@ -121,10 +121,10 @@ export class ItemFormComponent implements OnInit, OnDestroy {
     }
 
     this.readonly = true;
-    this.apiClient.updateProduct(this.subscription_id, this.model.id, this.model).subscribe((product) => {
+    this.apiClient.updateProduct(this.subscription_id, this.model.id, this.model.data).subscribe((product) => {
       // create a new backup copy
-      this.bak(this.model);
-      this.model = product;
+      this.bak(this.model.data);
+      this.model.data = product;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing
@@ -134,10 +134,10 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   }
 
   savenew() {
-    this.apiClient.createProduct(this.subscription_id, this.model).subscribe((product) => {
+    this.apiClient.createProduct(this.subscription_id, this.model.data).subscribe((product) => {
       // create a new backup copy
-      this.bak(this.model);
-      this.model = product;
+      this.bak(this.model.data);
+      this.model.data = product;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing

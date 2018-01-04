@@ -10,7 +10,7 @@ import { AlertsService } from '@jaspero/ng2-alerts';
   styleUrls: ['../features.components.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-  subscription_key: any = null;
+  subscriptionKey: any = null;
   subscription: any = {};
   company: any = {};
   params_sub: any = null;
@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.params_sub = this.route.params.subscribe((params) => {
       this.busy = true;
       this.appState.getSubscriptionByKey(params['subscription-alias']).subscribe((sub) => {
-        this.subscription_key = params['subscription-alias'];
+        this.subscriptionKey = params['subscription-alias'];
         this.subscription = sub;
         this.busy = false;
       });
@@ -33,8 +33,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   subscription_changed(model: any) {
-    this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
-      sub.model = model;
+    this.appState.getSubscriptionByKey(this.subscriptionKey).subscribe((sub) => {
+      sub.data = model;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     });
   }

@@ -61,7 +61,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
           this.subscription_id = sub.id;
-          const contact = sub.model.contact.clone();
+          const contact = sub.data.contact.clone();
           if (null == contact.address) {
             contact.address = new Address();
           }
@@ -110,7 +110,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       // create a new backup copy
       this.bak(this.model);
       this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
-        sub.model.contact = this.model;
+        sub.data.contact = this.model;
         this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
       });
     }, (error) => {

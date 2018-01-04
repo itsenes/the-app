@@ -126,8 +126,8 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
       this.bak(this.model);
       this.model = company;
       this.appState.getSubscriptionByKey(this.subscription_key).subscribe((sub) => {
-        if (sub.model.company.id === this.model.id) {
-          sub.model.company = this.model.clone();
+        if (sub.data.company.id === this.model.id) {
+          sub.data.company = this.model.clone();
         }
         this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
       });

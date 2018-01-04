@@ -71,7 +71,7 @@ export class TaxFormComponent implements OnInit, OnDestroy {
   toggle_edit_mode() {
     this.readonly = !this.readonly;
     if (!this.readonly) {
-      this.bak(this.model.model);
+      this.bak(this.model.data);
     }
   }
 
@@ -84,7 +84,7 @@ export class TaxFormComponent implements OnInit, OnDestroy {
       this.delete();
     } else {
       this.readonly = true;
-      this.model.model = this._bak;
+      this.model.data = this._bak;
     }
   }
 
@@ -107,10 +107,10 @@ export class TaxFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.apiClient.updateTax(this.subscriptionId, this.model.id, this.model.model).subscribe((tax) => {
+    this.apiClient.updateTax(this.subscriptionId, this.model.id, this.model.data).subscribe((tax) => {
       // create a new backup copy
-      this.bak(this.model.model);
-      this.model.model = tax;
+      this.bak(this.model.data);
+      this.model.data = tax;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing
@@ -120,10 +120,10 @@ export class TaxFormComponent implements OnInit, OnDestroy {
   }
 
   savenew() {
-    this.apiClient.createTax(this.subscriptionId, this.model.model).subscribe((tax) => {
+    this.apiClient.createTax(this.subscriptionId, this.model.data).subscribe((tax) => {
       // create a new backup copy
       this.bak(this.model);
-      this.model.model = tax;
+      this.model.data = tax;
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing

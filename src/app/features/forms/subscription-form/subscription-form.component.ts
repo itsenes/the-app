@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
+import { ApiClient, Subscription, UpdateSubscriptionCompanyRequest } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
 import { LookupsService } from '../../../services/lookups.service';
@@ -26,10 +26,10 @@ export class SubscriptionFormComponent implements OnInit, OnDestroy {
   // @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
 
   // @Input()
-  public set model(value: any) {
+  public set model(value: Subscription) {
     this._model = value;
   }
-  public get model(): any { return this._model; }
+  public get model(): Subscription { return this._model; }
 
   constructor(private alertsService: AlertsService, private route: ActivatedRoute,
     public dialog: MatDialog, private appState: AppStateService,
@@ -41,7 +41,7 @@ export class SubscriptionFormComponent implements OnInit, OnDestroy {
       this.subscription_key = params['subscription-alias'];
       this.appState.getSubscriptionByKey(this.subscription_key)
         .subscribe((sub) => {
-          this.model = sub.model;
+          this.model = sub.data;
         });
     });
   }

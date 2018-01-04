@@ -69,12 +69,12 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   public get vm(): DocumentViewModel { return this._viewmodel; }
 
   public set model(value: Document) {
-    this.vm.model = value;
+    this.vm.data = value;
   }
-  public get model(): Document { return this.vm.model; }
+  public get model(): Document { return this.vm.data; }
 
   public get company(): Organisation {
-    return this.vm.model.recipient.organisation;
+    return this.vm.data.recipient.organisation;
   }
 
   public get companyLogo(): string {
@@ -90,7 +90,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   public get contact(): Contact {
-    return this.vm.model.recipient.contact;
+    return this.vm.data.recipient.contact;
   }
 
   constructor(private appState: AppStateService, private route: ActivatedRoute,
@@ -228,7 +228,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   getNewDocument(): Document {
     const doc = new Document();
-    doc.currencyCode = this.subscription.company.model.currencyCode;
+    doc.currencyCode = this.subscription.company.data.currencyCode;
     doc.typeId = this.documentType.id;
     doc.date = new Date();
     doc.dueDate = new Date();
@@ -296,10 +296,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
       request.lines = new Array<DocumentLine>();
       this.vm.lines.forEach((line) => {
         const newline = new DocumentLine();
-        newline.description = line.model.description;
+        newline.description = line.data.description;
         newline.unitAmount = line.unitAmount;
         newline.quantity = line.quantity;
-        newline.discount = line.model.discount;
+        newline.discount = line.data.discount;
         newline.taxes = new Array<TaxAmount>();
         if (line.taxes) {
           line.taxes.forEach((tax) => {
@@ -307,7 +307,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           });
         }
         if (line.product) {
-          newline.product = line.product.model.clone();
+          newline.product = line.product.data.clone();
         }
         request.lines.push(newline);
       });
@@ -326,10 +326,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
       request.lines = new Array<DocumentLine>();
       this.vm.lines.forEach((line) => {
         const newline = new DocumentLine();
-        newline.description = line.model.description;
+        newline.description = line.data.description;
         newline.unitAmount = line.unitAmount;
         newline.quantity = line.quantity;
-        newline.discount = line.model.discount;
+        newline.discount = line.data.discount;
         newline.taxes = new Array<TaxAmount>();
         if (line.taxes) {
           line.taxes.forEach((tax) => {
@@ -337,7 +337,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           });
         }
         if (line.product) {
-          newline.product = line.product.model.clone();
+          newline.product = line.product.data.clone();
         }
         request.lines.push(newline);
       });
