@@ -16,8 +16,6 @@ import { environment } from '../../environments/environment';
 import { LookupsService } from '../services/lookups.service';
 import { FormControl } from '@angular/forms';
 import { retry } from 'rxjs/operator/retry';
-// causes circular...
-// import { AppStateService } from '../services/app-state.service';
 
 // what you need the service locator will provide...
 @Injectable()

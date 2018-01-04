@@ -10,6 +10,13 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceRoot}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against app.incontrl.io",
+            "url": "https://app.incontrl.io",
+            "webRoot": "${workspaceRoot}"
         }
     ]
 }
