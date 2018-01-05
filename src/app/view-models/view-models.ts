@@ -489,7 +489,7 @@ export class DocumentViewModel extends ViewModel<Document> {
   private _documentType: DocumentTypeViewModel = null;
   private _currency: LookupEntry;
   private _safePortalLink: SafeResourceUrl = null;
-
+  private _statusText: string = null;
   constructor() {
     super();
   }
@@ -547,24 +547,34 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get statusText() {
-    switch (this.data.status) {
-      case DocumentStatus.Draft:
-        return 'ΠΡΟΧΕΙΡΟ';
-      case DocumentStatus.Deleted:
-        return 'ΔΙΕΓΡΑΜΜΕΝΟ';
-      case DocumentStatus.Issued:
-        return 'ΕΧΕΙ ΑΠΟΣΤΑΛΕΙ';
-      case DocumentStatus.Overdue:
-        return 'ΣΕ ΚΑΘΥΣΤΕΡΗΣΗ';
-      case DocumentStatus.Paid:
-        return 'ΕΧΕΙ ΕΞΟΦΛΗΘΕΙ';
-      case DocumentStatus.Partial:
-        return 'ΕΚΚΡΕΜΕΙ ΕΞΟΦΛΗΣΗ';
-      case DocumentStatus.Void:
-        return 'ΑΚΥΡΩΜΕΝΟ';
-      default:
-        return '';
+    if (null == this._statusText) {
+      switch (this.data.status) {
+        case DocumentStatus.Draft:
+          this._statusText = 'ΠΡΟΧΕΙΡΟ';
+          break;
+        case DocumentStatus.Deleted:
+          this._statusText = 'ΔΙΕΓΡΑΜΜΕΝΟ';
+          break;
+        case DocumentStatus.Issued:
+          this._statusText = 'ΕΧΕΙ ΑΠΟΣΤΑΛΕΙ';
+          break;
+        case DocumentStatus.Overdue:
+          this._statusText = 'ΣΕ ΚΑΘΥΣΤΕΡΗΣΗ';
+          break;
+        case DocumentStatus.Paid:
+          this._statusText = 'ΕΧΕΙ ΕΞΟΦΛΗΘΕΙ';
+          break;
+        case DocumentStatus.Partial:
+          this._statusText = 'ΕΚΚΡΕΜΕΙ ΕΞΟΦΛΗΣΗ';
+          break;
+        case DocumentStatus.Void:
+          this._statusText = 'ΑΚΥΡΩΜΕΝΟ';
+          break;
+        default:
+          this._statusText = '';
+      }
     }
+    return this._statusText;
   }
 
   public get currency(): LookupEntry {
