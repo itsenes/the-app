@@ -36,26 +36,43 @@
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutAlign="start start">
         <mat-card class="doc-card" *ngFor="let doc of documents;let i = index;">
           <div class="selected-item" *ngIf="selected && doc.id===selected.id" fxFlexAlign="end"></div>
-          <div class="status-chip" [ngClass]="doc.data.status">
-            <label class="status-label">{{doc.data.status | uppercase}}</label>
-          </div>
+          <span class="status-chip-container">
+            <span class="filler"></span>
+            <span class="status-chip" [ngClass]="doc.data.status">
+              <label class="status-label">{{doc.data.status | uppercase}}</label>
+            </span>
+          </span>
           <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
-          <mat-card-header (click)="setSelected(doc)" class="clickable-header">
+          <mat-card-header class="clickable-header">
             <mat-card-title>
               <label class="small">{{doc.documentType.name}}</label>
-              <h2>{{doc.displayName}}</h2>
+              <h3>{{doc.displayName}}</h3>
             </mat-card-title>
-            <mat-divider></mat-divider>
-            <mat-card-title>ΣΥΝΟΛΟ: {{doc.data.total | currency:doc.data.currencyCode:true}}</mat-card-title>
-            <mat-card-subtitle>ΠΛΗΡΩΤΕΟ: {{doc.data.totalPayable | currency:doc.data.currencyCode:true}}</mat-card-subtitle>
-            <mat-card-subtitle>{{doc.data.date | date:'shortDate'}}</mat-card-subtitle>
-
-            <mat-card-title>{{doc.recipientName}}</mat-card-title>
-            <mat-card-subtitle>{{doc.recipientName1}}</mat-card-subtitle>
           </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
+          <mat-card-header>
+            <img mat-card-avatar class="company-avatar" [src]="doc.companyLogo">
+            <mat-card-title>
+              <mat-card-title>{{doc.recipientName}}
+                <br>{{doc.recipientName1}}</mat-card-title>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-header>
+            <mat-card-subtitle>{{doc.data.date | date:'shortDate'}}</mat-card-subtitle>
+            <mat-card-subtitle><strong> {{doc.data.total | currency:doc.data.currencyCode:true}}</strong></mat-card-subtitle>
+            <mat-card-subtitle>{{doc.data.totalPayable | currency:doc.data.currencyCode:true}} (πληρωτέο)</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <a mat-button (click)="setSelected(doc)">
+              <mat-icon class="card-button-icon">
+                  chrome_reader_mode
+              </mat-icon>
+              Επισκόπηση
+            </a>
+            <a mat-button [routerLink]="doc.viewPath">
+                <mat-icon class="card-button-icon">exit_to_app</mat-icon>
+                Λεπτομέρειες
+            </a>
+          </mat-card-actions>
         </mat-card>
       </div>
 
@@ -97,11 +114,9 @@
           <button mat-menu-item>
             <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
         </mat-menu>
-
         <br>
-        <h1 *ngIf="selected.data.numberPrintable">{{selected.data.numberPrintable}}</h1>
-        <h3 *ngIf="!selected.data.numberPrintable">{{selected.data.status}} {{selected.data.date | date:'longDate'}}</h3>
-        <h3 *ngIf="selected.data.numberPrintable">{{selected.data.date | date:'shortDate'}}</h3>
+        <h3>{{selected.displayName}}</h3>
+        <h3>{{selected.data.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
         <a class="portal-link" [href]="selected.portalLink" target="__new" mat-button>
           <div class="wrap">

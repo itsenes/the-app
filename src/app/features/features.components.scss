@@ -1,40 +1,49 @@
 .action-card {
-    height: 90%;
-    width: 98%;
-    background-color: white;
-    color: #1C1D21;
-    line-height: 14px;
-    opacity: 0.9;
-    margin-right: 10px;
-}  
+  height: 90%;
+  width: 98%;
+  background-color: white;
+  color: #1C1D21;
+  line-height: 14px;
+  opacity: 0.9;
+  margin-right: 10px;
+}
 
 .mat-card-avatar.avatar-large {
-    height: 64px;
-    width: 64px;
-    border-radius: 0%;
+  height: 64px;
+  width: 64px;
+  border-radius: 0%;
 }
 
 .mat-card-avatar.avatar-icon {
-    height: 22px;
-    width: 22px;
-    border-radius: 0%;
-    padding: 10px;
-    background: #FA646E;
+  height: 22px;
+  width: 22px;
+  border-radius: 0%;
+  padding: 10px;
+  background: #FA646E;
 }
-  
+
 .label-small {
-    font-size: 12px;
-    opacity: 0.8;
+  font-size: 12px;
+  opacity: 0.8;
 }
-  
+
 .mat-card-title {
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
 .mat-card-subtitle {
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
-.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button {
-    margin: 0px;
+.mat-card-actions .mat-button,
+.mat-card-actions .mat-raised-button {
+  margin: 0px;
+}
+
+.customer-logo {
+  float: left;
+  width: 64px;
+  height: 64px;
+  margin-top: 2px;
+  margin-right: 6px;
 }

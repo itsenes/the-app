@@ -1,5 +1,5 @@
 .doc-card {
-  min-width: 250px;
+  width: 280px;
   height: 220px;
   margin: 4px;
 }
@@ -81,9 +81,15 @@
 }
 
 .mat-card-header {
-  height: 210px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+
+.mat-card-avatar.company-avatar {
+border-radius: 0px;
+opacity: 0.4;
 }
 
 .selected-icon {
@@ -96,19 +102,20 @@
 .selected-item {
   width: 100%;
   height: 100%;
-  background: black; // background: -moz-linear-gradient(top, rgba(251,123,132,0) 57%, rgba(251,123,132,1) 100%);
-  // background: -webkit-linear-gradient(top, rgba(251,123,132,0) 57%,rgba(251,123,132,1) 100%);
-  // background: linear-gradient(to bottom, rgba(251,123,132,0) 57%,rgba(251,123,132,1) 100%);
-  // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fb7b84', endColorstr='#fb7b84',GradientType=0 );
+  background: black; 
+  //  background: -moz-linear-gradient(top, rgba(251,123,132,0) 57%, rgba(251,123,132,1) 100%);
+  //  background: -webkit-linear-gradient(top, rgba(251,123,132,0) 57%,rgba(251,123,132,1) 100%);
+  //  background: linear-gradient(to bottom, rgba(251,123,132,0) 57%,rgba(251,123,132,1) 100%);
+  //  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fb7b84', endColorstr='#fb7b84',GradientType=0 );
   // background: -moz-linear-gradient(top, rgba(251,123,132,1) 0%, rgba(251,123,132,0) 43%);
   // background: -webkit-linear-gradient(top, rgba(251,123,132,1) 0%,rgba(251,123,132,0) 43%);
   // background: linear-gradient(to bottom, rgba(251,123,132,1) 0%,rgba(251,123,132,0) 43%);
   // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fb7b84', endColorstr='#00fb7b84',GradientType=0 );
-  opacity: 0.1;
+  opacity: 0.05;
   position: absolute; // height: 80px;
   left: 0px;
   top:0px;
-  vertical-align: bottom;
+  vertical-align: top;
   //margin: -24px;
 }
 
@@ -116,7 +123,7 @@ h1,
 h2,
 h3 {
   margin-top: 2px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .clickable-header {
@@ -145,17 +152,26 @@ label.small {
   padding: 0px;
 }
 
-.mat-chip.status-chip,
-div.status-chip {
+span.status-chip-container {
+  display: flex;
+  width: 100%;
+  margin-top: -20px;
   position: absolute;
-  left: 74%;
-  min-width: 92px;
+  left: 0px;
+}
+
+span.filler {
+  flex: 1 1 auto;
+}
+
+span.status-chip {
+  // margin-right: -26px;
+  min-width: 90px;
   font-size: 13px;
   line-height: 28px;
-  margin-top: -15px;
   box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   outline: 0;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 
 .mat-button.menu-status {
@@ -265,4 +281,10 @@ label.status-label {
 
 label.search-status {
   font-size: 13px;
+}
+
+.material-icons.card-button-icon {
+  font-size: 20px;
+  opacity: 0.6;
+  margin-top:0px;
 }
