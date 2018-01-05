@@ -508,7 +508,7 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public get displayName() {
     if (!this.data || !this.data.id || !this.data.numberPrintable) {
-      return `${this.data.status} ${this.data.date.toLocaleString()}`;
+      return `${this.statusText} ${this.data.date.toLocaleString()}`;
     } else {
       return this.data.numberPrintable;
     }
@@ -544,6 +544,27 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   public get folder() {
     return this.documentType.folder;
+  }
+
+  public get statusText() {
+    switch (this.data.status) {
+      case DocumentStatus.Draft:
+        return 'ΠΡΟΧΕΙΡΟ';
+      case DocumentStatus.Deleted:
+        return 'ΔΙΕΓΡΑΜΜΕΝΟ';
+      case DocumentStatus.Issued:
+        return 'ΕΧΕΙ ΑΠΟΣΤΑΛΕΙ';
+      case DocumentStatus.Overdue:
+        return 'ΣΕ ΚΑΘΥΣΤΕΡΗΣΗ';
+      case DocumentStatus.Paid:
+        return 'ΕΧΕΙ ΕΞΟΦΛΗΘΕΙ';
+      case DocumentStatus.Partial:
+        return 'ΕΚΚΡΕΜΕΙ ΕΞΟΦΛΗΣΗ';
+      case DocumentStatus.Void:
+        return 'ΑΚΥΡΩΜΕΝΟ';
+      default:
+        return '';
+    }
   }
 
   public get currency(): LookupEntry {

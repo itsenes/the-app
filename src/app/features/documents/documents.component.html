@@ -39,7 +39,7 @@
           <span class="status-chip-container">
             <span class="filler"></span>
             <span class="status-chip" [ngClass]="doc.data.status">
-              <label class="status-label">{{doc.data.status | uppercase}}</label>
+              <label class="status-label">{{doc.statusText | uppercase}}</label>
             </span>
           </span>
           <!-- <mat-icon class="selected-icon" *ngIf="selected && doc.id===selected.id">check_circle</mat-icon> -->
@@ -58,19 +58,21 @@
           </mat-card-header>
           <mat-card-header>
             <mat-card-subtitle>{{doc.data.date | date:'shortDate'}}</mat-card-subtitle>
-            <mat-card-subtitle><strong> {{doc.data.total | currency:doc.data.currencyCode:true}}</strong></mat-card-subtitle>
+            <mat-card-subtitle>
+              <strong> {{doc.data.total | currency:doc.data.currencyCode:true}}</strong>
+            </mat-card-subtitle>
             <mat-card-subtitle>{{doc.data.totalPayable | currency:doc.data.currencyCode:true}} (πληρωτέο)</mat-card-subtitle>
           </mat-card-header>
           <mat-card-actions>
             <a mat-button (click)="setSelected(doc)">
               <mat-icon class="card-button-icon">
-                  chrome_reader_mode
+                chrome_reader_mode
               </mat-icon>
               Επισκόπηση
             </a>
             <a mat-button [routerLink]="doc.viewPath">
-                <mat-icon class="card-button-icon">exit_to_app</mat-icon>
-                Λεπτομέρειες
+              <mat-icon class="card-button-icon">exit_to_app</mat-icon>
+              Λεπτομέρειες
             </a>
           </mat-card-actions>
         </mat-card>
@@ -93,11 +95,13 @@
         </button>
       </div>
       <div *ngIf="selected">
-        <label class="small">{{selected.documentType.name}}</label>
-        <button class="menu-status" mat-button [ngClass]="selected.data.status" [matMenuTriggerFor]="menu">
-          <label class="status">{{selected.data.status | uppercase}}</label>
-          <mat-icon>keyboard_arrow_down</mat-icon>
-        </button>
+        <span class="status-button-container">
+          <span class="filler"></span>
+          <button class="menu-status" mat-button [ngClass]="selected.data.status" [matMenuTriggerFor]="menu">
+            <label class="status">{{selected.statusText | uppercase}}</label>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+        </span>
         <mat-menu #menu="matMenu" class="status-actions" [overlapTrigger]="false">
           <a mat-menu-item [routerLink]="selected.viewPath">
             <mat-icon>library_books</mat-icon>Προβολή</a>
@@ -114,7 +118,7 @@
           <button mat-menu-item>
             <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
         </mat-menu>
-        <br>
+        <label class="small">{{selected.documentType.name}}</label>
         <h3>{{selected.displayName}}</h3>
         <h3>{{selected.data.date | date:'shortDate'}}</h3>
         <!-- <iframe class="preview-doc" ></iframe> -->
