@@ -76,14 +76,16 @@
 
       <mat-hint align="start" *ngIf="model.data.generatesPrintouts">
         <div fxLayout="row" fxLayoutAlign="start center" class="download-link-container">
-          <a fxFlex="80px" fxFlexAlign="center" [download]='this.model.data.code+"-template.docx"' (click)='download_file($event)' mat-button
+          <a fxFlex="70px" fxFlexAlign="center" [download]='this.model.data.code+"-template.docx"' (click)='download_file($event)' mat-button
             class="download-link">
-            <img class="word-logo small">
+            <img src="assets/images/word.svg" class="small">
           </a>
           <div>
-            <label *ngIf='!readonly' align="start">Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο. </label>
+            <label *ngIf='!readonly' align="start">Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο ή πατήστε <a *ngIf='!readonly' fxFlexAlign="center" (click)='newfile.click()'><strong>εδώ</strong></a> για να ανεβάσετε καινούργιο.</label>
             <label *ngIf='readonly && model.data.generatesPrintouts' align="start">Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf. </label>
           </div>
+          
+          <input class="hidden" #newfile name="newfile" type="file" [(value)]="tempfile" (change)="upload_file($event)">
         </div>
       </mat-hint>
       <label *ngIf='readonly && !model.data.generatesPrintouts' align="start">Αυτός ο τύπος

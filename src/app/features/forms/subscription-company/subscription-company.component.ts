@@ -25,7 +25,7 @@ export class SubscriptionCompanyComponent implements OnInit, OnDestroy {
   public currencies = [];
   public countries = [];
   params_sub: any = null;
-  _title: string = null;
+  _title = 'ΣΤΟΙΧΕΙΑ ΕΠΙΧΕΙΡΗΣΗΣ';
   private manageEdit = false;
 
   @Output() model_changed: EventEmitter<any> = new EventEmitter<any>();
@@ -101,8 +101,7 @@ export class SubscriptionCompanyComponent implements OnInit, OnDestroy {
 
   save() {
     this.readonly = true;
-    // UpdateOrganisationRequest
-    const request: UpdateOrganisationRequest = new UpdateOrganisationRequest();
+    const request: UpdateSubscriptionCompanyRequest = new UpdateSubscriptionCompanyRequest();
     request.logoPath = this.model.logoPath;
     request.code = this.model.code;
     request.currencyCode = this.model.currencyCode;
@@ -115,7 +114,7 @@ export class SubscriptionCompanyComponent implements OnInit, OnDestroy {
     request.email = this.model.email;
     request.website = this.model.website;
     request.address = this.model.address;
-    this.apiClient.updateOrganisation(this.subscription.id, this.model.id, request).subscribe((company) => {
+    this.apiClient.updateSubscriptionCompany(this.subscription.id, request).subscribe((company) => {
       // create a new backup copy
       this.bak(this.model);
       this.model = company;

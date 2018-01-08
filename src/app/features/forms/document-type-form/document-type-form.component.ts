@@ -7,7 +7,7 @@ import {
   UpdateDocumentTypeRequest,
   CreateDocumentTypeRequest,
   CreateDocumentTypeRequestRecordType,
-  LookupEntry
+  LookupEntry, FileParameter
 } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectImageDialogComponent } from '../../../common/dialogs/select-image-dialog/select-image-dialog.component';
@@ -32,6 +32,7 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   params_sub: any = null;
   api_path = environment.api_url + '/api/';
   private template_file_url;
+  public tempfile: any = null;
 
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
@@ -87,6 +88,26 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
   delete() {
     if (null != this.onDelete) {
       this.onDelete.next(this.model);
+    }
+  }
+
+  upload_file(event) {
+    if (event && event.returnValue && event.target && event.target.files && event.target.files.length > 0) {
+      const fileParam = <FileParameter>{};
+      const reader = new FileReader();
+      const file = event.target.files[0];
+      fileParam.fileName = file.name;
+      reader.readAsDataURL(file);
+      reader.onload = (evt) => {
+        fileParam.data = (<FileReader>evt.target).result;
+        this.apiClient.updateDocumentTypeTemplate(this.subscriptionId, this.model.id, fileParam).subscribe(() => {
+          this.tempfile = null;
+          this.alertsService.create('success', 'Η αποστολή του αρχείου έγινε με επιτυχία!');
+        }, (error) => {
+          this.tempfile = null;
+          this.alertsService.create('error', 'Σφάλμα κατα την αποστολή του αρχείου! Μύνημα συστήματος: ' + error);
+        });
+      };
     }
   }
 

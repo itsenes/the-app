@@ -2809,6 +2809,7 @@ export class ApiClient {
             body: content_,
             method: "post",
             headers: new Headers({
+                'Content-Type': 'multipart/form-data'
             })
         };
 
