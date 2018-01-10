@@ -139,9 +139,6 @@
                       <!-- line 1 -->
                       <div fxLayout="row" fxLayoutAlign="space-between center">
                         <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
-                          <!-- <mat-icon *ngIf="!readonly" matPrefix class="search-icon">search</mat-icon>
-                            <input autocomplete="off" [readonly]="readonly" matInput #lineproductname="ngModel" name="lineproductname-{{i}}" [(ngModel)]='line.productName'
-                              placeholder="προϊόν ή υπηρεσία"> -->
                           <mat-select [compareWith]="line.productComparer" [disabled]='readonly' [(value)]='line.product' placeholder="προϊόν ή υπηρεσία">
                             <mat-option *ngFor='let product of products' [value]="product">{{product.name}}</mat-option>
                           </mat-select>
@@ -180,9 +177,9 @@
                         </mat-form-field>
 
                         <mat-form-field class="list-column" fxFlex="250px" floatPlaceholder='auto'>
-                          <input autocomplete="off" matInput [readonly]="true" type="text" #linesalestaxes="ngModel" name="linesalestaxes-{{i}}" [(ngModel)]='line.salesTaxesLabel'
-                            placeholder="ΦΠΑ">
-                          <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>
+                            <mat-select [compareWith]="line.taxComparer" [formControl]="line.salesTaxesControl" multiple [disabled]='readonly' [(value)]='line.salesTaxes' placeholder="φόροι πωλήσεων">
+                              <mat-option *ngFor='let tax of salesTaxes' [value]="tax">{{tax.displayName}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
 
                         <div fxFlex="120px" class="total-column" fxLayout="row" fxLayoutAlign="end center">
@@ -191,11 +188,11 @@
                       </div>
 
                       <!-- line 3 -->
-                      <div *ngIf="line.hasNonSalesTaxes" fxLayout="row" fxLayoutAlign="start start">
+                      <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
-                          <input autocomplete="off" matInput [readonly]="true" type="text" #linenonsalestaxes="ngModel" name="linenonsalestaxes-{{i}}"
-                            [(ngModel)]='line.nonSalesTaxesLabel' placeholder="Παρακρατήσεις, εισφορές">
-                          <mat-icon *ngIf="!readonly" (click)="toggleTaxEditPanel(line)" matSuffix class="button-icon">edit</mat-icon>
+                            <mat-select [compareWith]="line.taxComparer" [formControl]="line.nonSalesTaxesControl" multiple [disabled]='readonly' [(value)]='line.nonSalesTaxes' placeholder="Παρακρατήσεις, εισφορές">
+                              <mat-option *ngFor='let tax of nonSalesTaxes' [value]="tax">{{tax.displayName}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
                         <div fxFlex="120px" class="total-column" fxLayout="row" fxLayoutAlign="end center">
                           <label class="total-negative">{{line.totalTax | currency:model.currencyCode:true}}</label>

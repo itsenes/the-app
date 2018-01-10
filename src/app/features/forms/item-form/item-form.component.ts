@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AlertsService } from '@jaspero/ng2-alerts';
 import { AppStateService } from '../../../services/app-state.service';
-import { ApiClient, Product, Tax, TaxType } from '../../../services/incontrl-apiclient';
+import { ApiClient, Product, Tax, TaxType, TaxDefinition } from '../../../services/incontrl-apiclient';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../../environments/environment';
-import { ProductViewModel } from '../../../view-models/view-models';
+import { ProductViewModel, TaxDefinitionViewModel } from '../../../view-models/view-models';
 @Component({
   selector: 'app-item-form',
   templateUrl: './item-form.component.html',
@@ -24,7 +24,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   api_path = environment.api_url + '/api/';
   private template_file_url;
   public newtax = new Tax();
-  selectedTax: any = null;
+  selectedTax: TaxDefinitionViewModel = null;
 
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
@@ -69,12 +69,12 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   toggle_edit_mode() {
     this.readonly = !this.readonly;
     if (!this.readonly) {
-      this.bak(this.model.data);
+      this.bak();
     }
   }
 
-  private bak(value: any) {
-    this._bak = value.clone();
+  private bak() {
+    this._bak = this.model.data.clone();
   }
 
   cancel() {
@@ -101,11 +101,7 @@ export class ItemFormComponent implements OnInit, OnDestroy {
       this.model.data.taxes = [];
     }
     const newtax = new Tax();
-    newtax.code = this.selectedTax.code;
-    newtax.name = this.selectedTax.name;
-    newtax.isSalesTax = this.selectedTax.isSalesTax;
-    newtax.rate = this.selectedTax.model.rate;
-    newtax.type = this.selectedTax.type;
+    newtax.init(this.selectedTax.data);
     this.model.data.taxes.push(newtax);
     this.selectedTax = null;
   }
@@ -115,16 +111,17 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    this.readonly = true;
+
     if (this.isnew()) {
       this.savenew();
       return;
     }
 
-    this.readonly = true;
     this.apiClient.updateProduct(this.subscription_id, this.model.id, this.model.data).subscribe((product) => {
       // create a new backup copy
-      this.bak(this.model.data);
       this.model.data = product;
+      this.bak();
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing
@@ -136,8 +133,8 @@ export class ItemFormComponent implements OnInit, OnDestroy {
   savenew() {
     this.apiClient.createProduct(this.subscription_id, this.model.data).subscribe((product) => {
       // create a new backup copy
-      this.bak(this.model.data);
       this.model.data = product;
+      this.bak();
       this.alertsService.create('success', 'Η αποθήκευση των αλλαγών σας έγινε με επιτυχία!');
     }, (error) => {
       this.readonly = false; // continue editing

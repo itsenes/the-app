@@ -10,7 +10,7 @@ import {
   Product, Tax, TaxAmount, Document, Plan, Recipient, Organisation, Contact,
   DocumentLine, Address, DocumentStatus, TaxAmountType,
   DocumentCalculationRequest, DocumentCalculationResult,
-  PricedLine, TaxType, TaxDefinition, DocumentTypeRecordType,
+  PricedLine, TaxType, TaxDefinition, TaxDefinitionType, DocumentTypeRecordType,
   RecordType, CreateDocumentTypeRequestRecordType
 } from '../services/incontrl-apiclient';
 import { environment } from '../../environments/environment';
@@ -18,6 +18,7 @@ import { LookupsService } from '../services/lookups.service';
 import { FormControl } from '@angular/forms';
 import { retry } from 'rxjs/operator/retry';
 import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 // what you need the service locator will provide...
 @Injectable()
@@ -58,6 +59,11 @@ export class ViewModel<T> {
 
   public set data(value: T) {
     this._data = value;
+    this.dataChanged(value);
+  }
+
+  protected dataChanged(data: T) {
+    console.log('dataChanged for ' + this.getClassName());
   }
 
   protected init() { }
@@ -104,7 +110,7 @@ export class ViewModelLocator {
 
 export class SubscriptionViewModel extends ViewModel<Subscription> {
   private _documentTypes: DocumentTypeViewModel[];
-  private _products: any[];
+  private _products: ProductViewModel[];
   private _plan: Plan;
   private _members: any[];
   private _taxes: TaxDefinitionViewModel[];
@@ -200,28 +206,28 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
       });
   }
 
-  public get products(): Observable<any[]> {
+  public get products(): Observable<Array<ProductViewModel>> {
     if (null == this._products) {
       return this.loadProducts();
     }
     return this.asObservable(this._products);
   }
 
-  getProduct(id) {
-    return Observable.create((observer) => {
-      observer.next(this._products.find(item => item.id === id));
-      observer.complete();
-    });
+  getProduct(id): Observable<ProductViewModel> {
+    return this.asObservable(this._products.find(item => item.id === id));
   }
 
   addProduct() {
-    const product = new Product();
-    this._products.push({
-      model: product
-    });
+    const product = new ProductViewModel();
+    const data = new Product();
+    data.taxes = new Array<Tax>();
+    product.basePath = this.basePath;
+    product.serviceLocator = this.serviceLocator;
+    product.data = data;
+    this._products.push(product);
   }
 
-  loadProducts(): Observable<any> {
+  loadProducts(): Observable<Array<ProductViewModel>> {
     return this.serviceLocator.apiClient.getProducts(this.id, 1, 100)
       .map((response) => {
         if (response.count === 0) {
@@ -265,11 +271,11 @@ export class SubscriptionViewModel extends ViewModel<Subscription> {
 
   private loadTaxes(): Observable<TaxDefinitionViewModel[]> {
     return this.serviceLocator.apiClient.getTaxes(this.id, 1, 100).map((result) => {
-      this._taxes = result.items.map((item) => {
+      this._taxes = result.items.map((tax) => {
         const vm = new TaxDefinitionViewModel();
         vm.basePath = this.basePath;
         vm.serviceLocator = this.serviceLocator;
-        vm.data = item;
+        vm.data = tax;
         return vm;
       });
       return this._taxes;
@@ -413,6 +419,17 @@ export class TaxDefinitionViewModel extends ViewModel<TaxDefinition> {
     this.data.type = value;
   }
 
+  public getTaxType() {
+    switch (this.data.type) {
+      case TaxDefinitionType.Fixed:
+        return TaxType.Fixed;
+      case TaxDefinitionType.FixedRate:
+        return TaxType.FixedRate;
+      case TaxDefinitionType.UnitRate:
+        return TaxType.UnitRate;
+    }
+  }
+
   public get taxType() {
     switch (this.data.code) {
       case 'VAT': {
@@ -484,8 +501,8 @@ export class ProductViewModel extends ViewModel<Product> {
 }
 
 export class DocumentViewModel extends ViewModel<Document> {
-  private _salesTaxes: Array<Tax>;
-  private _nonSalesTaxes: Array<Tax>;
+  private _salesTaxes: Array<TaxAmount>;
+  private _nonSalesTaxes: Array<TaxAmount>;
   private _documentType: DocumentTypeViewModel = null;
   private _currency: LookupEntry;
   private _safePortalLink: SafeResourceUrl = null;
@@ -497,7 +514,6 @@ export class DocumentViewModel extends ViewModel<Document> {
   public get documentType(): DocumentTypeViewModel {
     return this._documentType;
   }
-
   public set documentType(value: DocumentTypeViewModel) {
     this._documentType = value;
   }
@@ -517,7 +533,6 @@ export class DocumentViewModel extends ViewModel<Document> {
   public get hasCompany() {
     return (this.data && this.data.recipient && this.data.recipient.organisation);
   }
-
   public get hasContact() {
     return (this.data && this.data.recipient && this.data.recipient.contact);
   }
@@ -647,17 +662,17 @@ export class DocumentViewModel extends ViewModel<Document> {
     this.calcTotals();
   }
 
-  public get salesTaxes(): any {
+  public get salesTaxes(): TaxAmount[] {
     return this._salesTaxes;
   }
-  public set salesTaxes(value: any) {
+  public set salesTaxes(value: TaxAmount[]) {
     this._salesTaxes = value;
   }
 
-  public get nonSalesTaxes(): any {
+  public get nonSalesTaxes(): TaxAmount[] {
     return this._nonSalesTaxes;
   }
-  public set nonSalesTaxes(value: any) {
+  public set nonSalesTaxes(value: TaxAmount[]) {
     this._nonSalesTaxes = value;
   }
 
@@ -695,9 +710,9 @@ export class DocumentViewModel extends ViewModel<Document> {
       // update taxes list...
       line.taxes.forEach((tax) => {
         if (tax.isSalesTax) {
-          salesTaxes.push(tax.clone());
+          salesTaxes.push(tax);
         } else {
-          nonSalesTaxes.push(tax.clone());
+          nonSalesTaxes.push(tax);
         }
       });
     });
@@ -705,36 +720,6 @@ export class DocumentViewModel extends ViewModel<Document> {
     // ok get unique tax descriptions
     this.salesTaxes = this.groupAndSumTaxes(salesTaxes);
     this.nonSalesTaxes = this.groupAndSumTaxes(nonSalesTaxes);
-    // calculate sums for each unique tax description
-    // push it to the corresponding array for ui binding!
-    console.log(this.salesTaxes);
-    console.log(this.nonSalesTaxes);
-  }
-
-  public serverCalc() {
-    const request: DocumentCalculationRequest = new DocumentCalculationRequest();
-    request.currencyCode = this.data.currencyCode;
-    request.lines = new Array<PricedLine>();
-    this.data.lines.forEach((line) => {
-      const newline = new PricedLine();
-      newline.discountRate = line.discountRate;
-      newline.quantity = line.quantity;
-      newline.unitAmount = line.unitAmount;
-      newline.taxes = new Array<Tax>();
-      line.taxes.forEach((t) => {
-        const newtax = new Tax();
-        newtax.isSalesTax = t.isSalesTax;
-        newtax.rate = t.rate;
-        newtax.type = TaxType.UnitRate;
-        newtax.code = t.code;
-        newtax.inclusive = t.inclusive;
-        newline.taxes.push(newtax);
-      });
-    });
-
-    this.serviceLocator.apiClient.calculate('', request).subscribe((response) => {
-      console.log(response.toJSON());
-    });
   }
 
   public init(): Observable<void> {
@@ -791,8 +776,35 @@ export class DocumentViewModel extends ViewModel<Document> {
 export class DocumentLineViewModel extends ViewModel<DocumentLine> {
   private _document: DocumentViewModel = null;
   private _product: ProductViewModel = null;
+  private _taxes: Array<TaxAmount> = null;
+  public salesTaxesControl: FormControl = new FormControl();
+  public nonSalesTaxesControl: FormControl = new FormControl();
+
   constructor() {
     super();
+    this.salesTaxesControl.valueChanges.subscribe((selectedTaxes: Array<TaxDefinitionViewModel>) => {
+      this.clearSalesTaxes();
+      if (null != selectedTaxes && selectedTaxes.length > 0) {
+        selectedTaxes.forEach((tax) => {
+          const taxdata = new TaxAmount();
+          taxdata.init(tax);
+          this.taxes.push(taxdata);
+        });
+      }
+      this.calcTotals();
+    });
+
+    this.nonSalesTaxesControl.valueChanges.subscribe((selectedTaxes: Array<TaxDefinitionViewModel>) => {
+      this.clearNonSalesTaxes();
+      if (null != selectedTaxes && selectedTaxes.length > 0) {
+        selectedTaxes.forEach((tax) => {
+          const taxdata = new TaxAmount();
+          taxdata.init(tax);
+          this.taxes.push(taxdata);
+        });
+      }
+      this.calcTotals();
+    });
   }
 
   public get id() {
@@ -814,6 +826,12 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     return p1.id === p2.id;
   }
 
+  taxComparer(p1: any, p2: any) {
+    if (p1 == null || p2 == null) {
+      return false;
+    }
+    return p1.displayName === p2.displayName;
+  }
 
   public get product(): ProductViewModel {
     if (null == this._product && null != this.data.product) {
@@ -826,33 +844,27 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     return this._product; // this.data.product;
   }
 
-  public set product(value: ProductViewModel) {
-    if (!this.data.product || this.data.product.id !== value.id) {
+  public set product(product: ProductViewModel) {
+    if (!this.data.product || this.data.product.id !== product.id) {
       console.log('should change taxes !');
-      this.data.description = value.name;
-      this.data.unitAmount = value.data.unitAmount;
-      this.data.taxes = new Array<TaxAmount>();
-      if (value.data.taxes) {
-        value.data.taxes.forEach((tax) => {
-          const newtax = new TaxAmount();
-          newtax.rate = tax.rate;
-          newtax.amount = tax.rate;
-          newtax.type = TaxAmountType.UnitRate;
-          newtax.code = tax.code;
-          newtax.name = tax.name;
-          newtax.inclusive = tax.inclusive;
-          newtax.isSalesTax = tax.isSalesTax;
-          this.data.taxes.push(newtax);
+      this.data.description = product.name;
+      this.data.unitAmount = product.data.unitAmount;
+      this.taxes = new Array<TaxAmount>();
+      if (product.data.taxes) {
+        product.data.taxes.forEach((tax) => {
+          const taxdata = new TaxAmount();
+          taxdata.init(tax);
+          this.taxes.push(taxdata);
         });
       }
     }
-    this._product = value;
-    this.data.product = value.data;
+    this._product = product;
+    this.data.product = product.data;
     this.calcTotals();
   }
 
   public get quantity() {
-    return this.data.quantity;
+    return this.data.quantity ? this.data.quantity : 0;
   }
   public set quantity(value: number) {
     this.data.quantity = value;
@@ -893,43 +905,42 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     return this.data.total;
   }
 
-  public get taxes() {
+  public get taxes(): Array<TaxAmount> {
     return this.data.taxes;
+  }
+
+  public set taxes(value: Array<TaxAmount>) {
+    this.data.taxes = value;
   }
 
   public get salesTaxes() {
     return this.taxes ? this.taxes.filter(t => t.isSalesTax) : new Array<TaxAmount>();
   }
 
-  public get salesTaxesLabel() {
-    let label = 'δεν έχουν οριστεί φόροι';
-    const labelArr = new Array<string>();
-    if (this.salesTaxes && this.salesTaxes.length) {
-      this.salesTaxes.forEach((tax) => {
-        labelArr.push(`${tax.name} (${tax.rate * 100}%)`);
-      });
-      label = labelArr.join(', ');
-    }
-    return label;
-  }
-
-  public get hasNonSalesTaxes() {
-    return this.nonSalesTaxes && this.nonSalesTaxes.length > 0;
-  }
   public get nonSalesTaxes() {
     return this.taxes ? this.taxes.filter(t => !t.isSalesTax) : new Array<TaxAmount>();
   }
 
-  public get nonSalesTaxesLabel() {
-    let label = 'δεν έχουν οριστεί παρακρατήσεις ή εισφορές';
-    const labelArr = new Array<string>();
-    if (this.nonSalesTaxes && this.nonSalesTaxes.length) {
-      this.nonSalesTaxes.forEach((tax) => {
-        labelArr.push(`${tax.name} (${tax.rate * 100}%)`);
-      });
-      label = labelArr.join(', ');
-    }
-    return label;
+  private clearSalesTaxes() {
+    // clear all sales taxes!
+    const remove = this.taxes.filter(t => t.isSalesTax);
+    remove.forEach((t => {
+      const i = this.taxes.findIndex(t1 => t1.displayName === t.displayName);
+      if (i >= 0) {
+        this.taxes.splice(i, 1);
+      }
+    }));
+  }
+
+  private clearNonSalesTaxes() {
+    // clear all sales taxes!
+    const remove = this.taxes.filter(t => !t.isSalesTax);
+    remove.forEach((t => {
+      const i = this.taxes.findIndex(t1 => t1.displayName === t.displayName);
+      if (i >= 0) {
+        this.taxes.splice(i, 1);
+      }
+    }));
   }
 
   public get document(): DocumentViewModel {
@@ -939,14 +950,6 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     this._document = value;
   }
 
-  public removeTax(tax) {
-    alert('remove tax');
-  }
-
-  public addTax(event) {
-    alert('add tax');
-  }
-
   public calcTotals() {
     this.data.subTotal = (this.quantity * this.unitAmount) - (this.quantity * this.unitAmount * this.data.discountRate);
     this.data.totalSalesTax = 0;
@@ -954,15 +957,15 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     this.data.total = 0;
     if (null != this.taxes) {
       this.taxes.forEach((tax) => {
-        tax.amount = tax.rate * this.subTotal;
+        tax.amount = tax.rate * this.data.subTotal;
         if (tax.isSalesTax) {
-          this.data.totalSalesTax = this.totalSalesTax + tax.amount;
+          this.data.totalSalesTax = this.data.totalSalesTax + tax.amount;
         } else {
-          this.data.totalTax = this.totalTax + tax.amount;
+          this.data.totalTax = this.data.totalTax + tax.amount;
         }
       });
     }
-    this.data.total = this.subTotal + this.totalSalesTax;
+    this.data.total = this.data.subTotal + this.data.totalSalesTax;
     if (null != this.document) {
       this.document.calcTotals();
     }

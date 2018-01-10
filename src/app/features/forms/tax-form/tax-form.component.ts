@@ -54,20 +54,6 @@ export class TaxFormComponent implements OnInit, OnDestroy {
     this.params_sub.unsubscribe();
   }
 
-  getTaxType(type) {
-    switch (type) {
-      case 'VAT': {
-        return 'Φόρος προστιθέμενης αξίας πώλησης αγαθών ή παροχής υπηρεσιών (ΦΠΑ)';
-      }
-      case 'DEDUCTABLE': {
-        return 'Κρατήσεις, παρακρατήσεις, εισφορές, χαρτόσημα, κτλ';
-      }
-      default: {
-        return 'Άλλος τύπος φόρου';
-      }
-    }
-  }
-
   toggle_edit_mode() {
     this.readonly = !this.readonly;
     if (!this.readonly) {

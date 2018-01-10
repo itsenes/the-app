@@ -53,6 +53,8 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   filteredcompanies: Organisation[];
   currencies: LookupEntry[] = null;
   taxes: Array<TaxDefinitionViewModel> = null;
+  salesTaxes: Array<TaxDefinitionViewModel> = null;
+  nonSalesTaxes: Array<TaxDefinitionViewModel> = null;
   filteredcurrencies: LookupEntry[];
   newline: DocumentLine = null;
   showPane = false;
@@ -171,6 +173,8 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
           this.products = result[1];
           this.documentType = result[2];
           this.taxes = result[3];
+          this.salesTaxes = this.taxes.filter(t => t.isSalesTax);
+          this.nonSalesTaxes = this.taxes.filter(t => !t.isSalesTax);
           // init the vm here!
           if ('new' === docid || null == docid) {
             const doc = this.getNewDocument();
@@ -291,7 +295,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         newline.taxes = new Array<TaxAmount>();
         if (line.taxes) {
           line.taxes.forEach((tax) => {
-            newline.taxes.push(tax.clone());
+            const taxdata = new TaxAmount();
+            taxdata.init(tax);
+            newline.taxes.push(taxdata);
           });
         }
         if (line.product) {
@@ -321,7 +327,9 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
         newline.taxes = new Array<TaxAmount>();
         if (line.taxes) {
           line.taxes.forEach((tax) => {
-            newline.taxes.push(tax.clone());
+            const taxdata = new TaxAmount();
+            taxdata.init(tax);
+            newline.taxes.push(taxdata);
           });
         }
         if (line.product) {
