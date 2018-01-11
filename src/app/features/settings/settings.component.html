@@ -1,5 +1,5 @@
 <mat-toolbar class="view-header  mat-elevation-z1">
-  <span class="title">ΡΥΘΜΙΣΕΙΣ ΣΥΝΔΡΟΜΗΣ</span>
+  <span class="title">{{'settings.title' | translate}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
 </mat-toolbar>
@@ -20,27 +20,27 @@
     <mat-card-actions>
       <a routerLink="subscription" routerLinkActive="active-route" mat-button>
         <mat-icon>assignment_ind</mat-icon>
-        <label>Η συνδρομή σας</label>
-      </a>
+        <label>{{'settings.your-subscription' | translate}}</label>
+      </a><br>
       <a routerLink="company" routerLinkActive="active-route" mat-button>
         <mat-icon>business</mat-icon>
-        <label>Στοιχεία Επιχείρησης</label>
-      </a>
+        <label>{{'settings.company-info' | translate}}</label>
+      </a><br>
       <a routerLink="contact" routerLinkActive="active-route" mat-button>
         <mat-icon>person</mat-icon>
-        <label>Στοιχεία Επικοινωνίας</label>
-      </a>
+        <label>{{'settings.contact-info' | translate}}</label>
+      </a><br>
       <a routerLink="document-types" routerLinkActive="active-route" mat-button>
         <mat-icon class="orange">folder</mat-icon>
-        <label>Τύποι εγγράφων</label>
-      </a>
+        <label>{{'settings.document-types' | translate}}</label>
+      </a><br>
       <a routerLink="taxes" routerLinkActive="active-route" mat-button>
         <mat-icon>playlist_add</mat-icon>
-        <label>Φόροι, Κρατήσεις, Εισφορές</label>
-      </a>
+        <label>{{'settings.taxes' | translate}}</label>
+      </a><br>
       <a routerLink="items" routerLinkActive="active-route" mat-button>
         <mat-icon>apps</mat-icon>
-        <label>Προϊόντα - Υπηρεσίες</label>
+        <label>{{'settings.products-services' | translate}}</label>
       </a>
       <!-- malakia (allh mia :) -->
       <br/>

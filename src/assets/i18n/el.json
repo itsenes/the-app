@@ -59,5 +59,14 @@
     "manage" : "Διαχείριση",
     "logout" : "Αποσύνδεση",
     "subscriptions" : "ΣΥΝΔΡΟΜΕΣ"
+  },
+  "settings" : {
+    "title" : "ΡΥΘΜΙΣΕΙΣ ΣΥΝΔΡΟΜΗΣ",
+    "your-subscription" : "Η συνδρομή σας",
+    "company-info" : "Στοιχεία Επιχείρησης",
+    "contact-info" : "Στοιχεία Επικοινωνίας",
+    "document-types": "Τύποι εγγράφων",
+    "taxes":"Φόροι, Κρατήσεις, Εισφορές",
+    "products-services":"Προϊόντα - Υπηρεσίες"
   }
 }

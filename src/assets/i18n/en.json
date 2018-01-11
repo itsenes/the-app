@@ -59,5 +59,14 @@
     "manage" : "Manage account",
     "logout" : "Logout",
     "subscriptions" : "SUBSCRIPTIONS"
+  },
+  "settings" : {
+    "title" : "SUBSCRIPTION SETTINGS",
+    "your-subscription" : "Your subscription",
+    "company-info" : "Company information",
+    "contact-info" : "Contact information",
+    "document-types": "Document types",
+    "taxes":"Taxes",
+    "products-services":"Products and services"
   }
 }
