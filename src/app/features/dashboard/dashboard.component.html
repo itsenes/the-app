@@ -26,11 +26,11 @@
         <mat-card-actions>
           <a mat-button [routerLink]="doc.searchPath">
             <mat-icon>search</mat-icon>
-            <label fxShow fxHide.sm fxHide.md>Αναζήτηση</label>
+            <label fxShow fxHide.sm fxHide.md>{{'dashboard.doc-search' | translate}}</label>
           </a>
           <a mat-button [routerLink]="doc.addNewPath">
             <mat-icon>add_circle</mat-icon>
-            <label fxShow fxHide.sm fxHide.md>Προσθήκη</label>
+            <label fxShow fxHide.sm fxHide.md>{{'dashboard.doc-add-new' | translate}}</label>
           </a>
         </mat-card-actions>
       </mat-card>
@@ -93,17 +93,17 @@
       <mat-card class="action-card">
         <mat-card-header>
           <mat-card-title class="action-card-title">
-            Ρυθμίσεις
+            {{'dashboard.settings-title' | translate}}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="min-height">
           <mat-icon class="size-128 settings">settings</mat-icon>
-          <mat-card-subtitle>Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.</mat-card-subtitle>
+          <mat-card-subtitle>{{'dashboard.settings-subtitle' | translate}}</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
           <a mat-button [routerLink]="subscription?.settingsPath" routerLinkActive="active-route">
             <mat-icon>settings</mat-icon>
-            <label fxShow fxHide.sm fxHide.md>Ξεκινήστε εδώ!</label>
+            <label fxShow fxHide.sm fxHide.md>{{'dashboard.settings-action' | translate}}</label>
           </a>
         </mat-card-actions>
       </mat-card>
@@ -112,18 +112,18 @@
       <mat-card class="action-card">
         <mat-card-header>
           <mat-card-title class="action-card-title">
-            Πληροφορίες
+            {{'dashboard.info-title' | translate}}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="min-height">
           <mat-icon class="size-128 info">bug_report</mat-icon>
-          <mat-card-subtitle>Η έκδοση της εφαρμογής είναι δοκιμαστική.
+          <mat-card-subtitle>{{'dashboard.info-subtitle' | translate}}
             <br>API: {{api_url}}</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
           <a mat-button href="https://www.incontrl.io" target="__new">
             <mat-icon>forum</mat-icon>
-            <label fxShow fxHide.sm fxHide.md>Επικοινωνήστε μαζί μας!</label>
+            <label fxShow fxHide.sm fxHide.md>{{'dashboard.info-action' | translate}}</label>
           </a>
         </mat-card-actions>
       </mat-card>

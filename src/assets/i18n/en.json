@@ -68,5 +68,17 @@
     "document-types": "Document types",
     "taxes":"Taxes",
     "products-services":"Products and services"
+  },
+  "dashboard" : {
+    "doc-search" : "Αναζήτηση",
+    "doc-add-new" : "Προσθήκη",
+    
+    "settings-title" : "Ρυθμίσεις",
+    "settings-subtitle" : "Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.",
+    "settings-action" : "Ξεκινήστε εδώ!",
+
+    "info-title" : "Πληροφορίες",
+    "info-subtitle" : "Η έκδοση της εφαρμογής είναι δοκιμαστική.",
+    "info-action" : "Επικοινωνήστε μαζί μας!"
   }
 }
