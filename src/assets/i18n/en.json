@@ -1,0 +1,16 @@
+{
+  "app-title": "THE-APP",
+  "document.status": {
+    "Draft": "Draft",
+    "Deleted": "Deleted",
+    "Issued": "Sent-Pending",
+    "Overdue": "Over due",
+    "Paid": "Paid",
+    "Partial": "Sent-Partially paid",
+    "Void": "Void"
+  },
+  "documents": {
+    "preview": "Preview",
+    "details": "Details"
+  }
+}

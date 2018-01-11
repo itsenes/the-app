@@ -51,11 +51,18 @@ import { SubscriptionFormComponent } from './features/forms/subscription-form/su
 import { SubscriptionCompanyComponent } from './features/forms/subscription-company/subscription-company.component';
 import { TaxesComponent } from './features/taxes/taxes.component';
 import { TaxFormComponent } from './features/forms/tax-form/tax-form.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // my api url factory method :)
 export const getApiUrl = function () {
   return environment.api_url;
 };
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 const appRoutes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent },
@@ -130,6 +137,14 @@ const appRoutes: Routes = [
   entryComponents: [SelectImageDialogComponent],
   imports: [
     HttpModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     RouterModule.forRoot(appRoutes),
     RouterModule.forChild(appRoutes),
     BrowserModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, BrowserAnimationsModule,

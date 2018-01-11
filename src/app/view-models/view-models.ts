@@ -19,11 +19,13 @@ import { FormControl } from '@angular/forms';
 import { retry } from 'rxjs/operator/retry';
 import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 import { forEach } from '@angular/router/src/utils/collection';
+import { TranslateService } from '@ngx-translate/core';
 
 // what you need the service locator will provide...
 @Injectable()
 export class ServiceLocator {
-  constructor(public apiClient: ApiClient, public lookups: LookupsService, public sanitizer: DomSanitizer) {
+  constructor(public apiClient: ApiClient, public lookups: LookupsService,
+    public sanitizer: DomSanitizer, public translations: TranslateService) {
   }
 }
 
@@ -50,6 +52,10 @@ export class ViewModel<T> {
 
   public get lookups(): LookupsService {
     return this.serviceLocator.lookups;
+  }
+
+  public get translations(): TranslateService {
+    return this.serviceLocator.translations;
   }
 
   private _data: T = null;
@@ -697,31 +703,14 @@ export class DocumentViewModel extends ViewModel<Document> {
 
   protected dataChanged(data) {
     super.dataChanged(data);
-    switch (data.status) {
-      case DocumentStatus.Draft:
-        this._statusText = 'ΠΡΟΣΧΕΔΙΟ';
-        break;
-      case DocumentStatus.Deleted:
-        this._statusText = 'ΔΙΕΓΡΑΜΜΕΝΟ';
-        break;
-      case DocumentStatus.Issued:
-        this._statusText = 'ΕΧΕΙ ΑΠΟΣΤΑΛΕΙ';
-        break;
-      case DocumentStatus.Overdue:
-        this._statusText = 'ΣΕ ΚΑΘΥΣΤΕΡΗΣΗ';
-        break;
-      case DocumentStatus.Paid:
-        this._statusText = 'ΕΧΕΙ ΕΞΟΦΛΗΘΕΙ';
-        break;
-      case DocumentStatus.Partial:
-        this._statusText = 'ΕΚΚΡΕΜΕΙ ΕΞΟΦΛΗΣΗ';
-        break;
-      case DocumentStatus.Void:
-        this._statusText = 'ΑΚΥΡΩΜΕΝΟ';
-        break;
-      default:
-        this._statusText = '';
-    }
+    const status_key = `document.status.${data.status}`;
+    this.translations
+      .get(status_key)
+      .subscribe(translation => {
+        this._statusText = translation;
+      }, (error) => {
+        console.log(status_key + ' not found in translations');
+      });
 
     if (data.recipient == null) {
       data.recipient = new Recipient();
