@@ -53,5 +53,11 @@
       "sales-taxes": "sales taxes",
       "non-sales-taxes": "non sales taxes"
     }
+  },
+  "account-settings" : {
+    "title" : "ACCOUNT SETTINGS",
+    "manage" : "Manage account",
+    "logout" : "Logout",
+    "subscriptions" : "SUBSCRIPTIONS"
   }
 }

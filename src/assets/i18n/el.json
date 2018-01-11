@@ -53,5 +53,11 @@
       "sales-taxes": "φόροι πωλήσεων",
       "non-sales-taxes": "Παρακρατήσεις, εισφορές"
     }
+  },
+  "account-settings" : {
+    "title" : "ΡΥΘΜΙΣΕΙΣ ΛΟΓΑΡΙΑΣΜΟΥ",
+    "manage" : "Διαχείριση",
+    "logout" : "Αποσύνδεση",
+    "subscriptions" : "ΣΥΝΔΡΟΜΕΣ"
   }
 }
