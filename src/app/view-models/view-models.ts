@@ -562,33 +562,6 @@ export class DocumentViewModel extends ViewModel<Document> {
   }
 
   public get statusText() {
-    if (null == this._statusText) {
-      switch (this.data.status) {
-        case DocumentStatus.Draft:
-          this._statusText = 'ΠΡΟΧΕΙΡΟ';
-          break;
-        case DocumentStatus.Deleted:
-          this._statusText = 'ΔΙΕΓΡΑΜΜΕΝΟ';
-          break;
-        case DocumentStatus.Issued:
-          this._statusText = 'ΕΧΕΙ ΑΠΟΣΤΑΛΕΙ';
-          break;
-        case DocumentStatus.Overdue:
-          this._statusText = 'ΣΕ ΚΑΘΥΣΤΕΡΗΣΗ';
-          break;
-        case DocumentStatus.Paid:
-          this._statusText = 'ΕΧΕΙ ΕΞΟΦΛΗΘΕΙ';
-          break;
-        case DocumentStatus.Partial:
-          this._statusText = 'ΕΚΚΡΕΜΕΙ ΕΞΟΦΛΗΣΗ';
-          break;
-        case DocumentStatus.Void:
-          this._statusText = 'ΑΚΥΡΩΜΕΝΟ';
-          break;
-        default:
-          this._statusText = '';
-      }
-    }
     return this._statusText;
   }
 
@@ -722,31 +695,55 @@ export class DocumentViewModel extends ViewModel<Document> {
     this.nonSalesTaxes = this.groupAndSumTaxes(nonSalesTaxes);
   }
 
-  public init(): Observable<void> {
-    if (null == this.data) {
-      return this.asObservable();
+  protected dataChanged(data) {
+    super.dataChanged(data);
+    switch (data.status) {
+      case DocumentStatus.Draft:
+        this._statusText = 'ΠΡΟΣΧΕΔΙΟ';
+        break;
+      case DocumentStatus.Deleted:
+        this._statusText = 'ΔΙΕΓΡΑΜΜΕΝΟ';
+        break;
+      case DocumentStatus.Issued:
+        this._statusText = 'ΕΧΕΙ ΑΠΟΣΤΑΛΕΙ';
+        break;
+      case DocumentStatus.Overdue:
+        this._statusText = 'ΣΕ ΚΑΘΥΣΤΕΡΗΣΗ';
+        break;
+      case DocumentStatus.Paid:
+        this._statusText = 'ΕΧΕΙ ΕΞΟΦΛΗΘΕΙ';
+        break;
+      case DocumentStatus.Partial:
+        this._statusText = 'ΕΚΚΡΕΜΕΙ ΕΞΟΦΛΗΣΗ';
+        break;
+      case DocumentStatus.Void:
+        this._statusText = 'ΑΚΥΡΩΜΕΝΟ';
+        break;
+      default:
+        this._statusText = '';
     }
-    if (this.data.recipient == null) {
-      this.data.recipient = new Recipient();
+
+    if (data.recipient == null) {
+      data.recipient = new Recipient();
     }
-    if (this.data.recipient.organisation == null) {
-      this.data.recipient.organisation = new Organisation();
+    if (data.recipient.organisation == null) {
+      data.recipient.organisation = new Organisation();
     }
-    if (this.data.recipient.organisation.address == null) {
-      this.data.recipient.organisation.address = new Address();
+    if (data.recipient.organisation.address == null) {
+      data.recipient.organisation.address = new Address();
     }
-    if (this.data.recipient.contact == null) {
+    if (data.recipient.contact == null) {
       this.data.recipient.contact = new Contact();
     }
-    if (this.data.recipient.contact.address == null) {
+    if (data.recipient.contact.address == null) {
       this.data.recipient.contact.address = new Address();
     }
-    if (this.data.lines == null || this.data.lines === undefined) {
+    if (data.lines == null || this.data.lines === undefined) {
       this.data.lines = [];
     }
 
     this.lines = new Array<DocumentLineViewModel>();
-    this.data.lines.forEach((line) => {
+    data.lines.forEach((line) => {
       if (line.discountRate == null) {
         line.discountRate = 0;
       }
@@ -761,13 +758,18 @@ export class DocumentViewModel extends ViewModel<Document> {
       this.lines.push(newline);
     });
     this.calcTotals();
-    let currencySubscription = null;
-    if ((null != this.data) && (null != this.data.currencyCode)
-      && (null != this.serviceLocator) && (null != this.serviceLocator.lookups)) {
-      currencySubscription = this.serviceLocator.lookups.getCurrency(this.data.currencyCode);
+  }
+
+  public init(): Observable<void> {
+    if (null == this.data) {
+      return this.asObservable();
     }
-    return Observable.forkJoin(currencySubscription).map((val1) => {
-      this._currency = val1[0] as LookupEntry;
+    let currencySub = null;
+    if (this.data.currencyCode) {
+      currencySub = this.serviceLocator.lookups.getCurrency(this.data.currencyCode);
+    }
+    return Observable.forkJoin(currencySub).map((results) => {
+      this._currency = results[0] as LookupEntry;
       return;
     });
   }
@@ -830,7 +832,7 @@ export class DocumentLineViewModel extends ViewModel<DocumentLine> {
     if (p1 == null || p2 == null) {
       return false;
     }
-    return p1.displayName === p2.displayName;
+    return p1.id === p2.id;
   }
 
   public get product(): ProductViewModel {
