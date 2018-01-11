@@ -1,6 +1,14 @@
 {
   "app-title": "Η-ΕΦΑΡΜΟΓΗ",
-  "start-here" : "ΞΕΚΙΝΗΣΤΕ ΕΔΩ!",
+  "start-here": "ΞΕΚΙΝΗΣΤΕ ΕΔΩ!",
+  "shell": {
+    "home": "Η εταιρία μου",
+    "settings": "Ρυθμίσεις"
+  },
+  "actions": {
+    "save": "ΑΠΟΘΗΚΕΥΣΗ",
+    "cancel": "ΑΚΥΡΩΣΗ"
+  },
   "document.status": {
     "Draft": "ΠΡΟΣΧΕΔΙΟ",
     "Deleted": "ΔΙΕΓΡΑΜΜΕΝΟ",
@@ -17,14 +25,33 @@
     "details": "Λεπτομέρειες",
     "view": "Προβολή",
     "edit": "Μεταβολή",
-    "copy":"Αντίγραφο",
+    "copy": "Αντίγραφο",
     "pay": "Πληρωμή",
     "cancel": "Ακύρωση",
     "delete": "Διαγραφή",
-    "customer":"ΠΕΛΑΤΗΣ",
-    "total":"ΣΥΝΟΛΟ",
-    "payable":"ΠΛΗΡΩΤΕΟ",
+    "customer": "ΠΕΛΑΤΗΣ",
+    "total": "ΣΥΝΟΛΟ",
+    "payable": "ΠΛΗΡΩΤΕΟ",
+    "sub-total": "ΣΥΝΟΛΟ ΑΞΙΑΣ",
+    "vat": "ΦΠΑ",
     "no-selected-document": "παρακαλώ επιλέξτε ένα εγγραφο.",
-    "no-documents-found": "δεν βρέθηκαν έγγραφα."
+    "no-documents-found": "δεν βρέθηκαν έγγραφα.",
+    "search-customer": "αναζήτηση επιχείρησης",
+    "new-customer": "ΝΕΟΣ ΠΕΛΑΤΗΣ",
+    "products-services": "ΠΡΟΪΟΝΤΑ - ΥΠΗΡΕΣΙΕΣ",
+    "add-line": "ΠΡΟΣΘΗΚΗ",
+    "no-lines": "Δεν έχουν οριστεί προιόντα ή υπηρεσίες",
+    "fields": {
+      "date": "Ημερομηνία",
+      "duedate": "Ημερομηνία πληρωμής",
+      "currency": "Νόμισμα",
+      "product-or-service": "προϊόν ή υπηρεσία",
+      "unit-amount": "αξία",
+      "quantity": "ποσότητα",
+      "discount": "έκπτωση",
+      "description": "περιγραφή",
+      "sales-taxes": "φόροι πωλήσεων",
+      "non-sales-taxes": "Παρακρατήσεις, εισφορές"
+    }
   }
 }

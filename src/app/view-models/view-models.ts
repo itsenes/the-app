@@ -337,6 +337,7 @@ export class OrganisationViewModel extends ViewModel<Organisation> {
 }
 
 export class DocumentTypeViewModel extends ViewModel<DocumentType> {
+  private _recordTypeText = null;
   constructor() {
     super();
   }
@@ -370,6 +371,10 @@ export class DocumentTypeViewModel extends ViewModel<DocumentType> {
     } else {
       return '';
     }
+  }
+
+  protected dataChanged(data) {
+
   }
 
   public getCreateRecordType(): CreateDocumentTypeRequestRecordType {

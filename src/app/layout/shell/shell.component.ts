@@ -4,6 +4,9 @@ import { AuthService } from '../../services/auth.service';
 import { AppStateService } from '../../services/app-state.service';
 import { AlertSettings } from '@jaspero/ng2-alerts';
 import { NgProgress } from 'ngx-progressbar';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Observable';
+import { DocumentTypeViewModel } from '../../view-models/view-models';
 
 const nav_width_collapsed = '65px;';
 const nav_width_extended = '240px;';
@@ -39,7 +42,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     declineText: 'OXI'
   };
   constructor(private appState: AppStateService, private authService: AuthService, private router: Router,
-    private route: ActivatedRoute, private ngProgress: NgProgress) {
+    private route: ActivatedRoute, private ngProgress: NgProgress, private translations: TranslateService) {
     this.user = this.authService.currentUser().profile;
   }
 
@@ -68,16 +71,22 @@ export class ShellComponent implements OnInit, OnDestroy {
           if (null != sub) {
             this.subscription = sub;
             this.appState.selectSubscription(this.subscription);
-            this.subscription.documentTypes.subscribe((types) => {
+            // ok get traslations and document types and populate menu!
+            const shell_translations = this.translations.get(['shell.home', 'shell.settings']);
+            const doc_types = this.subscription.documentTypes;
+
+            Observable.forkJoin([shell_translations, doc_types]).subscribe((results) => {
+              const translations = <string[]>results[0];
+              const types = <DocumentTypeViewModel[]>results[1];
               this.navLinks = [
-                { path: this.subscription.homePath, icon: 'home', label: 'Η εταιρεία μου' }
+                { path: this.subscription.homePath, icon: 'home', label: translations['shell.home'] }
               ];
               if (types != null) {
                 types.forEach((doc) => {
                   this.navLinks.push({ path: doc.searchPath, icon: 'folder', label: doc.folder });
                 });
               }
-              this.navLinks.push({ path: this.subscription.settingsPath, icon: 'settings', label: 'Ρυθμίσεις' });
+              this.navLinks.push({ path: this.subscription.settingsPath, icon: 'settings', label: translations['shell.settings'] });
             });
           } else {
             console.log('no active subscription - redirecting to auth-callback');

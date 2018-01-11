@@ -1,6 +1,14 @@
 {
   "app-title": "THE-APP",
-  "start-here" : "START HERE!",
+  "start-here": "START HERE!",
+  "shell": {
+    "home": "My company",
+    "settings": "Settings"
+  },
+  "actions": {
+    "save": "SAVE",
+    "cancel": "CANCEL"
+  },
   "document.status": {
     "Draft": "Draft",
     "Deleted": "Deleted",
@@ -17,14 +25,33 @@
     "details": "Details",
     "view": "View",
     "edit": "Edit",
-    "copy":"Copy",
+    "copy": "Duplicate",
     "pay": "Payment",
     "cancel": "Cancel",
     "delete": "Delete",
-    "customer":"Customer",
-    "total":"Total",
-    "payable":"Payable",
+    "customer": "CUSTOMER",
+    "total": "TOTAL",
+    "payable": "PAYABLE",
+    "sub-total": "SUB TOTAL",
+    "vat": "VAT",
     "no-selected-document": "please select a document.",
-    "no-documents-found": "no documents found."
+    "no-documents-found": "no documents found.",
+    "search-customer": "search for company",
+    "new-customer": "NEW CUSTOMER",
+    "products-services": "PRODUCTS - SERVICES",
+    "add-line": "ADD",
+    "no-lines": "No products or services found",
+    "fields": {
+      "date": "Date",
+      "duedate": "Payment date",
+      "currency": "Currency",
+      "product-or-service": "product or service",
+      "unit-amount": "amount",
+      "quantity": "quantity",
+      "discount": "discount",
+      "description": "description",
+      "sales-taxes": "sales taxes",
+      "non-sales-taxes": "non sales taxes"
+    }
   }
 }
