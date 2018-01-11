@@ -7,7 +7,9 @@
   },
   "actions": {
     "save": "SAVE",
-    "cancel": "CANCEL"
+    "cancel": "CANCEL",
+    "add":"ADD NEW",
+    "start-here":"START HERE!"
   },
   "document.status": {
     "Draft": "Draft",
@@ -70,15 +72,19 @@
     "products-services":"Products and services"
   },
   "dashboard" : {
-    "doc-search" : "Αναζήτηση",
-    "doc-add-new" : "Προσθήκη",
+    "doc-search" : "Search",
+    "doc-add-new" : "Add new",
     
-    "settings-title" : "Ρυθμίσεις",
-    "settings-subtitle" : "Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.",
-    "settings-action" : "Ξεκινήστε εδώ!",
+    "settings-title" : "Settings",
+    "settings-subtitle" : "Manage your company information, document types and more...",
+    "settings-action" : "Start here!",
 
-    "info-title" : "Πληροφορίες",
-    "info-subtitle" : "Η έκδοση της εφαρμογής είναι δοκιμαστική.",
-    "info-action" : "Επικοινωνήστε μαζί μας!"
+    "info-title" : "Information",
+    "info-subtitle" : "This is a beta version.",
+    "info-action" : "Contact us!"
+  },
+  "document-types" : {
+    "title" : "DOCUMENT TYPES",
+    "no-records" : "no document types found."
   }
 }
