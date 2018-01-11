@@ -2,7 +2,7 @@
   <span class="title">{{documentType?.folder | uppercase}}</span>
   <!-- This fills the remaining space of the current row -->
   <span class="app-toolbar-filler"></span>
-  <button (click)="add_new()" mat-button>NEO ΠΑΡΑΣΤΑΤΙΚΟ</button>
+  <button (click)="add_new()" mat-button>{{ 'documents.new-document-title' | translate}}</button>
   <label class="divider" *ngIf="!starthere">|</label>
   <button *ngIf="!starthere" (click)="toggleInfoPanel()" mat-icon-button>
     <mat-icon>info_outline</mat-icon>
@@ -15,7 +15,7 @@
     <div fxFlex>
       <mat-toolbar>
         <mat-form-field floatPlaceholder='never'>
-          <input mat-input [(ngModel)]="searchText" matInput type="text" placeholder="Αναζήτηση" maxlength="300">
+          <input mat-input [(ngModel)]="searchText" matInput type="text" [placeholder]="'documents.search' | translate" maxlength="300">
         </mat-form-field>
         <button mat-icon-button (click)="dosearch()" [disabled]="!cansearch()">
           <mat-icon>search</mat-icon>
@@ -88,10 +88,10 @@
     </div>
     <div fxFlex="360px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showInfo">
       <div class="no-records" fxFlex fxLayout="column" fxLayoutAlign="center center" *ngIf="!selected">
-        <label class="small">δεν έχετε επιλέξει καποιο έγγραφο.</label>
+        <label class="small">{{ 'documents.no-selected-document' | translate}}</label>
         <img src="assets/images/no-records.png" class="no-records">
         <button color="primary" (click)="add_new()" mat-button>
-          <label class="small">ΝΕΟ ΠΑΡΑΣΤΑΤΙΚΟ!</label>
+          <label class="small">{{ 'documents.new-document-title' | translate}}!</label>
         </button>
       </div>
       <div *ngIf="selected">
@@ -104,19 +104,19 @@
         </span>
         <mat-menu #menu="matMenu" class="status-actions" [overlapTrigger]="false">
           <a mat-menu-item [routerLink]="selected.viewPath">
-            <mat-icon>library_books</mat-icon>Προβολή</a>
+            <mat-icon>library_books</mat-icon>{{ 'documents.view' | translate}}</a>
           <a mat-menu-item [routerLink]="selected.editPath">
-            <mat-icon>edit</mat-icon>Μεταβολή</a>
+            <mat-icon>edit</mat-icon>{{ 'documents.view' | translate}}</a>
           <button mat-menu-item>
-            <mat-icon>content_copy</mat-icon>Αντίγραφο</button>
+            <mat-icon>content_copy</mat-icon>{{ 'documents.copy' | translate}}</button>
           <mat-divider></mat-divider>
           <button mat-menu-item>
-            <mat-icon>payment</mat-icon>Πληρωμή</button>
+            <mat-icon>payment</mat-icon>{{ 'documents.pay' | translate}}</button>
           <mat-divider></mat-divider>
           <button mat-menu-item>
-            <mat-icon>close</mat-icon>Ακύρωση</button>
+            <mat-icon>close</mat-icon>{{ 'documents.cancel' | translate}}</button>
           <button mat-menu-item>
-            <mat-icon>delete_forever</mat-icon>Διαγραφή</button>
+            <mat-icon>delete_forever</mat-icon>{{ 'documents.delete' | translate}}</button>
         </mat-menu>
         <label class="small">{{selected.documentType.name}}</label>
         <h3>{{selected.displayName}}</h3>
@@ -140,24 +140,23 @@
           </a>
         </div>
         <!-- <label class="small">ΣΕΛΙΔΑ ΠΕΛΑΤΗ</label> -->
-        <label class="small" *ngIf="selected.data.recipient.organisation || selected.data.recipient.contact">ΠΕΛΑΤΗΣ</label>
+        <label class="small" *ngIf="selected.data.recipient.organisation || selected.data.recipient.contact">{{'documents.customer' | translate}}</label>
         <h2 *ngIf="selected.data.recipient.organisation">{{selected.data.recipient.organisation.name}}</h2>
         <label *ngIf="selected.data.recipient.organisation">{{selected.data.recipient.organisation.legalName}}</label>
         <h2 *ngIf="selected.data.recipient.contact">{{selected.data.recipient.contact.firstName}} {{selected.data.recipient.contact.lastName}}</h2>
-        <label class="small">ΣΥΝΟΛΟ</label>
+        <label class="small">{{'documents.total' | translate}}</label>
         <h2>{{selected.data.total | currency:selected.data.currencyCode:true}}</h2>
-        <label class="small">ΠΛΗΡΩΤΕΟ</label>
+        <label class="small">{{'documents.payable' | translate}}</label>
         <h3>{{selected.data.totalPayable | currency:selected.data.currencyCode:true}}</h3>
-
       </div>
     </div>
   </div>
 
   <div class="no-records" fxLayout="column" fxLayoutAlign="center center" *ngIf="starthere">
-    <label class="small">δεν βρέθηκαν έγγραφα.</label>
+    <label class="small">{{'documents.no-documents-found' | translate}}</label>
     <img src="assets/images/no-records.png" class="no-records">
     <button color="primary" (click)="add_new()" mat-button>
-      <label class="small">ΞΕΚΙΝΗΣΤΕ ΕΔΩ!</label>
+      <label class="small">{{'start-here' | translate}}</label>
     </button>
   </div>
 </div>

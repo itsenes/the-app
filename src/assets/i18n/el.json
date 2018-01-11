@@ -1,5 +1,6 @@
 {
   "app-title": "Η-ΕΦΑΡΜΟΓΗ",
+  "start-here" : "ΞΕΚΙΝΗΣΤΕ ΕΔΩ!",
   "document.status": {
     "Draft": "ΠΡΟΣΧΕΔΙΟ",
     "Deleted": "ΔΙΕΓΡΑΜΜΕΝΟ",
@@ -10,7 +11,20 @@
     "Void": "ΑΚΥΡΩΜΕΝΟ"
   },
   "documents": {
+    "new-document-title": "NEO ΠΑΡΑΣΤΑΤΙΚΟ",
+    "search": "Αναζήτηση",
     "preview": "Επισκόπηση",
-    "details": "Λεπτομέρειες"
+    "details": "Λεπτομέρειες",
+    "view": "Προβολή",
+    "edit": "Μεταβολή",
+    "copy":"Αντίγραφο",
+    "pay": "Πληρωμή",
+    "cancel": "Ακύρωση",
+    "delete": "Διαγραφή",
+    "customer":"ΠΕΛΑΤΗΣ",
+    "total":"ΣΥΝΟΛΟ",
+    "payable":"ΠΛΗΡΩΤΕΟ",
+    "no-selected-document": "παρακαλώ επιλέξτε ένα εγγραφο.",
+    "no-documents-found": "δεν βρέθηκαν έγγραφα."
   }
 }

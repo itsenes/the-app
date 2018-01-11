@@ -1,5 +1,6 @@
 {
   "app-title": "THE-APP",
+  "start-here" : "START HERE!",
   "document.status": {
     "Draft": "Draft",
     "Deleted": "Deleted",
@@ -10,7 +11,20 @@
     "Void": "Void"
   },
   "documents": {
+    "new-document-title": "NEW DOCUMENT",
+    "search": "Search",
     "preview": "Preview",
-    "details": "Details"
+    "details": "Details",
+    "view": "View",
+    "edit": "Edit",
+    "copy":"Copy",
+    "pay": "Payment",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "customer":"Customer",
+    "total":"Total",
+    "payable":"Payable",
+    "no-selected-document": "please select a document.",
+    "no-documents-found": "no documents found."
   }
 }
