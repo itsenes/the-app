@@ -8,8 +8,8 @@
   "actions": {
     "save": "ΑΠΟΘΗΚΕΥΣΗ",
     "cancel": "ΑΚΥΡΩΣΗ",
-    "add":"ΠΡΟΣΘΗΚΗ",
-    "start-here":"ΞΕΚΙΝΗΣΤΕ ΕΔΩ!"
+    "add": "ΠΡΟΣΘΗΚΗ",
+    "start-here": "ΞΕΚΙΝΗΣΤΕ ΕΔΩ!"
   },
   "document.status": {
     "Draft": "ΠΡΟΣΧΕΔΙΟ",
@@ -56,35 +56,94 @@
       "non-sales-taxes": "Παρακρατήσεις, εισφορές"
     }
   },
-  "account-settings" : {
-    "title" : "ΡΥΘΜΙΣΕΙΣ ΛΟΓΑΡΙΑΣΜΟΥ",
-    "manage" : "Διαχείριση",
-    "logout" : "Αποσύνδεση",
-    "subscriptions" : "ΣΥΝΔΡΟΜΕΣ"
+  "account-settings": {
+    "title": "ΡΥΘΜΙΣΕΙΣ ΛΟΓΑΡΙΑΣΜΟΥ",
+    "manage": "Διαχείριση",
+    "logout": "Αποσύνδεση",
+    "subscriptions": "ΣΥΝΔΡΟΜΕΣ"
   },
-  "settings" : {
-    "title" : "ΡΥΘΜΙΣΕΙΣ ΣΥΝΔΡΟΜΗΣ",
-    "your-subscription" : "Η συνδρομή σας",
-    "company-info" : "Στοιχεία Επιχείρησης",
-    "contact-info" : "Στοιχεία Επικοινωνίας",
+  "settings": {
+    "title": "ΡΥΘΜΙΣΕΙΣ ΣΥΝΔΡΟΜΗΣ",
+    "your-subscription": "Η συνδρομή σας",
+    "company-info": "Στοιχεία Επιχείρησης",
+    "contact-info": "Στοιχεία Επικοινωνίας",
     "document-types": "Τύποι εγγράφων",
-    "taxes":"Φόροι, Κρατήσεις, Εισφορές",
-    "products-services":"Προϊόντα - Υπηρεσίες"
+    "taxes": "Φόροι, Κρατήσεις, Εισφορές",
+    "products-services": "Προϊόντα - Υπηρεσίες"
   },
-  "dashboard" : {
-    "doc-search" : "Αναζήτηση",
-    "doc-add-new" : "Προσθήκη",
+  "dashboard": {
+    "doc-search": "Αναζήτηση",
+    "doc-add-new": "Προσθήκη",
 
-    "settings-title" : "Ρυθμίσεις",
-    "settings-subtitle" : "Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.",
-    "settings-action" : "Ξεκινήστε εδώ!",
+    "settings-title": "Ρυθμίσεις",
+    "settings-subtitle": "Τα στοιχεία της επιχείρησης σας, τύποι παραστατικών και άλλες ρυθμίσεις.",
+    "settings-action": "Ξεκινήστε εδώ!",
 
-    "info-title" : "Πληροφορίες",
-    "info-subtitle" : "Η έκδοση της εφαρμογής είναι δοκιμαστική.",
-    "info-action" : "Επικοινωνήστε μαζί μας!"
+    "info-title": "Πληροφορίες",
+    "info-subtitle": "Η έκδοση της εφαρμογής είναι δοκιμαστική.",
+    "info-action": "Επικοινωνήστε μαζί μας!"
   },
-  "document-types" : {
-    "title" : "ΤΥΠΟΙ ΕΓΓΡΑΦΩΝ κ ΠΑΡΑΣΤΑΤΙΚΩΝ",
-    "no-records" : "δεν βρέθηκαν τύποι εγγράφων και παραστατικών."
+  "document-types": {
+    "title": "ΤΥΠΟΙ ΕΓΓΡΑΦΩΝ κ ΠΑΡΑΣΤΑΤΙΚΩΝ",
+    "no-records": "δεν βρέθηκαν τύποι εγγράφων και παραστατικών."
+  },
+  "company": {
+    "fields": {
+      "name": "Ονομασία (Διακριτικός τίτλος)",
+      "legalName": "Επωνυμία",
+      "lineOfBusiness": "Επάγγελμα, δραστηριότητα",
+      "vatCode": "ΑΦΜ",
+      "vatOffice": "ΔΟΥ",
+      "currency": "Νόμισμα",
+    }
+  },
+  "address": {
+    "title": "ΔΙΕΥΘΥΝΣΗ",
+    "primaryAddress": "ΔΙΕΥΘΥΝΣΗ ΕΔΡΑΣ",
+    "no-address": "Δεν έχει οριστεί διεύθυνση",
+    "fields": {
+      "line1": "Διεύθυνση #1",
+      "line2": "Διεύθυνση #2",
+      "zipCode": "ΤΚ",
+      "city": "Πόλη",
+      "country": "Χώρα"
+    }
+  },
+  "contact": {
+    "title": "ΣΤΟΙΧΕΙΑ ΕΠΙΚΟΙΝΩΝΙΑΣ",
+    "fields": {
+      "firstName": "Όνομα",
+      "lastName": "Επώνυμο",
+      "phone": "Τηλέφωνο",
+      "phone1": "Τηλέφωνο #1",
+      "phone2": "Τηλέφωνο #2",
+      "notes": "Σχόλια"
+    }
+  },
+  "document-type-recordType": {
+    "AccountsReceivable": "Έσοδα",
+    "AccountsPayable": "Έξοδα"
+  },
+  "document-type": {
+    "title": "ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ",
+    "next-number-label":"To επόμενο έγγραφο θα έχει τον αριθμό",
+    "generates-printouts":"Να παράγει έγγραφα",
+    "generates-printouts-not":"Να μην παράγει έγγραφα",
+    "generates-printouts-help":"Ενεργοποιήστε την επιλογή για να παράγονται έγγραφα τύπου microsoft word ή και pdf βάση του παρακάτω προτύπου.",
+    "generates-printouts-status":"Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf.",
+    "generates-printouts-status-not":"Αυτός ο τύπος <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf.",
+    "generates-printouts-link1":"Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο ή πατήστε",
+    "generates-printouts-link2":"<strong>εδώ</strong>",
+    "generates-printouts-link3":"για να ανεβάσετε καινούργιο.",
+    "fields": {
+      "name": "Ονομασία",
+      "notes": "Περιγραφή",
+      "folder": "Όνομα φακέλου",
+      "code": "Κωδικός",
+      "category": "Κατηγορία",
+      "generatesPrintouts": "Παράγει έγγραφα",
+      "numberFormat": "Μάσκα αρίθμησης",
+      "numberOffset": "Αρίθμηση από"
+    }
   }
 }
