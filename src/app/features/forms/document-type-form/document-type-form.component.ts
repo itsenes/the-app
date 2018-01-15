@@ -97,9 +97,8 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       const file = event.target.files[0];
       fileParam.fileName = file.name;
-      reader.readAsDataURL(file);
-      reader.onload = (evt) => {
-        fileParam.data = (<FileReader>evt.target).result;
+      reader.onload = (evt: any) => {
+        fileParam.data = evt.target.result;
         this.apiClient.updateDocumentTypeTemplate(this.subscriptionId, this.model.id, fileParam).subscribe(() => {
           this.tempfile = null;
           this.alertsService.create('success', 'Η αποστολή του αρχείου έγινε με επιτυχία!');
@@ -108,6 +107,7 @@ export class DocumentTypeFormComponent implements OnInit, OnDestroy {
           this.alertsService.create('error', 'Σφάλμα κατα την αποστολή του αρχείου! Μύνημα συστήματος: ' + error);
         });
       };
+      reader.readAsText(file);
     }
   }
 
