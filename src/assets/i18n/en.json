@@ -62,6 +62,9 @@
     "logout" : "Logout",
     "subscriptions" : "SUBSCRIPTIONS"
   },
+  "services": {
+    "settings":"Configure"
+  },
   "settings" : {
     "title" : "SUBSCRIPTION SETTINGS",
     "your-subscription" : "Your subscription",
@@ -86,5 +89,104 @@
   "document-types" : {
     "title" : "DOCUMENT TYPES",
     "no-records" : "no document types found."
+  },
+  "company": {
+    "title":"COMPANY INFORMATION",
+    "fields": {
+      "name": "Name (Distinctive Title)",
+      "legalName": "Legal name",
+      "lineOfBusiness": "Line of business",
+      "vatCode": "VAT Number",
+      "vatOffice": "Tax Office",
+      "currency": "Currency"
+    }
+  },
+  "address": {
+    "title": "ADDRESS",
+    "primaryAddress": "PRIMARY ADDRESS",
+    "no-address": "No address specified",
+    "fields": {
+      "line1": "Address line #1",
+      "line2": "Address line #2",
+      "zipCode": "Zip code",
+      "city": "City",
+      "country": "Country",
+      "phone": "Phone number",
+      "phone1": "Phone #1",
+      "phone2": "Phone #2",
+      "notes": "Notes"
+    }
+  },
+  "contact": {
+    "title": "CONTACT INFORMATION",
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phone": "Phone number",
+      "phone1": "Phone #1",
+      "phone2": "Phone #2",
+      "notes": "Notes"
+    }
+  },
+  "document-type-recordType": {
+    "AccountsReceivable": "Revenues",
+    "AccountsPayable": "Expenses"
+  },
+  "document-type": {
+    "title": "DOCUMENT TYPE",
+    "next-number-label": "The next document will be assigned the number ",
+    "generates-printouts": "Generates documents",
+    "generates-printouts-not": "Does not generates documents",
+    "generates-printouts-help": "Activate the option to generate word or pdf documents using the template below.",
+    "generates-printouts-status": "This type generates microsoft word and or pdf documents.",
+    "generates-printouts-status-not": "This type does <strong>NOT</strong> generates microsoft word and or pdf documents.",
+    "generates-printouts-link1": "Click on the icon to download the file or click",
+    "generates-printouts-link2": "<strong>here</strong>",
+    "generates-printouts-link3": "to upload a new one.",
+    "fields": {
+      "name": "Name",
+      "notes": "Description",
+      "folder": "Folder name",
+      "code": "Code",
+      "category": "Category",
+      "generatesPrintouts": "Generates document",
+      "numberFormat": "Number format",
+      "numberOffset": "Start document numbering from"
+    }
+  },
+  "items" : {
+    "title":"PRODUCTS & SERVICES",
+    "no-records":"no products or services found."
+  },
+  "item": {
+    "title": "PRODUCT or SERVICE",
+    "no-taxes": "No taxes assigned.",
+    "select-tax": "Select a tax category",
+    "taxes": "TAXES",
+    "fields": {
+      "name": "Name",
+      "notes": "Notes",
+      "code": "Item code",
+      "unitAmount": "Unit price",
+      "unitType": "Unit type"
+    }
+  },
+  "tax-type": {
+    "vat": "Sales taxes",
+    "deductable": "Non sales taxes",
+    "other": "Other"
+  },
+  "taxes": {
+    "title":"TAXES",
+    "no-records" : "no records found."
+  },
+  "tax": {
+    "title": "TAX INFORMATION",
+    "deductable-help": "Use negative amounts for taxes that are deductable from the payable amount.",
+    "fields": {
+      "name": "Name",
+      "taxType": "Type",
+      "rate": "Rate"
+    }
   }
 }
