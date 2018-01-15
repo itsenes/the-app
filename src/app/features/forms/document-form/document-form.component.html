@@ -36,14 +36,14 @@
               <!-- https://material.angular.io/components/datepicker/examples -->
               <mat-form-field class="medium" floatLabel='auto'>
                 <input matInput [matDatepicker]="datepicker" [readonly]='readonly' [formControl]="invoicedate" (dateChange)='dateChanged($event)'
-                  [placeholder]="'documents.fields.date' | translate">
+                  [placeholder]="'document.fields.date' | translate">
                 <mat-datepicker-toggle matSuffix *ngIf="!readonly" [for]="datepicker"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field class="medium" floatLabel='auto'>
                 <input matInput [matDatepicker]="duedatepicker" [readonly]='readonly' (dateChange)='duedateChanged($event)' [formControl]='invoicedueDate'
-                  [placeholder]="'documents.fields.duedate' | translate">
+                  [placeholder]="'document.fields.duedate' | translate">
                 <mat-datepicker-toggle matSuffix *ngIf="!readonly" [for]="duedatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #duedatepicker></mat-datepicker>
               </mat-form-field>
@@ -53,7 +53,7 @@
                 <input mat-input [readonly]='readonly' [formControl]="searchCurrencyControl" name="currencyfilter" matInput type="text" maxlength="30"
                   [matAutocomplete]="autocurrency">
                 <mat-placeholder>
-                  <mat-icon *ngIf='!readonly' matPrefix class="search-icon">search</mat-icon>&nbsp;{{'documents.fields.currency' | translate}}
+                  <mat-icon *ngIf='!readonly' matPrefix class="search-icon">search</mat-icon>&nbsp;{{'document.fields.currency' | translate}}
                 </mat-placeholder>
                 <mat-autocomplete #autocurrency="matAutocomplete" (optionSelected)="currencyChanged($event)" [displayWith]="displayCurrencyFn">
                   <mat-option *ngFor="let currency of filteredcurrencies" [value]="currency">
@@ -65,7 +65,7 @@
           </mat-card-content>
 
           <mat-card-title class="short">
-            <label class="small">{{'documents.customer' | translate}}</label>
+            <label class="small">{{'document.fields.customer' | translate}}</label>
             <span class="app-toolbar-filler"></span>
           </mat-card-title>
 
@@ -86,7 +86,7 @@
                 </mat-form-field>
                 <label class="small">&nbsp;&nbsp;&nbsp;&nbsp;ή</label>
                 <button mat-button (click)="toggleCompanyPanel(true)" color="primary">
-                  <label class="small">{{'documents.new-customer' | translate}}</label>
+                  <label class="small">{{'document.new-customer' | translate}}</label>
                 </button>
               </span>
               <ng-container *ngIf="company.name">
@@ -109,10 +109,10 @@
           </mat-card-content>
 
           <mat-card-title>
-            <label class="small">{{'documents.products-services' | translate}}</label>
+            <label class="small">{{'document.products-services' | translate}}</label>
             <span class="app-toolbar-filler"></span>
             <button *ngIf='!readonly' (click)="addline()" mat-button color="primary">
-              <label class="small">{{'documents.add-line' | translate}}</label>
+              <label class="small">{{'document.add-line' | translate}}</label>
             </button>
           </mat-card-title>
 
@@ -140,25 +140,25 @@
                       <div fxLayout="row" fxLayoutAlign="space-between center">
                         <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
                           <mat-select [compareWith]="line.productComparer" [disabled]='readonly' [(value)]='line.product' 
-                          [placeholder]="'documents.fields.product-or-service' | translate">
+                          [placeholder]="'document.fields.product-or-service' | translate">
                             <mat-option *ngFor='let product of products' [value]="product">{{product.name}}</mat-option>
                           </mat-select>
                         </mat-form-field>
 
                         <mat-form-field class="list-column" fxFlex="120px" floatPlaceholder='auto'>
                           <input autocomplete="off" matInput [readonly]="readonly" type="number" #lineunitAmount="ngModel" name="lineunitAmount-{{i}}"
-                            [(ngModel)]='line.unitAmount' [placeholder]="'documents.fields.unit-amount' | translate">
+                            [(ngModel)]='line.unitAmount' [placeholder]="'document.fields.unit-amount' | translate">
                           <span matSuffix class="extrasmall">{{model.currencyCode}}</span>
                         </mat-form-field>
 
                         <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
                           <input autocomplete="off" matInput [readonly]="readonly" type="number" #linequantity="ngModel" name="linequantity-{{i}}"
-                            [(ngModel)]='line.quantity' [placeholder]="'documents.fields.quantity' | translate">
+                            [(ngModel)]='line.quantity' [placeholder]="'document.fields.quantity' | translate">
                         </mat-form-field>
 
                         <mat-form-field class="list-column" fxFlex="60px" floatPlaceholder='auto'>
                           <input autocomplete="off" matInput [readonly]="readonly" type="number" #linediscount="ngModel" name="linediscount-{{i}}"
-                            [(ngModel)]='line.discountRate' [placeholder]="'documents.fields.discount' | translate">
+                            [(ngModel)]='line.discountRate' [placeholder]="'document.fields.discount' | translate">
                           <span matSuffix class="extrasmall">%</span>
                         </mat-form-field>
 
@@ -173,13 +173,13 @@
                       <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field fxFlex class="list-column" floatPlaceholder='auto'>
                           <textarea [readonly]="readonly" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="5" matInput #linedescription="ngModel"
-                            name="linedescription-{{i}}" [(ngModel)]='line.data.description' [placeholder]="'documents.fields.description' | translate" maxlength="500"></textarea>
+                            name="linedescription-{{i}}" [(ngModel)]='line.data.description' [placeholder]="'document.fields.description' | translate" maxlength="500"></textarea>
                           <mat-hint *ngIf="!readonly" align="end">{{line.data.description?.length || 0}}/500</mat-hint>
                         </mat-form-field>
 
                         <mat-form-field class="list-column" fxFlex="250px" floatPlaceholder='auto'>
                           <mat-select [compareWith]="line.taxComparer" [formControl]="line.salesTaxesControl" multiple [disabled]='readonly' [(value)]='line.salesTaxes'
-                            [placeholder]="'documents.fields.sales-taxes' | translate">
+                            [placeholder]="'document.fields.sales-taxes' | translate">
                             <mat-option *ngFor='let tax of salesTaxes' [value]="tax">{{tax.displayName}}</mat-option>
                           </mat-select>
                         </mat-form-field>
@@ -193,7 +193,7 @@
                       <div fxLayout="row" fxLayoutAlign="start start">
                         <mat-form-field class="list-column" fxFlex floatPlaceholder='auto'>
                           <mat-select [compareWith]="line.taxComparer" [formControl]="line.nonSalesTaxesControl" multiple [disabled]='readonly' [(value)]='line.nonSalesTaxes'
-                            [placeholder]="'documents.fields.non-sales-taxes' | translate">
+                            [placeholder]="'document.fields.non-sales-taxes' | translate">
                             <mat-option *ngFor='let tax of nonSalesTaxes' [value]="tax">{{tax.displayName}}</mat-option>
                           </mat-select>
                         </mat-form-field>
@@ -219,7 +219,7 @@
                   <div class="line-container-total">
                     <div fxFlex="30px"></div>
                     <div fxFlex></div>
-                    <div class="total">{{'documents.sub-total' | translate}}:</div>
+                    <div class="total">{{'document.fields.sub-total' | translate}}:</div>
                     <div fxFlex="120px">
                       <span fxFlex class="total">{{model.subTotal | currency:model.currencyCode:true}}</span>
                     </div>
@@ -227,7 +227,7 @@
                   <div class="line-container-total">
                     <div fxFlex="30px"></div>
                     <div fxFlex></div>
-                    <div class="total">{{'documents.vat' | translate}}:</div>
+                    <div class="total">{{'document.fields.vat' | translate}}:</div>
                     <div fxFlex="120px">
                       <span fxFlex class="total">{{model.totalSalesTax | currency:model.currencyCode:true}}</span>
                     </div>
@@ -236,7 +236,7 @@
                     <div fxFlex="30px"></div>
                     <div fxFlex></div>
                     <div class="grand-total">
-                      <strong>{{'documents.total' | translate}}:</strong>
+                      <strong>{{'document.fields.total' | translate}}:</strong>
                     </div>
                     <div fxFlex="120px">
                       <span fxFlex class="grand-total">
@@ -263,7 +263,7 @@
                     <div fxFlex="30px"></div>
                     <div fxFlex></div>
                     <div class="total">
-                      <strong>{{'documents.payable' | translate}}:</strong>
+                      <strong>{{'document.fields.payable' | translate}}:</strong>
                     </div>
                     <div fxFlex="120px">
                       <span fxFlex class="total">

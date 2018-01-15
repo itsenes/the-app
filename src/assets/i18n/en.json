@@ -8,17 +8,8 @@
   "actions": {
     "save": "SAVE",
     "cancel": "CANCEL",
-    "add":"ADD NEW",
-    "start-here":"START HERE!"
-  },
-  "document.status": {
-    "Draft": "Draft",
-    "Deleted": "Deleted",
-    "Issued": "Sent-Pending",
-    "Overdue": "Over due",
-    "Paid": "Paid",
-    "Partial": "Sent-Partially paid",
-    "Void": "Void"
+    "add": "ADD NEW",
+    "start-here": "START HERE!"
   },
   "documents": {
     "new-document-title": "NEW DOCUMENT",
@@ -34,10 +25,19 @@
     "customer": "CUSTOMER",
     "total": "TOTAL",
     "payable": "PAYABLE",
-    "sub-total": "SUB TOTAL",
-    "vat": "VAT",
     "no-selected-document": "please select a document.",
-    "no-documents-found": "no documents found.",
+    "no-documents-found": "no documents found."
+  },
+  "document": {
+    "status": {
+      "Draft": "Draft",
+      "Deleted": "Deleted",
+      "Issued": "Sent-Pending",
+      "Overdue": "Over due",
+      "Paid": "Paid",
+      "Partial": "Sent-Partially paid",
+      "Void": "Void"
+    },
     "search-customer": "search for company",
     "new-customer": "NEW CUSTOMER",
     "products-services": "PRODUCTS - SERVICES",
@@ -53,45 +53,50 @@
       "discount": "discount",
       "description": "description",
       "sales-taxes": "sales taxes",
-      "non-sales-taxes": "non sales taxes"
+      "non-sales-taxes": "non sales taxes",
+      "customer": "CUSTOMER",
+      "total": "TOTAL",
+      "payable": "PAYABLE",
+      "sub-total": "SUB TOTAL",
+      "vat": "VAT"
     }
   },
-  "account-settings" : {
-    "title" : "ACCOUNT SETTINGS",
-    "manage" : "Manage account",
-    "logout" : "Logout",
-    "subscriptions" : "SUBSCRIPTIONS"
+  "account-settings": {
+    "title": "ACCOUNT SETTINGS",
+    "manage": "Manage account",
+    "logout": "Logout",
+    "subscriptions": "SUBSCRIPTIONS"
   },
   "services": {
-    "settings":"Configure"
+    "settings": "Configure"
   },
-  "settings" : {
-    "title" : "SUBSCRIPTION SETTINGS",
-    "your-subscription" : "Your subscription",
-    "company-info" : "Company information",
-    "contact-info" : "Contact information",
+  "settings": {
+    "title": "SUBSCRIPTION SETTINGS",
+    "your-subscription": "Your subscription",
+    "company-info": "Company information",
+    "contact-info": "Contact information",
     "document-types": "Document types",
-    "taxes":"Taxes",
-    "products-services":"Products and services"
+    "taxes": "Taxes",
+    "products-services": "Products and services"
   },
-  "dashboard" : {
-    "doc-search" : "Search",
-    "doc-add-new" : "Add new",
-    
-    "settings-title" : "Settings",
-    "settings-subtitle" : "Manage your company information, document types and more...",
-    "settings-action" : "Start here!",
+  "dashboard": {
+    "doc-search": "Search",
+    "doc-add-new": "Add new",
 
-    "info-title" : "Information",
-    "info-subtitle" : "This is a beta version.",
-    "info-action" : "Contact us!"
+    "settings-title": "Settings",
+    "settings-subtitle": "Manage your company information, document types and more...",
+    "settings-action": "Start here!",
+
+    "info-title": "Information",
+    "info-subtitle": "This is a beta version.",
+    "info-action": "Contact us!"
   },
-  "document-types" : {
-    "title" : "DOCUMENT TYPES",
-    "no-records" : "no document types found."
+  "document-types": {
+    "title": "DOCUMENT TYPES",
+    "no-records": "no document types found."
   },
   "company": {
-    "title":"COMPANY INFORMATION",
+    "title": "COMPANY INFORMATION",
     "fields": {
       "name": "Name (Distinctive Title)",
       "legalName": "Legal name",
@@ -154,9 +159,9 @@
       "numberOffset": "Start document numbering from"
     }
   },
-  "items" : {
-    "title":"PRODUCTS & SERVICES",
-    "no-records":"no products or services found."
+  "items": {
+    "title": "PRODUCTS & SERVICES",
+    "no-records": "no products or services found."
   },
   "item": {
     "title": "PRODUCT or SERVICE",
@@ -177,8 +182,8 @@
     "other": "Other"
   },
   "taxes": {
-    "title":"TAXES",
-    "no-records" : "no records found."
+    "title": "TAXES",
+    "no-records": "no records found."
   },
   "tax": {
     "title": "TAX INFORMATION",

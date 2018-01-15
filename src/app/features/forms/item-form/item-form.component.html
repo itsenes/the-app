@@ -70,7 +70,7 @@
           </mat-select>
         </mat-form-field>
         <button (click)="addtax()" mat-button color="primary">
-          <label class="small">{{'actions.add'}}</label>
+          <label class="small">{{'actions.add' | translate}}</label>
         </button>
       </span>
       <mat-chip-list *ngIf='model.data.taxes.length>0'>
