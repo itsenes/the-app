@@ -1,7 +1,7 @@
 <div *ngIf="model && model.plan">
   <mat-card>
     <mat-card-title>
-      <label class="small">Η ΣΥΝΔΡΟΜΗ ΣΑΣ</label>
+      <label class="small">{{'settings.your-subscription' | translate}}</label>
       <span class="app-toolbar-filler"></span>
     </mat-card-title>
     <br>
@@ -40,7 +40,7 @@
         </mat-card-content>
         <mat-card-actions>
           <a mat-button>
-            <label>Ρυθμίσεις</label>
+            <label>{{'services.settings' | translate}}</label>
           </a>
         </mat-card-actions>
       </mat-card>

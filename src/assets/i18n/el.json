@@ -62,6 +62,9 @@
     "logout": "Αποσύνδεση",
     "subscriptions": "ΣΥΝΔΡΟΜΕΣ"
   },
+  "services": {
+    "settings":"Ρυθμίσεις"
+  },
   "settings": {
     "title": "ΡΥΘΜΙΣΕΙΣ ΣΥΝΔΡΟΜΗΣ",
     "your-subscription": "Η συνδρομή σας",
@@ -88,6 +91,7 @@
     "no-records": "δεν βρέθηκαν τύποι εγγράφων και παραστατικών."
   },
   "company": {
+    "title":"ΣΤΟΙΧΕΙΑ ΕΠΙΧΕΙΡΗΣΗΣ",
     "fields": {
       "name": "Ονομασία (Διακριτικός τίτλος)",
       "legalName": "Επωνυμία",
@@ -126,15 +130,15 @@
   },
   "document-type": {
     "title": "ΤΥΠΟΣ ΕΓΓΡΑΦΟΥ",
-    "next-number-label":"To επόμενο έγγραφο θα έχει τον αριθμό",
-    "generates-printouts":"Να παράγει έγγραφα",
-    "generates-printouts-not":"Να μην παράγει έγγραφα",
-    "generates-printouts-help":"Ενεργοποιήστε την επιλογή για να παράγονται έγγραφα τύπου microsoft word ή και pdf βάση του παρακάτω προτύπου.",
-    "generates-printouts-status":"Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf.",
-    "generates-printouts-status-not":"Αυτός ο τύπος <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf.",
-    "generates-printouts-link1":"Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο ή πατήστε",
-    "generates-printouts-link2":"<strong>εδώ</strong>",
-    "generates-printouts-link3":"για να ανεβάσετε καινούργιο.",
+    "next-number-label": "To επόμενο έγγραφο θα έχει τον αριθμό",
+    "generates-printouts": "Να παράγει έγγραφα",
+    "generates-printouts-not": "Να μην παράγει έγγραφα",
+    "generates-printouts-help": "Ενεργοποιήστε την επιλογή για να παράγονται έγγραφα τύπου microsoft word ή και pdf βάση του παρακάτω προτύπου.",
+    "generates-printouts-status": "Αυτός ο τύπος παράγει εγγραφα τύπου microsoft word ή και pdf.",
+    "generates-printouts-status-not": "Αυτός ο τύπος <strong>δεν</strong> παράγει εγγραφα τύπου microsoft word ή και pdf.",
+    "generates-printouts-link1": "Πατήστε στο εικονίδιο για να κατεβάσετε το αρχείο ή πατήστε",
+    "generates-printouts-link2": "<strong>εδώ</strong>",
+    "generates-printouts-link3": "για να ανεβάσετε καινούργιο.",
     "fields": {
       "name": "Ονομασία",
       "notes": "Περιγραφή",
@@ -144,6 +148,41 @@
       "generatesPrintouts": "Παράγει έγγραφα",
       "numberFormat": "Μάσκα αρίθμησης",
       "numberOffset": "Αρίθμηση από"
+    }
+  },
+  "items" : {
+    "title":"ΠΡΟΪΟΝΤΑ κ ΥΠΗΡΕΣΙΕΣ",
+    "no-records":"δεν βρέθηκαν προϊόντα ή υπηρεσίες."
+  },
+  "item": {
+    "title": "ΠΡΟΪΟΝ ή ΥΠΗΡΕΣΙΑ",
+    "no-taxes": "Δεν έχουν οριστεί φόροι.",
+    "select-tax": "Επιλέξτε κατηγορία φόρου",
+    "taxes": "ΦΟΡΟΙ",
+    "fields": {
+      "name": "Ονομασία",
+      "notes": "Σχόλια",
+      "code": "Κωδικός είδους",
+      "unitAmount": "Τιμή μονάδος",
+      "unitType": "Μονάδα μέτρησης",
+    }
+  },
+  "tax-type": {
+    "vat": "ΦΠΑ",
+    "deductable": "Κρατήσεις, εισφορές, κτλ",
+    "other": "Άλλο"
+  },
+  "taxes": {
+    "title":"ΦΟΡΟΙ, ΚΡΑΤΗΣΕΙΣ, ΕΙΣΦΟΡΕΣ",
+    "no-records" : "δεν βρέθηκαν εγγραφές."
+  },
+  "tax": {
+    "title": "ΚΑΤΗΓΟΡΙΑ ΦΟΡΟΥ",
+    "deductable-help": "Χρησιμοποιήστε αρνητικά ποσοστά για τις κρατήσεις, παρακρατήσεις, εισφορές, χαρτόσημα κτλ",
+    "fields": {
+      "name": "Ονομασία",
+      "taxType": "Τύπος",
+      "rate": "Ποσοστό"
     }
   }
 }

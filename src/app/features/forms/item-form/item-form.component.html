@@ -1,6 +1,6 @@
 <mat-card class="document-type-card-form">
   <mat-card-title>
-    <label class="small">ΠΡΟΪΟΝ ή ΥΠΗΡΕΣΙΑ</label>
+    <label class="small">{{'item.title' | translate}}</label>
     <span class="app-toolbar-filler"></span>
     <button *ngIf='readonly' color="primary" (click)="toggle_edit_mode()" mat-mini-fab>
       <mat-icon class="form-button-icon">edit</mat-icon>
@@ -9,64 +9,68 @@
       <mat-icon class="form-button-icon">delete_forever</mat-icon>
     </button>
     <button *ngIf='!readonly' (click)="save()" mat-button color="primary">
-      <label class="small">ΑΠΟΘΗΚΕΥΣΗ</label>
+      <label class="small">{{'actions.save' | translate}}</label>
     </button>
     <button *ngIf='!readonly' (click)="cancel()" mat-button color="warn">
-      <label class="small">ΑΚΥΡΩΣΗ</label>
+      <label class="small">{{'actions.cancel' | translate}}</label>
     </button>
   </mat-card-title>
   <mat-card-content>
     <div class="form-container">
       <h3 *ngIf='readonly'>{{model.data.name}}</h3>
       <mat-form-field *ngIf='!readonly'>
-        <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.data.name' placeholder="Ονομασία" floatPlaceholder='auto'
+        <input matInput [readonly]='readonly' #name="ngModel" name="name" [(ngModel)]='model.data.name' 
+        [placeholder]="'item.fields.name' | translate" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint *ngIf='!readonly' align="end">{{name.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
       <label *ngIf='readonly'>{{model.data.notes}}</label>
       <mat-form-field *ngIf='!readonly'>
-        <textarea matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.data.notes' placeholder="Σχόλια" floatPlaceholder='auto'
+        <textarea matInput [readonly]='readonly' #notes="ngModel" name="notes" [(ngModel)]='model.data.notes' 
+        [placeholder]="'item.fields.notes' | translate" floatPlaceholder='auto'
           maxlength="250"></textarea>
         <mat-hint align="end">{{notes.value?.length || 0}}/250</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Κωδικός είδους: {{model.data.code}}</label>
+      <label *ngIf='readonly'>{{'item.fields.code' | translate}}: {{model.data.code}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
-        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.data.code' placeholder="Κωδικός" floatPlaceholder='auto'
+        <input matInput [readonly]='readonly' #code="ngModel" name="code" [(ngModel)]='model.data.code' 
+        [placeholder]="'item.fields.code' | translate" floatPlaceholder='auto'
           maxlength="150">
         <mat-hint align="end">{{code.value?.length || 0}}/150</mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Τιμή μονάδος: {{model.data.unitAmount | currency:currencyCode:true}}</label>
+      <label *ngIf='readonly'>{{'item.fields.unitAmount' | translate}}: {{model.data.unitAmount | currency:currencyCode:true}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
         <input matInput type="number" [readonly]='readonly' #unitAmount="ngModel" name="unitAmount" [(ngModel)]='model.data.unitAmount'
-          placeholder="Τιμή μονάδος" floatPlaceholder='auto' maxlength="150">
+        [placeholder]="'item.fields.unitAmount' | translate" floatPlaceholder='auto' maxlength="150">
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
 
-      <label *ngIf='readonly'>Μονάδα μέτρησης: {{model.data.unitType}}</label>
+      <label *ngIf='readonly'>{{'item.fields.unitType' | translate}}: {{model.data.unitType}}</label>
       <mat-form-field *ngIf='!readonly' class="shorter">
-        <input matInput [readonly]='readonly' #unitType="ngModel" name="unitType" [(ngModel)]='model.data.unitType' placeholder="Μονάδα μέτρησης"
-          floatPlaceholder='auto' maxlength="50">
+        <input matInput [readonly]='readonly' #unitType="ngModel" name="unitType" [(ngModel)]='model.data.unitType' 
+        [placeholder]="'item.fields.unitType' | translate" floatPlaceholder='auto' maxlength="50">
         <mat-hint align="end"></mat-hint>
       </mat-form-field>
     </div>
   </mat-card-content>
 
   <mat-card-title>
-    <label class="small inline">ΦΟΡΟΙ</label>
+    <label class="small inline">{{'item.taxes' | translate}}</label>
   </mat-card-title>
   <mat-card-content>
     <div class="form-container">
       <span *ngIf="!readonly">
         <mat-form-field class="shorter list">
-          <mat-select [disabled]='readonly' name="tax" #currency="ngModel" [(ngModel)]='selectedTax' placeholder="Επιλέξτε κατηγορία φόρου">
+          <mat-select [disabled]='readonly' name="tax" #currency="ngModel" [(ngModel)]='selectedTax' 
+          [placeholder]="'item.select-tax' | translate">
             <mat-option *ngFor='let tax of taxes' [value]="tax">{{tax.displayName}}</mat-option>
           </mat-select>
         </mat-form-field>
         <button (click)="addtax()" mat-button color="primary">
-          <label class="small">ΠΡΟΣΘΗΚΗ</label>
+          <label class="small">{{'actions.add'}}</label>
         </button>
       </span>
       <mat-chip-list *ngIf='model.data.taxes.length>0'>
@@ -74,7 +78,7 @@
           <mat-icon matChipRemove *ngIf="!readonly">cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
-      <label *ngIf="(!model.data.taxes || model.data.taxes.length==0)">Δεν έχουν οριστεί φόροι</label>
+      <label *ngIf="(!model.data.taxes || model.data.taxes.length==0)">{{'item.no-taxes' | translate}}</label>
     </div>
   </mat-card-content>
 

@@ -1,9 +1,9 @@
 <mat-card class="list-card" *ngIf="!norecords">
   <mat-card-title class="list-card-title">
-    <label class="small">ΠΡΟΪΟΝΤΑ κ ΥΠΗΡΕΣΙΕΣ</label>
+    <label class="small">{{'items.title' | translate}}</label>
     <span class="app-toolbar-filler"></span>
     <button color="primary" (click)="add_new()" mat-button>
-      <label class="small">ΠΡΟΣΘΗΚΗ</label>
+      <label class="small">{{'actions.add' | translate}}</label>
     </button>
   </mat-card-title>
   <mat-card-content>
@@ -15,12 +15,12 @@
   <mat-card class="no-records-card">
     <mat-card-content fxLayout="column" fxLayoutAlign="center stretch">
       <mat-card-title fxLayoutAlign="center center">
-        <label class="small">δεν βρέθηκαν προϊόντα ή υπηρεσίες.</label>
+        <label class="small">{{'items.no-records' | translate}}</label>
       </mat-card-title>
       <mat-card-content fxLayout="column" fxLayoutAlign="center center">
         <img src="assets/images/no-records.png" class="no-records">
         <button color="primary" (click)="add_new()" mat-button>
-          <label class="small">ΞΕΚΙΝΗΣΤΕ ΕΔΩ!</label>
+          <label class="small">{{'actions.start-here' | translate}}</label>
         </button>
       </mat-card-content>
     </mat-card-content>

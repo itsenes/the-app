@@ -281,7 +281,7 @@
     </div>
     <div fxFlex="400px" fxLayoutAlign="start stretch" fxShow fxHide.lt-md class="doc-info-panel" *ngIf="showPane">
       <div class="panel-form" *ngIf="showAddCompany">
-        <h2>ΣΤΟΙΧΕΙΑ ΕΠΙΧΕΙΡΗΣΗΣ</h2>
+        <h2>{{'company.title' | translate}}</h2>
         <app-company-form title="" [(readonly)]="readonly" [(model)]="company"></app-company-form>
       </div>
     </div>
