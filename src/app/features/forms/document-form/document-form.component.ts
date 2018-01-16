@@ -19,7 +19,7 @@ import {
   ApiClient,
   Address, Contact, Document, DocumentLine, DocumentType, Organisation,
   Product, Recipient, Tax, TaxAmount, TaxType, TaxAmountType, LookupEntry,
-  UpdateDocumentRequest, CreateDocumentRequest, TaxDefinition
+  UpdateDocumentRequest, CreateDocumentRequest, TaxDefinition, DocumentStatus
 } from '../../../services/incontrl-apiclient';
 import { LookupsService } from '../../../services/lookups.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -29,6 +29,7 @@ import { AlertsService } from '@jaspero/ng2-alerts';
 import { environment } from '../../../../environments/environment.azure-dev';
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
 import { ConfirmationService } from '@jaspero/ng2-confirmations';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-document-form',
@@ -87,7 +88,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
     private apiClient: ApiClient, private sanitizer: DomSanitizer,
     private viewModelLocator: ViewModelLocator, private lookups: LookupsService,
     private alertsService: AlertsService,
-    private confirmation: ConfirmationService, private router: Router) {
+    private confirmation: ConfirmationService, private router: Router, private location: Location) {
   }
 
   displayCompanyFn(org: Organisation): string {
@@ -220,6 +221,7 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
 
   getNewDocument(): Document {
     const doc = new Document();
+    doc.status = DocumentStatus.Draft;
     doc.currencyCode = this.subscription.company.data.currencyCode;
     doc.typeId = this.documentType.id;
     doc.date = new Date();
@@ -266,6 +268,10 @@ export class DocumentFormComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
+    if (this.isnew()) {
+      this.location.back();
+      return;
+    }
     this.readonly = true;
     this.model = this._bak;
     this.vm.init().subscribe(() => {
